@@ -5,13 +5,7 @@ const Feed = () => {
   return (
     <div>
       <FeedContainer>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
+        <FeedPost>Create a post</FeedPost>
         <FeedItem></FeedItem>
         <FeedItem></FeedItem>
         <FeedItem></FeedItem>
@@ -32,11 +26,26 @@ const FeedContainer = styled.div`
   width: 40em;
 `;
 
+const FeedPost = styled.div`
+  margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: "Lato", sans-serif;
+  width: 40em;
+  background-color: white;
+  height: 150px;
+  position: sticky;
+  top: 80px;
+  border-radius: 10px;
+  border: solid black 1px;
+`;
+
 const FeedItem = styled.div`
   width: 100%;
   border-radius: 10px;
   background-color: white;
-  height: 150px;
+  height: 200px;
 `;
 
 export default Feed;

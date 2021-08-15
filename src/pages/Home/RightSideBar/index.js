@@ -14,7 +14,7 @@ const RSideContainer = styled.div`
   display: flex;
   align-items: center;
   position: sticky;
-  top: 90px;
+  top: 80px;
   background-color: white;
   width: 15em;
   border-radius: 10px;

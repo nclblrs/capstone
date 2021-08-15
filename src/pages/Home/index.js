@@ -14,7 +14,6 @@ const Home = () => {
   );
 };
 const HomeContainer = styled.div`
-  margin-top: 10px;
   display: flex;
   justify-content: center;
 `;
