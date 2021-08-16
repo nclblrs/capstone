@@ -6,7 +6,6 @@ import home from "./images/home.svg";
 import clock from "./images/clock.svg";
 import calendar from "./images/calendar.svg";
 import progress from "./images/progress.svg";
-import user from "./images/user.svg";
 
 const Navbar = () => {
   return (
