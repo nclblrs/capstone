@@ -84,7 +84,7 @@ const LeftSideBar = () => {
 const LSideContainer = styled.div`
   display: flex;
   position: sticky;
-  top: 80px;
+  top: 120px;
   background-color: #f2f2f2;
   width: 20%;
   border-radius: 10px;

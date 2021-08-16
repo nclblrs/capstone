@@ -32,7 +32,7 @@ const FeedContainer = styled.div`
 const FeedPost = styled.div`
   display: flex;
   position: sticky;
-  top: 80px;
+  top: 120px;
   background-color: #f2f2f2;
   width: 62em;
   border-radius: 10px;
