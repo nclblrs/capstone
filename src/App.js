@@ -29,7 +29,6 @@ function App() {
 }
 
 const AppContainer = styled.div`
-  width: 1200px;
   margin: 0 auto;
 `;
 

@@ -15,25 +15,33 @@ const LeftSideBar = () => {
         </h4>
         <LSideLinks>
           <img src={apple} alt="" />
-          <p title="Capstone Project 1">Capstone Project 1</p>
+          <p title="Introduction to Computing">Introduction to Computing</p>
         </LSideLinks>
         <LSideLinks>
           <img src={apple} alt="" />
-          <p title="Ethics">Ethics</p>
+          <p title="Computer Programming 1">Computer Programming 1</p>
         </LSideLinks>
         <LSideLinks>
           <img src={apple} alt="" />
-          <p title="Multimedia">Multimedia</p>
+          <p title="Mathematics in the Modern World">
+            Mathematics in the Modern World
+          </p>
+        </LSideLinks>
+        <LSideLinks>
+          <p>... See More</p>
         </LSideLinks>
       </LSideItem>
+      <Line />
       <LSideItem>
         <h4>
-          STUDY GROUPS
+          GROUPS
           <img src={pen} alt="" />
         </h4>
         <LSideLinks>
           <img src={lightbulb} alt="" />
-          <p title="BSIT 3-2 Study Buddies">BSIT 3-2 Study Buddies</p>
+          <p title="Group 1 - Computer Programming">
+            Group 1 - Computer Programming
+          </p>
         </LSideLinks>
         <LSideLinks>
           <img src={lightbulb} alt="" />
@@ -44,20 +52,29 @@ const LeftSideBar = () => {
           <p title="Group 10 - Science">Group 10 - Science</p>
         </LSideLinks>
         <LSideLinks>
+          <p>... See More</p>
+        </LSideLinks>
+      </LSideItem>
+      <Line />
+      <LSideItem>
+        <h4>
+          STUDY GROUPS
+          <img src={pen} alt="" />
+        </h4>
+        <LSideLinks>
           <img src={lightbulb} alt="" />
-          <p title="Group 10 - Science">Group 10 - Science</p>
+          <p title="NightOwls">NightOwls</p>
         </LSideLinks>
         <LSideLinks>
           <img src={lightbulb} alt="" />
-          <p title="Group 10 - Science">Group 10 - Science</p>
+          <p title="RGB">RGB</p>
         </LSideLinks>
         <LSideLinks>
           <img src={lightbulb} alt="" />
-          <p title="Group 10 - Science">Group 10 - Science</p>
+          <p title="Group 10 - Science">ITGo</p>
         </LSideLinks>
         <LSideLinks>
-          <img src={lightbulb} alt="" />
-          <p title="Group 10 - Science">Group 10 - Science</p>
+          <p>... See More</p>
         </LSideLinks>
       </LSideItem>
     </LSideContainer>
@@ -65,14 +82,14 @@ const LeftSideBar = () => {
 };
 
 const LSideContainer = styled.div`
-  height: max-content;
   display: flex;
   position: sticky;
   top: 80px;
-  background-color: white;
-  width: 15em;
+  background-color: #f2f2f2;
+  width: 20%;
   border-radius: 10px;
   flex-direction: column;
+  height: 911px;
 `;
 
 const LSideItem = styled.div`
@@ -80,14 +97,13 @@ const LSideItem = styled.div`
   flex-direction: column;
   padding: 1.2em;
   h4 {
-    color: gray;
+    color: #646464;
     text-align: left;
-    font-size: 16px;
-    margin: 0;
-    margin-bottom: 10px;
+    font-size: 26px;
+    margin: 10px 0;
     display: flex;
     align-items: center;
-
+    margin-bottom: 1em;
     img {
       margin-left: 10px;
       width: 16px;
@@ -97,12 +113,12 @@ const LSideItem = styled.div`
 
 const LSideLinks = styled(Link)`
   color: #003249;
-  font-size: 16px;
+  font-size: 22px;
   text-align: left;
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
   text-decoration: none;
   img {
     width: 20px;
@@ -115,4 +131,8 @@ const LSideLinks = styled(Link)`
   }
 `;
 
+const Line = styled.hr`
+  display: flex;
+  margin: 1em;
+`;
 export default LeftSideBar;

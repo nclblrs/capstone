@@ -16,5 +16,6 @@ const Home = () => {
 const HomeContainer = styled.div`
   display: flex;
   justify-content: center;
+  margin: 2em;
 `;
 export default Home;

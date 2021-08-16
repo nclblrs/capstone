@@ -11,11 +11,11 @@ import user from "./images/user.svg";
 const Navbar = () => {
   return (
     <Nav>
+      <NavLogo to="">
+        <img src={logo} Alt="ChumStudies logo" />
+        ChumStudies
+      </NavLogo>
       <NavbarContainer>
-        <NavLogo to="">
-          <img src={logo} Alt="ChumStudies logo" />
-          ChumStudies
-        </NavLogo>
         <NavMenu to="/" exact>
           <img src={home} Alt="Home" />
           Home
@@ -33,15 +33,13 @@ const Navbar = () => {
           Progress
         </NavMenu>
       </NavbarContainer>
-      <Profile to="">
-        <img src={user} Alt="User" />
-      </Profile>
+      <Profile to="">Angela Jane</Profile>
     </Nav>
   );
 };
 
 const Nav = styled.nav`
-  background-color: #ccdbdc;
+  background-color: #0f2520;
   height: 80px;
   display: flex;
   align-items: center;
@@ -49,51 +47,50 @@ const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 1;
-  font-family: "Maven Pro", sans-serif;
-  //border-bottom: 1px black solid;
+  font-family: "Roboto", sans-serif;
 `;
 
 const NavbarContainer = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-evenly;
   height: 80px;
   z-index: 1;
-  width: 75%;
-  max-width: 1100px;
+  margin: 0 10em;
 `;
 
 const NavLogo = styled(NavLink)`
-  color: #003249;
+  color: white;
   justify-self: flex-start;
   cursor: pointer;
-  font-size: 28px;
+  font-size: 26px;
   display: flex;
   align-items: center;
   font-weight: bold;
   text-decoration: none;
-  margin-right: 90px;
+  margin: 0 2.5em;
 
   img {
     padding-right: 10px;
     width: 40px;
+    filter: brightness(0) invert(1);
   }
 `;
 
 const NavMenu = styled(NavLink)`
-  color: #003249;
-  margin: 10px 2px;
+  color: white;
+  margin: 15px;
   justify-self: flex-start;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 26px;
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding-left: 15px;
-  padding-right: 15px;
+  gap: 5px;
+  padding: 0 1em;
 
   &.active,
   &:hover {
-    background-color: #003249;
+    background-color: #0f482f;
     color: white;
     border-radius: 5px;
     img {
@@ -102,7 +99,8 @@ const NavMenu = styled(NavLink)`
   }
   img {
     padding-right: 10px;
-    width: 25px;
+    width: 35px;
+    filter: brightness(0) invert(1);
   }
   img:hover {
     filter: brightness(0) invert(1);
@@ -115,9 +113,10 @@ const Profile = styled(NavLink)`
   display: flex;
   text-decoration: none;
   padding: 10px;
-  margin-left: auto;
+  font-size: 26px;
   justify-content: flex-end;
-
+  color: white;
+  margin-left: auto;
   img {
     width: 25px;
   }
