@@ -74,7 +74,7 @@ const ProfilePic = styled.img`
 `;
 
 const PostText = styled.textarea`
-  width: 830px;
+  width: 750px;
   align-items: center;
   justify-content: center;
   height: 70px;

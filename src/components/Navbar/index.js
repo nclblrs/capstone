@@ -31,6 +31,7 @@ const Navbar = () => {
           <img src={progress} Alt="Progress" />
           Progress
         </NavMenu>
+        <NavMenu to="/login">Login</NavMenu>
       </NavbarContainer>
       <Profile to="">Angela Jane</Profile>
     </Nav>

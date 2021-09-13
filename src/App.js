@@ -1,6 +1,7 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import Login from "./components/Login";
 import Home from "./pages/Home";
 import styled from "styled-components";
 import ClassSched from "./pages/ClassSchedule";
@@ -22,6 +23,9 @@ function App() {
             <Calendar />
           </Route>
           <Route path="/progress"></Route>
+          <Route path="/login">
+            <Login />
+          </Route>
         </Switch>
       </Router>
     </AppContainer>
