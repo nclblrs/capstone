@@ -31,7 +31,6 @@ const Navbar = () => {
           <img src={progress} Alt="Progress" />
           Progress
         </NavMenu>
-        <NavMenu to="/login">Login</NavMenu>
       </NavbarContainer>
       <Profile to="">Angela Jane</Profile>
     </Nav>
@@ -47,7 +46,6 @@ const Nav = styled.nav`
   position: sticky;
   top: 0;
   z-index: 1;
-  font-family: "Roboto", sans-serif;
 `;
 
 const NavbarContainer = styled.div`
@@ -65,7 +63,6 @@ const NavLogo = styled(NavLink)`
   font-size: 26px;
   display: flex;
   align-items: center;
-  font-weight: bold;
   text-decoration: none;
   margin: 0 2.5em;
 

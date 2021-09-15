@@ -11,21 +11,21 @@ function App() {
   return (
     <AppContainer>
       <Router>
-        <Navbar />
         <Switch>
-          <Route path="/" exact>
-            <Home />
-          </Route>
-          <Route path="/class-schedule">
-            <ClassSched />
-          </Route>
-          <Route path="/calendar">
-            <Calendar />
-          </Route>
-          <Route path="/progress"></Route>
-          <Route path="/login">
-            <Login />
-          </Route>
+          <Login />
+          <Switch>
+            <Navbar />
+            <Route path="/" exact>
+              <Home />
+            </Route>
+            <Route path="/class-schedule">
+              <ClassSched />
+            </Route>
+            <Route path="/calendar">
+              <Calendar />
+            </Route>
+            <Route path="/progress"></Route>
+          </Switch>
         </Switch>
       </Router>
     </AppContainer>
