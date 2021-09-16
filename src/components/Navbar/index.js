@@ -7,7 +7,11 @@ import clock from "./images/clock.svg";
 import calendar from "./images/calendar.svg";
 import progress from "./images/progress.svg";
 
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
+
 const Navbar = () => {
+  const { user, loading } = useCurrentUserContext();
+
   return (
     <Nav>
       <NavLogo to="">
@@ -32,7 +36,9 @@ const Navbar = () => {
           Progress
         </NavMenu>
       </NavbarContainer>
-      <Profile to="">Angela Jane</Profile>
+      <Profile to="#">
+        {loading ? "Loading..." : `${user?.firstName} ${user?.lastName}`}
+      </Profile>
     </Nav>
   );
 };
@@ -118,7 +124,7 @@ const Profile = styled(NavLink)`
     width: 25px;
   }
   &:hover {
-    background-color: #003249;
+    background-color: #0f482f;
     color: white;
     border-radius: 5px;
     img {

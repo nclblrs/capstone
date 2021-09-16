@@ -1,16 +1,44 @@
+import { useMutation } from "@apollo/client";
 import React from "react";
 import styled from "styled-components";
 
+import { AUTHENTICATE } from "./gql";
+
 const Login = () => {
+  const [authenticate, { loading }] = useMutation(AUTHENTICATE);
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+
+    try {
+      const { data } = await authenticate({ variables: { email, password } });
+      const accessToken = data?.authenticate?.tokens?.accessToken ?? null;
+
+      if (!accessToken) {
+        console.log("something is wrong");
+        return;
+      }
+
+      localStorage.setItem("access-token", accessToken);
+      window.location.href = "/";
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <Base>
       <h1>ChumStudies</h1>
-      <form>
+      <form onSubmit={handleLogin}>
         <p>Email</p>
-        <UserInput type="text" />
+        <UserInput type="text" name="email" />
         <p>Password</p>
-        <UserInput type="password" />
-        <SubmitButton type="submit">Submit</SubmitButton>
+        <UserInput type="password" name="password" />
+        <SubmitButton type="submit" disabled={loading}>
+          Submit
+        </SubmitButton>
       </form>
     </Base>
   );

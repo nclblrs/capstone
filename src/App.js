@@ -6,26 +6,34 @@ import Home from "./pages/Home";
 import styled from "styled-components";
 import ClassSched from "./pages/ClassSchedule";
 import Calendar from "./pages/Calendar";
+import Logout from "components/Logout";
 
 function App() {
   return (
     <AppContainer>
       <Router>
         <Switch>
-          <Login />
-          <Switch>
+          <Route path="/login" exact>
+            <Login />
+          </Route>
+          <Route path="/logout" exact>
+            <Logout />
+          </Route>
+          <>
             <Navbar />
-            <Route path="/" exact>
-              <Home />
-            </Route>
-            <Route path="/class-schedule">
-              <ClassSched />
-            </Route>
-            <Route path="/calendar">
-              <Calendar />
-            </Route>
-            <Route path="/progress"></Route>
-          </Switch>
+            <Switch>
+              <Route path="/" exact>
+                <Home />
+              </Route>
+              <Route path="/class-schedule">
+                <ClassSched />
+              </Route>
+              <Route path="/calendar">
+                <Calendar />
+              </Route>
+              <Route path="/progress"></Route>
+            </Switch>
+          </>
         </Switch>
       </Router>
     </AppContainer>
