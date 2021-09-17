@@ -37,6 +37,10 @@ const Navbar = () => {
         </NavMenu>
       </NavbarContainer>
       <Profile to="#">
+        <img
+          src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+          alt="Your profile pic"
+        />
         {loading ? "Loading..." : `${user?.firstName} ${user?.lastName}`}
       </Profile>
     </Nav>
@@ -48,7 +52,7 @@ const Nav = styled.nav`
   height: 80px;
   display: flex;
   align-items: center;
-  font-size: 1rem;
+  font-size: 12px;
   position: sticky;
   top: 0;
   z-index: 1;
@@ -82,9 +86,9 @@ const NavLogo = styled(NavLink)`
 const NavMenu = styled(NavLink)`
   color: white;
   margin: 15px;
-  justify-self: flex-start;
+  justify-self: center;
   cursor: pointer;
-  font-size: 26px;
+  font-size: 22px;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -116,19 +120,26 @@ const Profile = styled(NavLink)`
   display: flex;
   text-decoration: none;
   padding: 10px;
-  font-size: 26px;
+  font-size: 22px;
   justify-content: flex-end;
   color: white;
   margin-left: auto;
+  align-items: center;
   img {
-    width: 25px;
+    border-top-left-radius: 50% 50%;
+    border-top-right-radius: 50% 50%;
+    border-bottom-right-radius: 50% 50%;
+    border-bottom-left-radius: 50% 50%;
+    width: 50px;
+    margin-right: 10px;
+    object-fit: cover;
   }
   &:hover {
     background-color: #0f482f;
     color: white;
     border-radius: 5px;
     img {
-      filter: brightness(0) invert(1);
+      filter: brightness(1);
     }
   }
 `;

@@ -12,6 +12,19 @@ const GET_USER = gql`
       lastName
       student {
         id
+        courses {
+          data {
+            id
+            name
+          }
+        }
+        groups {
+          data {
+            id
+            name
+            type
+          }
+        }
       }
       teacher {
         id

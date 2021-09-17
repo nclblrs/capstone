@@ -4,53 +4,47 @@ import styled from "styled-components";
 import apple from "./images/apple.svg";
 import lightbulb from "./images/light-bulb.svg";
 import pen from "./images/pen.svg";
+import plus from "./images/plus.svg";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const LeftSideBar = () => {
+  const { user, loading } = useCurrentUserContext();
+  const coursesData = user?.student?.courses?.data ?? [];
+  const groupsData = user?.student?.groups?.data ?? [];
+  const studyGroupsData = groupsData.filter(({ type }) => type === "STUDY");
+  const classGroupsData = groupsData.filter(({ type }) => type === "CLASS");
   return (
     <LSideContainer>
       <LSideItem>
         <h4>
           CLASSES
-          <img src={pen} alt="" />
+          <button>
+            <img src={plus} alt="" />
+          </button>
         </h4>
-        <LSideLinks>
-          <img src={apple} alt="" />
-          <p title="Introduction to Computing">Introduction to Computing</p>
-        </LSideLinks>
-        <LSideLinks>
-          <img src={apple} alt="" />
-          <p title="Computer Programming 1">Computer Programming 1</p>
-        </LSideLinks>
-        <LSideLinks>
-          <img src={apple} alt="" />
-          <p title="Mathematics in the Modern World">
-            Mathematics in the Modern World
-          </p>
-        </LSideLinks>
+        {loading
+          ? "Loading..."
+          : coursesData.slice(0, 3).map(({ name }) => (
+              <LSideLinks>
+                <img src={apple} alt="" />
+                <p title={name}>{name}</p>
+              </LSideLinks>
+            ))}
         <LSideLinks>
           <p>... See More</p>
         </LSideLinks>
       </LSideItem>
       <Line />
       <LSideItem>
-        <h4>
-          GROUPS
-          <img src={pen} alt="" />
-        </h4>
-        <LSideLinks>
-          <img src={lightbulb} alt="" />
-          <p title="Group 1 - Computer Programming">
-            Group 1 - Computer Programming
-          </p>
-        </LSideLinks>
-        <LSideLinks>
-          <img src={lightbulb} alt="" />
-          <p title="Group 1">Group 1</p>
-        </LSideLinks>
-        <LSideLinks>
-          <img src={lightbulb} alt="" />
-          <p title="Group 10 - Science">Group 10 - Science</p>
-        </LSideLinks>
+        <h4>GROUPS</h4>
+        {loading
+          ? "Loading..."
+          : classGroupsData.slice(0, 3).map(({ name }) => (
+              <LSideLinks>
+                <img src={lightbulb} alt="" />
+                <p title={name}>{name}</p>
+              </LSideLinks>
+            ))}
         <LSideLinks>
           <p>... See More</p>
         </LSideLinks>
@@ -59,20 +53,18 @@ const LeftSideBar = () => {
       <LSideItem>
         <h4>
           STUDY GROUPS
-          <img src={pen} alt="" />
+          <button>
+            <img src={pen} alt="" />
+          </button>
         </h4>
-        <LSideLinks>
-          <img src={lightbulb} alt="" />
-          <p title="NightOwls">NightOwls</p>
-        </LSideLinks>
-        <LSideLinks>
-          <img src={lightbulb} alt="" />
-          <p title="RGB">RGB</p>
-        </LSideLinks>
-        <LSideLinks>
-          <img src={lightbulb} alt="" />
-          <p title="Group 10 - Science">ITGo</p>
-        </LSideLinks>
+        {loading
+          ? "Loading..."
+          : studyGroupsData.slice(0, 3).map(({ name }) => (
+              <LSideLinks>
+                <img src={lightbulb} alt="" />
+                <p title={name}>{name}</p>
+              </LSideLinks>
+            ))}
         <LSideLinks>
           <p>... See More</p>
         </LSideLinks>
@@ -89,31 +81,38 @@ const LSideContainer = styled.div`
   width: 20%;
   border-radius: 10px;
   flex-direction: column;
-  height: 911px;
+  height: max-content;
 `;
 
 const LSideItem = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.2em;
+  padding: 1em;
   h4 {
     color: #646464;
     text-align: left;
-    font-size: 26px;
-    margin: 10px 0;
+    font-size: 22px;
     display: flex;
     align-items: center;
-    margin-bottom: 1em;
-    img {
-      margin-left: 10px;
-      width: 16px;
+    margin: 0;
+    margin-bottom: 20px;
+    button {
+      justify-content: flex-end;
+      margin-left: auto;
+      padding: 0;
+      border: none;
+      background: none;
+      cursor: pointer;
+      img {
+        width: 18px;
+      }
     }
   }
 `;
 
 const LSideLinks = styled(Link)`
   color: #003249;
-  font-size: 22px;
+  font-size: 18px;
   text-align: left;
   display: flex;
   align-items: center;
@@ -133,6 +132,6 @@ const LSideLinks = styled(Link)`
 
 const Line = styled.hr`
   display: flex;
-  margin: 1em;
+  margin: 0 1em;
 `;
 export default LeftSideBar;

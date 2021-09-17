@@ -52,7 +52,7 @@ const RSideContainer = styled.div`
   width: 20%;
   border-radius: 10px;
   flex-direction: column;
-  height: 477px;
+  height: max-content;
 `;
 
 const RSideItem = styled.div`
@@ -62,7 +62,7 @@ const RSideItem = styled.div`
   h4 {
     color: #646464;
     text-align: left;
-    font-size: 26px;
+    font-size: 22px;
     margin: 10px 0;
     display: flex;
     align-items: center;
@@ -72,7 +72,7 @@ const RSideItem = styled.div`
     }
   }
   p {
-    font-size: 22px;
+    font-size: 18px;
     margin: 0;
   }
 `;
