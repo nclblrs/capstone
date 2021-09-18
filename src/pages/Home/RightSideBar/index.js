@@ -4,12 +4,20 @@ import styled from "styled-components";
 import lightbulb from "./images/light-bulb.svg";
 
 const RightSideBar = () => {
+  var today = new Date(),
+    date =
+      parseInt(today.getMonth() + 1) +
+      " " +
+      today.getDate() +
+      " " +
+      today.getFullYear();
+  console.log(date);
   return (
     <RSideContainer>
       <RSideItem>
         <h4>Reminder</h4>
         <p>Today's Agenda</p>
-        <p> Tue, September 7, 2021</p>
+        <p>Current Date : {date}</p>
       </RSideItem>
       <RSideItem>
         <RSideLinks>

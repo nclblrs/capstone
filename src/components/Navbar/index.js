@@ -52,15 +52,17 @@ const Nav = styled.nav`
   height: 80px;
   display: flex;
   align-items: center;
+  justify-content: center;
   font-size: 12px;
   position: sticky;
   top: 0;
   z-index: 1;
+  padding: 0 1em;
 `;
 
 const NavbarContainer = styled.div`
   display: flex;
-  justify-content: space-evenly;
+  justify-content: center;
   height: 80px;
   z-index: 1;
   margin: 0 10em;
@@ -68,13 +70,13 @@ const NavbarContainer = styled.div`
 
 const NavLogo = styled(NavLink)`
   color: white;
-  justify-self: flex-start;
+  justify-content: flex-start;
   cursor: pointer;
-  font-size: 26px;
+  font-size: 22px;
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin: 0 2.5em;
+  margin: auto;
 
   img {
     padding-right: 10px;
@@ -85,10 +87,10 @@ const NavLogo = styled(NavLink)`
 
 const NavMenu = styled(NavLink)`
   color: white;
-  margin: 15px;
-  justify-self: center;
+  margin: 0 1em;
+  justify-content: center;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   text-decoration: none;
@@ -120,10 +122,10 @@ const Profile = styled(NavLink)`
   display: flex;
   text-decoration: none;
   padding: 10px;
-  font-size: 22px;
+  font-size: 18px;
   justify-content: flex-end;
   color: white;
-  margin-left: auto;
+  margin: auto;
   align-items: center;
   img {
     border-top-left-radius: 50% 50%;

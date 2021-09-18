@@ -5,14 +5,14 @@ import apple from "./images/apple.svg";
 import lightbulb from "./images/light-bulb.svg";
 import pen from "./images/pen.svg";
 import plus from "./images/plus.svg";
-import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import { GET_STUDLEFTSIDEBAR } from "./gql";
+import { useQuery } from "@apollo/client";
 
 const LeftSideBar = () => {
-  const { user, loading } = useCurrentUserContext();
-  const coursesData = user?.student?.courses?.data ?? [];
-  const groupsData = user?.student?.groups?.data ?? [];
-  const studyGroupsData = groupsData.filter(({ type }) => type === "STUDY");
-  const classGroupsData = groupsData.filter(({ type }) => type === "CLASS");
+  const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
+  const courses = data?.studentLeftSidePanel?.courses ?? [];
+  const studyGroups = data?.studentLeftSidePanel?.studyGroups ?? [];
+  const classGroups = data?.studentLeftSidePanel?.classGroups ?? [];
   return (
     <LSideContainer>
       <LSideItem>
@@ -24,7 +24,7 @@ const LeftSideBar = () => {
         </h4>
         {loading
           ? "Loading..."
-          : coursesData.slice(0, 3).map(({ name }) => (
+          : courses.map(({ name }) => (
               <LSideLinks>
                 <img src={apple} alt="" />
                 <p title={name}>{name}</p>
@@ -39,7 +39,7 @@ const LeftSideBar = () => {
         <h4>GROUPS</h4>
         {loading
           ? "Loading..."
-          : classGroupsData.slice(0, 3).map(({ name }) => (
+          : classGroups.map(({ name }) => (
               <LSideLinks>
                 <img src={lightbulb} alt="" />
                 <p title={name}>{name}</p>
@@ -59,7 +59,7 @@ const LeftSideBar = () => {
         </h4>
         {loading
           ? "Loading..."
-          : studyGroupsData.slice(0, 3).map(({ name }) => (
+          : studyGroups.map(({ name }) => (
               <LSideLinks>
                 <img src={lightbulb} alt="" />
                 <p title={name}>{name}</p>
@@ -93,9 +93,9 @@ const LSideItem = styled.div`
     text-align: left;
     font-size: 22px;
     display: flex;
-    align-items: center;
-    margin: 0;
+    margin: 0 10px;
     margin-bottom: 20px;
+    font-weight: normal;
     button {
       justify-content: flex-end;
       margin-left: auto;
@@ -113,11 +113,11 @@ const LSideItem = styled.div`
 const LSideLinks = styled(Link)`
   color: #003249;
   font-size: 18px;
-  text-align: left;
+  text-align: center;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 15px;
+  gap: 18px;
+  margin: 10px 15px;
   text-decoration: none;
   img {
     width: 20px;
@@ -132,6 +132,6 @@ const LSideLinks = styled(Link)`
 
 const Line = styled.hr`
   display: flex;
-  margin: 0 1em;
+  margin: 0 2em;
 `;
 export default LeftSideBar;
