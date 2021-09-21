@@ -1,12 +1,14 @@
 import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Login from "./components/Login";
-import Home from "./pages/Home";
+import Navbar from "components/Navbar";
+import Login from "components/Login";
+import Home from "pages/Home";
 import styled from "styled-components";
-import ClassSched from "./pages/ClassSchedule";
-import Calendar from "./pages/Calendar";
+import ClassSched from "pages/ClassSchedule";
+import Calendar from "pages/Calendar";
 import Logout from "components/Logout";
+import Course from "pages/Course";
+import Group from "pages/Group";
 
 function App() {
   return (
@@ -32,6 +34,12 @@ function App() {
                 <Calendar />
               </Route>
               <Route path="/progress"></Route>
+              <Route path="/class/:id">
+                <Course />
+              </Route>
+              <Route path="/group/:id">
+                <Group />
+              </Route>
             </Switch>
           </>
         </Switch>

@@ -24,8 +24,8 @@ const LeftSideBar = () => {
         </h4>
         {loading
           ? "Loading..."
-          : courses.map(({ name }) => (
-              <LSideLinks>
+          : courses.map(({ id, name }) => (
+              <LSideLinks key={id} to={`/class/${id}`}>
                 <img src={apple} alt="" />
                 <p title={name}>{name}</p>
               </LSideLinks>
@@ -39,8 +39,8 @@ const LeftSideBar = () => {
         <h4>GROUPS</h4>
         {loading
           ? "Loading..."
-          : classGroups.map(({ name }) => (
-              <LSideLinks>
+          : classGroups.map(({ id, name }) => (
+              <LSideLinks key={id} to={`/group/${id}`}>
                 <img src={lightbulb} alt="" />
                 <p title={name}>{name}</p>
               </LSideLinks>
@@ -59,8 +59,8 @@ const LeftSideBar = () => {
         </h4>
         {loading
           ? "Loading..."
-          : studyGroups.map(({ name }) => (
-              <LSideLinks>
+          : studyGroups.map(({ id, name }) => (
+              <LSideLinks key={id} to={`/group/${id}`}>
                 <img src={lightbulb} alt="" />
                 <p title={name}>{name}</p>
               </LSideLinks>
