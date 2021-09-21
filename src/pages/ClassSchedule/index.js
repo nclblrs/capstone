@@ -1,9 +1,11 @@
 import React from "react";
 import styled from "styled-components";
+import LeftSideBar from "./LeftSideBar";
 
 const ClassSched = () => {
   return (
     <ClassSchedContainer>
+      <LeftSideBar />
       <ClassDiv />
     </ClassSchedContainer>
   );
