@@ -9,6 +9,8 @@ import Calendar from "pages/Calendar";
 import Logout from "components/Logout";
 import Course from "pages/Course";
 import Group from "pages/Group";
+import ResetPassword from "pages/ResetPassword";
+import ForgotPassword from "pages/ForgotPassword";
 
 function App() {
   return (
@@ -20,6 +22,12 @@ function App() {
           </Route>
           <Route path="/logout" exact>
             <Logout />
+          </Route>
+          <Route path="/reset-password/:token">
+            <ResetPassword />
+          </Route>
+          <Route path="/forgot-password">
+            <ForgotPassword />
           </Route>
           <>
             <Navbar />

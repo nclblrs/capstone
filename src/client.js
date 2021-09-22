@@ -19,7 +19,11 @@ const linkErrorHandle = onError(({ graphQLErrors, networkError }) => {
     graphQLErrors.forEach(({ message, locations, path }) => {
       if (
         message === "you must be logged in" &&
-        !window.location.href.includes("logout")
+        !(
+          window.location.href.includes("logout") ||
+          window.location.href.includes("reset-password") ||
+          window.location.href.includes("forgot-password")
+        )
       ) {
         window.location.href = "/logout";
       }
@@ -51,7 +55,11 @@ const Client = ({ children }) => {
   useEffect(() => {
     if (
       !localStorage.getItem("access-token") &&
-      !window.location.href.includes("login")
+      !(
+        window.location.href.includes("login") ||
+        window.location.href.includes("reset-password") ||
+        window.location.href.includes("forgot-password")
+      )
     )
       window.location.href = "/login ";
   });
