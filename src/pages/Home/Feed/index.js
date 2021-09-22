@@ -6,19 +6,19 @@ import clip from "./images/clip.svg";
 const Feed = () => {
   return (
     <FeedContainer>
-      <FeedPost>
-        <FeedPostDiv>
+      <FeedPostDiv>
+        <form>
           <img
             class="profilepic"
             src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             alt="Your profile pic"
           />
-          <form>
-            <textarea
-              placeholder=" 
+          <textarea
+            placeholder=" 
             
               Write Something"
-            ></textarea>
+          ></textarea>
+          <ButtonContainer>
             <select>
               <option value="Select Group" selected disabled>
                 Select Group
@@ -31,10 +31,11 @@ const Feed = () => {
               Attach File
               <img class="attachicon" src={clip} alt="" />
             </button>
-            <button class="postbutton">Post</button>
-          </form>
-        </FeedPostDiv>
-      </FeedPost>
+          </ButtonContainer>
+          <button class="postbutton">Post</button>
+        </form>
+      </FeedPostDiv>
+
       <FeedFilter>
         <p>What's new?</p>
         <button>
@@ -59,6 +60,7 @@ const FeedContainer = styled.div`
   font-family: "Roboto", sans-serif;
   button,
   select {
+    display: flex;
     width: 150px;
     height: 44px;
     font-size: 15px;
@@ -78,43 +80,32 @@ const FeedContainer = styled.div`
   }
 `;
 
-const FeedPost = styled.div`
+const FeedPostDiv = styled.div`
   display: flex;
   position: sticky;
   top: 120px;
-  background-color: #f2f2f2;
-  border-radius: 10px;
-  height: 255px;
   width: 100%;
-`;
-
-const FeedPostDiv = styled.div`
-  display: flex;
-  margin: 20px auto;
-  justify-content: center;
-
-  select,
-  .attach {
-    margin: 20px auto;
-    margin-right: 10px;
-  }
+  flex-direction: column;
+  background-color: #f2f2f2;
+  height: 255px;
+  border-radius: 10px;
+  padding: 2em;
 
   .postbutton {
-    display: flex;
-    margin: 0;
     margin-left: auto;
-    margin-right: 30px;
     background-color: #0f482f;
+    margin-right: 30px;
   }
 
   textarea {
-    width: 750px;
+    display: flex;
+    width: 80%;
     height: 90px;
     resize: none;
     font-size: 18px;
     border: solid #0e5937 1px;
     border-radius: 5px;
-    margin: auto;
+
     ::placeholder {
       color: #0f482f;
       align-items: center;
@@ -131,6 +122,7 @@ const FeedPostDiv = styled.div`
     margin: 0 25px;
     object-fit: cover;
     border: solid #0f482f 2px;
+    float: left;
   }
 
   .attachicon {
@@ -141,6 +133,18 @@ const FeedPostDiv = styled.div`
     &:hover {
       filter: brightness(0) invert(1);
     }
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  position: sticky;
+  width: 100%;
+  flex-direction: row;
+  padding: 0 8em;
+  select,
+  .attach {
+    margin: 1em;
   }
 `;
 
