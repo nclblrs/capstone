@@ -1,4 +1,5 @@
 import { useMutation } from "@apollo/client";
+import { Link } from "react-router-dom";
 import React from "react";
 import styled from "styled-components";
 
@@ -11,9 +12,12 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
+    const code = e.target.code.value;
 
     try {
-      const { data } = await authenticate({ variables: { email, password } });
+      const { data } = await authenticate({
+        variables: { email, password, code },
+      });
       const accessToken = data?.authenticate?.tokens?.accessToken ?? null;
 
       if (!accessToken) {
@@ -36,10 +40,13 @@ const Login = () => {
         <UserInput type="text" name="email" />
         <p>Password</p>
         <UserInput type="password" name="password" />
+        <p>Two-factor Code (if set)</p>
+        <UserInput type="text" name="code" placeholder="Two-factor code" />
         <SubmitButton type="submit" disabled={loading}>
           Submit
         </SubmitButton>
       </form>
+      <Link to="/forgot-password">Forgot passowrd?</Link>
     </Base>
   );
 };
