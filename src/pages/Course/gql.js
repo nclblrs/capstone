@@ -6,6 +6,7 @@ export const GET_COURSE = gql`
       id
       name
       subjCode
+      courseCode
       yearAndSection
       teacher {
         id
