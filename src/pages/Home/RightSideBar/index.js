@@ -16,8 +16,11 @@ const RightSideBar = () => {
     <RSideContainer>
       <RSideItem>
         <h4>Reminder</h4>
-        <p>Today's Agenda</p>
-        <p>Current Date : {date}</p>
+        <p>
+          Today's Agenda
+          <br />
+          Current Date : {date}
+        </p>
       </RSideItem>
       <RSideItem>
         <RSideLinks>
@@ -55,23 +58,25 @@ const RightSideBar = () => {
 const RSideContainer = styled.div`
   display: flex;
   position: sticky;
-  top: 120px;
+  top: 100px;
   background-color: #f2f2f2;
-  width: 20%;
+  width: 290px;
+  min-width: 290px;
   border-radius: 10px;
   flex-direction: column;
   height: max-content;
+  padding: 29px;
 `;
 
 const RSideItem = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1.2em;
   h4 {
     color: #646464;
     text-align: left;
-    font-size: 22px;
-    margin: 10px 0;
+    font-size: 18px;
+    margin: 0;
+    margin-bottom: 20px;
     display: flex;
     align-items: center;
     img {
@@ -80,8 +85,9 @@ const RSideItem = styled.div`
     }
   }
   p {
-    font-size: 18px;
+    font-size: 16px;
     margin: 0;
+    margin-bottom: 30px;
   }
 `;
 
@@ -92,7 +98,7 @@ const RSideLinks = styled(Link)`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
   text-decoration: none;
   img {
     width: 20px;
