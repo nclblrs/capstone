@@ -76,24 +76,25 @@ const LeftSideBar = () => {
 const LSideContainer = styled.div`
   display: flex;
   position: sticky;
-  top: 120px;
+  top: 100px;
   background-color: #f2f2f2;
-  width: 20%;
+  width: 290px;
+  min-width: 290px;
   border-radius: 10px;
   flex-direction: column;
   height: max-content;
+  padding: 29px;
 `;
 
 const LSideItem = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1em;
   h4 {
     color: #646464;
     text-align: left;
-    font-size: 22px;
+    font-size: 18px;
     display: flex;
-    margin: 0 10px;
+    margin: 0;
     margin-bottom: 20px;
     font-weight: normal;
     button {
@@ -104,7 +105,7 @@ const LSideItem = styled.div`
       background: none;
       cursor: pointer;
       img {
-        width: 18px;
+        width: 12px;
       }
     }
   }
@@ -112,12 +113,12 @@ const LSideItem = styled.div`
 
 const LSideLinks = styled(Link)`
   color: #003249;
-  font-size: 18px;
+  font-size: 16px;
   text-align: center;
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin: 10px 15px;
+  gap: 12px;
+  margin-bottom: 12px;
   text-decoration: none;
   img {
     width: 20px;
@@ -132,6 +133,6 @@ const LSideLinks = styled(Link)`
 
 const Line = styled.hr`
   display: flex;
-  margin: 0 2em;
+  margin: 20px 0;
 `;
 export default LeftSideBar;
