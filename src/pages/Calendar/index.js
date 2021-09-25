@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { FaCircle } from "react-icons/fa";
+import { FaCircle, FaPlusCircle } from "react-icons/fa";
 
 const Calendar = () => {
   var today = new Date(),
@@ -23,7 +23,9 @@ const Calendar = () => {
             <i> Today is </i>
           </p>
           <p class="CurrentDate"> {date} </p>
-          <button class="AddAgenda">Add Agenda</button>
+          <button class="AddAgenda">
+            Add Agenda <FaPlusCircle size={18} top="1px;" />
+          </button>
         </UpperContainer>
         <LeftContainer>
           <ul>
