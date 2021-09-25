@@ -10,6 +10,7 @@ const GET_USER = gql`
       firstName
       middleName
       lastName
+      isAdmin
       student {
         id
       }

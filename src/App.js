@@ -1,5 +1,10 @@
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+} from "react-router-dom";
 import Navbar from "components/Navbar";
 import Login from "components/Login";
 import Home from "pages/Home";
@@ -11,8 +16,13 @@ import Course from "pages/Course";
 import Group from "pages/Group";
 import ResetPassword from "pages/ResetPassword";
 import ForgotPassword from "pages/ForgotPassword";
+import Admin from "pages/Admin";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 function App() {
+  const { user } = useCurrentUserContext();
+  const isAdmin = user?.isAdmin;
+
   return (
     <AppContainer>
       <Router>
@@ -32,6 +42,14 @@ function App() {
           <>
             <Navbar />
             <Switch>
+              {isAdmin && (
+                <Switch>
+                  <Route path="/admin">
+                    <Admin />
+                  </Route>
+                  <Redirect from="/" to="/admin" />
+                </Switch>
+              )}
               <Route path="/" exact>
                 <Home />
               </Route>
@@ -48,6 +66,7 @@ function App() {
               <Route path="/group/:id">
                 <Group />
               </Route>
+              <Redirect from="/" exact to="/" />
             </Switch>
           </>
         </Switch>
