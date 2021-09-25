@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import apple from "pages/ClassSchedule/LeftSideBar/images/apple.svg";
-import plus from "pages/ClassSchedule/LeftSideBar/images/plus.svg";
+import { FaPlusCircle } from "react-icons/fa";
 import { GET_STUDLEFTSIDEBAR } from "./gql";
 import { useQuery } from "@apollo/client";
 
@@ -15,7 +15,7 @@ const LeftSideBar = () => {
             <h4>
               CLASSES
               <button>
-                <img src={plus} alt="" />
+                <FaPlusCircle size = {20} />
               </button>
             </h4>
             {loading
@@ -43,6 +43,7 @@ const LeftSideBar = () => {
       border-radius: 10px;
       flex-direction: column;
       height: max-content;
+      margin-left: 3em;
     `;
     
     const LSideItem = styled.div`
@@ -62,11 +63,8 @@ const LeftSideBar = () => {
           margin-left: auto;
           padding: 0;
           border: none;
-          background: none;
+          color: #0E5937;
           cursor: pointer;
-          img {
-            width: 18px;
-          }
         }
       }
     `;

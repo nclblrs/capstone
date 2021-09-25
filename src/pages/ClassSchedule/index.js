@@ -1,12 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import LeftSideBar from "./LeftSideBar";
+import ScheduleContainer from "./ScheduleContainer";
 
 const ClassSched = () => {
   return (
     <ClassSchedContainer>
       <LeftSideBar />
       <ClassDiv />
+      <ScheduleContainer />
     </ClassSchedContainer>
   );
 };
@@ -18,11 +20,10 @@ const ClassSchedContainer = styled.div`
 `;
 
 const ClassDiv = styled.div`
-  width: 100em;
+  width: 3em;
   height: 20em;
   background-color: white;
   border-radius: 10px;
-  margin: 1em;
 `;
 
 export default ClassSched;
