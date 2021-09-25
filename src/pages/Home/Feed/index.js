@@ -6,53 +6,46 @@ import { FaFilter } from "react-icons/fa";
 const Feed = () => {
   return (
     <FeedContainer>
-      <FeedHeader>
-        <FeedPostDiv>
+      <FeedPostDiv>
+        <form>
           <img
             class="profilepic"
             src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             alt="Your profile pic"
           />
-          <form>
-            <textarea
-              placeholder=" 
+          <textarea
+            placeholder=" 
             
               Write Something"
-            ></textarea>
-            <ButtonContainer>
-              <select>
-                <option value="Select Group" selected disabled>
-                  Select Group
-                </option>
-                <option value="TEST 1">TEST 1</option>
-                <option value="TEST 2">TEST 2</option>
-                <option value="TEST 3">TEST 3</option>
-              </select>
-              <button class="attach">
-                Attach File
-                <BsPaperclip size={18} class="attachicon" />
-              </button>
-            </ButtonContainer>
-            <button class="postbutton">Post</button>
-          </form>
-        </FeedPostDiv>
+          ></textarea>
+          <ButtonContainer>
+            <select>
+              <option value="Select Group" selected disabled>
+                Select Group
+              </option>
+              <option value="TEST 1">TEST 1</option>
+              <option value="TEST 2">TEST 2</option>
+              <option value="TEST 3">TEST 3</option>
+            </select>
+            <button class="attach">
+              Attach File
+              <BsPaperclip size={15} class="attachicon" />
+            </button>
+          </ButtonContainer>
+          <button class="postbutton">Post</button>
+        </form>
+      </FeedPostDiv>
 
-        <FeedFilter>
-          <p>What's new?</p>
-          <button>
-            Filter Posts
-            <FaFilter size={18} class="filtericon" />
-          </button>
-        </FeedFilter>
-      </FeedHeader>
-      <FeedItemsContainer>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem></FeedItem>
-        <FeedItem>Last</FeedItem>
-      </FeedItemsContainer>
+      <FeedFilter>
+        <p>What's new?</p>
+        <button>
+          Filter Posts
+          <FaFilter size={15} class="filtericon" />
+        </button>
+      </FeedFilter>
+      <FeedItem></FeedItem>
+      <FeedItem></FeedItem>
+      <FeedItem></FeedItem>
     </FeedContainer>
   );
 };
@@ -63,7 +56,7 @@ const FeedContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 50%;
   font-family: "Roboto", sans-serif;
   button,
   select {
@@ -92,11 +85,15 @@ const FeedContainer = styled.div`
 `;
 
 const FeedPostDiv = styled.div`
+  display: flex;
+  position: sticky;
+  top: 120px;
   width: 100%;
+  flex-direction: column;
   background-color: #f2f2f2;
-  height: 200px;
+  height: 255px;
   border-radius: 10px;
-  padding: 28px 48px;
+  padding: 2em;
 
   form {
     height: 100%;
@@ -107,14 +104,14 @@ const FeedPostDiv = styled.div`
   }
 
   .postbutton {
-    position: absolute;
-    right: -10px;
-    bottom: -12px;
+    position: auto;
+    background-color: #0f482f;
+    margin-right: 30px;
   }
 
   textarea {
     display: flex;
-    width: 100%;
+    width: 80%;
     height: 90px;
     resize: none;
     font-size: 18px;
@@ -134,8 +131,7 @@ const FeedPostDiv = styled.div`
     border-bottom-left-radius: 50% 50%;
     width: 90px;
     height: 90px;
-    margin-right: 20px;
-    margin-left: -10px;
+    margin: 0 25px;
     object-fit: cover;
     border: solid #0f482f 2px;
     float: left;
@@ -154,7 +150,14 @@ const FeedPostDiv = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  gap: 20px;
+  position: sticky;
+  width: 100%;
+  flex-direction: row;
+  padding: 0 8em;
+  select,
+  .attach {
+    margin: 1em;
+  }
 `;
 
 const FeedFilter = styled.div`
@@ -188,18 +191,6 @@ const FeedFilter = styled.div`
       filter: brightness(0) invert(1);
     }
   }
-`;
-
-const FeedHeader = styled.div`
-  position: sticky;
-  top: 80px;
-  padding-top: 20px;
-  width: 100%;
-  background: white;
-`;
-
-const FeedItemsContainer = styled.div`
-  width: 100%;
 `;
 
 const FeedItem = styled.div`
