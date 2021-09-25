@@ -1,23 +1,21 @@
 import React from "react";
-import { GET_COURSE } from "./gql";
+import { GET_GROUP } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import clip from "./images/clip.svg";
 
-const Course = () => {
+const ClassGroup = () => {
   let { id } = useParams();
-  const { loading, data } = useQuery(GET_COURSE, {
-    variables: { courseId: id },
+  const { loading, data } = useQuery(GET_GROUP, {
+    variables: { groupId: id },
   });
-  const { name, subjCode, teacher, courseCode, yearAndSection } =
-    data?.course ?? {};
-  const { firstName, lastName } = teacher?.user ?? {};
+  const { name, leader, course } = data?.group ?? {};
+  const { firstName, lastName } = leader?.user ?? {};
   return (
-    <CourseContainer>
-      <CoursePostsContainer>
-        <CoursePostHeader>
-          <CoursePost>
+    <CGContainer>
+      <CGPostsContainer>
+        <CGPostHeader>
+          <CGPost>
             <form>
               <textarea
                 placeholder=" 
@@ -34,25 +32,24 @@ const Course = () => {
               </select>
               <button class="attach">
                 Attach File
-                <img class="attachicon" src={clip} alt="" />
+                <img class="attachicon" alt="" />
               </button>
               <button class="postbutton">Post</button>
             </form>
-          </CoursePost>
-          <CourseFilter>
+          </CGPost>
+          <CGFilter>
             <button>Files</button>
             <button>Activities</button>
             <button>Members</button>
-            <button>Groups</button>
-          </CourseFilter>
-        </CoursePostHeader>
-        <CourseItemsContainer>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-        </CourseItemsContainer>
-      </CoursePostsContainer>
+          </CGFilter>
+        </CGPostHeader>
+        <CGItemsContainer>
+          <CGPostItems></CGPostItems>
+          <CGPostItems></CGPostItems>
+          <CGPostItems></CGPostItems>
+          <CGPostItems></CGPostItems>
+        </CGItemsContainer>
+      </CGPostsContainer>
       <RSideContainer>
         <RSideAbout>
           <h4>ABOUT</h4>
@@ -60,16 +57,12 @@ const Course = () => {
             "Loading..."
           ) : (
             <>
-              <h5>{name}</h5>
-              <h5>
-                Class Code: <p>&nbsp;{courseCode}</p>
-              </h5>
-              <h6>Subject Code: {subjCode}</h6>
+              <h5>{course.name}</h5>
+              <h5>Group Name: {name}</h5>
               <h6>
-                Faculty: {firstName}&nbsp;
+                Leader: {firstName}&nbsp;
                 {lastName}
               </h6>
-              <h6>Section: {yearAndSection}</h6>
             </>
           )}
         </RSideAbout>
@@ -80,17 +73,17 @@ const Course = () => {
           <h6>TESSSSSSSSSSSSST</h6>
         </RSideToDo>
       </RSideContainer>
-    </CourseContainer>
+    </CGContainer>
   );
 };
 
-const CourseContainer = styled.div`
+const CGContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 50px;
 `;
 
-const CoursePostsContainer = styled.div`
+const CGPostsContainer = styled.div`
   margin: 0 2em;
   display: flex;
   flex-direction: column;
@@ -118,7 +111,7 @@ const CoursePostsContainer = styled.div`
   }
 `;
 
-const CoursePost = styled.div`
+const CGPost = styled.div`
   display: flex;
   position: sticky;
   top: 100px;
@@ -165,7 +158,7 @@ const CoursePost = styled.div`
   }
 `;
 
-const CourseFilter = styled.div`
+const CGFilter = styled.div`
   display: flex;
   position: sticky;
   top: 400px;
@@ -184,7 +177,7 @@ const CourseFilter = styled.div`
   }
 `;
 
-const CoursePostItems = styled.div`
+const CGPostItems = styled.div`
   display: flex;
   border-radius: 1em;
   background-color: #f2f2f2;
@@ -215,9 +208,8 @@ const RSideContainer = styled.div`
     margin: 0;
     color: #0f482f;
     text-align: left;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: normal;
-    display: flex;
   }
   h6 {
     margin: 0;
@@ -254,11 +246,11 @@ const RSideToDo = styled.div`
   padding: 2em;
 `;
 
-const CourseItemsContainer = styled.div`
+const CGItemsContainer = styled.div`
   width: 100%;
 `;
 
-const CoursePostHeader = styled.div`
+const CGPostHeader = styled.div`
   position: sticky;
   top: 80px;
   padding-top: 10px;
@@ -266,4 +258,4 @@ const CoursePostHeader = styled.div`
   background: white;
 `;
 
-export default Course;
+export default ClassGroup;

@@ -69,10 +69,11 @@ const NavLogo = styled(NavLink)`
   color: white;
   justify-content: flex-start;
   cursor: pointer;
-  font-size: 22px;
+  font-size: 26px;
   display: flex;
   align-items: center;
   text-decoration: none;
+  margin: 0 1em;
 
   img {
     padding-right: 10px;
@@ -86,11 +87,10 @@ const NavMenu = styled(NavLink)`
   margin: 0 1em;
   justify-content: center;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 18px;
   display: flex;
   align-items: center;
   text-decoration: none;
-  gap: 5px;
   padding: 0 1em;
 
   &.active,

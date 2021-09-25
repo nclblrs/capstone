@@ -2,8 +2,13 @@ import React from "react";
 import styled from "styled-components";
 import filter from "./images/filter.svg";
 import clip from "./images/clip.svg";
+import { GET_GROUP } from "./gql";
+import { useQuery } from "@apollo/client";
 
 const Feed = () => {
+  const { loading, data } = useQuery(GET_GROUP);
+  const studyGroups = data?.studentLeftSidePanel?.studyGroups ?? [];
+  const classGroups = data?.studentLeftSidePanel?.classGroups ?? [];
   return (
     <FeedContainer>
       <FeedHeader>
@@ -24,9 +29,16 @@ const Feed = () => {
                 <option value="Select Group" selected disabled>
                   Select Group
                 </option>
-                <option value="TEST 1">TEST 1</option>
-                <option value="TEST 2">TEST 2</option>
-                <option value="TEST 3">TEST 3</option>
+                {loading
+                  ? "Loading..."
+                  : studyGroups.map(({ name }) => (
+                      <option value="">{name}</option>
+                    ))}
+                {loading
+                  ? "Loading..."
+                  : classGroups.map(({ name }) => (
+                      <option value="">{name}</option>
+                    ))}
               </select>
               <button class="attach">
                 Attach File
@@ -58,19 +70,18 @@ const Feed = () => {
 };
 
 const FeedContainer = styled.div`
-  margin: 0 2em;
+  margin: 0 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   width: 100%;
-  font-family: "Roboto", sans-serif;
   button,
   select {
     display: flex;
     width: 150px;
-    height: 44px;
-    font-size: 15px;
+    height: 33px;
+    font-size: 16px;
     align-items: center;
     justify-content: center;
     background-color: #0e5937;
@@ -79,7 +90,7 @@ const FeedContainer = styled.div`
     text-align: center;
 
     &:hover {
-      background-color: #0f2520;
+      background-color: #157348;
       color: white;
       cursor: pointer;
       border: solid #0f482f 1px;
@@ -90,7 +101,7 @@ const FeedContainer = styled.div`
 const FeedPostDiv = styled.div`
   width: 100%;
   background-color: #f2f2f2;
-  height: 200px;
+  height: 248px;
   border-radius: 10px;
   padding: 28px 48px;
 

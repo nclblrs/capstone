@@ -5,6 +5,8 @@ export const GET_GROUP = gql`
     group(groupId: $groupId) {
       id
       name
+      type
+      groupCode
       course {
         id
         name
@@ -12,8 +14,15 @@ export const GET_GROUP = gql`
       leader {
         user {
           firstName
-          middleName
           lastName
+        }
+      }
+      admins {
+        data {
+          user {
+            firstName
+            lastName
+          }
         }
       }
     }
