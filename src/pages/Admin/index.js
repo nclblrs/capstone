@@ -154,14 +154,17 @@ const UsersCount = styled.div`
 const Header = styled.div`
   display: flex;
   justify-content: space-between;
-  font-size: 18px;
 
   button {
     cursor: pointer;
     background: #0e5937;
-    padding: 10px 30px;
+    padding: 10px 40px;
     color: white;
     border: none;
+    font-size: 18px;
+  }
+  input {
+    font-size: 18px;
   }
 `;
 
