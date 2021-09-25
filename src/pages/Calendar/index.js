@@ -24,7 +24,7 @@ const Calendar = () => {
           </p>
           <p class="CurrentDate"> {date} </p>
           <button class="AddAgenda">
-            Add Agenda <FaPlusCircle size={18} top="1px;" />
+            Add Agenda <FaPlusCircle size={18} class="agendaicon" />
           </button>
         </UpperContainer>
         <LeftContainer>
@@ -87,12 +87,16 @@ const CalendarCard = styled.div`
   border-radius: 5px;
   height: max-content;
   button {
+    display: flex;
+    width: 150px;
+    height: 44px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
     background-color: #0e5937;
     color: white;
     border: none;
-    width: 150px;
-    height: 44px;
-    cursor: pointer;
+    text-align: center;
   }
 `;
 
@@ -107,7 +111,7 @@ const CalendarHeader = styled.div`
   height: 5%;
   top: 120px;
   h3 {
-    font-size: 1.25vw;
+    font-size: 24px;
     color: white;
     font-weight: normal;
     margin: 1%;
@@ -119,24 +123,27 @@ const UpperContainer = styled.div`
   flex-direction: row;
   position: absolute;
   width: 100%;
+  .agendaicon {
+    padding-left: 10px;
+    width: 24px;
+  }
   .AddAgenda {
     right: 0;
     margin-left: auto;
     position: absolute;
-    display: inline;
-    font-size: 1vw;
+    font-size: 16px;
     margin-top: 5em;
   }
   .Today {
     position: absolute;
     left: 50%;
-    font-size: 1.25vw;
+    font-size: 24px;
     margin-top: 4.01em;
   }
   .CurrentDate {
     position: absolute;
     left: 50%;
-    font-size: 1.4vw;
+    font-size: 26px;
     margin-top: 4.98em;
     color: #0e5937;
     font-weight: bold;
@@ -151,12 +158,12 @@ const LeftContainer = styled.div`
   float: right;
   margin-top: 10em;
   ul {
-    margin-top: 1%;
+    margin-top: 4%;
     list-style-type: none;
   }
   li {
     margin-top: 0.8%;
-    font-size: 1.1vw;
+    font-size: 20px;
   }
   .c1 {
     color: #164aae;

@@ -1,8 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import apple from "pages/ClassSchedule/LeftSideBar/images/apple.svg";
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle, FaRegLightbulb } from "react-icons/fa";
 import { GET_STUDLEFTSIDEBAR } from "./gql";
 import { useQuery } from "@apollo/client";
 
@@ -22,7 +21,7 @@ const LeftSideBar = () => {
           ? "Loading..."
           : courses.map(({ name }) => (
               <LSideLinks>
-                <img src={apple} alt="" />
+                <FaRegLightbulb size={18} />
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
@@ -78,8 +77,8 @@ const LSideLinks = styled(Link)`
   gap: 18px;
   margin: 10px 15px;
   text-decoration: none;
-  img {
-    width: 20px;
+  .bulb {
+    color: #0e5937;
   }
   p {
     white-space: nowrap;

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import lightbulb from "./images/light-bulb.svg";
+import { FaRegLightbulb } from "react-icons/fa";
 
 const RightSideBar = () => {
   var today = new Date(),
@@ -21,25 +21,25 @@ const RightSideBar = () => {
       </RSideItem>
       <RSideItem>
         <RSideLinks>
-          <img src={lightbulb} alt="" />
+          <FaRegLightbulb size={18} />
           <p title="Synchronous Meeting - Computer Programming 1">
             Synchronous Meeting - Computer Programming 1
           </p>
         </RSideLinks>
         <RSideLinks>
-          <img src={lightbulb} alt="" />
+          <FaRegLightbulb size={18} />
           <p title="Assessment 10 - Mathematics in the Modern World">
             Assessment 10 - Mathematics in the Modern World
           </p>
         </RSideLinks>
         <RSideLinks>
-          <img src={lightbulb} alt="" />
+          <FaRegLightbulb size={18} />
           <p title="Chapter 1-3 - Introduction to Computing">
             Chapter 1-3 - Introduction to Computing
           </p>
         </RSideLinks>
         <RSideLinks>
-          <img src={lightbulb} alt="" />
+          <FaRegLightbulb size={18} />
           <p title="Introduction - Group 1 - Introduction to Computing">
             Introduction - Group 1 - Introduction to Computing
           </p>

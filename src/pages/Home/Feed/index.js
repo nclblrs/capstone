@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import filter from "./images/filter.svg";
-import clip from "./images/clip.svg";
+import { BsPaperclip } from "react-icons/bs";
+import { FaFilter } from "react-icons/fa";
 
 const Feed = () => {
   return (
@@ -29,7 +29,7 @@ const Feed = () => {
             </select>
             <button class="attach">
               Attach File
-              <img class="attachicon" src={clip} alt="" />
+              <BsPaperclip size={15} class="attachicon" />
             </button>
           </ButtonContainer>
           <button class="postbutton">Post</button>
@@ -40,7 +40,7 @@ const Feed = () => {
         <p>What's new?</p>
         <button>
           Filter Posts
-          <img src={filter} alt="" />
+          <FaFilter size={15} class="filtericon" />
         </button>
       </FeedFilter>
       <FeedItem></FeedItem>
@@ -77,6 +77,10 @@ const FeedContainer = styled.div`
       cursor: pointer;
       border: solid #0f482f 1px;
     }
+  }
+  .filtericon {
+    padding-left: 10px;
+    width: 24px;
   }
 `;
 
@@ -127,7 +131,7 @@ const FeedPostDiv = styled.div`
 
   .attachicon {
     padding-left: 10px;
-    width: 24px;
+    width: 26px;
     filter: brightness(0) invert(1);
     text-align: center;
     &:hover {
