@@ -1,14 +1,15 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { GET_STUDLEFTSIDEBAR } from "./gql";
-import { useQuery } from "@apollo/client";
 import {
   FaPlusCircle,
   FaRegLightbulb,
   FaLaptop,
   FaPenSquare,
 } from "react-icons/fa";
+
+import { GET_STUDLEFTSIDEBAR } from "./gql";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
@@ -78,30 +79,25 @@ const LeftSideBar = () => {
 const LSideContainer = styled.div`
   display: flex;
   position: sticky;
-  top: 120px;
+  top: 100px;
   background-color: #f2f2f2;
-  width: 20%;
+  width: 370px;
+  min-width: 370px;
   border-radius: 10px;
   flex-direction: column;
   height: max-content;
-  .pluscircle {
-    color: #0e5937;
-  }
-  .pen {
-    color: #0e5937;
-  }
+  padding: 29px;
 `;
 
 const LSideItem = styled.div`
   display: flex;
   flex-direction: column;
-  padding: 1em;
   h4 {
     color: #646464;
     text-align: left;
     font-size: 22px;
     display: flex;
-    margin: 0 10px;
+    margin: 0;
     margin-bottom: 20px;
     font-weight: normal;
     button {
@@ -112,25 +108,25 @@ const LSideItem = styled.div`
       background: none;
       cursor: pointer;
       img {
-        width: 18px;
+        width: 12px;
       }
     }
   }
 `;
 
 const LSideLinks = styled(Link)`
-  color: #003249;
-  font-size: 18px;
+  color: #0f482f;
   text-align: center;
   display: flex;
   align-items: center;
-  gap: 18px;
-  margin: 10px 15px;
+  gap: 12px;
+  margin-bottom: 12px;
   text-decoration: none;
   img {
     width: 20px;
   }
   p {
+    font-size: 18px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -140,6 +136,7 @@ const LSideLinks = styled(Link)`
 
 const Line = styled.hr`
   display: flex;
-  margin: 0 2em;
+  margin: 20px 0;
+  color: #e8e8e8;
 `;
 export default LeftSideBar;

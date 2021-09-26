@@ -1,29 +1,28 @@
 import React from "react";
-import { GET_COURSE } from "./gql";
+import { GET_GROUP } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import clip from "./images/clip.svg";
 
-const Course = () => {
+const StudyGroup = () => {
   let { id } = useParams();
-  const { loading, data } = useQuery(GET_COURSE, {
-    variables: { courseId: id },
+  const { loading, data } = useQuery(GET_GROUP, {
+    variables: { groupId: id },
   });
-  const { name, subjCode, teacher, courseCode, yearAndSection } =
-    data?.course ?? {};
-  const { firstName, lastName } = teacher?.user ?? {};
+  const { name, groupCode, admins } = data?.group ?? {};
+
   return (
-    <CourseContainer>
-      <CoursePostsContainer>
-        <CoursePostHeader>
-          <CoursePost>
+    <SGContainer>
+      <SGPostsContainer>
+        <SGPostHeader>
+          <SGPost>
             <form>
               <textarea
                 placeholder=" 
             
               Write Something"
               ></textarea>
+              <span>Tags</span> <input type="text"></input>
               <select>
                 <option value="Category" selected disabled>
                   Category
@@ -34,63 +33,56 @@ const Course = () => {
               </select>
               <button class="attach">
                 Attach File
-                <img class="attachicon" src={clip} alt="" />
+                <img class="attachicon" alt="" />
               </button>
               <button class="postbutton">Post</button>
             </form>
-          </CoursePost>
-          <CourseFilter>
+          </SGPost>
+          <SGFilter>
             <button>Files</button>
-            <button>Activities</button>
+            <button>Forums</button>
             <button>Members</button>
-            <button>Groups</button>
-          </CourseFilter>
-        </CoursePostHeader>
-        <CourseItemsContainer>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-        </CourseItemsContainer>
-      </CoursePostsContainer>
+          </SGFilter>
+        </SGPostHeader>
+        <SGItemsContainer>
+          <SGPostItems></SGPostItems>
+          <SGPostItems></SGPostItems>
+          <SGPostItems></SGPostItems>
+          <SGPostItems></SGPostItems>
+        </SGItemsContainer>
+      </SGPostsContainer>
       <RSideContainer>
         <RSideAbout>
-          <h4>ABOUT</h4>
-          {loading ? (
-            "Loading..."
-          ) : (
-            <>
-              <h5>{name}</h5>
-              <h5>
-                Class Code: <p>&nbsp;{courseCode}</p>
-              </h5>
-              <h6>Subject Code: {subjCode}</h6>
-              <h6>
-                Faculty: {firstName}&nbsp;
-                {lastName}
-              </h6>
-              <h6>Section: {yearAndSection}</h6>
-            </>
-          )}
+          {loading
+            ? "Loading..."
+            : admins?.data?.map(({ user }) => (
+                <>
+                  <h4>ABOUT</h4>
+                  <h5>{name}</h5>
+                  <h5>
+                    Group Code: <p>&nbsp;{groupCode}</p>
+                  </h5>
+                  <h5>
+                    Admins: {user.firstName} {user.lastName}
+                  </h5>
+                </>
+              ))}
         </RSideAbout>
         <RSideToDo>
-          <h4>TO-DO</h4>
-          <h6>TESSSSSSSSSSSSST</h6>
-          <h6>TESSSSSSSSSSSSST</h6>
-          <h6>TESSSSSSSSSSSSST</h6>
+          <h4>QUESTIONS</h4>
         </RSideToDo>
       </RSideContainer>
-    </CourseContainer>
+    </SGContainer>
   );
 };
 
-const CourseContainer = styled.div`
+const SGContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 50px;
 `;
 
-const CoursePostsContainer = styled.div`
+const SGPostsContainer = styled.div`
   margin: 0 2em;
   display: flex;
   flex-direction: column;
@@ -116,9 +108,21 @@ const CoursePostsContainer = styled.div`
       border: solid #0f482f 1px;
     }
   }
+  span {
+    margin: 0;
+    color: #0f482f;
+    white-space: nowrap;
+    overflow: hidden;
+    font-size: 18px;
+  }
+  input {
+    height: 33px;
+    margin: 10px;
+    width: 30%;
+  }
 `;
 
-const CoursePost = styled.div`
+const SGPost = styled.div`
   display: flex;
   position: sticky;
   top: 100px;
@@ -165,7 +169,7 @@ const CoursePost = styled.div`
   }
 `;
 
-const CourseFilter = styled.div`
+const SGFilter = styled.div`
   display: flex;
   position: sticky;
   top: 400px;
@@ -184,7 +188,7 @@ const CourseFilter = styled.div`
   }
 `;
 
-const CoursePostItems = styled.div`
+const SGPostItems = styled.div`
   display: flex;
   border-radius: 1em;
   background-color: #f2f2f2;
@@ -210,7 +214,6 @@ const RSideContainer = styled.div`
     margin: 0;
     color: #646464;
   }
-
   h5 {
     margin: 0;
     color: #0f482f;
@@ -254,11 +257,11 @@ const RSideToDo = styled.div`
   padding: 2em;
 `;
 
-const CourseItemsContainer = styled.div`
+const SGItemsContainer = styled.div`
   width: 100%;
 `;
 
-const CoursePostHeader = styled.div`
+const SGPostHeader = styled.div`
   position: sticky;
   top: 80px;
   padding-top: 10px;
@@ -266,4 +269,4 @@ const CoursePostHeader = styled.div`
   background: white;
 `;
 
-export default Course;
+export default StudyGroup;

@@ -1,69 +1,88 @@
 import React from "react";
 import styled from "styled-components";
+import { useQuery } from "@apollo/client";
 import { BsPaperclip } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa";
 
+import { GET_GROUP } from "./gql";
+
 const Feed = () => {
+  const { loading, data } = useQuery(GET_GROUP);
+  const studyGroups = data?.studentLeftSidePanel?.studyGroups ?? [];
+  const classGroups = data?.studentLeftSidePanel?.classGroups ?? [];
   return (
     <FeedContainer>
-      <FeedPostDiv>
-        <form>
+      <FeedHeader>
+        <FeedPostDiv>
           <img
             class="profilepic"
             src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             alt="Your profile pic"
           />
-          <textarea
-            placeholder=" 
+          <form>
+            <textarea
+              placeholder=" 
             
               Write Something"
-          ></textarea>
-          <ButtonContainer>
-            <select>
-              <option value="Select Group" selected disabled>
-                Select Group
-              </option>
-              <option value="TEST 1">TEST 1</option>
-              <option value="TEST 2">TEST 2</option>
-              <option value="TEST 3">TEST 3</option>
-            </select>
-            <button class="attach">
-              Attach File
-              <BsPaperclip size={15} class="attachicon" />
-            </button>
-          </ButtonContainer>
-          <button class="postbutton">Post</button>
-        </form>
-      </FeedPostDiv>
+            ></textarea>
+            <ButtonContainer>
+              <select>
+                <option value="Select Group" selected disabled>
+                  Select Group
+                </option>
+                {loading
+                  ? "Loading..."
+                  : studyGroups.map(({ name }) => (
+                      <option value="">{name}</option>
+                    ))}
+                {loading
+                  ? "Loading..."
+                  : classGroups.map(({ name }) => (
+                      <option value="">{name}</option>
+                    ))}
+              </select>
+              <button class="attach">
+                Attach File
+                <BsPaperclip size={15} class="attachicon" />
+              </button>
+            </ButtonContainer>
+            <button class="postbutton">Post</button>
+          </form>
+        </FeedPostDiv>
 
-      <FeedFilter>
-        <p>What's new?</p>
-        <button>
-          Filter Posts
-          <FaFilter size={15} class="filtericon" />
-        </button>
-      </FeedFilter>
-      <FeedItem></FeedItem>
-      <FeedItem></FeedItem>
-      <FeedItem></FeedItem>
+        <FeedFilter>
+          <p>What's new?</p>
+          <button>
+            Filter Posts
+            <FaFilter size={15} class="filtericon" />
+          </button>
+        </FeedFilter>
+      </FeedHeader>
+      <FeedItemsContainer>
+        <FeedItem></FeedItem>
+        <FeedItem></FeedItem>
+        <FeedItem></FeedItem>
+        <FeedItem></FeedItem>
+        <FeedItem></FeedItem>
+        <FeedItem>Last</FeedItem>
+      </FeedItemsContainer>
     </FeedContainer>
   );
 };
 
 const FeedContainer = styled.div`
-  margin: 0 2em;
+  margin: 0 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 50%;
-  font-family: "Roboto", sans-serif;
+  width: 100%;
   button,
   select {
     display: flex;
     width: 150px;
-    height: 44px;
-    font-size: 15px;
+    height: 33px;
+    font-size: 16px;
     align-items: center;
     justify-content: center;
     background-color: #0e5937;
@@ -72,28 +91,20 @@ const FeedContainer = styled.div`
     text-align: center;
 
     &:hover {
-      background-color: #0f2520;
+      background-color: #157348;
       color: white;
       cursor: pointer;
       border: solid #0f482f 1px;
     }
   }
-  .filtericon {
-    padding-left: 10px;
-    width: 24px;
-  }
 `;
 
 const FeedPostDiv = styled.div`
-  display: flex;
-  position: sticky;
-  top: 120px;
   width: 100%;
-  flex-direction: column;
   background-color: #f2f2f2;
-  height: 255px;
+  height: 248px;
   border-radius: 10px;
-  padding: 2em;
+  padding: 28px 48px;
 
   form {
     height: 100%;
@@ -104,14 +115,14 @@ const FeedPostDiv = styled.div`
   }
 
   .postbutton {
-    position: auto;
-    background-color: #0f482f;
-    margin-right: 30px;
+    position: absolute;
+    right: -10px;
+    bottom: -12px;
   }
 
   textarea {
     display: flex;
-    width: 80%;
+    width: 100%;
     height: 90px;
     resize: none;
     font-size: 18px;
@@ -131,7 +142,8 @@ const FeedPostDiv = styled.div`
     border-bottom-left-radius: 50% 50%;
     width: 90px;
     height: 90px;
-    margin: 0 25px;
+    margin-right: 20px;
+    margin-left: -10px;
     object-fit: cover;
     border: solid #0f482f 2px;
     float: left;
@@ -139,7 +151,7 @@ const FeedPostDiv = styled.div`
 
   .attachicon {
     padding-left: 10px;
-    width: 26px;
+    width: 24px;
     filter: brightness(0) invert(1);
     text-align: center;
     &:hover {
@@ -150,14 +162,7 @@ const FeedPostDiv = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
-  position: sticky;
-  width: 100%;
-  flex-direction: row;
-  padding: 0 8em;
-  select,
-  .attach {
-    margin: 1em;
-  }
+  gap: 20px;
 `;
 
 const FeedFilter = styled.div`
@@ -191,6 +196,18 @@ const FeedFilter = styled.div`
       filter: brightness(0) invert(1);
     }
   }
+`;
+
+const FeedHeader = styled.div`
+  position: sticky;
+  top: 80px;
+  padding-top: 20px;
+  width: 100%;
+  background: white;
+`;
+
+const FeedItemsContainer = styled.div`
+  width: 100%;
 `;
 
 const FeedItem = styled.div`
