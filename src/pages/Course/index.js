@@ -161,7 +161,7 @@ const CourseFilter = styled.div`
   width: 100%;
   align-items: center;
   margin: 20px auto;
-  border-top: solid #0e5937 1px;
+  border-bottom: solid #0e5937 1px;
 `;
 
 const CoursePostItems = styled.div`
@@ -195,6 +195,7 @@ const RSideContainer = styled.div`
     margin-bottom: 20px;
     font-weight: normal;
   }
+
   h5 {
     color: #0f482f;
     text-align: left;

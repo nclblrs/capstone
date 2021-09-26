@@ -80,7 +80,12 @@ const LSideContainer = styled.div`
   position: sticky;
   top: 120px;
   background-color: #f2f2f2;
+<<<<<<< HEAD
   width: 20%;
+=======
+  width: 370px;
+  min-width: 370px;
+>>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
   border-radius: 10px;
   flex-direction: column;
   height: max-content;
@@ -119,8 +124,12 @@ const LSideItem = styled.div`
 `;
 
 const LSideLinks = styled(Link)`
+<<<<<<< HEAD
   color: #003249;
   font-size: 18px;
+=======
+  color: #0f482f;
+>>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
   text-align: center;
   display: flex;
   align-items: center;
@@ -131,6 +140,7 @@ const LSideLinks = styled(Link)`
     width: 20px;
   }
   p {
+    font-size: 18px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -140,6 +150,11 @@ const LSideLinks = styled(Link)`
 
 const Line = styled.hr`
   display: flex;
+<<<<<<< HEAD
   margin: 0 2em;
+=======
+  margin: 20px 0;
+  color: #e8e8e8;
+>>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
 `;
 export default LeftSideBar;

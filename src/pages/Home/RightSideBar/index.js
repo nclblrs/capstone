@@ -7,17 +7,26 @@ const RightSideBar = () => {
   var today = new Date(),
     date =
       parseInt(today.getMonth() + 1) +
-      " " +
+      "-" +
       today.getDate() +
-      " " +
+      "-" +
       today.getFullYear();
   console.log(date);
   return (
     <RSideContainer>
       <RSideItem>
+<<<<<<< HEAD
         <h4>Reminder</h4>
         <p>Today's Agenda </p>
         <p>Current Date : {date}</p>
+=======
+        <h4>REMINDER</h4>
+        <p>
+          Today's Agenda
+          <br />
+          Current Date : {date}
+        </p>
+>>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
       </RSideItem>
       <RSideItem>
         <RSideLinks>
@@ -57,8 +66,8 @@ const RSideContainer = styled.div`
   position: sticky;
   top: 100px;
   background-color: #f2f2f2;
-  width: 290px;
-  min-width: 290px;
+  width: 370px;
+  min-width: 370px;
   border-radius: 10px;
   flex-direction: column;
   height: max-content;
@@ -71,11 +80,12 @@ const RSideItem = styled.div`
   h4 {
     color: #646464;
     text-align: left;
-    font-size: 18px;
+    font-size: 22px;
     margin: 0;
     margin-bottom: 20px;
     display: flex;
     align-items: center;
+    font-weight: normal;
     img {
       margin-left: 10px;
       width: 16px;
@@ -89,8 +99,7 @@ const RSideItem = styled.div`
 `;
 
 const RSideLinks = styled(Link)`
-  color: #003249;
-  font-size: 22px;
+  color: #0f482f;
   text-align: left;
   display: flex;
   align-items: center;
@@ -105,6 +114,7 @@ const RSideLinks = styled(Link)`
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
+    font-size: 18px;
   }
 `;
 

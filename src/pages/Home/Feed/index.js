@@ -1,9 +1,19 @@
 import React from "react";
 import styled from "styled-components";
+<<<<<<< HEAD
 import { BsPaperclip } from "react-icons/bs";
 import { FaFilter } from "react-icons/fa";
+=======
+import filter from "./images/filter.svg";
+import clip from "./images/clip.svg";
+import { GET_GROUP } from "./gql";
+import { useQuery } from "@apollo/client";
+>>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
 
 const Feed = () => {
+  const { loading, data } = useQuery(GET_GROUP);
+  const studyGroups = data?.studentLeftSidePanel?.studyGroups ?? [];
+  const classGroups = data?.studentLeftSidePanel?.classGroups ?? [];
   return (
     <FeedContainer>
       <FeedPostDiv>
@@ -17,6 +27,7 @@ const Feed = () => {
             placeholder=" 
             
               Write Something"
+<<<<<<< HEAD
           ></textarea>
           <ButtonContainer>
             <select>
@@ -46,24 +57,72 @@ const Feed = () => {
       <FeedItem></FeedItem>
       <FeedItem></FeedItem>
       <FeedItem></FeedItem>
+=======
+            ></textarea>
+            <ButtonContainer>
+              <select>
+                <option value="Select Group" selected disabled>
+                  Select Group
+                </option>
+                {loading
+                  ? "Loading..."
+                  : studyGroups.map(({ name }) => (
+                      <option value="">{name}</option>
+                    ))}
+                {loading
+                  ? "Loading..."
+                  : classGroups.map(({ name }) => (
+                      <option value="">{name}</option>
+                    ))}
+              </select>
+              <button class="attach">
+                Attach File
+                <img class="attachicon" src={clip} alt="" />
+              </button>
+            </ButtonContainer>
+            <button class="postbutton">Post</button>
+          </form>
+        </FeedPostDiv>
+
+        <FeedFilter>
+          <p>What's new?</p>
+          <button>
+            Filter Posts
+            <img src={filter} alt="" />
+          </button>
+        </FeedFilter>
+      </FeedHeader>
+      <FeedItemsContainer>
+        <FeedItem></FeedItem>
+        <FeedItem></FeedItem>
+        <FeedItem></FeedItem>
+        <FeedItem></FeedItem>
+        <FeedItem></FeedItem>
+        <FeedItem>Last</FeedItem>
+      </FeedItemsContainer>
+>>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
     </FeedContainer>
   );
 };
 
 const FeedContainer = styled.div`
-  margin: 0 2em;
+  margin: 0 5em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+<<<<<<< HEAD
   width: 50%;
   font-family: "Roboto", sans-serif;
+=======
+  width: 100%;
+>>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
   button,
   select {
     display: flex;
     width: 150px;
-    height: 44px;
-    font-size: 15px;
+    height: 33px;
+    font-size: 16px;
     align-items: center;
     justify-content: center;
     background-color: #0e5937;
@@ -72,7 +131,7 @@ const FeedContainer = styled.div`
     text-align: center;
 
     &:hover {
-      background-color: #0f2520;
+      background-color: #157348;
       color: white;
       cursor: pointer;
       border: solid #0f482f 1px;
@@ -91,7 +150,11 @@ const FeedPostDiv = styled.div`
   width: 100%;
   flex-direction: column;
   background-color: #f2f2f2;
+<<<<<<< HEAD
   height: 255px;
+=======
+  height: 248px;
+>>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
   border-radius: 10px;
   padding: 2em;
 
