@@ -15,18 +15,12 @@ const RightSideBar = () => {
   return (
     <RSideContainer>
       <RSideItem>
-<<<<<<< HEAD
-        <h4>Reminder</h4>
-        <p>Today's Agenda </p>
-        <p>Current Date : {date}</p>
-=======
         <h4>REMINDER</h4>
         <p>
           Today's Agenda
           <br />
           Current Date : {date}
         </p>
->>>>>>> f80721397a0f2f7fa95f47dc8c63f828872517fb
       </RSideItem>
       <RSideItem>
         <RSideLinks>
