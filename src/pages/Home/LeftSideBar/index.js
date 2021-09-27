@@ -61,9 +61,7 @@ const LeftSideBar = () => {
                   <button>Create Study Group</button>
                 </DropdownButtons>
               }
-            >
-              <img src={pen} alt="" />
-            </Dropdown>
+            ></Dropdown>
           </button>
         </h4>
         {loading
