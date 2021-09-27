@@ -21,6 +21,8 @@ const RightSideBar = () => {
           <br />
           Current Date : {date}
         </p>
+        <p>Today's Agenda </p>
+        <p>Current Date : {date}</p>
       </RSideItem>
       <RSideItem>
         <RSideLinks>

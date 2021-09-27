@@ -1,7 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import { GET_GROUP } from "./gql";
 import { useQuery } from "@apollo/client";
+import { GET_GROUP } from "./gql";
 import { FaFilter } from "react-icons/fa";
 import { BsPaperclip } from "react-icons/bs";
 
@@ -43,6 +43,7 @@ const Feed = () => {
               <button class="attach">
                 Attach File
                 <BsPaperclip size={15} />
+                <BsPaperclip size={15} class="attachicon" />
               </button>
             </ButtonContainer>
             <button class="postbutton">Post</button>
@@ -53,7 +54,7 @@ const Feed = () => {
           <p>What's new?</p>
           <button>
             Filter Posts
-            <FaFilter size={15} />
+            <FaFilter size={15} class="filtericon" />
           </button>
         </FeedFilter>
       </FeedHeader>

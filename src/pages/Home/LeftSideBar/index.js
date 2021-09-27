@@ -1,11 +1,11 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { GET_STUDLEFTSIDEBAR } from "./gql";
-import { useQuery } from "@apollo/client";
-import { FaLaptop, FaPenSquare, FaPlusCircle } from "react-icons/fa";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
+import { FaPlusCircle, FaLaptop, FaPenSquare } from "react-icons/fa";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
