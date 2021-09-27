@@ -14,6 +14,7 @@ import Calendar from "pages/Calendar";
 import Logout from "components/Logout";
 import Course from "pages/Course";
 import Group from "pages/Group";
+import Settings from "pages/Settings";
 import ResetPassword from "pages/ResetPassword";
 import ForgotPassword from "pages/ForgotPassword";
 import Admin from "pages/Admin";
@@ -65,6 +66,9 @@ function App() {
               </Route>
               <Route path="/group/:id">
                 <Group />
+              </Route>
+              <Route path="/settings">
+                <Settings />
               </Route>
               <Redirect from="/" exact to="/" />
             </Switch>
