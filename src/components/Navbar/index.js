@@ -8,41 +8,54 @@ import calendar from "./images/calendar.svg";
 import progress from "./images/progress.svg";
 
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const Navbar = () => {
   const { user, loading } = useCurrentUserContext();
+  const isAdmin = user?.isAdmin;
 
   return (
     <Nav>
       <NavLogo to="">
-        <img src={logo} Alt="ChumStudies logo" />
+        <img src={logo} alt="ChumStudies logo" />
         ChumStudies
       </NavLogo>
-      <NavbarContainer>
-        <NavMenu to="/" exact>
-          <img src={home} Alt="Home" />
-          Home
-        </NavMenu>
-        <NavMenu to="/class-schedule">
-          <img src={clock} Alt="Class Schedule" />
-          Class Schedule
-        </NavMenu>
-        <NavMenu to="/calendar">
-          <img src={calendar} Alt="Calendar" />
-          Calendar
-        </NavMenu>
-        <NavMenu to="/progress">
-          <img src={progress} Alt="Progress" />
-          Progress
-        </NavMenu>
-      </NavbarContainer>
-      <Profile to="#">
-        <img
-          src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt="Your profile pic"
-        />
-        {loading ? "Loading..." : `${user?.firstName} ${user?.lastName}`}
-      </Profile>
+      {!isAdmin && (
+        <NavbarContainer>
+          <NavMenu to="/" exact>
+            <img src={home} alt="Home" />
+            Home
+          </NavMenu>
+          <NavMenu to="/class-schedule">
+            <img src={clock} alt="Class Schedule" />
+            Class Schedule
+          </NavMenu>
+          <NavMenu to="/calendar">
+            <img src={calendar} alt="Calendar" />
+            Calendar
+          </NavMenu>
+          <NavMenu to="/progress">
+            <img src={progress} alt="Progress" />
+            Progress
+          </NavMenu>
+        </NavbarContainer>
+      )}
+      <Dropdown
+        popperComponent={
+          <DropdownButtons>
+            <NavMenu to="/settings">Settings</NavMenu>
+            <NavMenu to="/logout">Logout</NavMenu>
+          </DropdownButtons>
+        }
+      >
+        <Profile to="#">
+          <img
+            src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            alt="Your profile pic"
+          />
+          {loading ? "Loading..." : `${user?.firstName} ${user?.lastName}`}
+        </Profile>
+      </Dropdown>
     </Nav>
   );
 };
@@ -56,8 +69,13 @@ const Nav = styled.nav`
   font-size: 12px;
   position: sticky;
   top: 0;
+<<<<<<< HEAD
   z-index: 1;
   padding: 0 1em;
+=======
+  padding: 0 3em;
+  z-index: 1;
+>>>>>>> 4d37e81b6d86f69a5c8518f03556d35b9651d7a9
 `;
 
 const NavbarContainer = styled.div`

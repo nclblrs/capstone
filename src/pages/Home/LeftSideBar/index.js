@@ -3,8 +3,12 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { GET_STUDLEFTSIDEBAR } from "./gql";
 import { useQuery } from "@apollo/client";
+<<<<<<< HEAD
 import { FaLaptop, FaPenSquare, FaPlusCircle } from "react-icons/fa";
 import { HiOutlineLightBulb } from "react-icons/hi";
+=======
+import Dropdown, { DropdownButtons } from "components/Dropdown";
+>>>>>>> 4d37e81b6d86f69a5c8518f03556d35b9651d7a9
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
@@ -52,7 +56,20 @@ const LeftSideBar = () => {
         <h4>
           STUDY GROUPS
           <button>
+<<<<<<< HEAD
             <FaPenSquare size={20} class="button-icon" />
+=======
+            <Dropdown
+              popperComponent={
+                <DropdownButtons>
+                  <button>Join Group</button>
+                  <button>Create Study Group</button>
+                </DropdownButtons>
+              }
+            >
+              <img src={pen} alt="" />
+            </Dropdown>
+>>>>>>> 4d37e81b6d86f69a5c8518f03556d35b9651d7a9
           </button>
         </h4>
         {loading
@@ -98,7 +115,7 @@ const LSideItem = styled.div`
     margin: 0;
     margin-bottom: 20px;
     font-weight: normal;
-    button {
+    > button {
       justify-content: flex-end;
       margin-left: auto;
       padding: 0;
