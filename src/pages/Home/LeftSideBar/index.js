@@ -7,6 +7,7 @@ import pen from "./images/pen.svg";
 import plus from "./images/plus.svg";
 import { GET_STUDLEFTSIDEBAR } from "./gql";
 import { useQuery } from "@apollo/client";
+import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
@@ -54,7 +55,16 @@ const LeftSideBar = () => {
         <h4>
           STUDY GROUPS
           <button>
-            <img src={pen} alt="" />
+            <Dropdown
+              popperComponent={
+                <DropdownButtons>
+                  <button>Join Group</button>
+                  <button>Create Study Group</button>
+                </DropdownButtons>
+              }
+            >
+              <img src={pen} alt="" />
+            </Dropdown>
           </button>
         </h4>
         {loading
@@ -97,7 +107,7 @@ const LSideItem = styled.div`
     margin: 0;
     margin-bottom: 20px;
     font-weight: normal;
-    button {
+    > button {
       justify-content: flex-end;
       margin-left: auto;
       padding: 0;

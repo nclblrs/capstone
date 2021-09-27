@@ -8,6 +8,7 @@ import calendar from "./images/calendar.svg";
 import progress from "./images/progress.svg";
 
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const Navbar = () => {
   const { user, loading } = useCurrentUserContext();
@@ -39,13 +40,22 @@ const Navbar = () => {
           </NavMenu>
         </NavbarContainer>
       )}
-      <Profile to="#">
-        <img
-          src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          alt="Your profile pic"
-        />
-        {loading ? "Loading..." : `${user?.firstName} ${user?.lastName}`}
-      </Profile>
+      <Dropdown
+        popperComponent={
+          <DropdownButtons>
+            <NavMenu to="/settings">Settings</NavMenu>
+            <NavMenu to="/logout">Logout</NavMenu>
+          </DropdownButtons>
+        }
+      >
+        <Profile to="#">
+          <img
+            src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            alt="Your profile pic"
+          />
+          {loading ? "Loading..." : `${user?.firstName} ${user?.lastName}`}
+        </Profile>
+      </Dropdown>
     </Nav>
   );
 };
@@ -60,6 +70,7 @@ const Nav = styled.nav`
   position: sticky;
   top: 0;
   padding: 0 3em;
+  z-index: 1;
 `;
 
 const NavbarContainer = styled.div`
