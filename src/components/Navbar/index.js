@@ -11,31 +11,34 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const Navbar = () => {
   const { user, loading } = useCurrentUserContext();
+  const isAdmin = user?.isAdmin;
 
   return (
     <Nav>
       <NavLogo to="">
-        <img src={logo} Alt="ChumStudies logo" />
+        <img src={logo} alt="ChumStudies logo" />
         ChumStudies
       </NavLogo>
-      <NavbarContainer>
-        <NavMenu to="/" exact>
-          <img src={home} Alt="Home" />
-          Home
-        </NavMenu>
-        <NavMenu to="/class-schedule">
-          <img src={clock} Alt="Class Schedule" />
-          Class Schedule
-        </NavMenu>
-        <NavMenu to="/calendar">
-          <img src={calendar} Alt="Calendar" />
-          Calendar
-        </NavMenu>
-        <NavMenu to="/progress">
-          <img src={progress} Alt="Progress" />
-          Progress
-        </NavMenu>
-      </NavbarContainer>
+      {!isAdmin && (
+        <NavbarContainer>
+          <NavMenu to="/" exact>
+            <img src={home} alt="Home" />
+            Home
+          </NavMenu>
+          <NavMenu to="/class-schedule">
+            <img src={clock} alt="Class Schedule" />
+            Class Schedule
+          </NavMenu>
+          <NavMenu to="/calendar">
+            <img src={calendar} alt="Calendar" />
+            Calendar
+          </NavMenu>
+          <NavMenu to="/progress">
+            <img src={progress} alt="Progress" />
+            Progress
+          </NavMenu>
+        </NavbarContainer>
+      )}
       <Profile to="#">
         <img
           src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
