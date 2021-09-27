@@ -42,7 +42,6 @@ const Feed = () => {
               </select>
               <button class="attach">
                 Attach File
-                <BsPaperclip size={15} />
                 <BsPaperclip size={15} class="attachicon" />
               </button>
             </ButtonContainer>

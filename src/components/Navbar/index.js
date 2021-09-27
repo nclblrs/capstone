@@ -69,13 +69,10 @@ const Nav = styled.nav`
   font-size: 12px;
   position: sticky;
   top: 0;
-<<<<<<< HEAD
   z-index: 1;
   padding: 0 1em;
-=======
   padding: 0 3em;
   z-index: 1;
->>>>>>> 4d37e81b6d86f69a5c8518f03556d35b9651d7a9
 `;
 
 const NavbarContainer = styled.div`
