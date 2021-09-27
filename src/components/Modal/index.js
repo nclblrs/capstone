@@ -1,11 +1,19 @@
 import styled from "styled-components";
 
 const Modal = ({ title, show, closeModal, width, children }) => {
+  const handleClickOutside = () => {
+    closeModal();
+  };
+
+  const handleClickInside = (e) => {
+    e.stopPropagation();
+  };
+
   if (!show) return null;
 
   return (
-    <ModalBackground>
-      <Container width={width}>
+    <ModalBackground onClick={handleClickOutside}>
+      <Container width={width} onClick={handleClickInside}>
         <Header>
           <span>{title}</span>
           <span className="closeButton" onClick={closeModal}>
@@ -33,16 +41,16 @@ const ModalBackground = styled.div`
 `;
 
 const Container = styled.div`
-  background-color: #ccdbdc;
-  width: ${({ width }) => width || "400px"};
-  border-radius: 10px;
+  background-color: white;
+  width: ${({ width }) => width || "max-content"};
+  border-radius: 4px;
 `;
 
 const Header = styled.div`
-  background-color: #003249;
+  background-color: #0f482f;
   width: 100%;
-  height: 40px;
-  border-radius: 10px 10px 0 0;
+  height: 42px;
+  border-radius: 4px 4px 0 0;
   padding: 0 20px;
 
   display: flex;
