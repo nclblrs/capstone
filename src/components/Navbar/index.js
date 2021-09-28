@@ -65,10 +65,12 @@ const Nav = styled.nav`
   height: 80px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   font-size: 12px;
   position: sticky;
   top: 0;
+  z-index: 1;
+  padding: 0 1em;
   padding: 0 3em;
   z-index: 1;
 `;
@@ -76,18 +78,19 @@ const Nav = styled.nav`
 const NavbarContainer = styled.div`
   display: flex;
   justify-content: center;
-  height: 100%;
+  height: 80px;
+  z-index: 1;
+  margin: 0 10em;
 `;
 
 const NavLogo = styled(NavLink)`
   color: white;
   justify-content: flex-start;
   cursor: pointer;
-  font-size: 26px;
+  font-size: 22px;
   display: flex;
   align-items: center;
   text-decoration: none;
-  margin: 0 1em;
 
   img {
     padding-right: 10px;
@@ -101,10 +104,11 @@ const NavMenu = styled(NavLink)`
   margin: 0 1em;
   justify-content: center;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 20px;
   display: flex;
   align-items: center;
   text-decoration: none;
+  gap: 5px;
   padding: 0 1em;
 
   &.active,
