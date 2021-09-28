@@ -222,7 +222,7 @@ const Attachment = styled.a`
   color: white;
   width: 100%;
   text-align: left;
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 10px 32px;
   display: flex;
   align-items: center;
