@@ -65,6 +65,7 @@ const SchedContainer = styled.div`
   }
   li {
     padding: 8px 8px;
+    text-align: center;
   }
   li:hover {
     background-color: #0f482f;
