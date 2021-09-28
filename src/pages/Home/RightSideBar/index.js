@@ -60,8 +60,8 @@ const RSideContainer = styled.div`
   position: sticky;
   top: 100px;
   background-color: #f2f2f2;
-  width: 370px;
-  min-width: 370px;
+  width: 300px;
+  min-width: 300px;
   border-radius: 10px;
   flex-direction: column;
   height: max-content;
