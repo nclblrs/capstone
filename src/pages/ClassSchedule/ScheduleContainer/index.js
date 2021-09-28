@@ -7,28 +7,25 @@ import Dropdown, { DropdownButtons } from "components/Dropdown";
 const ScheduleContainer = () => {
   return (
     <SchedContainer>
-      <SchedItem>
-        <h3>
-          Class Schedule
-          <button id="pendropdown">
-            <FaPenSquare size={20} />
+      <Dropdown
+        popperComponent={
+          <DropdownButtons>
+            <ul>
+              <li>Add New</li>
+              <li>Edit Schedule</li>
+              <li>Delete Schedule</li>
+            </ul>
+          </DropdownButtons>
+        }
+      >
+        <UpperContainer>
+          <h3>Class Schedule</h3>
+          <button>
+            <FaPenSquare size={20} color="#0e5937" class="pen" />
           </button>
-        </h3>
+        </UpperContainer>
+      </Dropdown>
 
-        <Dropdown
-          popperComponent={
-            <DropdownButtons>
-              <PenDropdown>
-                <ul>
-                  <li>Add New</li>
-                  <li>Edit Schedule</li>
-                  <li>Delete Schedule</li>
-                </ul>
-              </PenDropdown>
-            </DropdownButtons>
-          }
-        ></Dropdown>
-      </SchedItem>
       <Line />
       <SchedTable>
         <table>
@@ -51,58 +48,56 @@ const ScheduleContainer = () => {
 
 const SchedContainer = styled.div`
   display: flex;
+  flex-direction: column;
   position: sticky;
   top: 120px;
   background-color: #f2f2f2;
   width: 72%;
   border-radius: 10px;
-  flex-direction: column;
   height: max-content;
-`;
-
-const SchedItem = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 1em;
-  h3 {
-    color: #646464;
-    text-align: left;
-    font-size: 1.55vw;
-    display: flex;
-    margin: 0 10px;
-    margin-bottom: 3px;
+  ul {
+    color: white;
+    font-size: 18px;
     font-weight: normal;
-    button {
-      justify-content: flex-end;
-      margin-left: auto;
-      padding: 0;
-      color: #0e5937;
-      cursor: pointer;
-      border: none;
-    }
+    list-style-type: none;
+    cursor: pointer;
+    padding: 0 1em;
+  }
+  li {
+    padding: 8px 8px;
+  }
+  li:hover {
+    background-color: #0f482f;
+    color: white;
+    border-radius: 5px;
   }
 `;
 
-const PenDropdown = styled.div`
-  display: inline;
-  background-color: #0e5937;
-  color: white;
-  border-radius: 10px;
-  width: 15%;
-  position: absolute;
-  top: 3em;
-  right: 1.5em;
-  margin: auto;
-  ul {
-    font-size: 0.95vw;
+const UpperContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  h3 {
+    color: #646464;
+    text-align: left;
+    font-size: 26px;
+    margin-left: 15px;
+    margin-top: 20px;
+    margin-bottom: 3px;
     font-weight: normal;
-    list-style-type: none;
+  }
+  button {
+    border: none;
+    position: absolute;
+    right: 0;
+    margin-left: auto;
+    padding: 25px 15px;
   }
 `;
 
 const Line = styled.hr`
   display: flex;
-  margin: 5px;
+  margin: 20px 5px;
 `;
 
 const SchedTable = styled.div`
@@ -122,7 +117,7 @@ const SchedTable = styled.div`
     background-color: #70ac47;
     color: white;
     font-weight: normal;
-    font-size: 0.92vw;
+    font-size: 17px;
     text-align: center;
     padding: 0.2em;
   }
