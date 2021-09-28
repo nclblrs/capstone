@@ -67,10 +67,10 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
+  z-index: 1;
   position: sticky;
   top: 0;
   padding: 0 3em;
-  z-index: 1;
 `;
 
 const NavbarContainer = styled.div`

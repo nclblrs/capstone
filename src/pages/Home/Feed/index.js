@@ -70,12 +70,12 @@ const Feed = () => {
 };
 
 const FeedContainer = styled.div`
-  margin: 0 5em;
+  margin: 0 1.5em;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 60%;
   button,
   select {
     display: flex;

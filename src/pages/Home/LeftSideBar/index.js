@@ -18,7 +18,15 @@ const LeftSideBar = () => {
         <h4>
           CLASSES
           <button>
-            <FaPlusCircle size={20} class="button-icon" />
+            <Dropdown
+              popperComponent={
+                <DropdownButtons>
+                  <button>Join Class</button>
+                </DropdownButtons>
+              }
+            >
+              <FaPlusCircle size={20} class="button-icon" />
+            </Dropdown>
           </button>
         </h4>
         {loading
@@ -53,7 +61,6 @@ const LeftSideBar = () => {
         <h4>
           STUDY GROUPS
           <button>
-            <FaPenSquare size={20} class="button-icon" />
             <Dropdown
               popperComponent={
                 <DropdownButtons>
@@ -61,7 +68,9 @@ const LeftSideBar = () => {
                   <button>Create Study Group</button>
                 </DropdownButtons>
               }
-            ></Dropdown>
+            >
+              <FaPenSquare size={20} class="button-icon" />
+            </Dropdown>
           </button>
         </h4>
         {loading
@@ -85,8 +94,8 @@ const LSideContainer = styled.div`
   position: sticky;
   top: 100px;
   background-color: #f2f2f2;
-  width: 370px;
-  min-width: 370px;
+  width: 300px;
+  min-width: 300px;
   border-radius: 10px;
   flex-direction: column;
   height: max-content;

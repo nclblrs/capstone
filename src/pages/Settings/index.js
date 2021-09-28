@@ -1,8 +1,12 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink, Switch, Route } from "react-router-dom";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const Settings = () => {
+  const { user, loading } = useCurrentUserContext();
+  const { firstName, middleName, lastName, schoolIdNumber, student, emails } =
+    user ?? {};
   return (
     <SettingsContainer>
       <LSideContainer>
@@ -24,17 +28,90 @@ const Settings = () => {
                     src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                     alt="Your profile pic"
                   />
-                  <p class="name">Angela Jane</p>
-                  <p class="idnum">2018-08054-MN-0</p>
-                  <p class="role">Student</p>
+                  <p class="name">
+                    {loading
+                      ? "Loading..."
+                      : [firstName, middleName, lastName]
+                          .filter((n) => n)
+                          .join(" ")}
+                  </p>
+                  <p class="idnum">{schoolIdNumber}</p>
+                  <p class="role">{student ? "Student" : "Teacher"}</p>
                 </div>
-                <button>Edit Profile</button>
+                <button class="editprofile">Edit Profile</button>
               </div>
-              <div class="profilebottom">PROFILE</div>
+              <div class="profilebottom">
+                <hr></hr>
+                <div class="row">
+                  <div class="nameInput">
+                    <label for="FN">First Name</label>
+                    <input
+                      type="text"
+                      id="FN"
+                      disabled
+                      placeholder={firstName}
+                    />
+                  </div>
+                  <div class="nameInput">
+                    <label for="MN">Middle Name</label>
+                    <input
+                      type="text"
+                      id="MN"
+                      disabled
+                      placeholder={middleName ?? ""}
+                    />
+                  </div>
+                  <div class="nameInput">
+                    <label for="LN">Last Name</label>
+                    <input
+                      type="text"
+                      id="LN"
+                      disabled
+                      placeholder={lastName}
+                    />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="snInput">
+                    <label for="SN">Student Number</label>
+                    <input
+                      type="text"
+                      id="SN"
+                      disabled
+                      placeholder={schoolIdNumber}
+                    />
+                  </div>
+                  <div class="emailInput">
+                    <label for="Email">Email</label>
+                    <input
+                      type="text"
+                      id="Email"
+                      disabled
+                      placeholder={emails?.[0].address}
+                    />
+                  </div>
+                </div>
+              </div>
             </RSideBar>
           </Route>
           <Route path="/settings/change-password">
-            <RSideBar>THIS IS CHANGE PASSWORD</RSideBar>
+            <RSideBar>
+              <div class="pwHeader">
+                <p class="pwText">Change Password</p>
+                <hr></hr>
+              </div>
+              <div class="pwBottom">
+                <div class="pwInputs">
+                  <label for="CurP">Current Password</label>
+                  <input type="text" id="CurP" />
+                  <label for="NP">New Password</label>
+                  <input type="text" id="NP" />
+                  <label for="ConP">Confirm Password</label>
+                  <input type="text" id="ConP" />
+                </div>
+                <button class="save">Save Changes</button>
+              </div>
+            </RSideBar>
           </Route>
         </Switch>
       </RSideContainer>
@@ -48,7 +125,7 @@ const SettingsContainer = styled.div`
 `;
 
 const LSideContainer = styled.div`
-  margin: 2em;
+  margin: 1em;
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -78,13 +155,13 @@ const NavMenu = styled(NavLink)`
   padding: 1em 0;
   &.active,
   &:hover {
-    background-color: #0f482f;
-    color: white;
+    background-color: #dfdfdf;
+    color: #0e5937;
   }
 `;
 
 const RSideContainer = styled.div`
-  margin: 2em;
+  margin: 1em;
   display: flex;
   width: 75%;
 `;
@@ -93,14 +170,19 @@ const RSideBar = styled.div`
   display: flex;
   width: 100%;
   background-color: #f2f2f2;
-  height: 650px;
+  height: 550px;
   border-radius: 10px;
-  padding: 3em;
   flex-direction: column;
+  hr {
+    color: #0e5937;
+    background-color: #0e5937;
+    height: 2px;
+    border: none;
+  }
   .profiletop {
-    width: 100%;
-    height: 35%;
+    height: 25%;
     font-size: 24px;
+    padding: 2em;
   }
   .profilepic {
     border-top-left-radius: 50% 50%;
@@ -116,10 +198,8 @@ const RSideBar = styled.div`
   }
 
   .profilebottom {
-    padding: 3em;
-    width: 100%;
-    height: 35%;
-    border-top: solid #0e5937 1px;
+    padding: 5em 2em;
+    height: 75%;
   }
   p {
     color: #0f482f;
@@ -130,20 +210,94 @@ const RSideBar = styled.div`
   .name {
     font-size: 24px;
   }
+  .idnum {
+    font-size: 22px;
+  }
   .role {
-    color: #0f482f;
-    font-size: 18px;
+    color: #646464;
+    font-size: 22px;
     padding: 0;
   }
-  button {
+  .editprofile {
     position: absolute;
     right: 130px;
-    top: 180px;
-    height: 50px;
+    top: 170px;
+    padding: 1em;
     font-size: 16px;
     background-color: #0e5937;
     color: white;
     border: none;
+    cursor: pointer;
+  }
+
+  .row {
+    width: 100%;
+    color: #646464;
+    display: flex;
+    gap: 10px;
+    padding: 2em 1em;
+    input {
+      height: 40px;
+      border: solid #0e5937 2px;
+      border-radius: 3px;
+      width: 100%;
+      ::placeholder {
+        font-size: 20px;
+      }
+    }
+    label {
+      display: block;
+    }
+    .nameInput {
+      width: 33.3%;
+    }
+    .snInput {
+      width: 40%;
+    }
+    .emailInput {
+      width: 60%;
+    }
+  }
+  .pwHeader {
+    height: 10%;
+    .pwText {
+      padding: 1em;
+      font-size: 22px;
+      color: #646464;
+    }
+    > hr {
+      color: #646464;
+      background-color: #646464;
+    }
+  }
+  .pwBottom {
+    padding: 5em 2em;
+    height: 75%;
+    .pwInputs {
+      width: 100%;
+      color: #646464;
+      input {
+        height: 40px;
+        border: solid #0e5937 2px;
+        border-radius: 3px;
+        width: 60%;
+        margin-bottom: 30px;
+      }
+      label {
+        display: block;
+      }
+    }
+    .save {
+      position: absolute;
+      right: 100px;
+      bottom: 200px;
+      padding: 1em;
+      font-size: 16px;
+      background-color: #0e5937;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
   }
 `;
 
