@@ -1,44 +1,83 @@
 import React from "react";
-import { GET_COURSE } from "./gql";
-import { useQuery } from "@apollo/client";
+import {
+  ADD_ATTACHMENT_TO_POST,
+  COURSE_POSTS,
+  CREATE_COURSE_POST,
+  GET_COURSE,
+} from "./gql";
+import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import clip from "./images/clip.svg";
+import PostsFeed from "components/PostsFeed";
+import { upload } from "utils/upload";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import PostForm from "components/PostForm";
 
 const Course = () => {
   let { id } = useParams();
+  const { user } = useCurrentUserContext();
+
+  const [createPost] = useMutation(CREATE_COURSE_POST);
+  const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
+
   const { loading, data } = useQuery(GET_COURSE, {
     variables: { courseId: id },
   });
+  const {
+    data: postsData,
+    loading: postsLoading,
+    refetch,
+  } = useQuery(COURSE_POSTS, {
+    variables: { courseId: id },
+  });
+
+  const posts = postsData?.coursePosts?.data ?? [];
+
   const { name, subjCode, teacher, courseCode, yearAndSection } =
     data?.course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
+
+  const handleCreatePost = async (data) => {
+    const { content, category, file: files } = data;
+    const file = files[0];
+
+    try {
+      const { data: createPostData } = await createPost({
+        variables: { courseId: id, content, category },
+      });
+      const postId = createPostData?.createPost?.id;
+
+      if (!postId) throw Error("something is wrong");
+
+      if (file) {
+        const { cloudinaryString } = await upload(
+          file,
+          user.uploadPreset,
+          `Post_${postId}`
+        );
+        const { data: addAttachmentToPostData } = await addAttachmentToPost({
+          variables: { id: postId, attachment: cloudinaryString },
+        });
+
+        if (!addAttachmentToPostData?.addAttachmentToPost?.id)
+          throw Error("something is wrong");
+      }
+
+      alert("Created Post");
+
+      refetch();
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <CourseContainer>
       <CoursePostsContainer>
         <CoursePostHeader>
-          <CoursePost>
-            <form>
-              <textarea
-                placeholder=" 
-            
-              Write Something"
-              ></textarea>
-              <select>
-                <option value="Category" selected disabled>
-                  Category
-                </option>
-                <option value="TEST 1">TEST 1</option>
-                <option value="TEST 2">TEST 2</option>
-                <option value="TEST 3">TEST 3</option>
-              </select>
-              <button class="attach">
-                Attach File
-                <img class="attachicon" src={clip} alt="" />
-              </button>
-              <button class="postbutton">Post</button>
-            </form>
-          </CoursePost>
+          <PostFormContainer>
+            <PostForm onSubmit={handleCreatePost} />
+          </PostFormContainer>
           <CourseFilter>
             <button>Files</button>
             <button>Activities</button>
@@ -46,12 +85,7 @@ const Course = () => {
             <button>Groups</button>
           </CourseFilter>
         </CoursePostHeader>
-        <CourseItemsContainer>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-        </CourseItemsContainer>
+        {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
       </CoursePostsContainer>
       <RSideContainer>
         <RSideAbout>
@@ -96,7 +130,6 @@ const CoursePostsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
   width: 60%;
   button,
   select {
@@ -119,51 +152,12 @@ const CoursePostsContainer = styled.div`
   }
 `;
 
-const CoursePost = styled.div`
+const PostFormContainer = styled.div`
   display: flex;
   position: sticky;
   top: 100px;
   width: 100%;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  height: 255px;
-  border-radius: 10px;
-  padding: 1em 2em;
-  select,
-  .attach {
-    margin: 20px auto;
-    margin-right: 10px;
-  }
-
-  .postbutton {
-    display: flex;
-    margin: 0;
-    margin-left: auto;
-    background-color: #0f482f;
-  }
-
-  textarea {
-    width: 100%;
-    height: 90px;
-    resize: none;
-    font-size: 18px;
-    border: solid #0e5937 1px;
-    border-radius: 5px;
-    ::placeholder {
-      color: #0f482f;
-      align-items: center;
-    }
-  }
-
-  .attachicon {
-    padding-left: 10px;
-    width: 24px;
-    filter: brightness(0) invert(1);
-    text-align: center;
-    &:hover {
-      filter: brightness(0) invert(1);
-    }
-  }
+  z-index: 1;
 `;
 
 const CourseFilter = styled.div`
@@ -175,6 +169,7 @@ const CourseFilter = styled.div`
   align-items: center;
   margin: 10px 0px auto;
   border-bottom: solid #0f482f 3px;
+
   button {
     background-color: white;
     color: #0f482f;
@@ -184,21 +179,13 @@ const CourseFilter = styled.div`
   }
 `;
 
-const CoursePostItems = styled.div`
-  display: flex;
-  border-radius: 1em;
-  background-color: #f2f2f2;
-  height: 300px;
-  margin: 2em 0;
-  width: 100%;
-`;
-
 const RSideContainer = styled.div`
   display: flex;
   width: 25%;
   flex-direction: column;
   border-radius: 10px;
   position: sticky;
+  margin: 0 2em;
   h4 {
     margin: 0;
     color: #646464;
@@ -207,6 +194,7 @@ const RSideContainer = styled.div`
   }
   p {
     margin: 0;
+    color: #646464;
   }
 
   h5 {
@@ -244,16 +232,12 @@ const RSideToDo = styled.div`
   position: sticky;
   top: 490px;
   width: 100%;
-  justify-content: space-between;
   flex-direction: column;
+  justify-content: space-between;
   background-color: #f2f2f2;
   height: 362px;
   border-radius: 10px;
   padding: 2em;
-`;
-
-const CourseItemsContainer = styled.div`
-  width: 100%;
 `;
 
 const CoursePostHeader = styled.div`
@@ -262,6 +246,7 @@ const CoursePostHeader = styled.div`
   padding-top: 10px;
   width: 100%;
   background: white;
+  z-index: 1;
 `;
 
 export default Course;

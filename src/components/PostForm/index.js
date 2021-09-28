@@ -1,0 +1,140 @@
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import styled from "styled-components";
+
+const PostForm = ({ onSubmit, withTags }) => {
+  const { register, handleSubmit, reset, watch } = useForm();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
+
+  const handleSubmitWithLoadingAndReset = async (data) => {
+    setIsSubmitting(true);
+    await onSubmit(data);
+    reset();
+    setIsSubmitting(false);
+  };
+
+  return (
+    <StyledForm onSubmit={handleSubmit(handleSubmitWithLoadingAndReset)}>
+      <textarea
+        {...register("content", { required: true })}
+        placeholder="Write Something"
+      ></textarea>
+      <div>
+        {withTags && (
+          <Tags>
+            Tags
+            <input
+              placeholder="#Hashtag #Programming #IdkWhatImDoing"
+              {...register("tags")}
+            />
+          </Tags>
+        )}
+        <select {...register("category")}>
+          <option value="post" selected disabled>
+            Category
+          </option>
+          <option value="post">Post</option>
+          <option value="question">Question</option>
+        </select>
+        <label for="attach-file-post" class="attachmentLabel">
+          {attachedFileName ? attachedFileName : "Attach File"}
+        </label>
+        <input
+          id="attach-file-post"
+          type="file"
+          {...register("file")}
+          class="attachmentInput"
+        />
+      </div>
+
+      <button class="postbutton" disabled={isSubmitting}>
+        {isSubmitting ? "Posting..." : "Post"}
+      </button>
+    </StyledForm>
+  );
+};
+
+export default PostForm;
+
+const Tags = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  width: 50%;
+  input {
+    height: 32px;
+    width: 100%;
+  }
+`;
+
+const StyledForm = styled.form`
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  padding: 1em 2em;
+  padding-bottom: 40px;
+  position: relative;
+
+  > div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  button,
+  select,
+  .attachmentLabel {
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    padding: 8px 20px;
+
+    &:hover:enabled {
+      background-color: #157348;
+      color: white;
+    }
+  }
+
+  .attachmentLabel {
+    width: 140px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+
+  .postbutton {
+    position: absolute;
+    bottom: 16px;
+    right: 20px;
+    background-color: #0f482f;
+  }
+
+  textarea {
+    width: 100%;
+    height: 90px;
+    resize: none;
+    font-size: 18px;
+    border: solid #0e5937 1px;
+    border-radius: 5px;
+    ::placeholder {
+      color: #0f482f;
+      align-items: center;
+    }
+  }
+
+  .attachmentInput {
+    visibility: hidden;
+  }
+`;
