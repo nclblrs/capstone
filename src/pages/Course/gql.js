@@ -12,6 +12,7 @@ export const GET_COURSE = gql`
         id
         user {
           firstName
+          middleName
           lastName
         }
       }
