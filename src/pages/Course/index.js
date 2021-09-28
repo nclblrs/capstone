@@ -12,6 +12,9 @@ import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
+import { FaLaptop } from "react-icons/fa";
+import { BsFillPersonFill } from "react-icons/bs";
+import { TiGroup } from "react-icons/ti";
 
 const Course = () => {
   let { id } = useParams();
@@ -89,29 +92,35 @@ const Course = () => {
       </CoursePostsContainer>
       <RSideContainer>
         <RSideAbout>
-          <h4>ABOUT</h4>
+          <h3>ABOUT</h3>
           {loading ? (
             "Loading..."
           ) : (
             <>
-              <h5>{name}</h5>
+              <h4>{name}</h4>
               <h5>
                 Class Code: <p>&nbsp;{courseCode}</p>
               </h5>
-              <h6>Subject Code: {subjCode}</h6>
-              <h6>
-                Faculty: {firstName}&nbsp;
-                {lastName}
-              </h6>
-              <h6>Section: {yearAndSection}</h6>
+              <ul>
+                <li>
+                  <FaLaptop size={15} />
+                  &nbsp; Subject Code: {subjCode}
+                </li>
+                <li>
+                  <BsFillPersonFill size={15} />
+                  &nbsp; Faculty: {firstName}&nbsp;
+                  {lastName}
+                </li>
+                <li>
+                  <TiGroup size={15} />
+                  &nbsp; Section: {yearAndSection}
+                </li>
+              </ul>
             </>
           )}
         </RSideAbout>
         <RSideToDo>
-          <h4>TO-DO</h4>
-          <h6>TESSSSSSSSSSSSST</h6>
-          <h6>TESSSSSSSSSSSSST</h6>
-          <h6>TESSSSSSSSSSSSST</h6>
+          <h3>TO-DO</h3>
         </RSideToDo>
       </RSideContainer>
     </CourseContainer>
@@ -181,36 +190,52 @@ const CourseFilter = styled.div`
 
 const RSideContainer = styled.div`
   display: flex;
-  width: 25%;
+  width: 400px;
+  min-width: 400px;
   flex-direction: column;
   border-radius: 10px;
   position: sticky;
   margin: 0 2em;
-  h4 {
-    margin: 0;
+  h3 {
     color: #646464;
-    font-size: 20px;
+    text-align: left;
+    font-size: 22px;
     font-weight: normal;
+    display: flex;
+    margin: 0 10px;
+    margin-bottom: 20px;
+  }
+  h4 {
+    color: #0f482f;
+    font-size: 20px;
+    text-align: left;
+    font-weight: normal;
+    display: flex;
+    margin: 0 10px;
+  }
+  h5 {
+    color: #0f482f;
+    font-size: 20px;
+    text-align: left;
+    font-weight: normal;
+    display: flex;
+    margin: 0 10px;
+    padding-top: 10px;
   }
   p {
     margin: 0;
     color: #646464;
   }
 
-  h5 {
-    margin: 0;
-    color: #0f482f;
-    text-align: left;
-    font-size: 18px;
-    font-weight: normal;
-    display: flex;
-  }
-  h6 {
-    margin: 0;
-    font-size: 18px;
+  ul {
+    font-size: 20px;
     color: #646464;
     font-weight: normal;
-    text-align: left;
+    list-style-type: none;
+    margin-top: 20px;
+  }
+  li {
+    padding: 8px 8px;
   }
 `;
 
@@ -220,9 +245,8 @@ const RSideAbout = styled.div`
   top: 100px;
   width: 100%;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #f2f2f2;
-  height: 362px;
+  height: 320px;
   border-radius: 10px;
   padding: 2em;
 `;
@@ -230,12 +254,12 @@ const RSideAbout = styled.div`
 const RSideToDo = styled.div`
   display: flex;
   position: sticky;
-  top: 490px;
+  top: 450px;
   width: 100%;
   flex-direction: column;
   justify-content: space-between;
   background-color: #f2f2f2;
-  height: 362px;
+  height: max-content;
   border-radius: 10px;
   padding: 2em;
 `;

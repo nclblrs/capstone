@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import { FaPlusCircle, FaRegLightbulb } from "react-icons/fa";
+import { FaPlusCircle, FaLaptop } from "react-icons/fa";
 import { GET_STUDLEFTSIDEBAR } from "./gql";
 import { useQuery } from "@apollo/client";
 
@@ -19,9 +19,9 @@ const LeftSideBar = () => {
         </h4>
         {loading
           ? "Loading..."
-          : courses.map(({ name }) => (
-              <LSideLinks>
-                <FaRegLightbulb size={18} />
+          : courses.map(({ id, name }) => (
+              <LSideLinks key={id} to={`/class/${id}`}>
+                <FaLaptop size={18} />
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
@@ -38,7 +38,8 @@ const LSideContainer = styled.div`
   position: sticky;
   top: 120px;
   background-color: #f2f2f2;
-  width: 20%;
+  width: 370px;
+  min-width: 370px;
   border-radius: 10px;
   flex-direction: column;
   height: max-content;

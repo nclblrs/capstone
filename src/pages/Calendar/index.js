@@ -6,9 +6,9 @@ const Calendar = () => {
   var today = new Date(),
     date =
       parseInt(today.getMonth() + 1) +
-      " " +
+      "-" +
       today.getDate() +
-      " " +
+      "-" +
       today.getFullYear();
   console.log(date);
 
