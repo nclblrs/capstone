@@ -1,42 +1,107 @@
-import React from "react";
-import { GET_COURSE } from "./gql";
-import { useQuery } from "@apollo/client";
+import React, { useState } from "react";
+import {
+  ADD_ATTACHMENT_TO_POST,
+  COURSE_POSTS,
+  CREATE_COURSE_POST,
+  GET_COURSE,
+} from "./gql";
+import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import clip from "./images/clip.svg";
+import PostsFeed from "components/PostsFeed";
+import { upload } from "utils/upload";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const Course = () => {
   let { id } = useParams();
+  const { user } = useCurrentUserContext();
+
+  const [createPost] = useMutation(CREATE_COURSE_POST);
+  const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
+  const [posting, setPosting] = useState(false);
+
   const { loading, data } = useQuery(GET_COURSE, {
     variables: { courseId: id },
   });
+  const {
+    data: postsData,
+    loading: postsLoading,
+    refetch,
+  } = useQuery(COURSE_POSTS, {
+    variables: { courseId: id },
+  });
+
+  const posts = postsData?.coursePosts?.data ?? [];
+
   const { name, subjCode, teacher, courseCode, yearAndSection } =
     data?.course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
+
+  const handleCreatePost = async (e) => {
+    e.preventDefault();
+
+    const content = e.target.content.value;
+    const category = e.target.category.value;
+    const file = e.target.file.files[0];
+
+    if (!content) {
+      alert("Please write something");
+      return;
+    }
+
+    setPosting(true);
+
+    try {
+      const { data: createPostData } = await createPost({
+        variables: { courseId: id, content, category },
+      });
+
+      const postId = createPostData?.createPost?.id;
+      if (!postId) throw Error("something is wrong");
+
+      const { cloudinaryString } = await upload(
+        file,
+        user.uploadPreset,
+        `Post_${postId}`
+      );
+
+      const { data: addAttachmentToPostData } = await addAttachmentToPost({
+        variables: { id: postId, attachment: cloudinaryString },
+      });
+
+      if (!addAttachmentToPostData?.addAttachmentToPost?.id)
+        throw Error("something is wrong");
+
+      alert("Created Post");
+      e.target.content.value = "";
+      e.target.file.value = null;
+      refetch();
+    } catch (error) {
+      alert(error);
+    }
+
+    setPosting(false);
+  };
+
   return (
     <CourseContainer>
       <CoursePostsContainer>
         <CoursePostHeader>
           <CoursePost>
-            <form>
-              <textarea
-                placeholder=" 
-            
-              Write Something"
-              ></textarea>
-              <select>
-                <option value="Category" selected disabled>
+            <form onSubmit={handleCreatePost}>
+              <textarea name="content" placeholder="Write Something"></textarea>
+              <select name="category">
+                <option value="post" selected disabled>
                   Category
                 </option>
-                <option value="TEST 1">TEST 1</option>
-                <option value="TEST 2">TEST 2</option>
-                <option value="TEST 3">TEST 3</option>
+                <option value="post">Post</option>
+                <option value="question">Question</option>
               </select>
-              <button class="attach">
-                Attach File
-                <img class="attachicon" src={clip} alt="" />
+              <input type="file" name="file" class="attachmentInput" />
+              <button class="postbutton" disabled={posting}>
+                Post
               </button>
-              <button class="postbutton">Post</button>
             </form>
           </CoursePost>
           <CourseFilter>
@@ -46,12 +111,7 @@ const Course = () => {
             <button>Groups</button>
           </CourseFilter>
         </CoursePostHeader>
-        <CourseItemsContainer>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-        </CourseItemsContainer>
+        {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
       </CoursePostsContainer>
       <RSideContainer>
         <RSideAbout>
