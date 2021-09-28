@@ -16,42 +16,33 @@ const Course = () => {
   return (
     <CourseContainer>
       <CoursePostsContainer>
-        <CoursePostHeader>
-          <CoursePost>
-            <form>
-              <textarea
-                placeholder=" 
+        <CoursePost>
+          <form>
+            <textarea
+              placeholder=" 
             
               Write Something"
-              ></textarea>
-              <select>
-                <option value="Category" selected disabled>
-                  Category
-                </option>
-                <option value="TEST 1">TEST 1</option>
-                <option value="TEST 2">TEST 2</option>
-                <option value="TEST 3">TEST 3</option>
-              </select>
-              <button class="attach">
-                Attach File
-                <img class="attachicon" src={clip} alt="" />
-              </button>
-              <button class="postbutton">Post</button>
-            </form>
-          </CoursePost>
-          <CourseFilter>
-            <button>Files</button>
-            <button>Activities</button>
-            <button>Members</button>
-            <button>Groups</button>
-          </CourseFilter>
-        </CoursePostHeader>
-        <CourseItemsContainer>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-          <CoursePostItems></CoursePostItems>
-        </CourseItemsContainer>
+            ></textarea>
+            <select>
+              <option value="Category" selected disabled>
+                Category
+              </option>
+              <option value="TEST 1">TEST 1</option>
+              <option value="TEST 2">TEST 2</option>
+              <option value="TEST 3">TEST 3</option>
+            </select>
+            <button class="attach">
+              Attach File
+              <img class="attachicon" src={clip} alt="" />
+            </button>
+            <button class="postbutton">Post</button>
+          </form>
+        </CoursePost>
+        <CourseFilter></CourseFilter>
+        <CoursePostItems></CoursePostItems>
+        <CoursePostItems></CoursePostItems>
+        <CoursePostItems></CoursePostItems>
+        <CoursePostItems></CoursePostItems>
       </CoursePostsContainer>
       <RSideContainer>
         <RSideAbout>
@@ -62,11 +53,12 @@ const Course = () => {
             <>
               <h5>{name}</h5>
               <h5>
-                Class Code: <p>&nbsp;{courseCode}</p>
+                Class Code: &nbsp;<p>{courseCode}</p>
               </h5>
               <h6>Subject Code: {subjCode}</h6>
               <h6>
-                Faculty: {firstName}&nbsp;
+                Faculty: {firstName}
+                &nbsp;
                 {lastName}
               </h6>
               <h6>Section: {yearAndSection}</h6>
@@ -75,9 +67,7 @@ const Course = () => {
         </RSideAbout>
         <RSideToDo>
           <h4>TO-DO</h4>
-          <h6>TESSSSSSSSSSSSST</h6>
-          <h6>TESSSSSSSSSSSSST</h6>
-          <h6>TESSSSSSSSSSSSST</h6>
+          TESSSSSSSSSSSSST
         </RSideToDo>
       </RSideContainer>
     </CourseContainer>
@@ -87,20 +77,18 @@ const Course = () => {
 const CourseContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: 0 50px;
+  margin: 1em;
 `;
 
 const CoursePostsContainer = styled.div`
-  margin: 0 2em;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   width: 60%;
+  flex-direction: column;
+  margin: 20px auto;
   button,
   select {
     width: 150px;
-    height: 33px;
+    height: 44px;
     font-size: 15px;
     align-items: center;
     justify-content: center;
@@ -110,7 +98,7 @@ const CoursePostsContainer = styled.div`
     text-align: center;
 
     &:hover {
-      background-color: #157348;
+      background-color: #0f2520;
       color: white;
       cursor: pointer;
       border: solid #0f482f 1px;
@@ -121,7 +109,7 @@ const CoursePostsContainer = styled.div`
 const CoursePost = styled.div`
   display: flex;
   position: sticky;
-  top: 100px;
+  top: 120px;
   width: 100%;
   flex-direction: column;
   background-color: #f2f2f2;
@@ -169,60 +157,59 @@ const CourseFilter = styled.div`
   display: flex;
   position: sticky;
   top: 400px;
-  height: 50px;
+  height: 80px;
   width: 100%;
   align-items: center;
-  margin: 10px 0px auto;
-  border-bottom: solid #0f482f 3px;
-
-  button {
-    background-color: white;
-    color: #0f482f;
-    &:hover {
-      background-color: #0e5937;
-    }
-  }
+  margin: 20px auto;
+  border-bottom: solid #0e5937 1px;
 `;
 
 const CoursePostItems = styled.div`
   display: flex;
-  border-radius: 1em;
-  background-color: #f2f2f2;
-  height: 300px;
-  margin: 2em 0;
   width: 100%;
+  flex-direction: column;
+  background-color: #f2f2f2;
+  height: 255px;
+  border-radius: 10px;
+  margin: 50px auto;
 `;
 
 const RSideContainer = styled.div`
   display: flex;
   width: 25%;
   flex-direction: column;
+  margin: 20px auto;
   border-radius: 10px;
   position: sticky;
-  margin: 0 2em;
-  h4 {
-    margin: 0;
-    color: #646464;
-    font-size: 20px;
-    font-weight: normal;
-  }
+  top: 120px;
   p {
     margin: 0;
     color: #646464;
   }
+  h4 {
+    color: #646464;
+    text-align: left;
+    font-size: 22px;
+    display: flex;
+    margin: 0 10px;
+    margin-bottom: 20px;
+    font-weight: normal;
+  }
 
   h5 {
-    margin: 0;
     color: #0f482f;
     text-align: left;
-    font-size: 18px;
-    font-weight: normal;
+    font-size: 24px;
     display: flex;
+    margin: 0 10px;
+    margin-bottom: 20px;
+    font-weight: normal;
   }
   h6 {
-    margin: 0;
-    font-size: 18px;
+    font-size: 22px;
+    margin: 10px 30px;
     color: #646464;
+    font-family: Roboto;
     font-weight: normal;
     text-align: left;
   }
@@ -231,39 +218,26 @@ const RSideContainer = styled.div`
 const RSideAbout = styled.div`
   display: flex;
   position: sticky;
-  top: 100px;
+  top: 120px;
   width: 100%;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #f2f2f2;
   height: 362px;
   border-radius: 10px;
   padding: 2em;
+  margin-bottom: 2em;
 `;
 
 const RSideToDo = styled.div`
   display: flex;
   position: sticky;
-  top: 490px;
+  top: 530px;
   width: 100%;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #f2f2f2;
-  height: 362px;
+  height: max-content;
   border-radius: 10px;
   padding: 2em;
-`;
-
-const CourseItemsContainer = styled.div`
-  width: 100%;
-`;
-
-const CoursePostHeader = styled.div`
-  position: sticky;
-  top: 80px;
-  padding-top: 10px;
-  width: 100%;
-  background: white;
 `;
 
 export default Course;

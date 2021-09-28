@@ -1,13 +1,11 @@
 import React from "react";
+import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import apple from "./images/apple.svg";
-import lightbulb from "./images/light-bulb.svg";
-import pen from "./images/pen.svg";
-import plus from "./images/plus.svg";
 import { GET_STUDLEFTSIDEBAR } from "./gql";
-import { useQuery } from "@apollo/client";
+import { HiOutlineLightBulb } from "react-icons/hi";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
+import { FaPlusCircle, FaLaptop, FaPenSquare } from "react-icons/fa";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
@@ -20,14 +18,14 @@ const LeftSideBar = () => {
         <h4>
           CLASSES
           <button>
-            <img src={plus} alt="" />
+            <FaPlusCircle size={20} class="button-icon" />
           </button>
         </h4>
         {loading
           ? "Loading..."
           : courses.map(({ id, name }) => (
               <LSideLinks key={id} to={`/class/${id}`}>
-                <img src={apple} alt="" />
+                <FaLaptop size={18} />
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
@@ -42,7 +40,7 @@ const LeftSideBar = () => {
           ? "Loading..."
           : classGroups.map(({ id, name }) => (
               <LSideLinks key={id} to={`/group/${id}`}>
-                <img src={lightbulb} alt="" />
+                <HiOutlineLightBulb size={18} />
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
@@ -55,6 +53,7 @@ const LeftSideBar = () => {
         <h4>
           STUDY GROUPS
           <button>
+            <FaPenSquare size={20} class="button-icon" />
             <Dropdown
               popperComponent={
                 <DropdownButtons>
@@ -62,16 +61,14 @@ const LeftSideBar = () => {
                   <button>Create Study Group</button>
                 </DropdownButtons>
               }
-            >
-              <img src={pen} alt="" />
-            </Dropdown>
+            ></Dropdown>
           </button>
         </h4>
         {loading
           ? "Loading..."
           : studyGroups.map(({ id, name }) => (
               <LSideLinks key={id} to={`/group/${id}`}>
-                <img src={lightbulb} alt="" />
+                <HiOutlineLightBulb size={18} />
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
@@ -94,6 +91,9 @@ const LSideContainer = styled.div`
   flex-direction: column;
   height: max-content;
   padding: 29px;
+  .button-icon {
+    color: #0e5937;
+  }
 `;
 
 const LSideItem = styled.div`

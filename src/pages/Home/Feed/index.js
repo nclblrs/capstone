@@ -1,9 +1,9 @@
 import React from "react";
 import styled from "styled-components";
-import filter from "./images/filter.svg";
-import clip from "./images/clip.svg";
-import { GET_GROUP } from "./gql";
 import { useQuery } from "@apollo/client";
+import { GET_GROUP } from "./gql";
+import { FaFilter } from "react-icons/fa";
+import { BsPaperclip } from "react-icons/bs";
 
 const Feed = () => {
   const { loading, data } = useQuery(GET_GROUP);
@@ -42,7 +42,7 @@ const Feed = () => {
               </select>
               <button class="attach">
                 Attach File
-                <img class="attachicon" src={clip} alt="" />
+                <BsPaperclip size={15} class="attachicon" />
               </button>
             </ButtonContainer>
             <button class="postbutton">Post</button>
@@ -53,7 +53,7 @@ const Feed = () => {
           <p>What's new?</p>
           <button>
             Filter Posts
-            <img src={filter} alt="" />
+            <FaFilter size={15} class="filtericon" />
           </button>
         </FeedFilter>
       </FeedHeader>
