@@ -18,7 +18,15 @@ const LeftSideBar = () => {
         <h4>
           CLASSES
           <button>
-            <FaPlusCircle size={20} class="button-icon" />
+            <Dropdown
+              popperComponent={
+                <DropdownButtons>
+                  <button>Join Class</button>
+                </DropdownButtons>
+              }
+            >
+              <FaPlusCircle size={20} class="button-icon" />
+            </Dropdown>
           </button>
         </h4>
         {loading
