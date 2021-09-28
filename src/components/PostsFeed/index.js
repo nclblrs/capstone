@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import Comments from "./Comments";
 
 const PostsFeed = ({ posts }) => {
   return (
@@ -75,10 +76,6 @@ const PostsFeed = ({ posts }) => {
                       {original_filename}.{secure_url.split(".").slice(-1)}
                     </Attachment>
                   )}
-                  <CommentForm>
-                    <input placeholder="Write a comment" />
-                    <button>Comment</button>
-                  </CommentForm>
                 </PostContent>
                 {groupActivity && (
                   <Link
@@ -95,6 +92,8 @@ const PostsFeed = ({ posts }) => {
                   </Link>
                 )}
               </Post>
+
+              <Comments postId={id} />
             </PostContainer>
           );
         }
@@ -113,12 +112,12 @@ const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 16px 0;
-`;
-
-const Post = styled.div`
   border-radius: 1em;
   background-color: #f2f2f2;
   width: 100%;
+`;
+
+const Post = styled.div`
   padding: 24px 18px;
   padding-right: 40px;
   display: flex;
@@ -226,29 +225,4 @@ const Attachment = styled.a`
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
-`;
-
-const CommentForm = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-
-  > input {
-    width: 100%;
-    height: 40px;
-  }
-
-  > button {
-    background: #0e5937;
-    color: white;
-    height: 30px;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-  }
 `;
