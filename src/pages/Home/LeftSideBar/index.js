@@ -53,7 +53,6 @@ const LeftSideBar = () => {
         <h4>
           STUDY GROUPS
           <button>
-            <FaPenSquare size={20} class="button-icon" />
             <Dropdown
               popperComponent={
                 <DropdownButtons>
@@ -61,7 +60,9 @@ const LeftSideBar = () => {
                   <button>Create Study Group</button>
                 </DropdownButtons>
               }
-            ></Dropdown>
+            >
+              <FaPenSquare size={20} class="button-icon" />
+            </Dropdown>
           </button>
         </h4>
         {loading
