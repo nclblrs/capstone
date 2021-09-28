@@ -13,8 +13,9 @@ import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
 import { FaLaptop } from "react-icons/fa";
-import { BsFillPersonFill } from "react-icons/bs";
+import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
+import { RiFileCopy2Fill } from "react-icons/ri";
 
 const Course = () => {
   let { id } = useParams();
@@ -82,10 +83,20 @@ const Course = () => {
             <PostForm onSubmit={handleCreatePost} />
           </PostFormContainer>
           <CourseFilter>
-            <button>Files</button>
-            <button>Activities</button>
-            <button>Members</button>
-            <button>Groups</button>
+            <button>
+              <RiFileCopy2Fill size={18} /> &nbsp; Files
+            </button>
+            <button>
+              <FaLaptop size={18} /> &nbsp; Activities
+            </button>
+            <button>
+              <MdGroupAdd size={18} />
+              &nbsp; Members
+            </button>
+            <button>
+              <TiGroup size={18} />
+              &nbsp; Groups
+            </button>
           </CourseFilter>
         </CoursePostHeader>
         {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
@@ -103,16 +114,16 @@ const Course = () => {
               </h5>
               <ul>
                 <li>
-                  <FaLaptop size={15} />
+                  <FaLaptop size={18} />
                   &nbsp; Subject Code: {subjCode}
                 </li>
                 <li>
-                  <BsFillPersonFill size={15} />
+                  <MdAccountCircle size={18} />
                   &nbsp; Faculty: {firstName}&nbsp;
                   {lastName}
                 </li>
                 <li>
-                  <TiGroup size={15} />
+                  <TiGroup size={18} />
                   &nbsp; Section: {yearAndSection}
                 </li>
               </ul>
@@ -156,7 +167,6 @@ const CoursePostsContainer = styled.div`
       background-color: #157348;
       color: white;
       cursor: pointer;
-      border: solid #0f482f 1px;
     }
   }
 `;
@@ -176,12 +186,13 @@ const CourseFilter = styled.div`
   height: 50px;
   width: 100%;
   align-items: center;
-  margin: 10px 0px auto;
+  margin: 15px 0px auto;
   border-bottom: solid #0f482f 3px;
 
   button {
     background-color: white;
     color: #0f482f;
+    font-size: 18px;
     &:hover {
       background-color: #0e5937;
     }

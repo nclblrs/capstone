@@ -112,7 +112,7 @@ const Container = styled.div`
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 16px 0;
+  margin: 25px 0;
 `;
 
 const Post = styled.div`
@@ -184,8 +184,9 @@ const PostContent = styled.div`
   }
   > p {
     color: #0f482f;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
+    letter-spacing: 0.5px;
   }
 `;
 
@@ -203,15 +204,16 @@ const Activity = styled.div`
 const ActivityContent = styled.div`
   > h3 {
     color: #0f482f;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     margin: 0;
   }
 
   > p {
     color: #0f482f;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
+    letter-spacing: 0.5px;
   }
 `;
 
@@ -238,6 +240,7 @@ const CommentForm = styled.form`
   > input {
     width: 100%;
     height: 40px;
+    padding-left: 10px;
   }
 
   > button {
@@ -249,6 +252,5 @@ const CommentForm = styled.form`
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 4px;
   }
 `;
