@@ -31,23 +31,51 @@ const Settings = () => {
                 <button>Edit Profile</button>
               </div>
               <div class="profilebottom">
-                <div>
-                  <div class="firstrowlabels">
+                <hr></hr>
+                <div class="row">
+                  <div class="nameInput">
                     <label for="FN">First Name</label>
-                    <label for="MN">Middle Name</label>
-                    <label for="LN">Last Name</label>
+                    <input type="text" id="FN" disabled />
                   </div>
-                  <div class="firstrow">
-                    <input type="text" id="FN" />
-                    <input type="text" id="MN" />
-                    <input type="text" id="LN" />
+                  <div class="nameInput">
+                    <label for="MN">Middle Name</label>
+                    <input type="text" id="MN" disabled />
+                  </div>
+                  <div class="nameInput">
+                    <label for="LN">Last Name</label>
+                    <input type="text" id="LN" disabled />
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="snInput">
+                    <label for="SN">Student Number</label>
+                    <input type="text" id="SN" disabled />
+                  </div>
+                  <div class="emailInput">
+                    <label for="Email">Email</label>
+                    <input type="text" id="Email" disabled />
                   </div>
                 </div>
               </div>
             </RSideBar>
           </Route>
           <Route path="/settings/change-password">
-            <RSideBar>THIS IS CHANGE PASSWORD</RSideBar>
+            <RSideBar>
+              <div class="pwHeader">
+                <p class="pwText">Change Password</p>
+                <hr></hr>
+              </div>
+              <div class="pwBottom">
+                <div class="pwInputs">
+                  <label for="CurP">Change Password</label>
+                  <input type="text" id="CurP" disabled />
+                  <label for="NP">New Password</label>
+                  <input type="text" id="NP" disabled />
+                  <label for="ConP">Confirm Password</label>
+                  <input type="text" id="ConP" disabled />
+                </div>
+              </div>
+            </RSideBar>
           </Route>
         </Switch>
       </RSideContainer>
@@ -61,7 +89,7 @@ const SettingsContainer = styled.div`
 `;
 
 const LSideContainer = styled.div`
-  margin: 2em;
+  margin: 1em;
   display: flex;
   flex-direction: column;
   width: 25%;
@@ -91,13 +119,13 @@ const NavMenu = styled(NavLink)`
   padding: 1em 0;
   &.active,
   &:hover {
-    background-color: #0f482f;
-    color: white;
+    background-color: #dfdfdf;
+    color: #0e5937;
   }
 `;
 
 const RSideContainer = styled.div`
-  margin: 2em;
+  margin: 1em;
   display: flex;
   width: 75%;
 `;
@@ -106,14 +134,19 @@ const RSideBar = styled.div`
   display: flex;
   width: 100%;
   background-color: #f2f2f2;
-  height: 650px;
+  height: 550px;
   border-radius: 10px;
-  padding: 3em;
   flex-direction: column;
+  hr {
+    color: #0e5937;
+    background-color: #0e5937;
+    height: 1px;
+    border: none;
+  }
   .profiletop {
-    width: 100%;
-    height: 35%;
+    height: 25%;
     font-size: 24px;
+    padding: 2em;
   }
   .profilepic {
     border-top-left-radius: 50% 50%;
@@ -129,10 +162,8 @@ const RSideBar = styled.div`
   }
 
   .profilebottom {
-    padding: 3em;
-    width: 100%;
-    height: 35%;
-    border-top: solid #0e5937 1px;
+    padding: 5em 2em;
+    height: 75%;
   }
   p {
     color: #0f482f;
@@ -143,26 +174,78 @@ const RSideBar = styled.div`
   .name {
     font-size: 24px;
   }
+  .idnum {
+    font-size: 22px;
+  }
   .role {
-    color: #0f482f;
-    font-size: 18px;
+    color: #646464;
+    font-size: 22px;
     padding: 0;
   }
   button {
     position: absolute;
     right: 130px;
-    top: 180px;
-    height: 50px;
+    top: 170px;
+    padding: 1em;
     font-size: 16px;
     background-color: #0e5937;
     color: white;
     border: none;
   }
-  .firstrow {
+
+  .row {
+    width: 100%;
+    color: #646464;
     display: flex;
-    justify-content: space-between;
+    gap: 10px;
+    padding: 2em 1em;
     input {
       height: 40px;
+      border: solid #0e5937 1px;
+      border-radius: 3px;
+      width: 100%;
+    }
+    label {
+      display: block;
+    }
+    .nameInput {
+      width: 33.3%;
+    }
+    .snInput {
+      width: 40%;
+    }
+    .emailInput {
+      width: 60%;
+    }
+  }
+  .pwHeader {
+    height: 10%;
+    .pwText {
+      padding: 1em;
+      font-size: 22px;
+      color: #646464;
+    }
+    > hr {
+      color: #646464;
+      background-color: #646464;
+    }
+  }
+  .pwBottom {
+    padding: 5em 2em;
+    height: 75%;
+    .pwInputs {
+      width: 100%;
+      color: #646464;
+      input {
+        height: 40px;
+        border: solid #0e5937 1px;
+        border-radius: 3px;
+        width: 60%;
+        margin-bottom: 30px;
+      }
+      label {
+        display: block;
+      }
     }
   }
 `;
