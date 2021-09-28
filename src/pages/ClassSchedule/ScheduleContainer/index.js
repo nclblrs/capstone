@@ -117,7 +117,7 @@ const SchedTable = styled.div`
     background-color: #70ac47;
     color: white;
     font-weight: normal;
-    font-size: 17px;
+    font-size: 18px;
     text-align: center;
     padding: 0.2em;
   }
