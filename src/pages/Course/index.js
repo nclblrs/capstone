@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   ADD_ATTACHMENT_TO_POST,
   COURSE_POSTS,
@@ -8,10 +8,10 @@ import {
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
-import clip from "./images/clip.svg";
 import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import PostForm from "components/PostForm";
 
 const Course = () => {
   let { id } = useParams();
@@ -19,7 +19,6 @@ const Course = () => {
 
   const [createPost] = useMutation(CREATE_COURSE_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
-  const [posting, setPosting] = useState(false);
 
   const { loading, data } = useQuery(GET_COURSE, {
     variables: { courseId: id },
@@ -38,72 +37,47 @@ const Course = () => {
     data?.course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
 
-  const handleCreatePost = async (e) => {
-    e.preventDefault();
-
-    const content = e.target.content.value;
-    const category = e.target.category.value;
-    const file = e.target.file.files[0];
-
-    if (!content) {
-      alert("Please write something");
-      return;
-    }
-
-    setPosting(true);
+  const handleCreatePost = async (data) => {
+    const { content, category, file: files } = data;
+    const file = files[0];
 
     try {
       const { data: createPostData } = await createPost({
         variables: { courseId: id, content, category },
       });
-
       const postId = createPostData?.createPost?.id;
+
       if (!postId) throw Error("something is wrong");
 
-      const { cloudinaryString } = await upload(
-        file,
-        user.uploadPreset,
-        `Post_${postId}`
-      );
+      if (file) {
+        const { cloudinaryString } = await upload(
+          file,
+          user.uploadPreset,
+          `Post_${postId}`
+        );
+        const { data: addAttachmentToPostData } = await addAttachmentToPost({
+          variables: { id: postId, attachment: cloudinaryString },
+        });
 
-      const { data: addAttachmentToPostData } = await addAttachmentToPost({
-        variables: { id: postId, attachment: cloudinaryString },
-      });
-
-      if (!addAttachmentToPostData?.addAttachmentToPost?.id)
-        throw Error("something is wrong");
+        if (!addAttachmentToPostData?.addAttachmentToPost?.id)
+          throw Error("something is wrong");
+      }
 
       alert("Created Post");
-      e.target.content.value = "";
-      e.target.file.value = null;
+
       refetch();
     } catch (error) {
       alert(error);
     }
-
-    setPosting(false);
   };
 
   return (
     <CourseContainer>
       <CoursePostsContainer>
         <CoursePostHeader>
-          <CoursePost>
-            <form onSubmit={handleCreatePost}>
-              <textarea name="content" placeholder="Write Something"></textarea>
-              <select name="category">
-                <option value="post" selected disabled>
-                  Category
-                </option>
-                <option value="post">Post</option>
-                <option value="question">Question</option>
-              </select>
-              <input type="file" name="file" class="attachmentInput" />
-              <button class="postbutton" disabled={posting}>
-                Post
-              </button>
-            </form>
-          </CoursePost>
+          <PostFormContainer>
+            <PostForm onSubmit={handleCreatePost} />
+          </PostFormContainer>
           <CourseFilter>
             <button>Files</button>
             <button>Activities</button>
@@ -178,51 +152,12 @@ const CoursePostsContainer = styled.div`
   }
 `;
 
-const CoursePost = styled.div`
+const PostFormContainer = styled.div`
   display: flex;
   position: sticky;
   top: 100px;
   width: 100%;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  height: 255px;
-  border-radius: 10px;
-  padding: 1em 2em;
-  select,
-  .attach {
-    margin: 20px auto;
-    margin-right: 10px;
-  }
-
-  .postbutton {
-    display: flex;
-    margin: 0;
-    margin-left: auto;
-    background-color: #0f482f;
-  }
-
-  textarea {
-    width: 100%;
-    height: 90px;
-    resize: none;
-    font-size: 18px;
-    border: solid #0e5937 1px;
-    border-radius: 5px;
-    ::placeholder {
-      color: #0f482f;
-      align-items: center;
-    }
-  }
-
-  .attachicon {
-    padding-left: 10px;
-    width: 24px;
-    filter: brightness(0) invert(1);
-    text-align: center;
-    &:hover {
-      filter: brightness(0) invert(1);
-    }
-  }
+  z-index: 1;
 `;
 
 const CourseFilter = styled.div`
@@ -242,15 +177,6 @@ const CourseFilter = styled.div`
       background-color: #0e5937;
     }
   }
-`;
-
-const CoursePostItems = styled.div`
-  display: flex;
-  border-radius: 1em;
-  background-color: #f2f2f2;
-  height: 300px;
-  margin: 2em 0;
-  width: 100%;
 `;
 
 const RSideContainer = styled.div`
@@ -314,16 +240,13 @@ const RSideToDo = styled.div`
   padding: 2em;
 `;
 
-const CourseItemsContainer = styled.div`
-  width: 100%;
-`;
-
 const CoursePostHeader = styled.div`
   position: sticky;
   top: 80px;
   padding-top: 10px;
   width: 100%;
   background: white;
+  z-index: 1;
 `;
 
 export default Course;
