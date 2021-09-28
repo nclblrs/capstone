@@ -30,7 +30,20 @@ const Settings = () => {
                 </div>
                 <button>Edit Profile</button>
               </div>
-              <div class="profilebottom">PROFILE</div>
+              <div class="profilebottom">
+                <div>
+                  <div class="firstrowlabels">
+                    <label for="FN">First Name</label>
+                    <label for="MN">Middle Name</label>
+                    <label for="LN">Last Name</label>
+                  </div>
+                  <div class="firstrow">
+                    <input type="text" id="FN" />
+                    <input type="text" id="MN" />
+                    <input type="text" id="LN" />
+                  </div>
+                </div>
+              </div>
             </RSideBar>
           </Route>
           <Route path="/settings/change-password">
@@ -144,6 +157,13 @@ const RSideBar = styled.div`
     background-color: #0e5937;
     color: white;
     border: none;
+  }
+  .firstrow {
+    display: flex;
+    justify-content: space-between;
+    input {
+      height: 40px;
+    }
   }
 `;
 
