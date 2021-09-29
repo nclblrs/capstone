@@ -100,21 +100,23 @@ const Settings = () => {
           </Route>
           <Route path="/settings/change-password">
             <RSideBar>
-              <div class="pwHeader">
-                <p class="pwText">Change Password</p>
-                <hr></hr>
-              </div>
-              <div class="pwBottom">
-                <div class="pwInputs">
-                  <label for="CurP">Current Password</label>
-                  <input type="text" id="CurP" />
-                  <label for="NP">New Password</label>
-                  <input type="text" id="NP" />
-                  <label for="ConP">Confirm Password</label>
-                  <input type="text" id="ConP" />
+              <PasswordContainer>
+                <div class="pwHeader">
+                  <h3>Change Password</h3>
+                  <hr></hr>
                 </div>
-                <button class="save">Save Changes</button>
-              </div>
+                <div class="pwBottom">
+                  <div class="pwInputs">
+                    <label for="CurP">Current Password</label>
+                    <input type="text" id="CurP" />
+                    <label for="NP">New Password</label>
+                    <input type="text" id="NP" />
+                    <label for="ConP">Confirm Password</label>
+                    <input type="text" id="ConP" />
+                    <button class="save">Save Changes</button>
+                  </div>
+                </div>
+              </PasswordContainer>
             </RSideBar>
           </Route>
         </Switch>
@@ -186,54 +188,8 @@ const RSideBar = styled.div`
     height: 2px;
     border: none;
   }
-  p {
-    color: #0f482f;
-    font-size: 18px;
-    padding: 10px;
-    margin: 0;
-  }
-  .pwHeader {
-    height: 10%;
-    .pwText {
-      padding: 1em;
-      font-size: 22px;
-      color: #646464;
-    }
-    > hr {
-      color: #646464;
-      background-color: #646464;
-    }
-  }
-  .pwBottom {
-    padding: 5em 2em;
-    height: 75%;
-    .pwInputs {
-      width: 100%;
-      color: #646464;
-      input {
-        height: 40px;
-        border: solid #0e5937 2px;
-        border-radius: 3px;
-        width: 60%;
-        margin-bottom: 30px;
-      }
-      label {
-        display: block;
-      }
-    }
-    .save {
-      position: absolute;
-      right: 100px;
-      bottom: 200px;
-      padding: 1em;
-      font-size: 16px;
-      background-color: #0e5937;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-  }
 `;
+
 const ProfileTop = styled.div`
   display: flex;
   flex-direction: row;
@@ -284,6 +240,11 @@ const ProfileTop = styled.div`
     margin-left: auto;
     margin-top: 88px;
     cursor: pointer;
+
+    &:hover {
+      background-color: #157348;
+      color: white;
+    }
   }
   .editicon {
     padding-left: 15px;
@@ -323,6 +284,52 @@ const ProfileBottom = styled.div`
     }
     .emailInput {
       width: 60%;
+    }
+  }
+`;
+
+const PasswordContainer = styled.div`
+  h3 {
+    color: #646464;
+    font-size: 24px;
+    font-weight: normal;
+    padding: 10px;
+    margin: 1em;
+  }
+  input {
+    height: 45px;
+    border: solid #0e5937 2px;
+    border-radius: 3px;
+    background-color: #e5e5e5;
+    width: 60%;
+    font-size: 18px;
+  }
+  label {
+    display: block;
+    margin-bottom: 10px;
+    color: #646464;
+    margin-top: 20px;
+    font-size: 17px;
+  }
+  .pwInputs {
+    padding: 2em 4em;
+    width: 100%;
+    color: #646464;
+  }
+  .save {
+    position: absolute;
+    right: 90px;
+    margin-top: 90px;
+    padding: 1em;
+    font-size: 16px;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #157348;
+      color: white;
     }
   }
 `;
