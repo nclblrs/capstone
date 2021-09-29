@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 
-import { CREATE_POST_COMMENT, POST_COMMENTS } from "./gql";
+import { CREATE_POST_COMMENT, POST_COMMENTS, VOTE_COMMENT } from "./gql";
 
 const Comments = ({ postId }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -13,6 +13,7 @@ const Comments = ({ postId }) => {
     variables: { postId },
   });
   const [createPostComment] = useMutation(CREATE_POST_COMMENT);
+  const [voteComment, { loading: voteLoading }] = useMutation(VOTE_COMMENT);
 
   const comments = data?.postComments?.data ?? [];
 
@@ -38,6 +39,17 @@ const Comments = ({ postId }) => {
     setIsSubmitting(false);
   };
 
+  const handleVote = async (commentId, vote) => {
+    if (voteLoading) return;
+
+    try {
+      const { data } = await voteComment({ variables: { commentId, vote } });
+      if (!data?.voteComment?.id) throw Error("something is wrong");
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <Container>
       <CommentForm onSubmit={handleSubmit(onSubmit)}>
@@ -48,7 +60,7 @@ const Comments = ({ postId }) => {
       {loading && "Loading comments..."}
 
       {!!comments.length &&
-        comments.map(({ id, content, createdAt, user }) => {
+        comments.map(({ id, content, createdAt, user, vote, score }) => {
           const { firstName, lastName, id: userId } = user;
 
           return (
@@ -62,9 +74,17 @@ const Comments = ({ postId }) => {
                 <p>{content}</p>
               </CommentContent>
               <Votes>
-                <IoIosArrowUp size={30} />
-                Vote
-                <IoIosArrowDown size={30} />
+                <IoIosArrowUp
+                  size={30}
+                  onClick={() => handleVote(id, vote === 1 ? 0 : 1)}
+                  color={vote === 1 ? "#0f482f" : "#0f482f33"}
+                />
+                {vote === 0 ? "Vote" : score}
+                <IoIosArrowDown
+                  size={30}
+                  onClick={() => handleVote(id, vote === -1 ? 0 : -1)}
+                  color={vote === -1 ? "#0f482f" : "#0f482f33"}
+                />
               </Votes>
             </Comment>
           );
