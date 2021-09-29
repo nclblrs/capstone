@@ -3,13 +3,14 @@ import { GET_GROUP } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { NavLink, Switch, Route } from "react-router-dom";
 
 const StudyGroup = () => {
   let { id } = useParams();
   const { loading, data } = useQuery(GET_GROUP, {
     variables: { groupId: id },
   });
-  const { name, groupCode, admins } = data?.group ?? {};
+  const { name, groupCode, admins, students } = data?.group ?? {};
 
   return (
     <SGContainer>
@@ -39,16 +40,61 @@ const StudyGroup = () => {
             </form>
           </SGPost>
           <SGFilter>
-            <button>Files</button>
-            <button>Forums</button>
-            <button>Members</button>
+            <Nav>
+              <NavMenu to={`/group/${id}`} exact>
+                Posts
+              </NavMenu>
+              <NavMenu to={`/group/${id}/files`}>Files</NavMenu>
+              <NavMenu to={`/group/${id}/forums`}>Forums</NavMenu>
+              <NavMenu to={`/group/${id}/members`}>Members</NavMenu>
+            </Nav>
           </SGFilter>
         </SGPostHeader>
         <SGItemsContainer>
-          <SGPostItems></SGPostItems>
-          <SGPostItems></SGPostItems>
-          <SGPostItems></SGPostItems>
-          <SGPostItems></SGPostItems>
+          <Switch>
+            <Route path={`/group/${id}`} exact>
+              <SGPostItems></SGPostItems>
+              <SGPostItems></SGPostItems>
+              <SGPostItems></SGPostItems>
+              <SGPostItems></SGPostItems>
+              <SGPostItems></SGPostItems>
+            </Route>
+            <Route path={`/group/${id}/files`}>
+              <LeftContainer>
+                <div class="leftHeader">
+                  <h1>Files</h1>
+                </div>
+              </LeftContainer>
+            </Route>
+            <Route path={`/group/${id}/forums`}>
+              <LeftContainer>
+                <div class="leftHeader">
+                  <h1>Forums</h1>
+                </div>
+              </LeftContainer>
+            </Route>
+            <Route path={`/group/${id}/members`}>
+              <LeftContainer>
+                <div class="leftHeader">
+                  <h1>Members</h1>
+                </div>
+                <div class="leftContent">
+                  {loading
+                    ? "Loading..."
+                    : students?.data?.map(({ user }) => (
+                        <>
+                          <h5>
+                            <li>
+                              {user.lastName}, {user.firstName}{" "}
+                              {user.middleName}
+                            </li>
+                          </h5>
+                        </>
+                      ))}
+                </div>
+              </LeftContainer>
+            </Route>
+          </Switch>
         </SGItemsContainer>
       </SGPostsContainer>
       <RSideContainer>
@@ -87,7 +133,6 @@ const SGPostsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 60%;
   button,
   select {
@@ -239,20 +284,16 @@ const RSideAbout = styled.div`
   flex-direction: column;
   justify-content: space-between;
   background-color: #f2f2f2;
-  height: 362px;
+  height: 255px;
   border-radius: 10px;
   padding: 2em;
 `;
 
 const RSideToDo = styled.div`
-  display: flex;
   position: sticky;
-  top: 490px;
+  top: 400px;
   width: 100%;
-  flex-direction: column;
-  justify-content: space-between;
   background-color: #f2f2f2;
-  height: 362px;
   border-radius: 10px;
   padding: 2em;
 `;
@@ -261,12 +302,59 @@ const SGItemsContainer = styled.div`
   width: 100%;
 `;
 
+const Nav = styled.nav`
+  height: 50px;
+  display: flex;
+
+  font-size: 12px;
+  z-index: 1;
+  position: sticky;
+  top: 0;
+`;
+
+const NavMenu = styled(NavLink)`
+  color: #0f482f;
+  cursor: pointer;
+  font-size: 18px;
+  display: flex;
+  text-decoration: none;
+  padding: 1em 2em;
+  &:hover {
+    background-color: #0f482f;
+    color: white;
+  }
+`;
+
 const SGPostHeader = styled.div`
   position: sticky;
   top: 80px;
   padding-top: 10px;
   width: 100%;
   background: white;
+`;
+
+const LeftContainer = styled.div`
+  display: flex;
+  border-radius: 1em;
+  background-color: #f2f2f2;
+  margin: 2em 0;
+  width: 100%;
+  padding: 2em;
+  flex-direction: column;
+  .leftHeader {
+    height: 20%;
+    h1 {
+      color: #0f482f;
+    }
+  }
+  h5 {
+    font-weight: normal;
+    color: #0f482f;
+    font-size: 20px;
+  }
+  li {
+    margin: 0 2em;
+  }
 `;
 
 export default StudyGroup;

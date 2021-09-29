@@ -25,6 +25,15 @@ export const GET_GROUP = gql`
           }
         }
       }
+      students {
+        data {
+          user {
+            firstName
+            middleName
+            lastName
+          }
+        }
+      }
     }
   }
 `;
