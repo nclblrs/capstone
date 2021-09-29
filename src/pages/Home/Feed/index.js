@@ -21,7 +21,6 @@ const Feed = () => {
           <form>
             <textarea
               placeholder=" 
-            
               Write Something"
             ></textarea>
             <ButtonContainer>
@@ -42,7 +41,7 @@ const Feed = () => {
               </select>
               <button class="attach">
                 Attach File
-                <BsPaperclip size={15} class="attachicon" />
+                <BsPaperclip size={25} class="attachicon" />
               </button>
             </ButtonContainer>
             <button class="postbutton">Post</button>
@@ -51,8 +50,8 @@ const Feed = () => {
 
         <FeedFilter>
           <p>What's new?</p>
-          <button>
-            Filter Posts
+          <button class="filterbutton">
+            Filter Posts &nbsp;
             <FaFilter size={15} class="filtericon" />
           </button>
         </FeedFilter>
@@ -129,8 +128,10 @@ const FeedPostDiv = styled.div`
     border-radius: 5px;
 
     ::placeholder {
-      color: #0f482f;
+      color: #a7a4a4;
       align-items: center;
+      padding-left: 12px;
+      padding-top: 20px;
     }
   }
 
@@ -150,12 +151,11 @@ const FeedPostDiv = styled.div`
 
   .attachicon {
     padding-left: 10px;
-    width: 24px;
-    filter: brightness(0) invert(1);
     text-align: center;
-    &:hover {
-      filter: brightness(0) invert(1);
-    }
+  }
+  .filtericon {
+    padding-left: 15px;
+    text-align: center;
   }
 `;
 
@@ -168,14 +168,14 @@ const FeedFilter = styled.div`
   display: flex;
   position: sticky;
   top: 400px;
-  height: 80px;
+  height: 60px;
   width: 100%;
   align-items: center;
-  margin: 20px auto;
+  margin: 22px auto;
   border-top: solid #0e5937 1px;
 
   p {
-    margin: auto 10px;
+    margin: 5px 10px;
     font-size: 20px;
     color: #646464;
   }
@@ -186,14 +186,7 @@ const FeedFilter = styled.div`
     border: none;
     text-align: center;
     margin-left: auto;
-  }
-  img {
-    padding-left: 10px;
-    width: 30px;
-    filter: brightness(0) invert(1);
-    &:hover {
-      filter: brightness(0) invert(1);
-    }
+    margin-top: 5px;
   }
 `;
 
@@ -214,7 +207,7 @@ const FeedItem = styled.div`
   border-radius: 1em;
   background-color: #f2f2f2;
   height: 300px;
-  margin: 2em 0;
+  margin: 1em 0;
   width: 100%;
 `;
 

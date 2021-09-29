@@ -115,13 +115,6 @@ const PostContainer = styled.div`
 `;
 
 const Post = styled.div`
-  margin: 16px 0;
-  border-radius: 1em;
-  background-color: #f2f2f2;
-  width: 100%;
-`;
-
-const Post = styled.div`
   padding: 24px 18px;
   padding-right: 40px;
   display: flex;
@@ -232,31 +225,3 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
 `;
-<<<<<<< HEAD
-
-const CommentForm = styled.form`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
-  margin-top: 20px;
-
-  > input {
-    width: 100%;
-    height: 40px;
-    padding-left: 10px;
-  }
-
-  > button {
-    background: #0e5937;
-    color: white;
-    height: 30px;
-    padding: 10px 20px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-`;
-=======
->>>>>>> f6903a22c296e6f9461c7d7ea27a34845c03290a
