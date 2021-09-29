@@ -79,7 +79,7 @@ const Comments = ({ postId }) => {
                   onClick={() => handleVote(id, vote === 1 ? 0 : 1)}
                   color={vote === 1 ? "#0f482f" : "#0f482f33"}
                 />
-                {vote === 0 ? "Vote" : score}
+                {score}
                 <IoIosArrowDown
                   size={30}
                   onClick={() => handleVote(id, vote === -1 ? 0 : -1)}
