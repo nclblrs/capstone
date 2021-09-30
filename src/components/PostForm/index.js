@@ -118,8 +118,8 @@ const StyledForm = styled.form`
 
   .postbutton {
     position: absolute;
-    bottom: 10px;
-    right: 20px;
+    bottom: 15px;
+    right: 35px;
     background-color: #0f482f;
   }
 

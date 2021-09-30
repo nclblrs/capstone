@@ -51,8 +51,8 @@ const PostsFeed = ({ posts }) => {
                     </span>
                     {createdAt}
                     <div className="tags">
-                      {tags.map((tag) => (
-                        <span>{tag}</span>
+                      {tags.map((tag, index) => (
+                        <span key={index}>{tag}</span>
                       ))}
                     </div>
                   </h4>
@@ -112,6 +112,9 @@ const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin: 25px 0;
+  border-radius: 1em;
+  background-color: #f2f2f2;
+  width: 100%;
 `;
 
 const Post = styled.div`

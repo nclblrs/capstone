@@ -64,7 +64,7 @@ const Comments = ({ postId }) => {
           const { firstName, lastName, id: userId } = user;
 
           return (
-            <Comment>
+            <Comment key={id}>
               <img src={`https://picsum.photos/seed/${userId}/80/80`} alt="a" />
               <CommentContent>
                 <h3>
@@ -165,6 +165,7 @@ const CommentForm = styled.form`
   align-items: center;
   justify-content: center;
   gap: 10px;
+  width: 100%;
 
   > input {
     width: 100%;
