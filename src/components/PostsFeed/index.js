@@ -111,10 +111,7 @@ const Container = styled.div`
 const PostContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin: 16px 0;
-  border-radius: 1em;
-  background-color: #f2f2f2;
-  width: 100%;
+  margin: 25px 0;
 `;
 
 const Post = styled.div`
@@ -183,8 +180,9 @@ const PostContent = styled.div`
   }
   > p {
     color: #0f482f;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
+    letter-spacing: 0.5px;
   }
 `;
 
@@ -202,15 +200,16 @@ const Activity = styled.div`
 const ActivityContent = styled.div`
   > h3 {
     color: #0f482f;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     margin: 0;
   }
 
   > p {
     color: #0f482f;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
+    letter-spacing: 0.5px;
   }
 `;
 
@@ -219,7 +218,7 @@ const Attachment = styled.a`
   color: white;
   width: 100%;
   text-align: left;
-  border-radius: 8px;
+  border-radius: 5px;
   padding: 10px 32px;
   display: flex;
   align-items: center;

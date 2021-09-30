@@ -21,30 +21,28 @@ const RightSideBar = () => {
           <br />
           Current Date : {date}
         </p>
-      </RSideItem>
-      <RSideItem>
         <RSideLinks>
-          <FaRegLightbulb size={18} />
           <p title="Synchronous Meeting - Computer Programming 1">
-            Synchronous Meeting - Computer Programming 1
+            <FaRegLightbulb size={18} /> &nbsp; Synchronous Meeting - Computer
+            Programming 1
           </p>
         </RSideLinks>
         <RSideLinks>
-          <FaRegLightbulb size={18} />
           <p title="Assessment 10 - Mathematics in the Modern World">
-            Assessment 10 - Mathematics in the Modern World
+            <FaRegLightbulb size={18} /> &nbsp; Assessment 10 - Mathematics in
+            the Modern World
           </p>
         </RSideLinks>
         <RSideLinks>
-          <FaRegLightbulb size={18} />
           <p title="Chapter 1-3 - Introduction to Computing">
-            Chapter 1-3 - Introduction to Computing
+            <FaRegLightbulb size={18} /> &nbsp; Chapter 1-3 - Introduction to
+            Computing
           </p>
         </RSideLinks>
         <RSideLinks>
-          <FaRegLightbulb size={18} />
           <p title="Introduction - Group 1 - Introduction to Computing">
-            Introduction - Group 1 - Introduction to Computing
+            <FaRegLightbulb size={18} /> &nbsp; Introduction - Group 1 -
+            Introduction to Computing
           </p>
         </RSideLinks>
         <RSideLinks>

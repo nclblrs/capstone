@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
+import { BsPaperclip } from "react-icons/bs";
 
 const PostForm = ({ onSubmit, withTags }) => {
   const { register, handleSubmit, reset, watch } = useForm();
@@ -40,6 +41,7 @@ const PostForm = ({ onSubmit, withTags }) => {
         </select>
         <label for="attach-file-post" class="attachmentLabel">
           {attachedFileName ? attachedFileName : "Attach File"}
+          <BsPaperclip size={15} class="attachicon" />
         </label>
         <input
           id="attach-file-post"
@@ -101,7 +103,7 @@ const StyledForm = styled.form`
     outline: none;
     padding: 8px 20px;
 
-    &:hover:enabled {
+    &:hover {
       background-color: #157348;
       color: white;
     }
@@ -116,7 +118,7 @@ const StyledForm = styled.form`
 
   .postbutton {
     position: absolute;
-    bottom: 16px;
+    bottom: 10px;
     right: 20px;
     background-color: #0f482f;
   }
@@ -129,12 +131,20 @@ const StyledForm = styled.form`
     border: solid #0e5937 1px;
     border-radius: 5px;
     ::placeholder {
-      color: #0f482f;
+      color: #a7a4a4;
       align-items: center;
+      padding-left: 15px;
+      padding-top: 20px;
     }
   }
 
   .attachmentInput {
     visibility: hidden;
+  }
+
+  .attachicon {
+    padding-left: 10px;
+    width: 24px;
+    text-align: center;
   }
 `;

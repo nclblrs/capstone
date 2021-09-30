@@ -116,16 +116,13 @@ const LSideItem = styled.div`
     margin: 0;
     margin-bottom: 20px;
     font-weight: normal;
-    > button {
+    button {
       justify-content: flex-end;
       margin-left: auto;
       padding: 0;
       border: none;
       background: none;
       cursor: pointer;
-      img {
-        width: 12px;
-      }
     }
   }
 `;
@@ -138,9 +135,6 @@ const LSideLinks = styled(Link)`
   gap: 12px;
   margin-bottom: 12px;
   text-decoration: none;
-  img {
-    width: 20px;
-  }
   p {
     font-size: 18px;
     white-space: nowrap;

@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink, Switch, Route } from "react-router-dom";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import { BsPencilSquare } from "react-icons/bs";
 
 const Settings = () => {
   const { user, loading } = useCurrentUserContext();
@@ -21,26 +22,29 @@ const Settings = () => {
         <Switch>
           <Route path="/settings" exact>
             <RSideBar>
-              <div class="profiletop">
-                <div>
-                  <img
-                    class="profilepic"
-                    src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-                    alt="Your profile pic"
-                  />
-                  <p class="name">
+              <ProfileTop>
+                <img
+                  class="profilepic"
+                  src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                  alt="Your profile pic"
+                />
+                <ul>
+                  <li class="name">
                     {loading
                       ? "Loading..."
                       : [firstName, middleName, lastName]
                           .filter((n) => n)
                           .join(" ")}
-                  </p>
-                  <p class="idnum">{schoolIdNumber}</p>
-                  <p class="role">{student ? "Student" : "Teacher"}</p>
-                </div>
-                <button class="editprofile">Edit Profile</button>
-              </div>
-              <div class="profilebottom">
+                  </li>
+                  <li class="idnum">{schoolIdNumber}</li>
+                  <li class="role">{student ? "Student" : "Teacher"}</li>
+                </ul>
+                <button class="editprofile">
+                  Edit Profile &nbsp;
+                  <BsPencilSquare size={30} class="editicon" />
+                </button>
+              </ProfileTop>
+              <ProfileBottom>
                 <hr></hr>
                 <div class="row">
                   <div class="nameInput">
@@ -91,26 +95,28 @@ const Settings = () => {
                     />
                   </div>
                 </div>
-              </div>
+              </ProfileBottom>
             </RSideBar>
           </Route>
           <Route path="/settings/change-password">
             <RSideBar>
-              <div class="pwHeader">
-                <p class="pwText">Change Password</p>
-                <hr></hr>
-              </div>
-              <div class="pwBottom">
-                <div class="pwInputs">
-                  <label for="CurP">Current Password</label>
-                  <input type="text" id="CurP" />
-                  <label for="NP">New Password</label>
-                  <input type="text" id="NP" />
-                  <label for="ConP">Confirm Password</label>
-                  <input type="text" id="ConP" />
+              <PasswordContainer>
+                <div class="pwHeader">
+                  <h3>Change Password</h3>
+                  <hr></hr>
                 </div>
-                <button class="save">Save Changes</button>
-              </div>
+                <div class="pwBottom">
+                  <div class="pwInputs">
+                    <label for="CurP">Current Password</label>
+                    <input type="text" id="CurP" />
+                    <label for="NP">New Password</label>
+                    <input type="text" id="NP" />
+                    <label for="ConP">Confirm Password</label>
+                    <input type="text" id="ConP" />
+                    <button class="save">Save Changes</button>
+                  </div>
+                </div>
+              </PasswordContainer>
             </RSideBar>
           </Route>
         </Switch>
@@ -121,14 +127,15 @@ const Settings = () => {
 
 const SettingsContainer = styled.div`
   display: flex;
+  flex-direction: row;
   margin: 0 50px;
 `;
 
 const LSideContainer = styled.div`
-  margin: 1em;
-  display: flex;
-  flex-direction: column;
-  width: 25%;
+  margin-top: 20px;
+  width: 30%;
+  min-width: 300px;
+  margin-right: 50px;
 `;
 
 const Nav = styled.nav`
@@ -137,7 +144,7 @@ const Nav = styled.nav`
   width: 100%;
   flex-direction: column;
   background-color: #f2f2f2;
-  height: 150px;
+  height: 30%;
   border-radius: 10px;
   justify-content: center;
   font-size: 18px;
@@ -152,18 +159,20 @@ const NavMenu = styled(NavLink)`
   display: flex;
   align-items: center;
   text-decoration: none;
+  font-weight: normal;
   padding: 1em 0;
   &.active,
   &:hover {
-    background-color: #dfdfdf;
-    color: #0e5937;
+    background-color: #0e5937;
+    color: white;
   }
 `;
 
 const RSideContainer = styled.div`
-  margin: 1em;
+  margin-top: 20px;
   display: flex;
-  width: 75%;
+  width: 100%;
+  min-width: 880px;
 `;
 
 const RSideBar = styled.div`
@@ -179,74 +188,93 @@ const RSideBar = styled.div`
     height: 2px;
     border: none;
   }
-  .profiletop {
-    height: 25%;
-    font-size: 24px;
-    padding: 2em;
-  }
+`;
+
+const ProfileTop = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
   .profilepic {
     border-top-left-radius: 50% 50%;
     border-top-right-radius: 50% 50%;
     border-bottom-right-radius: 50% 50%;
     border-bottom-left-radius: 50% 50%;
-    width: 130px;
-    height: 130px;
-    object-fit: cover;
+    width: 120px;
+    height: 120px;
     border: solid #0f482f 2px;
-    float: left;
-    margin-right: 1em;
+    margin-left: 50px;
+    margin-top: 50px;
+    margin-bottom: 3px;
   }
-
-  .profilebottom {
-    padding: 5em 2em;
-    height: 75%;
-  }
-  p {
-    color: #0f482f;
-    font-size: 18px;
-    padding: 10px;
-    margin: 0;
+  ul {
+    list-style-type: none;
+    margin-top: 55px;
   }
   .name {
-    font-size: 24px;
+    font-size: 28px;
+    color: #0f482f;
   }
   .idnum {
-    font-size: 22px;
+    color: #0f482f;
   }
   .role {
     color: #646464;
-    font-size: 22px;
-    padding: 0;
+  }
+  .idnum,
+  .role {
+    font-size: 25px;
+    margin-top: 8px;
   }
   .editprofile {
-    position: absolute;
-    right: 130px;
-    top: 170px;
-    padding: 1em;
+    display: flex;
+    width: 150px;
+    height: 50px;
     font-size: 16px;
+    align-items: center;
+    justify-content: center;
     background-color: #0e5937;
     color: white;
     border: none;
+    position: absolute;
+    right: 81px;
+    margin-left: auto;
+    margin-top: 88px;
     cursor: pointer;
-  }
 
+    &:hover {
+      background-color: #157348;
+      color: white;
+    }
+  }
+  .editicon {
+    padding-left: 15px;
+  }
+`;
+
+const ProfileBottom = styled.div`
+  hr {
+    margin: 2em;
+  }
   .row {
     width: 100%;
     color: #646464;
     display: flex;
-    gap: 10px;
-    padding: 2em 1em;
+    gap: 25px;
+    padding: 10px 90px;
     input {
-      height: 40px;
+      height: 45px;
       border: solid #0e5937 2px;
       border-radius: 3px;
       width: 100%;
+      background-color: #e5e5e5;
+      text-align: center;
       ::placeholder {
         font-size: 20px;
       }
     }
     label {
       display: block;
+      margin-bottom: 10px;
     }
     .nameInput {
       width: 33.3%;
@@ -258,45 +286,50 @@ const RSideBar = styled.div`
       width: 60%;
     }
   }
-  .pwHeader {
-    height: 10%;
-    .pwText {
-      padding: 1em;
-      font-size: 22px;
-      color: #646464;
-    }
-    > hr {
-      color: #646464;
-      background-color: #646464;
-    }
+`;
+
+const PasswordContainer = styled.div`
+  h3 {
+    color: #646464;
+    font-size: 24px;
+    font-weight: normal;
+    padding: 10px;
+    margin: 1em;
   }
-  .pwBottom {
-    padding: 5em 2em;
-    height: 75%;
-    .pwInputs {
-      width: 100%;
-      color: #646464;
-      input {
-        height: 40px;
-        border: solid #0e5937 2px;
-        border-radius: 3px;
-        width: 60%;
-        margin-bottom: 30px;
-      }
-      label {
-        display: block;
-      }
-    }
-    .save {
-      position: absolute;
-      right: 100px;
-      bottom: 200px;
-      padding: 1em;
-      font-size: 16px;
-      background-color: #0e5937;
+  input {
+    height: 45px;
+    border: solid #0e5937 2px;
+    border-radius: 3px;
+    background-color: #e5e5e5;
+    width: 60%;
+    font-size: 18px;
+  }
+  label {
+    display: block;
+    margin-bottom: 10px;
+    color: #646464;
+    margin-top: 20px;
+    font-size: 17px;
+  }
+  .pwInputs {
+    padding: 2em 4em;
+    width: 100%;
+    color: #646464;
+  }
+  .save {
+    position: absolute;
+    right: 90px;
+    margin-top: 90px;
+    padding: 1em;
+    font-size: 16px;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    cursor: pointer;
+
+    &:hover {
+      background-color: #157348;
       color: white;
-      border: none;
-      cursor: pointer;
     }
   }
 `;
