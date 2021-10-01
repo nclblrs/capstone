@@ -10,7 +10,7 @@ import { useEffect } from "react";
 import { CurrentUserContextProvider } from "./contexts/CurrentUserContext";
 
 const httpLink = createHttpLink({
-  uri: "https://staging-chumstudies-backend.netlify.app/.netlify/functions/graphql",
+  uri: process.env.REACT_APP_BACKEND_API_URL,
 });
 
 const linkErrorHandle = onError(({ graphQLErrors, networkError }) => {
