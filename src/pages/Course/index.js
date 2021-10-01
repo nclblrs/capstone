@@ -6,13 +6,14 @@ import {
   GET_COURSE,
 } from "./gql";
 import { useMutation, useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useParams, NavLink, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
 import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
 import { FaLaptop } from "react-icons/fa";
+import { BiMessageDetail } from "react-icons/bi";
 import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { RiFileCopy2Fill } from "react-icons/ri";
@@ -37,8 +38,16 @@ const Course = () => {
 
   const posts = postsData?.coursePosts?.data ?? [];
 
-  const { name, subjCode, teacher, courseCode, yearAndSection } =
-    data?.course ?? {};
+  const {
+    name,
+    subjCode,
+    teacher,
+    courseCode,
+    yearAndSection,
+    students,
+    groups,
+  } = data?.course ?? {};
+
   const { firstName, lastName } = teacher?.user ?? {};
 
   const handleCreatePost = async (data) => {
@@ -83,23 +92,79 @@ const Course = () => {
             <PostForm onSubmit={handleCreatePost} />
           </PostFormContainer>
           <CourseFilter>
-            <button>
+            <NavMenu to={`/class/${id}`} exact>
+              <BiMessageDetail size={18} /> &nbsp; Posts
+            </NavMenu>
+            <NavMenu to={`/class/${id}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
-            </button>
-            <button>
-              <FaLaptop size={18} /> &nbsp; Activities
-            </button>
-            <button>
+            </NavMenu>
+            <NavMenu to={`/class/${id}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
-            </button>
-            <button>
+            </NavMenu>
+            <NavMenu to={`/class/${id}/groups`}>
               <TiGroup size={18} />
               &nbsp; Groups
-            </button>
+            </NavMenu>
           </CourseFilter>
         </CoursePostHeader>
-        {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
+        <ItemsContainer>
+          <Switch>
+            <Route path={`/class/${id}`} exact>
+              {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
+            </Route>
+            <Route path={`/class/${id}/files`}>
+              <LeftContainer>
+                <div className="leftHeader">
+                  <h1>Files</h1>
+                </div>
+              </LeftContainer>
+            </Route>
+            <Route path={`/class/${id}/members`}>
+              <LeftContainer>
+                <div className="leftHeader">
+                  <h1>Members</h1>
+                </div>
+                <div className="leftContent">
+                  <h5>
+                    <p>
+                      Teacher: {lastName}, {firstName}
+                    </p>
+                    {loading
+                      ? "Loading..."
+                      : students?.data?.map(({ user }) => (
+                          <>
+                            <h5>
+                              <li>
+                                {user.lastName}, {user.firstName}{" "}
+                                {user.middleName}
+                              </li>
+                            </h5>
+                          </>
+                        ))}
+                  </h5>
+                </div>
+              </LeftContainer>
+            </Route>
+            <Route path={`/class/${id}/groups`}>
+              <GroupContainer>
+                <div className="leftContent">
+                  {loading
+                    ? "Loading..."
+                    : groups?.data?.map(({ name }) => (
+                        <>
+                          <div className="groupcontainer">
+                            <h5>{name}</h5>&nbsp;
+                            <p>Leader:</p>&nbsp;
+                            <p>Members:</p>
+                          </div>
+                        </>
+                      ))}
+                </div>
+              </GroupContainer>
+            </Route>
+          </Switch>
+        </ItemsContainer>
       </CoursePostsContainer>
       <RSideContainer>
         <RSideAbout>
@@ -149,7 +214,6 @@ const CoursePostsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 60%;
   button,
   select {
@@ -179,7 +243,7 @@ const PostFormContainer = styled.div`
   z-index: 1;
 `;
 
-const CourseFilter = styled.div`
+const CourseFilter = styled.nav`
   display: flex;
   position: sticky;
   top: 400px;
@@ -188,24 +252,18 @@ const CourseFilter = styled.div`
   align-items: center;
   margin: 15px 0px auto;
   border-bottom: solid #0f482f 3px;
-
-  button {
-    background-color: white;
-    color: #0f482f;
-    font-size: 18px;
-    &:hover {
-      background-color: #0e5937;
-    }
-  }
 `;
 
 const RSideContainer = styled.div`
   display: flex;
+  position: sticky;
+  top: 100px;
   width: 400px;
+  height: 100px;
+  gap: 20px;
   min-width: 400px;
   flex-direction: column;
   border-radius: 10px;
-  position: sticky;
   margin: 0 2em;
   h3 {
     color: #646464;
@@ -252,8 +310,6 @@ const RSideContainer = styled.div`
 
 const RSideAbout = styled.div`
   display: flex;
-  position: sticky;
-  top: 100px;
   width: 100%;
   flex-direction: column;
   background-color: #f2f2f2;
@@ -264,15 +320,86 @@ const RSideAbout = styled.div`
 
 const RSideToDo = styled.div`
   display: flex;
-  position: sticky;
-  top: 450px;
   width: 100%;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #f2f2f2;
-  height: max-content;
   border-radius: 10px;
   padding: 2em;
+`;
+
+const NavMenu = styled(NavLink)`
+  color: #0f482f;
+  cursor: pointer;
+  font-size: 18px;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 1em;
+  margin: 0 1em;
+  &:hover {
+    background-color: #0e5937;
+    color: white;
+  }
+`;
+
+const LeftContainer = styled.div`
+  display: flex;
+  border-radius: 1em;
+  background-color: #f2f2f2;
+  margin: 1.5em 0;
+  padding: 2em;
+  flex-direction: column;
+  .leftHeader {
+    height: 20%;
+    h1 {
+      color: #0f482f;
+    }
+  }
+  h5 {
+    font-weight: normal;
+    color: #0f482f;
+    font-size: 20px;
+  }
+  li {
+    margin: 0 2em;
+  }
+  .leftContent {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+`;
+
+const GroupContainer = styled.div`
+  display: flex;
+  border-radius: 1em;
+  padding: 1.5em 0;
+  flex-direction: column;
+
+  .leftContent {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .groupcontainer {
+      border-radius: 1em;
+      flex-direction: column;
+      display: flex;
+      padding: 2em;
+      width: 32%;
+      background-color: #f2f2f2;
+      height: 350px;
+      margin-bottom: 20px;
+
+      > h5 {
+        font-weight: bold;
+        color: #0f482f;
+        font-size: 20px;
+        margin: 0;
+      }
+    }
+  }
 `;
 
 const CoursePostHeader = styled.div`
@@ -282,6 +409,10 @@ const CoursePostHeader = styled.div`
   width: 100%;
   background: white;
   z-index: 1;
+`;
+
+const ItemsContainer = styled.div`
+  width: 100%;
 `;
 
 export default Course;
