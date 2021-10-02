@@ -55,3 +55,21 @@ export const ADMIN_CREATE_USER = gql`
     }
   }
 `;
+
+export const CREATE_ADMIN = gql`
+  mutation createAdmin(
+    $firstName: String!
+    $middleName: String
+    $lastName: String!
+    $email: String!
+  ) {
+    createAdmin(
+      firstName: $firstName
+      middleName: $middleName
+      lastName: $lastName
+      email: $email
+    ) {
+      id
+    }
+  }
+`;

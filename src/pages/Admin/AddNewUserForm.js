@@ -1,28 +1,45 @@
 import { useMutation } from "@apollo/client";
 import styled from "styled-components";
-import { ADMIN_CREATE_USER } from "./gql";
+import { useForm } from "react-hook-form";
+
+import { ADMIN_CREATE_USER, CREATE_ADMIN } from "./gql";
 
 const AddNewUserForm = ({ onCreateFinish }) => {
-  const [adminCreateUser, { loading }] = useMutation(ADMIN_CREATE_USER);
+  const [adminCreateUser, { loading: createUserLoading }] =
+    useMutation(ADMIN_CREATE_USER);
+  const [createAdmin, { loading: createAdminLoading }] =
+    useMutation(CREATE_ADMIN);
+  const loading = createUserLoading || createAdminLoading;
+  const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async (data) => {
+    console.log(data);
 
-    const firstName = e.target.firstName.value;
-    const middleName = e.target.middleName.value;
-    const lastName = e.target.lastName.value;
-    const email = e.target.email.value;
-    const schoolIdNumber = e.target.schoolIdNumber.value;
-    const type = e.target.type.value;
-
-    console.log(firstName);
-    console.log(middleName);
-    console.log(lastName);
-    console.log(email);
-    console.log(schoolIdNumber);
-    console.log(type);
+    const { firstName, middleName, lastName, email, schoolIdNumber, type } =
+      data;
 
     if (type === "admin") {
+      try {
+        const { data } = await createAdmin({
+          variables: {
+            firstName,
+            middleName,
+            lastName,
+            email,
+            schoolIdNumber,
+          },
+        });
+
+        if (data?.createAdmin?.id) {
+          alert("Created successfully");
+          onCreateFinish();
+          reset();
+        } else {
+          alert("Something is wrong");
+        }
+      } catch (error) {
+        alert(error);
+      }
     } else {
       try {
         const { data } = await adminCreateUser({
@@ -39,6 +56,7 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         if (data?.adminCreateUser?.id) {
           alert("Created successfully");
           onCreateFinish();
+          reset();
         } else {
           alert("Something is wrong");
         }
@@ -49,30 +67,30 @@ const AddNewUserForm = ({ onCreateFinish }) => {
   };
 
   return (
-    <Form onSubmit={onSubmit}>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <div>
         <label>First Name</label>
-        <input name="firstName" />
+        <input {...register("firstName", { required: true })} />
       </div>
       <div>
         <label>Middle Name</label>
-        <input name="middleName" />
+        <input {...register("middleName")} />
       </div>
       <div>
         <label>Last Name</label>
-        <input name="lastName" />
+        <input {...register("lastName", { required: true })} />
       </div>
       <div>
         <label>Email</label>
-        <input name="email" />
+        <input {...register("email", { required: true })} />
       </div>
       <div>
         <label>School Number</label>
-        <input name="schoolIdNumber" />
+        <input {...register("schoolIdNumber", { required: true })} />
       </div>
       <div>
         <label>User Type</label>
-        <select name="type">
+        <select {...register("type", { required: true })}>
           <option value="student">Student</option>
           <option value="teacher">Teacher</option>
           <option value="admin">Admin</option>
