@@ -36,10 +36,10 @@ const LeftSideBar = () => {
 const LSideContainer = styled.div`
   display: flex;
   position: sticky;
-  top: 120px;
+  margin-top: 10px;
   background-color: #f2f2f2;
-  width: 370px;
-  min-width: 370px;
+  width: 10%;
+  min-width: 300px;
   border-radius: 10px;
   flex-direction: column;
   height: max-content;

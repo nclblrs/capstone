@@ -190,9 +190,12 @@ const CourseFilter = styled.div`
   border-bottom: solid #0f482f 3px;
 
   button {
+    display: flex;
     background-color: white;
     color: #0f482f;
     font-size: 18px;
+    justify-content: center;
+    align-items: center;
     &:hover {
       background-color: #0e5937;
     }

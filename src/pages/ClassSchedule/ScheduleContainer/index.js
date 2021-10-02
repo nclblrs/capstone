@@ -50,9 +50,10 @@ const SchedContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: sticky;
-  top: 120px;
+  margin-top: 10px;
   background-color: #f2f2f2;
   width: 72%;
+  min-width: 300px;
   border-radius: 10px;
   height: max-content;
   ul {

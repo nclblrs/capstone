@@ -76,6 +76,7 @@ const CalendarContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 2em;
+  margin-top: 20px;
 `;
 
 const CalendarCard = styled.div`
@@ -84,6 +85,7 @@ const CalendarCard = styled.div`
   top: 120px;
   background-color: #f2f2f2;
   width: 100%;
+  min-width: 500px;
   border-radius: 5px;
   height: max-content;
   button {
