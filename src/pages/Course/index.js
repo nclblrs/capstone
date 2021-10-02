@@ -151,12 +151,23 @@ const Course = () => {
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
-                    : groups?.data?.map(({ name }) => (
+                    : groups?.data?.map(({ name, students, leader }) => (
                         <>
                           <div className="groupcontainer">
                             <h5>{name}</h5>&nbsp;
-                            <p>Leader:</p>&nbsp;
-                            <p>Members:</p>
+                            <p>
+                              Leader:{" "}
+                              {leader &&
+                                `${leader?.user?.lastName}, ${leader?.user?.firstName}`}
+                            </p>
+                            <p>Members: </p>
+                            {students?.data?.map(({ user }) => (
+                              <>
+                                <li>
+                                  {user.lastName}, {user.firstName}
+                                </li>
+                              </>
+                            ))}
                           </div>
                         </>
                       ))}
@@ -381,7 +392,9 @@ const GroupContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-
+    li {
+      padding: 10px 8px;
+    }
     .groupcontainer {
       border-radius: 1em;
       flex-direction: column;

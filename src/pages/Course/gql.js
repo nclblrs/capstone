@@ -32,6 +32,14 @@ export const GET_COURSE = gql`
               lastName
             }
           }
+          students {
+            data {
+              user {
+                firstName
+                lastName
+              }
+            }
+          }
         }
       }
     }
