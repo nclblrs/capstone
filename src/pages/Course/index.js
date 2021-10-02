@@ -226,24 +226,6 @@ const CoursePostsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 60%;
-  button,
-  select {
-    width: 150px;
-    height: 33px;
-    font-size: 15px;
-    align-items: center;
-    justify-content: center;
-    background-color: #0e5937;
-    color: white;
-    border: none;
-    text-align: center;
-
-    &:hover {
-      background-color: #157348;
-      color: white;
-      cursor: pointer;
-    }
-  }
 `;
 
 const PostFormContainer = styled.div`
