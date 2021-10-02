@@ -54,7 +54,10 @@ const Comments = ({ postId }) => {
   return (
     <Container>
       <CommentForm onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="Write a comment" {...register("content")} />
+        <input
+          placeholder="Write a comment"
+          {...register("content", { required: true })}
+        />
         <button disabled={isSubmitting}>Comment</button>
       </CommentForm>
 
