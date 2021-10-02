@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import dayjs from "dayjs";
+
 import Comments from "./Comments";
 
 const PostsFeed = ({ posts }) => {
@@ -49,7 +51,7 @@ const PostsFeed = ({ posts }) => {
                         ? "Question"
                         : "Post"}
                     </span>
-                    {createdAt}
+                    {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                     <div className="tags">
                       {tags.map((tag, index) => (
                         <span key={index}>{tag}</span>

@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
+import dayjs from "dayjs";
 
 import { CREATE_POST_COMMENT, POST_COMMENTS, VOTE_COMMENT } from "./gql";
 
@@ -70,7 +71,7 @@ const Comments = ({ postId }) => {
                 <h3>
                   {firstName} {lastName}
                 </h3>
-                <h4>{createdAt}</h4>
+                <h4>{dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}</h4>
                 <p>{content}</p>
               </CommentContent>
               <Votes>
