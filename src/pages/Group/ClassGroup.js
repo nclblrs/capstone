@@ -1,76 +1,169 @@
 import React from "react";
-import { GET_GROUP } from "./gql";
-import { useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import {
+  ADD_ATTACHMENT_TO_POST,
+  GROUP_POSTS,
+  CREATE_GROUP_POST,
+  GET_GROUP,
+} from "./gql";
+import { useMutation, useQuery } from "@apollo/client";
+import { useParams, NavLink, Switch, Route } from "react-router-dom";
 import styled from "styled-components";
+import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
+import { RiFileCopy2Fill } from "react-icons/ri";
+import { FaLaptop } from "react-icons/fa";
+import { BiMessageDetail } from "react-icons/bi";
+import PostForm from "components/PostForm";
+import { upload } from "utils/upload";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import PostsFeed from "components/PostsFeed";
 
 const ClassGroup = () => {
   let { id } = useParams();
+  const { user } = useCurrentUserContext();
+
+  const [createPost] = useMutation(CREATE_GROUP_POST);
+  const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
+
   const { loading, data } = useQuery(GET_GROUP, {
     variables: { groupId: id },
   });
-  const { name, leader, course } = data?.group ?? {};
+  const {
+    data: postsData,
+    loading: postsLoading,
+    refetch,
+  } = useQuery(GROUP_POSTS, {
+    variables: { groupId: id },
+  });
+
+  const posts = postsData?.groupPosts?.data ?? [];
+
+  const { name, leader, course, students } = data?.group ?? {};
   const { firstName, lastName } = leader?.user ?? {};
+
+  const handleCreatePost = async (data) => {
+    const { content, category, file: files } = data;
+    const file = files[0];
+
+    try {
+      const { data: createPostData } = await createPost({
+        variables: { groupId: id, content, category },
+      });
+      const postId = createPostData?.createPost?.id;
+
+      if (!postId) throw Error("something is wrong");
+
+      if (file) {
+        const { cloudinaryString } = await upload(
+          file,
+          user.uploadPreset,
+          `Post_${postId}`
+        );
+        const { data: addAttachmentToPostData } = await addAttachmentToPost({
+          variables: { id: postId, attachment: cloudinaryString },
+        });
+
+        if (!addAttachmentToPostData?.addAttachmentToPost?.id)
+          throw Error("something is wrong");
+      }
+
+      alert("Created Post");
+
+      refetch();
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <CGContainer>
       <CGPostsContainer>
         <CGPostHeader>
-          <CGPost>
-            <form>
-              <textarea
-                placeholder=" 
-            
-              Write Something"
-              ></textarea>
-              <select>
-                <option value="Category" selected disabled>
-                  Category
-                </option>
-                <option value="TEST 1">TEST 1</option>
-                <option value="TEST 2">TEST 2</option>
-                <option value="TEST 3">TEST 3</option>
-              </select>
-              <button class="attach">
-                Attach File
-                <img class="attachicon" alt="" />
-              </button>
-              <button class="postbutton">Post</button>
-            </form>
-          </CGPost>
+          <PostFormContainer>
+            <PostForm onSubmit={handleCreatePost} />
+          </PostFormContainer>
           <CGFilter>
-            <button>Files</button>
-            <button>Activities</button>
-            <button>Members</button>
+            <NavMenu to={`/group/${id}`} exact>
+              <BiMessageDetail size={18} /> &nbsp; Posts
+            </NavMenu>
+            <NavMenu to={`/group/${id}/files`}>
+              <RiFileCopy2Fill size={18} /> &nbsp; Files
+            </NavMenu>
+            <NavMenu to={`/group/${id}/activities`}>
+              <FaLaptop size={18} /> &nbsp; Activities
+            </NavMenu>
+            <NavMenu to={`/group/${id}/members`}>
+              <MdGroupAdd size={18} />
+              &nbsp; Members
+            </NavMenu>
           </CGFilter>
         </CGPostHeader>
         <CGItemsContainer>
-          <CGPostItems></CGPostItems>
-          <CGPostItems></CGPostItems>
-          <CGPostItems></CGPostItems>
-          <CGPostItems></CGPostItems>
+          <Switch>
+            <Route path={`/group/${id}`} exact>
+              {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
+            </Route>
+            <Route path={`/group/${id}/files`}>
+              <LeftContainer>
+                <div className="leftHeader">
+                  <h1>Files</h1>
+                </div>
+              </LeftContainer>
+            </Route>
+            <Route path={`/group/${id}/activities`}>
+              <LeftContainer>
+                <div className="leftHeader">
+                  <h1>Activities</h1>
+                </div>
+              </LeftContainer>
+            </Route>
+            <Route path={`/group/${id}/members`}>
+              <LeftContainer>
+                <div className="leftHeader">
+                  <h1>Members</h1>
+                </div>
+                <div className="leftContent">
+                  {loading
+                    ? "Loading..."
+                    : students?.data?.map(({ user }) => (
+                        <>
+                          <h5>
+                            <li>
+                              {user.lastName}, {user.firstName}{" "}
+                              {user.middleName}
+                            </li>
+                          </h5>
+                        </>
+                      ))}
+                </div>
+              </LeftContainer>
+            </Route>
+          </Switch>
         </CGItemsContainer>
       </CGPostsContainer>
       <RSideContainer>
         <RSideAbout>
-          <h4>ABOUT</h4>
+          <h3>ABOUT</h3>
           {loading ? (
             "Loading..."
           ) : (
             <>
-              <h5>{course.name}</h5>
-              <h5>Group Name: {name}</h5>
-              <h6>
-                Leader: {firstName}&nbsp;
-                {lastName}
-              </h6>
+              <h4>{course.name}</h4>
+              <ul>
+                <li>Group Name: {name}</li>
+                <li>
+                  <MdAccountCircle size={18} />
+                  &nbsp; Leader: {firstName}&nbsp;
+                  {lastName}
+                </li>
+              </ul>
             </>
           )}
         </RSideAbout>
         <RSideToDo>
-          <h4>TO-DO</h4>
-          <h6>TESSSSSSSSSSSSST</h6>
-          <h6>TESSSSSSSSSSSSST</h6>
-          <h6>TESSSSSSSSSSSSST</h6>
+          <h3>TO-DO</h3>
+          <h5>TESSSSSSSSSSSSST</h5>
+          <h5>TESSSSSSSSSSSSST</h5>
+          <h5>TESSSSSSSSSSSSST</h5>
         </RSideToDo>
       </RSideContainer>
     </CGContainer>
@@ -88,7 +181,6 @@ const CGPostsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   width: 60%;
   button,
   select {
@@ -111,137 +203,86 @@ const CGPostsContainer = styled.div`
   }
 `;
 
-const CGPost = styled.div`
-  display: flex;
-  position: sticky;
-  top: 100px;
-  width: 100%;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  height: 255px;
-  border-radius: 10px;
-  padding: 1em 2em;
-  select,
-  .attach {
-    margin: 20px auto;
-    margin-right: 10px;
-  }
-
-  .postbutton {
-    display: flex;
-    margin: 0;
-    margin-left: auto;
-    background-color: #0f482f;
-  }
-
-  textarea {
-    width: 100%;
-    height: 90px;
-    resize: none;
-    font-size: 18px;
-    border: solid #0e5937 1px;
-    border-radius: 5px;
-    ::placeholder {
-      color: #0f482f;
-      align-items: center;
-    }
-  }
-
-  .attachicon {
-    padding-left: 10px;
-    width: 24px;
-    filter: brightness(0) invert(1);
-    text-align: center;
-    &:hover {
-      filter: brightness(0) invert(1);
-    }
-  }
-`;
-
-const CGFilter = styled.div`
+const CGFilter = styled.nav`
   display: flex;
   position: sticky;
   top: 400px;
   height: 50px;
   width: 100%;
   align-items: center;
-  margin: 10px 0px auto;
+  margin: 15px 0px auto;
   border-bottom: solid #0f482f 3px;
-
-  button {
-    background-color: white;
-    color: #0f482f;
-    &:hover {
-      background-color: #0e5937;
-    }
-  }
-`;
-
-const CGPostItems = styled.div`
-  display: flex;
-  border-radius: 1em;
-  background-color: #f2f2f2;
-  height: 300px;
-  margin: 2em 0;
-  width: 100%;
 `;
 
 const RSideContainer = styled.div`
   display: flex;
-  width: 25%;
+  position: sticky;
+  top: 100px;
+  width: 400px;
+  height: 100px;
+  gap: 20px;
+  min-width: 400px;
   flex-direction: column;
   border-radius: 10px;
-  position: sticky;
   margin: 0 2em;
-  h4 {
-    margin: 0;
+
+  h3 {
     color: #646464;
-    font-size: 20px;
+    text-align: left;
+    font-size: 22px;
     font-weight: normal;
+    display: flex;
+    margin: 0 10px;
+    margin-bottom: 20px;
+  }
+  h4 {
+    color: #0f482f;
+    font-size: 20px;
+    text-align: left;
+    font-weight: normal;
+    display: flex;
+    margin: 0 10px;
   }
   p {
     margin: 0;
     color: #646464;
   }
-
   h5 {
-    margin: 0;
     color: #0f482f;
+    font-size: 20px;
     text-align: left;
-    font-size: 22px;
     font-weight: normal;
+    display: flex;
+    margin: 0 10px;
+    padding-top: 10px;
   }
-  h6 {
-    margin: 0;
-    font-size: 18px;
+  ul {
+    font-size: 20px;
     color: #646464;
     font-weight: normal;
-    text-align: left;
+    list-style-type: none;
+    margin-top: 20px;
+  }
+  li {
+    padding: 8px 8px;
   }
 `;
 
 const RSideAbout = styled.div`
   display: flex;
-  position: sticky;
-  top: 100px;
   width: 100%;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #f2f2f2;
-  height: 362px;
+  height: 320px;
   border-radius: 10px;
   padding: 2em;
 `;
 
 const RSideToDo = styled.div`
   display: flex;
-  position: sticky;
-  top: 490px;
   width: 100%;
   flex-direction: column;
-  justify-content: space-between;
   background-color: #f2f2f2;
-  height: 362px;
   border-radius: 10px;
   padding: 2em;
 `;
@@ -250,12 +291,58 @@ const CGItemsContainer = styled.div`
   width: 100%;
 `;
 
+const NavMenu = styled(NavLink)`
+  color: #0f482f;
+  cursor: pointer;
+  font-size: 18px;
+  align-items: center;
+  text-decoration: none;
+  padding: 10px 1em;
+  margin: 0 1em;
+  &:hover {
+    background-color: #0e5937;
+    color: white;
+  }
+`;
+
 const CGPostHeader = styled.div`
   position: sticky;
   top: 80px;
   padding-top: 10px;
   width: 100%;
   background: white;
+`;
+
+const LeftContainer = styled.div`
+  display: flex;
+  border-radius: 1em;
+  background-color: #f2f2f2;
+  margin: 2em 0;
+  width: 100%;
+  padding: 2em;
+  flex-direction: column;
+  .leftHeader {
+    height: 20%;
+    h1 {
+      color: #0f482f;
+    }
+  }
+  h5 {
+    font-weight: normal;
+    color: #0f482f;
+    font-size: 20px;
+  }
+  li {
+    margin: 0 2em;
+  }
+`;
+
+const PostFormContainer = styled.div`
+  display: flex;
+  position: sticky;
+  top: 100px;
+  width: 100%;
+  z-index: 1;
 `;
 
 export default ClassGroup;

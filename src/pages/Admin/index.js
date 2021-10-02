@@ -13,11 +13,15 @@ const Admin = () => {
   const history = useHistory();
   const location = useLocation();
   const { search } = useUrlQuery();
-  const { data: countData, loading: countLoading } = useQuery(USERS_COUNT);
+  const {
+    data: countData,
+    loading: countLoading,
+    refetch: refetchCount,
+  } = useQuery(USERS_COUNT);
   const {
     data: usersData,
     loading: usersLoading,
-    refetch,
+    refetch: refetchUsers,
   } = useQuery(USERS, {
     variables: { filter: { search } },
   });
@@ -118,7 +122,8 @@ const Admin = () => {
         <AddNewUserForm
           onCreateFinish={() => {
             setShowNewUserModal(false);
-            refetch();
+            refetchCount();
+            refetchUsers();
           }}
         />
       </Modal>
