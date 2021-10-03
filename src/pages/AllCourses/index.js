@@ -16,8 +16,8 @@ const AllCourses = () => {
         <div className="itemcontainer">
           {loading
             ? "Loading..."
-            : data?.courses?.data?.map(
-                ({ id, name, yearAndSection, teacher }) => (
+            : data?.studentCourses?.data?.map(
+                ({ id, name, yearAndSection, teacher, studentCount }) => (
                   <Link className="items" key={id} to={`/class/${id}`}>
                     <h1>{name}</h1>
                     <p>
@@ -25,7 +25,7 @@ const AllCourses = () => {
                       {teacher?.user?.firstName}
                     </p>
                     <p>Year and Section: {yearAndSection}</p>
-                    <p> *** members</p>
+                    <p> {studentCount + 1} members</p>
                   </Link>
                 )
               )}
@@ -66,7 +66,7 @@ const MainContainer = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 15px;
     margin: 2em;
     li {
       padding: 10px 8px;
@@ -82,7 +82,6 @@ const MainContainer = styled.div`
     height: 250px;
     margin-bottom: 20px;
     text-decoration: none;
-    justify-content: space-between;
 
     :hover {
       background-color: #e8e8e8;

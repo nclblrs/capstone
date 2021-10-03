@@ -1,14 +1,15 @@
 import { gql } from "@apollo/client";
 
 export const GET_COURSES = gql`
-  query courses {
-    courses {
+  query studentCourses {
+    studentCourses {
       data {
         id
         name
         subjCode
         courseCode
         yearAndSection
+        studentCount
         teacher {
           user {
             firstName
