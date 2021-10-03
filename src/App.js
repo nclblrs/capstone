@@ -20,6 +20,7 @@ import Settings from "pages/Settings";
 import ResetPassword from "pages/ResetPassword";
 import ForgotPassword from "pages/ForgotPassword";
 import Admin from "pages/Admin";
+import Progress from "pages/Progress";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 function App() {
@@ -62,7 +63,9 @@ function App() {
               <Route path="/calendar">
                 <Calendar />
               </Route>
-              <Route path="/progress"></Route>
+              <Route path="/progress">
+                <Progress />
+              </Route>
               <Route path="/classes">
                 <AllCourses />
               </Route>
