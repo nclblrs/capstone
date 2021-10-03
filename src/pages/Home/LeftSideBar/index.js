@@ -37,7 +37,7 @@ const LeftSideBar = () => {
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
-        <LSideLinks>
+        <LSideLinks to="/classes">
           <p>... See More</p>
         </LSideLinks>
       </LSideItem>
@@ -52,7 +52,7 @@ const LeftSideBar = () => {
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
-        <LSideLinks>
+        <LSideLinks to="/groups">
           <p>... See More</p>
         </LSideLinks>
       </LSideItem>
@@ -81,7 +81,7 @@ const LeftSideBar = () => {
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
-        <LSideLinks>
+        <LSideLinks to="/groups">
           <p>... See More</p>
         </LSideLinks>
       </LSideItem>

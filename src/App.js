@@ -13,6 +13,8 @@ import ClassSched from "pages/ClassSchedule";
 import Calendar from "pages/Calendar";
 import Logout from "components/Logout";
 import Course from "pages/Course";
+import AllCourses from "pages/AllCourses";
+import AllGroups from "pages/AllGroups";
 import Group from "pages/Group";
 import Settings from "pages/Settings";
 import ResetPassword from "pages/ResetPassword";
@@ -61,8 +63,14 @@ function App() {
                 <Calendar />
               </Route>
               <Route path="/progress"></Route>
+              <Route path="/classes">
+                <AllCourses />
+              </Route>
               <Route path="/class/:id">
                 <Course />
+              </Route>
+              <Route path="/groups">
+                <AllGroups />
               </Route>
               <Route path="/group/:id">
                 <Group />
