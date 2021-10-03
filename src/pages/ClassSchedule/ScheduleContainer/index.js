@@ -52,10 +52,12 @@ const SchedContainer = styled.div`
   position: sticky;
   margin-top: 10px;
   background-color: #f2f2f2;
-  width: 72%;
-  min-width: 300px;
+  width: 80%;
+  min-width: 250px;
   border-radius: 10px;
   height: max-content;
+  margin-right: 3em;
+  margin-left: 2.5em;
   ul {
     color: white;
     font-size: 18px;
@@ -94,6 +96,7 @@ const UpperContainer = styled.div`
     right: 0;
     margin-left: auto;
     padding: 25px 15px;
+    cursor: pointer;
   }
 `;
 

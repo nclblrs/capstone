@@ -21,7 +21,9 @@ const LeftSideBar = () => {
             <Dropdown
               popperComponent={
                 <DropdownButtons>
-                  <button>Join Class</button>
+                  <button>
+                    <p> Join Class </p>
+                  </button>
                 </DropdownButtons>
               }
             >
@@ -117,12 +119,16 @@ const LSideItem = styled.div`
     margin-bottom: 20px;
     font-weight: normal;
     button {
-      justify-content: flex-end;
+      justify-content: center;
       margin-left: auto;
       padding: 0;
       border: none;
       background: none;
       cursor: pointer;
+      text-align: center;
+    }
+    p {
+      padding: 1em;
     }
   }
 `;

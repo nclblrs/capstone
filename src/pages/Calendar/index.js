@@ -75,7 +75,7 @@ const Calendar = () => {
 const CalendarContainer = styled.div`
   display: flex;
   justify-content: center;
-  margin: 2em;
+  margin: 3em;
   margin-top: 20px;
 `;
 
