@@ -263,7 +263,6 @@ const CourseFilter = styled.nav`
   align-items: center;
   margin: 15px 0px auto;
   border-bottom: solid #0f482f 3px;
-<<<<<<< HEAD
 
   button {
     display: flex;
@@ -276,8 +275,6 @@ const CourseFilter = styled.nav`
       background-color: #0e5937;
     }
   }
-=======
->>>>>>> 359ccdc9eccee3abeb8f906c4b6863cf8ebf37fc
 `;
 
 const RSideContainer = styled.div`

@@ -87,7 +87,6 @@ const FeedContainer = styled.div`
     color: white;
     border: none;
     text-align: center;
-
     &:hover {
       background-color: #157348;
       color: white;
@@ -103,7 +102,6 @@ const FeedPostDiv = styled.div`
   height: 248px;
   border-radius: 10px;
   padding: 28px 48px;
-
   form {
     height: 100%;
     display: flex;
@@ -111,13 +109,11 @@ const FeedPostDiv = styled.div`
     gap: 18px;
     position: relative;
   }
-
   .postbutton {
     position: absolute;
     right: -10px;
     bottom: -12px;
   }
-
   textarea {
     display: flex;
     width: 100%;
@@ -126,7 +122,6 @@ const FeedPostDiv = styled.div`
     font-size: 18px;
     border: solid #0e5937 1px;
     border-radius: 5px;
-
     ::placeholder {
       color: #a7a4a4;
       align-items: center;
@@ -134,7 +129,6 @@ const FeedPostDiv = styled.div`
       padding-top: 20px;
     }
   }
-
   .profilepic {
     border-top-left-radius: 50% 50%;
     border-top-right-radius: 50% 50%;
@@ -148,7 +142,6 @@ const FeedPostDiv = styled.div`
     border: solid #0f482f 2px;
     float: left;
   }
-
   .attachicon {
     padding-left: 10px;
     text-align: center;
@@ -173,13 +166,11 @@ const FeedFilter = styled.div`
   align-items: center;
   margin: 22px auto;
   border-top: solid #0e5937 1px;
-
   p {
     margin: 5px 10px;
     font-size: 20px;
     color: #646464;
   }
-
   button {
     background-color: #0e5937;
     color: white;
