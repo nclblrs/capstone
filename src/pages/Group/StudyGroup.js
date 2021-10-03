@@ -162,9 +162,6 @@ const StudyGroup = () => {
         </RSideAbout>
         <RSideQuestion>
           <h3>QUESTIONS</h3>
-          <h5>TESSSSSSSSSSSSST</h5>
-          <h5>TESSSSSSSSSSSSST</h5>
-          <h5>TESSSSSSSSSSSSST</h5>
         </RSideQuestion>
       </RSideContainer>
     </SGContainer>
@@ -183,37 +180,6 @@ const SGPostsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 60%;
-  button,
-  select {
-    width: 150px;
-    height: 33px;
-    font-size: 15px;
-    align-items: center;
-    justify-content: center;
-    background-color: #0e5937;
-    color: white;
-    border: none;
-    text-align: center;
-
-    &:hover {
-      background-color: #157348;
-      color: white;
-      cursor: pointer;
-      border: solid #0f482f 1px;
-    }
-  }
-  span {
-    margin: 0;
-    color: #0f482f;
-    white-space: nowrap;
-    overflow: hidden;
-    font-size: 18px;
-  }
-  input {
-    height: 33px;
-    margin: 10px;
-    width: 30%;
-  }
 `;
 
 const SGFilter = styled.nav`

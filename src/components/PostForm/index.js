@@ -51,7 +51,7 @@ const PostForm = ({ onSubmit, withTags }) => {
         />
       </div>
 
-      <button class="postbutton" disabled={isSubmitting}>
+      <button className="postbutton" disabled={isSubmitting}>
         {isSubmitting ? "Posting..." : "Post"}
       </button>
     </StyledForm>
