@@ -6,12 +6,15 @@ import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import dayjs from "dayjs";
 
 import { CREATE_POST_COMMENT, POST_COMMENTS, VOTE_COMMENT } from "./gql";
+import ViewportBlock from "components/ViewportBlock";
 
 const Comments = ({ postId }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [loadComments, setLoadComments] = useState(false);
   const { register, handleSubmit, reset } = useForm();
   const { data, loading, refetch } = useQuery(POST_COMMENTS, {
     variables: { postId },
+    skip: !loadComments,
   });
   const [createPostComment] = useMutation(CREATE_POST_COMMENT);
   const [voteComment, { loading: voteLoading }] = useMutation(VOTE_COMMENT);
@@ -54,10 +57,13 @@ const Comments = ({ postId }) => {
   return (
     <Container>
       <CommentForm onSubmit={handleSubmit(onSubmit)}>
-        <input placeholder="Write a comment" {...register("content")} />
+        <input
+          placeholder="Write a comment"
+          {...register("content", { required: true })}
+        />
         <button disabled={isSubmitting}>Comment</button>
       </CommentForm>
-
+      <ViewportBlock onEnterViewport={() => setLoadComments(true)} />
       {loading && "Loading comments..."}
 
       {!!comments.length &&

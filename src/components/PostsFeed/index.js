@@ -24,7 +24,6 @@ const PostsFeed = ({ posts }) => {
             title,
             description,
             attachment: activityAttachment,
-            dueAt,
           } = activity ?? groupActivity ?? {};
 
           const { original_filename, secure_url } =
