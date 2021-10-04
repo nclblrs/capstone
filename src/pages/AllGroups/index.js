@@ -1,14 +1,72 @@
 import React from "react";
 import styled from "styled-components";
+import { NavLink, Switch, Route, Link } from "react-router-dom";
+import { GET_CLASSGROUPS, GET_STUDYGROUPS } from "./gql";
+import { useQuery } from "@apollo/client";
 
 const AllGroups = () => {
+  const { loading: ClassGroupLoading, data: ClassGroupData } =
+    useQuery(GET_CLASSGROUPS);
+  const { loading: StudyGroupLoading, data: StudyGroupData } =
+    useQuery(GET_STUDYGROUPS);
+
   return (
     <PageContainer>
       <MainContainer>
         <div className="buttoncontainer">
-          <p>ALL GROUPS</p>
+          <nav className="Nav">
+            <NavLink to="/groups/classgroups" className="NavMenu">
+              Class Groups
+            </NavLink>
+            <NavLink to="/groups/studygroups" className="NavMenu">
+              Study Groups
+            </NavLink>
+          </nav>
         </div>
-        <div className="itemcontainer"></div>
+
+        <Switch>
+          <Route path="/groups/classgroups">
+            <div className="itemcontainer">
+              {ClassGroupLoading
+                ? "Loading..."
+                : ClassGroupData?.studentClassGroups?.data?.map(
+                    ({ id, name, leader, studentCount }) => (
+                      <Link className="items" key={id} to={`/group/${id}`}>
+                        <h1>{name}</h1>
+                        <p>
+                          Leader: {leader?.user?.lastName},{" "}
+                          {leader?.user?.firstName}
+                        </p>
+                        <p>{studentCount} members</p>
+                      </Link>
+                    )
+                  )}
+            </div>
+          </Route>
+          <Route path="/groups/studygroups">
+            <div className="itemcontainer">
+              {StudyGroupLoading
+                ? "Loading..."
+                : StudyGroupData?.studentStudyGroups?.data?.map(
+                    ({ id, name, admins, studentCount }) => (
+                      <Link className="items" key={id} to={`/group/${id}`}>
+                        <h1>{name}</h1>
+                        <p>
+                          Admins:
+                          {admins?.data?.map(({ user }) => (
+                            <>
+                              {" "}
+                              {user.lastName}, {user?.firstName}
+                            </>
+                          ))}
+                        </p>
+                        <p> {studentCount} members</p>
+                      </Link>
+                    )
+                  )}
+            </div>
+          </Route>
+        </Switch>
       </MainContainer>
     </PageContainer>
   );
@@ -32,9 +90,24 @@ const MainContainer = styled.div`
   .buttoncontainer {
     display: flex;
     width: 100%;
-    height: 80px;
-    padding: 10px;
-    button {
+
+    .Nav {
+      height: 80px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .NavMenu {
+      border: solid #0f482f 1px;
+      border-radius: 10px;
+      padding: 10px;
+      text-decoration: none;
+      color: #0f482f;
+
+      :hover,
+      &.active {
+        background-color: #f2f2f2;
+      }
     }
     > p {
       font-size: 20px;
@@ -45,7 +118,7 @@ const MainContainer = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    gap: 15px;
     margin: 2em;
     li {
       padding: 10px 8px;
@@ -61,7 +134,6 @@ const MainContainer = styled.div`
     height: 250px;
     margin-bottom: 20px;
     text-decoration: none;
-    justify-content: space-between;
 
     :hover {
       background-color: #e8e8e8;
