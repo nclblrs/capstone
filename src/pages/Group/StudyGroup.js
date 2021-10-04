@@ -104,34 +104,28 @@ const StudyGroup = () => {
             </Route>
             <Route path={`/group/${id}/files`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Files</h1>
-                </div>
+                <h1>Files</h1>
               </LeftContainer>
             </Route>
             <Route path={`/group/${id}/tags`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Tags</h1>
-                </div>
+                <h1>Tags</h1>
               </LeftContainer>
             </Route>
             <Route path={`/group/${id}/members`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Members</h1>
-                </div>
+                <h1>Members</h1>
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
                     : students?.data?.map(({ user }) => (
                         <>
-                          <h5>
+                          <ul>
                             <li>
                               {user.lastName}, {user.firstName}{" "}
                               {user.middleName}
                             </li>
-                          </h5>
+                          </ul>
                         </>
                       ))}
                 </div>
@@ -276,7 +270,7 @@ const NavMenu = styled(NavLink)`
   font-size: 18px;
   align-items: center;
   text-decoration: none;
-  padding: 10px 1em;
+  padding: 7px 1em;
   margin: 0 1em;
   &:hover,
   &.active {
@@ -299,22 +293,26 @@ const LeftContainer = styled.div`
   display: flex;
   border-radius: 1em;
   background-color: #f2f2f2;
-  margin: 2em 0;
-  padding: 2em;
+  margin-top: 1.5em;
+  overflow-y: scroll;
+  width: 100%;
+  height: 550px;
   flex-direction: column;
-  .leftHeader {
-    height: 20%;
-    h1 {
+  h1 {
+    color: #0f482f;
+    padding: 0.5em 1.5em;
+  }
+  .leftContent {
+    position: absolute;
+    padding: 6em 2em;
+    h5 {
+      font-size: 20px;
       color: #0f482f;
     }
-  }
-  h5 {
-    font-weight: normal;
-    color: #0f482f;
-    font-size: 20px;
-  }
-  li {
-    margin: 0 2em;
+    ul {
+      list-style-type: none;
+      font-size: 20px;
+    }
   }
 `;
 

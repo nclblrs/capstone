@@ -12,7 +12,7 @@ import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
-import { FaLaptop } from "react-icons/fa";
+import { FaLaptop, FaPenSquare } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
@@ -115,34 +115,28 @@ const Course = () => {
             </Route>
             <Route path={`/class/${id}/files`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Files</h1>
-                </div>
+                <h1>Files</h1>
               </LeftContainer>
             </Route>
             <Route path={`/class/${id}/members`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Members</h1>
-                </div>
+                <h1>Members</h1>
                 <div className="leftContent">
                   <h5>
-                    <p>
-                      Teacher: {lastName}, {firstName}
-                    </p>
-                    {loading
-                      ? "Loading..."
-                      : students?.data?.map(({ user }) => (
-                          <>
-                            <h5>
-                              <li>
-                                {user.lastName}, {user.firstName}{" "}
-                                {user.middleName}
-                              </li>
-                            </h5>
-                          </>
-                        ))}
+                    Teacher : {lastName}, {firstName}
                   </h5>
+                  {loading
+                    ? "Loading..."
+                    : students?.data?.map(({ user }) => (
+                        <>
+                          <ul>
+                            <li>
+                              {user.lastName}, {user.firstName}{" "}
+                              {user.middleName}
+                            </li>
+                          </ul>
+                        </>
+                      ))}
                 </div>
               </LeftContainer>
             </Route>
@@ -154,6 +148,13 @@ const Course = () => {
                     : groups?.data?.map(({ name, students, leader }) => (
                         <>
                           <div className="groupcontainer">
+                            <button>
+                              <FaPenSquare
+                                size={20}
+                                color="#0e5937"
+                                class="pen"
+                              />
+                            </button>
                             <h5>{name}</h5>&nbsp;
                             <p>
                               Leader:{" "}
@@ -163,9 +164,11 @@ const Course = () => {
                             <p>Members: </p>
                             {students?.data?.map(({ user }) => (
                               <>
-                                <li>
-                                  {user.lastName}, {user.firstName}
-                                </li>
+                                <ul>
+                                  <li>
+                                    {user.lastName}, {user.firstName}
+                                  </li>
+                                </ul>
                               </>
                             ))}
                           </div>
@@ -338,7 +341,7 @@ const NavMenu = styled(NavLink)`
   font-size: 18px;
   align-items: center;
   text-decoration: none;
-  padding: 10px 1em;
+  padding: 7px 1em;
   margin: 0 1em;
   &:hover,
   &.active {
@@ -352,28 +355,26 @@ const LeftContainer = styled.div`
   display: flex;
   border-radius: 1em;
   background-color: #f2f2f2;
-  margin: 1.5em 0;
-  padding: 2em;
   flex-direction: column;
-  .leftHeader {
-    height: 20%;
-    h1 {
-      color: #0f482f;
-    }
-  }
-  h5 {
-    font-weight: normal;
+  width: 100%;
+  height: 550px;
+  margin-top: 1.5em;
+  overflow-y: scroll;
+  h1 {
     color: #0f482f;
-    font-size: 20px;
-  }
-  li {
-    margin: 0 2em;
+    padding: 0.5em 1.5em;
   }
   .leftContent {
-    width: 100%;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    position: absolute;
+    padding: 4.2em 3em;
+    h5 {
+      font-size: 20px;
+      color: #0f482f;
+    }
+    ul {
+      list-style-type: none;
+      font-size: 20px;
+    }
   }
 `;
 
@@ -382,15 +383,11 @@ const GroupContainer = styled.div`
   border-radius: 1em;
   padding: 1.5em 0;
   flex-direction: column;
-
   .leftContent {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    li {
-      padding: 10px 8px;
-    }
     .groupcontainer {
       border-radius: 1em;
       flex-direction: column;
@@ -401,11 +398,32 @@ const GroupContainer = styled.div`
       height: 350px;
       margin-bottom: 20px;
 
+      button {
+        justify-content: center;
+        margin-left: auto;
+        padding: 0;
+        border: none;
+        background: none;
+        cursor: pointer;
+        text-align: center;
+      }
+
       > h5 {
         font-weight: bold;
         color: #0f482f;
         font-size: 20px;
         margin: 0;
+        position: absolute;
+      }
+      p {
+        margin-top: 7px;
+        color: #0f482f;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      ul {
+        list-style-type: none;
+        margin: 10px;
       }
     }
   }
