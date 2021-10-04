@@ -40,12 +40,12 @@ const StudyGroup = () => {
   const { name, groupCode, admins, students } = data?.group ?? {};
 
   const handleCreatePost = async (data) => {
-    const { content, category, file: files } = data;
+    const { content, category, file: files, tags } = data;
     const file = files[0];
 
     try {
       const { data: createPostData } = await createPost({
-        variables: { groupId: id, content, category },
+        variables: { groupId: id, content, category, tags },
       });
       const postId = createPostData?.createPost?.id;
 
