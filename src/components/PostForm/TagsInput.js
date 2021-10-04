@@ -17,12 +17,17 @@ const TagsInput = ({ tags, setTags }) => {
   };
 
   const handleKeyDown = (e) => {
-    // Number 13 is the "Enter" key on the keyboard
+    // ENTER
     if (e.keyCode === 13) {
-      // Trigger the button element with a click
       e.preventDefault();
-      console.log("asda");
       addTag(inputValue);
+    }
+
+    // BACKSPACE
+    if (e.keyCode === 8 && inputValue === "") {
+      const newTags = [...tags];
+      newTags.pop();
+      setTags(newTags);
     }
   };
 
@@ -39,8 +44,8 @@ const TagsInput = ({ tags, setTags }) => {
         e.target?.querySelector("input")?.focus();
       }}
     >
-      {tags.map((tagName) => (
-        <Tag name={tagName} removeTag={removeTag} />
+      {tags.map((tagName, index) => (
+        <Tag key={index} name={tagName} removeTag={removeTag} />
       ))}
       <input
         onKeyDown={handleKeyDown}
