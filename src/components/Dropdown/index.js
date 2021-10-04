@@ -8,14 +8,15 @@ const Dropdown = ({ popperComponent, children, closeOnClickInside = true }) => {
   const referenceRef = useRef(null);
   const popperRef = useRef(null);
 
-  const handleClickOutsidePopper = () => {
+  const handleClickOutsidePopper = (e) => {
+    if (referenceRef?.current?.contains(e.target)) return;
+
     setVisibility(false);
   };
 
   const handleClickInsidePopper = (e) => {
-    e.stopPropagation();
-
-    if (closeOnClickInside) setVisibility(false);
+    const clickedInside = popperRef?.current?.contains(e.target);
+    if (clickedInside && !closeOnClickInside) e.stopPropagation();
   };
 
   const { styles, attributes } = usePopper(
@@ -40,19 +41,13 @@ const Dropdown = ({ popperComponent, children, closeOnClickInside = true }) => {
   }, []);
 
   function handleDropdownClick(e) {
-    e.stopPropagation();
     setVisibility(!visible);
   }
 
   return (
     <DropdownContainer ref={referenceRef} onClick={handleDropdownClick}>
       {children}
-      <div
-        ref={popperRef}
-        style={styles.popper}
-        {...attributes.popper}
-        onClick={(e) => e.stopPropagation()}
-      >
+      <div ref={popperRef} style={styles.popper} {...attributes.popper}>
         <PopverContainer
           style={styles.offset}
           visible={visible}
