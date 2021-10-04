@@ -34,15 +34,15 @@ const PostForm = ({ onSubmit, withTags }) => {
           <option value="post">Post</option>
           <option value="question">Question</option>
         </select>
-        <label for="attach-file-post" class="attachmentLabel">
+        <label for="attach-file-post" className="attachmentLabel">
           {attachedFileName ? attachedFileName : "Attach File"}
-          <BsPaperclip size={15} class="attachicon" />
+          <BsPaperclip size={15} className="attachicon" />
         </label>
         <input
           id="attach-file-post"
           type="file"
           {...register("file")}
-          class="attachmentInput"
+          className="attachmentInput"
         />
       </div>
 

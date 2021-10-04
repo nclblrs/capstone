@@ -127,15 +127,12 @@ const Course = () => {
                   </h5>
                   {loading
                     ? "Loading..."
-                    : students?.data?.map(({ user }) => (
-                        <>
-                          <ul>
-                            <li>
-                              {user.lastName}, {user.firstName}{" "}
-                              {user.middleName}
-                            </li>
-                          </ul>
-                        </>
+                    : students?.data?.map(({ id, user }) => (
+                        <ul key={id}>
+                          <li>
+                            {user.lastName}, {user.firstName} {user.middleName}
+                          </li>
+                        </ul>
                       ))}
                 </div>
               </LeftContainer>
@@ -145,14 +142,14 @@ const Course = () => {
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
-                    : groups?.data?.map(({ name, students, leader }) => (
+                    : groups?.data?.map(({ id, name, students, leader }) => (
                         <>
-                          <div className="groupcontainer">
+                          <div key={id} className="groupcontainer">
                             <button>
                               <FaPenSquare
                                 size={20}
                                 color="#0e5937"
-                                class="pen"
+                                className="pen"
                               />
                             </button>
                             <h5>{name}</h5>&nbsp;
@@ -162,14 +159,12 @@ const Course = () => {
                                 `${leader?.user?.lastName}, ${leader?.user?.firstName}`}
                             </p>
                             <p>Members: </p>
-                            {students?.data?.map(({ user }) => (
-                              <>
-                                <ul>
-                                  <li>
-                                    {user.lastName}, {user.firstName}
-                                  </li>
-                                </ul>
-                              </>
+                            {students?.data?.map(({ id, user }) => (
+                              <ul key={id}>
+                                <li>
+                                  {user.lastName}, {user.firstName}
+                                </li>
+                              </ul>
                             ))}
                           </div>
                         </>

@@ -19,12 +19,12 @@ const Calendar = () => {
           <h3>Calendar</h3>
         </CalendarHeader>
         <UpperContainer>
-          <p class="Today">
+          <p className="Today">
             <i> Today is </i>
           </p>
-          <p class="CurrentDate"> {date} </p>
-          <button class="AddAgenda">
-            Add Agenda <FaPlusCircle size={18} class="agendaicon" />
+          <p className="CurrentDate"> {date} </p>
+          <button className="AddAgenda">
+            Add Agenda <FaPlusCircle size={18} className="agendaicon" />
           </button>
         </UpperContainer>
         <LeftContainer>
@@ -32,37 +32,37 @@ const Calendar = () => {
             <li>
               <i>
                 {" "}
-                <FaCircle class="c1" /> To-do
+                <FaCircle className="c1" /> To-do
               </i>
             </li>
             <li>
               <i>
                 {" "}
-                <FaCircle class="c2" /> In Progress
+                <FaCircle className="c2" /> In Progress
               </i>
             </li>
             <li>
               <i>
                 {" "}
-                <FaCircle class="c3" /> Under Review
+                <FaCircle className="c3" /> Under Review
               </i>
             </li>
             <li>
               <i>
                 {" "}
-                <FaCircle class="c4" /> Done
+                <FaCircle className="c4" /> Done
               </i>
             </li>
             <li>
               <i>
                 {" "}
-                <FaCircle class="c5" /> Missing
+                <FaCircle className="c5" /> Missing
               </i>
             </li>
             <li>
               <i>
                 {" "}
-                <FaCircle class="c6" /> Priority
+                <FaCircle className="c6" /> Priority
               </i>
             </li>
           </ul>

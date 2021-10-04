@@ -27,7 +27,7 @@ const LeftSideBar = () => {
                 </DropdownButtons>
               }
             >
-              <FaPlusCircle size={20} class="button-icon" />
+              <FaPlusCircle size={20} className="button-icon" />
             </Dropdown>
           </button>
         </h4>
@@ -71,7 +71,7 @@ const LeftSideBar = () => {
                 </DropdownButtons>
               }
             >
-              <FaPenSquare size={20} class="button-icon" />
+              <FaPenSquare size={20} className="button-icon" />
             </Dropdown>
           </button>
         </h4>
@@ -83,6 +83,7 @@ const LeftSideBar = () => {
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
+
         {studyGroups?.length === 3 && (
           <LSideLinks to="/groups/studygroups">See More</LSideLinks>
         )}

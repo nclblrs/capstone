@@ -14,7 +14,7 @@ const Feed = () => {
       <FeedHeader>
         <FeedPostDiv>
           <img
-            class="profilepic"
+            className="profilepic"
             src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
             alt="Your profile pic"
           />
@@ -30,29 +30,33 @@ const Feed = () => {
                 </option>
                 {loading
                   ? "Loading..."
-                  : studyGroups.map(({ name }) => (
-                      <option value="">{name}</option>
+                  : studyGroups.map(({ id, name }) => (
+                      <option key={id} value="">
+                        {name}
+                      </option>
                     ))}
                 {loading
                   ? "Loading..."
-                  : classGroups.map(({ name }) => (
-                      <option value="">{name}</option>
+                  : classGroups.map(({ id, name }) => (
+                      <option key={id} value="">
+                        {name}
+                      </option>
                     ))}
               </select>
-              <button class="attach">
+              <button className="attach">
                 Attach File
-                <BsPaperclip size={25} class="attachicon" />
+                <BsPaperclip size={25} className="attachicon" />
               </button>
             </ButtonContainer>
-            <button class="postbutton">Post</button>
+            <button className="postbutton">Post</button>
           </form>
         </FeedPostDiv>
 
         <FeedFilter>
           <p>What's new?</p>
-          <button class="filterbutton">
+          <button className="filterbutton">
             Filter Posts &nbsp;
-            <FaFilter size={15} class="filtericon" />
+            <FaFilter size={15} className="filtericon" />
           </button>
         </FeedFilter>
       </FeedHeader>

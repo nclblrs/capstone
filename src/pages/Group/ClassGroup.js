@@ -118,15 +118,12 @@ const ClassGroup = () => {
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
-                    : students?.data?.map(({ user }) => (
-                        <>
-                          <ul>
-                            <li>
-                              {user.lastName}, {user.firstName}{" "}
-                              {user.middleName}
-                            </li>
-                          </ul>
-                        </>
+                    : students?.data?.map(({ id, user }) => (
+                        <ul key={id}>
+                          <li>
+                            {user.lastName}, {user.firstName} {user.middleName}
+                          </li>
+                        </ul>
                       ))}
                 </div>
               </LeftContainer>
