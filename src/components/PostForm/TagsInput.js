@@ -32,7 +32,7 @@ const TagsInput = ({ tags, setTags }) => {
   };
 
   const addTag = (tag) => {
-    if (tags.includes(tag)) return;
+    if (tag === "" || tags.includes(tag)) return;
 
     setTags([...tags, tag]);
     setInputValue("");
