@@ -340,9 +340,11 @@ const NavMenu = styled(NavLink)`
   text-decoration: none;
   padding: 10px 1em;
   margin: 0 1em;
-  &:hover {
+  &:hover,
+  &.active {
     background-color: #0e5937;
     color: white;
+    border-radius: 5px;
   }
 `;
 

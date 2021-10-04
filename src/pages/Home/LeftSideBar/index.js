@@ -39,9 +39,9 @@ const LeftSideBar = () => {
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
-        <LSideLinks to="/classes">
-          <p>... See More</p>
-        </LSideLinks>
+        {courses?.length === 3 && (
+          <LSideLinks to="/classes">See More</LSideLinks>
+        )}
       </LSideItem>
       <Line />
       <LSideItem>
@@ -54,9 +54,9 @@ const LeftSideBar = () => {
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
-        <LSideLinks to="/groups">
-          <p>... See More</p>
-        </LSideLinks>
+        {classGroups?.length === 3 && (
+          <LSideLinks to="/groups/classgroups">See More</LSideLinks>
+        )}
       </LSideItem>
       <Line />
       <LSideItem>
@@ -83,9 +83,9 @@ const LeftSideBar = () => {
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
-        <LSideLinks to="/groups">
-          <p>... See More</p>
-        </LSideLinks>
+        {studyGroups?.length === 3 && (
+          <LSideLinks to="/groups/studygroups">See More</LSideLinks>
+        )}
       </LSideItem>
     </LSideContainer>
   );

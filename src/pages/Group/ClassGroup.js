@@ -161,9 +161,6 @@ const ClassGroup = () => {
         </RSideAbout>
         <RSideToDo>
           <h3>TO-DO</h3>
-          <h5>TESSSSSSSSSSSSST</h5>
-          <h5>TESSSSSSSSSSSSST</h5>
-          <h5>TESSSSSSSSSSSSST</h5>
         </RSideToDo>
       </RSideContainer>
     </CGContainer>
@@ -280,9 +277,11 @@ const NavMenu = styled(NavLink)`
   text-decoration: none;
   padding: 10px 1em;
   margin: 0 1em;
-  &:hover {
+  &:hover,
+  &.active {
     background-color: #0e5937;
     color: white;
+    border-radius: 5px;
   }
 `;
 
