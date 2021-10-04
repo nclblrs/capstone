@@ -1,6 +1,7 @@
 import { useMutation } from "@apollo/client";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 
 import { ADMIN_CREATE_USER, CREATE_ADMIN } from "./gql";
 
@@ -31,14 +32,14 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         });
 
         if (data?.createAdmin?.id) {
-          alert("Created successfully");
+          toast.success("Created successfully");
           onCreateFinish();
           reset();
         } else {
-          alert("Something is wrong");
+          throw Error("something is wrong");
         }
       } catch (error) {
-        alert(error);
+        toast.error(error.message);
       }
     } else {
       try {
@@ -54,14 +55,14 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         });
 
         if (data?.adminCreateUser?.id) {
-          alert("Created successfully");
+          toast.success("Created successfully");
           onCreateFinish();
           reset();
         } else {
-          alert("Something is wrong");
+          throw Error("something is wrong");
         }
       } catch (error) {
-        alert(error);
+        toast.error(error.message);
       }
     }
   };

@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 import React from "react";
 import styled from "styled-components";
 
@@ -21,14 +22,13 @@ const Login = () => {
       const accessToken = data?.authenticate?.tokens?.accessToken ?? null;
 
       if (!accessToken) {
-        console.log("something is wrong");
-        return;
+        throw Error("something is wrong");
       }
 
       localStorage.setItem("access-token", accessToken);
       window.location.href = "/";
     } catch (error) {
-      alert(error);
+      toast.error(error.message);
     }
   };
 
