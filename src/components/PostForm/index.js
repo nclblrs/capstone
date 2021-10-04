@@ -2,17 +2,20 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { BsPaperclip } from "react-icons/bs";
+import TagsInput from "./TagsInput";
 
 const PostForm = ({ onSubmit, withTags }) => {
   const { register, handleSubmit, reset, watch } = useForm();
+  const [tags, setTags] = useState([]);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
 
   const handleSubmitWithLoadingAndReset = async (data) => {
     setIsSubmitting(true);
-    await onSubmit(data);
+    await onSubmit({ ...data, tags });
     reset();
+    setTags([]);
     setIsSubmitting(false);
   };
 
@@ -23,15 +26,7 @@ const PostForm = ({ onSubmit, withTags }) => {
         placeholder="Write Something"
       ></textarea>
       <div>
-        {withTags && (
-          <Tags>
-            Tags
-            <input
-              placeholder="#Hashtag #Programming #IdkWhatImDoing"
-              {...register("tags")}
-            />
-          </Tags>
-        )}
+        {withTags && <TagsInput tags={tags} setTags={setTags} />}
         <select {...register("category")}>
           <option value="post" selected disabled>
             Category
@@ -59,18 +54,6 @@ const PostForm = ({ onSubmit, withTags }) => {
 };
 
 export default PostForm;
-
-const Tags = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-
-  width: 50%;
-  input {
-    height: 32px;
-    width: 100%;
-  }
-`;
 
 const StyledForm = styled.form`
   display: flex;
