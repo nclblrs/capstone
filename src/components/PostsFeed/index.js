@@ -53,7 +53,7 @@ const PostsFeed = ({ posts }) => {
                     {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                     <div className="tags">
                       {tags.map((tag, index) => (
-                        <span key={index}>{tag}</span>
+                        <span key={index}>#{tag}</span>
                       ))}
                     </div>
                   </h4>
