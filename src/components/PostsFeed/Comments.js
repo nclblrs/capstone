@@ -2,6 +2,7 @@ import { useMutation, useQuery } from "@apollo/client";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { toast } from "react-toastify";
 import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
 import dayjs from "dayjs";
 
@@ -23,7 +24,6 @@ const Comments = ({ postId }) => {
 
   const onSubmit = async (data) => {
     setIsSubmitting(true);
-    console.log(data);
     const { content } = data;
 
     try {
@@ -34,10 +34,10 @@ const Comments = ({ postId }) => {
       if (!data?.createPostComment?.id) throw Error("something is wrong");
 
       refetch();
-      alert("Comment created!");
+      toast.success("Comment created!");
       reset();
     } catch (error) {
-      alert("error");
+      toast.error(error.message);
     }
 
     setIsSubmitting(false);
@@ -50,7 +50,7 @@ const Comments = ({ postId }) => {
       const { data } = await voteComment({ variables: { commentId, vote } });
       if (!data?.voteComment?.id) throw Error("something is wrong");
     } catch (error) {
-      alert(error);
+      toast.error(error.message);
     }
   };
 

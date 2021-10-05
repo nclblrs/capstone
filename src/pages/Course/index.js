@@ -1,4 +1,5 @@
 import React from "react";
+import { toast } from "react-toastify";
 import {
   ADD_ATTACHMENT_TO_POST,
   COURSE_POSTS,
@@ -76,11 +77,11 @@ const Course = () => {
           throw Error("something is wrong");
       }
 
-      alert("Created Post");
+      toast.success("Created Post");
 
       refetch();
     } catch (error) {
-      alert(error);
+      toast.error(error.message);
     }
   };
 
