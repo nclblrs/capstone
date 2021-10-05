@@ -18,6 +18,8 @@ import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { RiFileCopy2Fill } from "react-icons/ri";
 
+import Dropdown, { DropdownButtons } from "components/Dropdown";
+
 const Course = () => {
   let { id } = useParams();
   const { user } = useCurrentUserContext();
@@ -145,16 +147,26 @@ const Course = () => {
                     : groups?.data?.map(({ id, name, students, leader }) => (
                         <>
                           <div key={id} className="groupcontainer">
-                            <button>
-                              <FaPenSquare
-                                size={20}
-                                color="#0e5937"
-                                className="pen"
-                              />
-                            </button>
-                            <h5>{name}</h5>&nbsp;
+                            <h5>
+                              {name}
+                              <button>
+                                <Dropdown
+                                  popperComponent={
+                                    <DropdownButtons>
+                                      <button>Edit Information</button>
+                                    </DropdownButtons>
+                                  }
+                                >
+                                  <FaPenSquare
+                                    size={20}
+                                    color="#0e5937"
+                                    className="pen"
+                                  />
+                                </Dropdown>
+                              </button>
+                            </h5>
                             <p>
-                              Leader:{" "}
+                              Leader: &nbsp;
                               {leader &&
                                 `${leader?.user?.lastName}, ${leader?.user?.firstName}`}
                             </p>
@@ -362,13 +374,13 @@ const LeftContainer = styled.div`
   .leftContent {
     position: absolute;
     padding: 4.2em 3em;
-    h5 {
-      font-size: 20px;
-      color: #0f482f;
-    }
     ul {
       list-style-type: none;
       font-size: 20px;
+    }
+    h5 {
+      font-size: 20px;
+      color: #0f482f;
     }
   }
 `;
@@ -378,11 +390,33 @@ const GroupContainer = styled.div`
   border-radius: 1em;
   padding: 1.5em 0;
   flex-direction: column;
+
+  h5 {
+    font-weight: bold;
+    color: #0f482f;
+    text-align: left;
+    font-size: 20px;
+    display: flex;
+    margin: 0;
+    margin-bottom: 1em;
+  }
+
+  button {
+    justify-content: center;
+    margin-left: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
   .leftContent {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+
     .groupcontainer {
       border-radius: 1em;
       flex-direction: column;
@@ -393,23 +427,6 @@ const GroupContainer = styled.div`
       height: 350px;
       margin-bottom: 20px;
 
-      button {
-        justify-content: center;
-        margin-left: auto;
-        padding: 0;
-        border: none;
-        background: none;
-        cursor: pointer;
-        text-align: center;
-      }
-
-      > h5 {
-        font-weight: bold;
-        color: #0f482f;
-        font-size: 20px;
-        margin: 0;
-        position: absolute;
-      }
       p {
         margin-top: 7px;
         color: #0f482f;
