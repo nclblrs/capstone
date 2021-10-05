@@ -5,6 +5,7 @@ import {
   GROUP_POSTS,
   CREATE_GROUP_POST,
   GET_GROUP,
+  GET_TAGS,
 } from "./gql";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams, NavLink, Switch, Route } from "react-router-dom";
@@ -28,6 +29,11 @@ const StudyGroup = () => {
   const { loading, data } = useQuery(GET_GROUP, {
     variables: { groupId: id },
   });
+
+  const { loading: tagLoading, data: tagData } = useQuery(GET_TAGS, {
+    variables: { groupId: id },
+  });
+
   const {
     data: postsData,
     loading: postsLoading,
@@ -39,6 +45,7 @@ const StudyGroup = () => {
   const posts = postsData?.groupPosts?.data ?? [];
 
   const { name, groupCode, admins, students } = data?.group ?? {};
+  const tags = tagData?.groupPostTags ?? [];
 
   const handleCreatePost = async (data) => {
     const { content, category, file: files, tags } = data;
@@ -114,6 +121,15 @@ const StudyGroup = () => {
               <LeftContainer>
                 <div className="leftHeader">
                   <h1>Tags</h1>
+                  <div className="tagcontainer">
+                    {tagLoading
+                      ? "Loading..."
+                      : tags.map(({ name: tagName, count }) => (
+                          <h5>
+                            #{tagName} <span>{count}</span>
+                          </h5>
+                        ))}
+                  </div>
                 </div>
               </LeftContainer>
             </Route>
@@ -306,16 +322,31 @@ const LeftContainer = styled.div`
   .leftHeader {
     height: 20%;
     h1 {
-      color: #0f482f;
+      color: #0e5937;
     }
   }
   h5 {
     font-weight: normal;
-    color: #0f482f;
+    color: #0e5937;
     font-size: 20px;
   }
   li {
     margin: 0 2em;
+  }
+  .tagcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    height: 270px;
+    span {
+      font-size: 16px;
+      border-radius: 50%;
+      padding: 3px 6px;
+      background: #0e5937;
+      border: 2px solid white;
+      color: white;
+      text-align: center;
+    }
   }
 `;
 
