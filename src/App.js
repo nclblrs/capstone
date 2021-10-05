@@ -5,10 +5,13 @@ import {
   Route,
   Redirect,
 } from "react-router-dom";
+import styled from "styled-components";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 import Navbar from "components/Navbar";
 import Login from "components/Login";
 import Home from "pages/Home";
-import styled from "styled-components";
 import ClassSched from "pages/ClassSchedule";
 import Calendar from "pages/Calendar";
 import Logout from "components/Logout";
@@ -86,6 +89,7 @@ function App() {
           </>
         </Switch>
       </Router>
+      <ToastContainer />
     </AppContainer>
   );
 }

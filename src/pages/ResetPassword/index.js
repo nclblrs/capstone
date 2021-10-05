@@ -1,5 +1,6 @@
 import { useMutation } from "@apollo/client";
 import { useParams } from "react-router";
+import { toast } from "react-toastify";
 
 import { RESET_PASSWORD } from "./gql";
 
@@ -17,14 +18,13 @@ const ResetPassword = () => {
       });
 
       if (!data) {
-        console.log("something is wrong");
-        return;
+        throw Error("something is wrong");
       }
 
-      alert("successfully changed password");
+      toast.success("successfully changed password");
       window.location.href = "/login";
     } catch (error) {
-      alert(error);
+      toast.error(error.message);
     }
   };
 
