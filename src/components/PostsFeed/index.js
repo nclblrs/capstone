@@ -1,10 +1,12 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import dayjs from "dayjs";
-
+import { useLocation } from "react-router";
 import Comments from "./Comments";
 
 const PostsFeed = ({ posts }) => {
+  const location = useLocation();
+
   return (
     <Container>
       {posts.map(
@@ -53,7 +55,13 @@ const PostsFeed = ({ posts }) => {
                     {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                     <div className="tags">
                       {tags.map((tag, index) => (
-                        <span key={index}>#{tag}</span>
+                        <Link
+                          className="TagLink"
+                          key={index}
+                          to={`${location.pathname}?tag=${tag}`}
+                        >
+                          #{tag}
+                        </Link>
                       ))}
                     </div>
                   </h4>
@@ -166,13 +174,14 @@ const PostContent = styled.div`
     align-items: center;
 
     .category,
-    .tags > span {
+    .tags > .TagLink {
       background: #e7b22a;
       color: white;
       font-size: 14px;
       padding: 4px 10px;
       border-radius: 4px;
       margin-right: 12px;
+      text-decoration: none;
     }
 
     .tags {

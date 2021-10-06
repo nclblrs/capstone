@@ -5,7 +5,6 @@ import {
   GROUP_POSTS,
   CREATE_GROUP_POST,
   GET_GROUP,
-  GET_TAGS,
 } from "./gql";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams, NavLink, Switch, Route } from "react-router-dom";
@@ -18,10 +17,13 @@ import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
+import { useUrlQuery } from "hooks/useUrlQuery";
+import TagsInfo from "./StudyGroupTabs/Tags";
 
 const StudyGroup = () => {
   let { id } = useParams();
   const { user } = useCurrentUserContext();
+  const { tag } = useUrlQuery();
 
   const [createPost] = useMutation(CREATE_GROUP_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
@@ -30,22 +32,17 @@ const StudyGroup = () => {
     variables: { groupId: id },
   });
 
-  const { loading: tagLoading, data: tagData } = useQuery(GET_TAGS, {
-    variables: { groupId: id },
-  });
-
   const {
     data: postsData,
     loading: postsLoading,
     refetch,
   } = useQuery(GROUP_POSTS, {
-    variables: { groupId: id },
+    variables: { groupId: id, tags: tag ? [tag] : [] },
   });
 
   const posts = postsData?.groupPosts?.data ?? [];
 
   const { name, groupCode, admins, students } = data?.group ?? {};
-  const tags = tagData?.groupPostTags ?? [];
 
   const handleCreatePost = async (data) => {
     const { content, category, file: files, tags } = data;
@@ -105,34 +102,33 @@ const StudyGroup = () => {
             </NavMenu>
           </SGFilter>
         </SGPostHeader>
+        {tag ? (
+          <div className="tagtitle">
+            <h1>#{tag}</h1>
+          </div>
+        ) : null}
         <SGItemsContainer>
           <Switch>
-            <Route path={`/group/${id}`} exact>
+            <Route path={`/group/:id`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/group/${id}/files`}>
+            <Route path={`/group/:id/files`}>
               <LeftContainer>
                 <h1>Files</h1>
               </LeftContainer>
             </Route>
-            <Route path={`/group/${id}/tags`}>
+            <Route path={`/group/:id/tags`}>
               <LeftContainer>
                 <h1>Tags</h1>
                 <div className="leftHeader">
                   <h1>Tags</h1>
                   <div className="tagcontainer">
-                    {tagLoading
-                      ? "Loading..."
-                      : tags.map(({ name: tagName, count }) => (
-                          <h5>
-                            #{tagName} <span>{count}</span>
-                          </h5>
-                        ))}
+                    <TagsInfo />
                   </div>
                 </div>
               </LeftContainer>
             </Route>
-            <Route path={`/group/${id}/members`}>
+            <Route path={`/group/:id/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">
@@ -191,6 +187,24 @@ const SGPostsContainer = styled.div`
   flex-direction: column;
   align-items: center;
   width: 60%;
+  .tagtitle {
+    position: sticky;
+    top: 353px;
+    height: 100px;
+    background-color: #e8e8e8;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    border-bottom: solid 1px #0f482f;
+    padding: 1em;
+    z-index: 1;
+    > h1 {
+      margin: 0;
+      color: #0f482f;
+    }
+  }
 `;
 
 const SGFilter = styled.nav`
@@ -329,6 +343,7 @@ const LeftContainer = styled.div`
       color: #0e5937;
       font-size: 20px;
     }
+<<<<<<< HEAD
     .leftContent {
       position: absolute;
       padding: 6em 2em;
@@ -356,6 +371,23 @@ const LeftContainer = styled.div`
         text-align: center;
       }
     }
+=======
+  }
+  h5 {
+    font-weight: normal;
+    color: #0e5937;
+    font-size: 20px;
+  }
+  li {
+    margin: 0 2em;
+  }
+  .tagcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: flex-start;
+    height: 220px;
+>>>>>>> d15e7cdbf0125c4a2ede794bfa75c94a7c3d5cce
   }
 `;
 
