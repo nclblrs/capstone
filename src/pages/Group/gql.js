@@ -39,8 +39,8 @@ export const GET_GROUP = gql`
 `;
 
 export const GROUP_POSTS = gql`
-  query groupPosts($groupId: ID!) {
-    groupPosts(groupId: $groupId) {
+  query groupPosts($groupId: ID!, $tags: [String]) {
+    groupPosts(groupId: $groupId, tags: $tags) {
       data {
         id
         content
