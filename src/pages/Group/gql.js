@@ -104,3 +104,12 @@ export const ADD_ATTACHMENT_TO_POST = gql`
     }
   }
 `;
+
+export const GET_TAGS = gql`
+  query groupPostTags($groupId: ID!) {
+    groupPostTags(groupId: $groupId) {
+      name
+      count
+    }
+  }
+`;
