@@ -117,9 +117,7 @@ const StudyGroup = () => {
             </Route>
             <Route path={`/group/${id}/tags`}>
               <LeftContainer>
-<<<<<<< HEAD
                 <h1>Tags</h1>
-=======
                 <div className="leftHeader">
                   <h1>Tags</h1>
                   <div className="tagcontainer">
@@ -132,7 +130,6 @@ const StudyGroup = () => {
                         ))}
                   </div>
                 </div>
->>>>>>> 2ec7b29444e18969071446c5b8adb30e844dc6f2
               </LeftContainer>
             </Route>
             <Route path={`/group/${id}/members`}>
@@ -318,48 +315,46 @@ const LeftContainer = styled.div`
   width: 100%;
   height: 550px;
   flex-direction: column;
-<<<<<<< HEAD
   h1 {
     color: #0f482f;
     padding: 0.5em 1.5em;
-=======
-  .leftHeader {
-    height: 20%;
-    h1 {
-      color: #0e5937;
+    .leftHeader {
+      height: 20%;
+      h1 {
+        color: #0e5937;
+      }
     }
-  }
-  h5 {
-    font-weight: normal;
-    color: #0e5937;
-    font-size: 20px;
->>>>>>> 2ec7b29444e18969071446c5b8adb30e844dc6f2
-  }
-  .leftContent {
-    position: absolute;
-    padding: 6em 2em;
     h5 {
-      font-size: 20px;
-      color: #0f482f;
-    }
-    ul {
-      list-style-type: none;
+      font-weight: normal;
+      color: #0e5937;
       font-size: 20px;
     }
-  }
-  .tagcontainer {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    height: 270px;
-    span {
-      font-size: 16px;
-      border-radius: 50%;
-      padding: 3px 6px;
-      background: #0e5937;
-      border: 2px solid white;
-      color: white;
-      text-align: center;
+    .leftContent {
+      position: absolute;
+      padding: 6em 2em;
+      h5 {
+        font-size: 20px;
+        color: #0f482f;
+      }
+      ul {
+        list-style-type: none;
+        font-size: 20px;
+      }
+    }
+    .tagcontainer {
+      display: flex;
+      flex-wrap: wrap;
+      flex-direction: column;
+      height: 270px;
+      span {
+        font-size: 16px;
+        border-radius: 50%;
+        padding: 3px 6px;
+        background: #0e5937;
+        border: 2px solid white;
+        color: white;
+        text-align: center;
+      }
     }
   }
 `;
