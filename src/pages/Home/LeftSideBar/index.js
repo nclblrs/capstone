@@ -59,7 +59,7 @@ const LeftSideBar = () => {
               </LSideLinks>
             ))}
         {classGroups?.length === 3 && (
-          <LSideLinks to="/groups/classgroups">
+          <LSideLinks to="/coursegroups">
             <BiDotsHorizontalRounded size={18} /> See More
           </LSideLinks>
         )}
@@ -91,7 +91,7 @@ const LeftSideBar = () => {
             ))}
 
         {studyGroups?.length === 3 && (
-          <LSideLinks to="/groups/studygroups">
+          <LSideLinks to="/studygroups">
             <BiDotsHorizontalRounded size={18} /> See More
           </LSideLinks>
         )}
