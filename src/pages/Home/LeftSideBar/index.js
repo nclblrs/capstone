@@ -6,6 +6,7 @@ import { GET_STUDLEFTSIDEBAR } from "./gql";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 import { FaPlusCircle, FaLaptop, FaPenSquare } from "react-icons/fa";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
@@ -40,7 +41,10 @@ const LeftSideBar = () => {
               </LSideLinks>
             ))}
         {courses?.length === 3 && (
-          <LSideLinks to="/classes">See More</LSideLinks>
+          <LSideLinks to="/classes">
+            <BiDotsHorizontalRounded size={18} />
+            See More
+          </LSideLinks>
         )}
       </LSideItem>
       <Line />
@@ -55,7 +59,9 @@ const LeftSideBar = () => {
               </LSideLinks>
             ))}
         {classGroups?.length === 3 && (
-          <LSideLinks to="/groups/classgroups">See More</LSideLinks>
+          <LSideLinks to="/groups/classgroups">
+            <BiDotsHorizontalRounded size={18} /> See More
+          </LSideLinks>
         )}
       </LSideItem>
       <Line />
@@ -85,7 +91,9 @@ const LeftSideBar = () => {
             ))}
 
         {studyGroups?.length === 3 && (
-          <LSideLinks to="/groups/studygroups">See More</LSideLinks>
+          <LSideLinks to="/groups/studygroups">
+            <BiDotsHorizontalRounded size={18} /> See More
+          </LSideLinks>
         )}
       </LSideItem>
     </LSideContainer>

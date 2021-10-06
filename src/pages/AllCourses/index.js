@@ -10,8 +10,14 @@ const AllCourses = () => {
   return (
     <PageContainer>
       <MainContainer>
+        <ul>
+          <li>Classes</li>
+          <li>Course Groups</li>
+          <li>Study Groups</li>
+        </ul>
         <div className="buttoncontainer">
-          <p>ALL CLASSES</p>
+          <h2>ALL CLASSES</h2>
+          <button>Show Inactive</button>
         </div>
         <div className="itemcontainer">
           {loading
@@ -49,16 +55,60 @@ const MainContainer = styled.div`
   border-radius: 10px;
   height: 600px;
   padding: 1em;
+  ul {
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 50px;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 1px;
+    margin-bottom: 0;
+    font-size: 18px;
+    color: #646464;
+    margin-top: 0;
+  }
+  li {
+    cursor: pointer;
+    border-bottom: 3px solid #0e5937;
+    padding: 10px;
+    margin-top: 0;
+    font-weight: bold;
+  }
+  li:hover {
+    color: white;
+    background-color: #0e5937;
+    border-radius: 10px;
+    padding: 0.5em;
+    font-weight: normal;
+  }
 
   .buttoncontainer {
     display: flex;
     width: 100%;
     height: 80px;
-    padding: 10px;
     button {
+      border: none;
+      color: white;
+      background-color: #0e5937;
+      margin-left: auto;
+      margin-right: 0.5em;
+      margin-top: 10px;
+      width: 150px;
+      height: 50px;
+      font-size: 16px;
+      cursor: pointer;
+      &:hover {
+        background-color: #157348;
+        color: white;
+        cursor: pointer;
+      }
     }
-    > p {
-      font-size: 20px;
+    > h2 {
+      font-size: 24px;
+      color: #0f482f;
+      letter-spacing: 1px;
+      cursor: pointer;
     }
   }
 
@@ -66,8 +116,8 @@ const MainContainer = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 15px;
-    margin: 2em;
+    gap: 22px;
+    margin: 1em;
     li {
       padding: 10px 8px;
     }
@@ -91,7 +141,6 @@ const MainContainer = styled.div`
       font-size: 20px;
       margin: 10px 0;
     }
-
     h1 {
       font-weight: bold;
       color: #0f482f;

@@ -283,6 +283,7 @@ const CGPostHeader = styled.div`
   padding-top: 10px;
   width: 100%;
   background: white;
+  z-index: 1;
 `;
 
 const LeftContainer = styled.div`
