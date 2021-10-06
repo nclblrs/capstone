@@ -60,7 +60,7 @@ const PostsFeed = ({ posts }) => {
                           key={index}
                           to={`${location.pathname}?tag=${tag}`}
                         >
-                          #{tag}
+                          #{tag} &nbsp;
                         </Link>
                       ))}
                     </div>
@@ -175,16 +175,24 @@ const PostContent = styled.div`
 
     .category,
     .tags > .TagLink {
-      background: #e7b22a;
       color: white;
       font-size: 14px;
-      padding: 4px 10px;
-      border-radius: 4px;
-      margin-right: 12px;
       text-decoration: none;
     }
 
+    .category {
+      background: #e7b22a;
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-right: 12px;
+    }
+
     .tags {
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-right: 12px;
+      background: #0e5937;
+      border-radius: 4px;
       margin-left: 12px;
       > span {
         background: #646464;

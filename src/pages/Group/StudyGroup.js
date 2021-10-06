@@ -119,7 +119,6 @@ const StudyGroup = () => {
             </Route>
             <Route path={`/group/:id/tags`}>
               <LeftContainer>
-                <h1>Tags</h1>
                 <div className="leftHeader">
                   <h1>Tags</h1>
                   <div className="tagcontainer">
@@ -189,15 +188,12 @@ const SGPostsContainer = styled.div`
   width: 60%;
   .tagtitle {
     position: sticky;
-    top: 353px;
-    height: 100px;
-    background-color: #e8e8e8;
+    top: 351px;
+    height: 75px;
+    background-color: white;
     width: 100%;
     display: flex;
     align-items: center;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-bottom: solid 1px #0f482f;
     padding: 1em;
     z-index: 1;
     > h1 {
@@ -324,11 +320,11 @@ const LeftContainer = styled.div`
   display: flex;
   border-radius: 1em;
   background-color: #f2f2f2;
-  margin-top: 1.5em;
-  overflow-y: scroll;
+  flex-direction: column;
   width: 100%;
   height: 550px;
-  flex-direction: column;
+  margin-top: 1.5em;
+  overflow-y: scroll;
   h1 {
     color: #0f482f;
     padding: 0.5em 1.5em;
@@ -343,43 +339,6 @@ const LeftContainer = styled.div`
       color: #0e5937;
       font-size: 20px;
     }
-<<<<<<< HEAD
-    .leftContent {
-      position: absolute;
-      padding: 6em 2em;
-      h5 {
-        font-size: 20px;
-        color: #0f482f;
-      }
-      ul {
-        list-style-type: none;
-        font-size: 20px;
-      }
-    }
-    .tagcontainer {
-      display: flex;
-      flex-wrap: wrap;
-      flex-direction: column;
-      height: 270px;
-      span {
-        font-size: 16px;
-        border-radius: 50%;
-        padding: 3px 6px;
-        background: #0e5937;
-        border: 2px solid white;
-        color: white;
-        text-align: center;
-      }
-    }
-=======
-  }
-  h5 {
-    font-weight: normal;
-    color: #0e5937;
-    font-size: 20px;
-  }
-  li {
-    margin: 0 2em;
   }
   .tagcontainer {
     display: flex;
@@ -387,7 +346,19 @@ const LeftContainer = styled.div`
     flex-direction: column;
     align-content: flex-start;
     height: 220px;
->>>>>>> d15e7cdbf0125c4a2ede794bfa75c94a7c3d5cce
+    margin-left: 3em;
+  }
+  .leftContent {
+    position: absolute;
+    padding: 6em 2em;
+    ul {
+      list-style-type: none;
+      font-size: 20px;
+    }
+    h5 {
+      font-size: 20px;
+      color: #0f482f;
+    }
   }
 `;
 
