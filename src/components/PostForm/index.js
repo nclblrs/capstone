@@ -28,7 +28,7 @@ const PostForm = ({ onSubmit, withTags }) => {
       <div>
         {withTags && <TagsInput tags={tags} setTags={setTags} />}
         <select {...register("category")}>
-          <option value="post" selected disabled>
+          <option value="post" defaultValue="selected" disabled>
             Category
           </option>
           <option value="post">Post</option>
