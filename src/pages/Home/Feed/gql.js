@@ -14,3 +14,29 @@ export const GET_GROUP = gql`
     }
   }
 `;
+
+export const GET_FEED = gql`
+  query studentHomeFeed {
+    studentHomeFeed {
+      data {
+        id
+        attachment
+        content
+        tags
+        group {
+          id
+          name
+        }
+        course {
+          id
+          name
+        }
+        user {
+          id
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;

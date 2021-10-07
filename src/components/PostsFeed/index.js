@@ -55,6 +55,7 @@ const PostsFeed = ({ posts }) => {
                               ? "/group/"
                               : "/class/") + postedIn.id
                           }
+                          title={postedIn.name}
                         >
                           {postedIn.name}
                         </Link>
@@ -77,9 +78,14 @@ const PostsFeed = ({ posts }) => {
                         <Link
                           className="TagLink"
                           key={index}
-                          to={`${location.pathname}?tag=${tag}`}
+                          to={
+                            group
+                              ? `/group/${group.id}?tag=${tag}`
+                              : `${location.pathname}?tag=${tag}`
+                          }
+                          title={tag}
                         >
-                          #{tag} &nbsp;
+                          #{tag}
                         </Link>
                       ))}
                     </div>
