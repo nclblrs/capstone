@@ -12,7 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Navbar from "components/Navbar";
 import Login from "components/Login";
 import Home from "pages/Home";
-import ClassSched from "pages/ClassSchedule";
+import ClassSched from "pages/ClassSchedule/ScheduleContainer";
 import Calendar from "pages/Calendar";
 import Logout from "components/Logout";
 import Course from "pages/Course";

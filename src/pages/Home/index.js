@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import LeftSideBar from "./LeftSideBar";
 import RightSideBar from "./RightSideBar";
 import Feed from "./Feed";
+import LeftSideBar from "./LeftSideBar";
 
 const Home = () => {
   return (
