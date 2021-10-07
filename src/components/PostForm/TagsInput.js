@@ -49,10 +49,11 @@ const TagsInput = ({ tags, setTags }) => {
       ))}
       <input
         onKeyDown={handleKeyDown}
-        placeholder="Tag"
+        placeholder="tags"
         value={inputValue}
         onChange={handleInputChange}
       />
+      {inputValue ? <Warning>Press enter to add the tag</Warning> : null}
     </TagsContainer>
   );
 };
@@ -114,4 +115,9 @@ const TagsContainer = styled.div`
     border: none;
     width: 100px;
   }
+`;
+
+const Warning = styled.div`
+  position: absolute;
+  bottom: 12px;
 `;

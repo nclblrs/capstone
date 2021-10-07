@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import { BsPaperclip } from "react-icons/bs";
 import TagsInput from "./TagsInput";
+import { useUrlQuery } from "hooks/useUrlQuery";
 
 const PostForm = ({ onSubmit, withTags }) => {
+  const { tag } = useUrlQuery();
   const { register, handleSubmit, reset, watch } = useForm();
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(tag ? [tag] : []);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
@@ -15,9 +17,13 @@ const PostForm = ({ onSubmit, withTags }) => {
     setIsSubmitting(true);
     await onSubmit({ ...data, tags });
     reset();
-    setTags([]);
+    setTags(tag ? [tag] : []);
     setIsSubmitting(false);
   };
+
+  useEffect(() => {
+    tag && setTags([tag]);
+  }, [tag]);
 
   return (
     <StyledForm onSubmit={handleSubmit(handleSubmitWithLoadingAndReset)}>
