@@ -215,16 +215,14 @@ const PostContent = styled.div`
       margin-right: 12px;
     }
 
-    .tags {
+    .TagLink {
+      width: 100%;
       padding: 4px 10px;
       border-radius: 4px;
       margin-right: 12px;
       background: #0e5937;
       border-radius: 4px;
       margin-left: 12px;
-      > span {
-        background: #646464;
-      }
     }
   }
   > p {
