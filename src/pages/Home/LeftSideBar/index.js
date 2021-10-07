@@ -6,6 +6,7 @@ import { GET_STUDLEFTSIDEBAR } from "./gql";
 import { HiOutlineLightBulb } from "react-icons/hi";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 import { FaPlusCircle, FaLaptop, FaPenSquare } from "react-icons/fa";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
@@ -21,11 +22,13 @@ const LeftSideBar = () => {
             <Dropdown
               popperComponent={
                 <DropdownButtons>
-                  <button>Join Class</button>
+                  <button>
+                    <p> Join Class </p>
+                  </button>
                 </DropdownButtons>
               }
             >
-              <FaPlusCircle size={20} class="button-icon" />
+              <FaPlusCircle size={20} className="button-icon" />
             </Dropdown>
           </button>
         </h4>
@@ -38,7 +41,10 @@ const LeftSideBar = () => {
               </LSideLinks>
             ))}
         {courses?.length === 3 && (
-          <LSideLinks to="/classes">See More</LSideLinks>
+          <LSideLinks to="/classes">
+            <BiDotsHorizontalRounded size={18} />
+            See More
+          </LSideLinks>
         )}
       </LSideItem>
       <Line />
@@ -53,7 +59,9 @@ const LeftSideBar = () => {
               </LSideLinks>
             ))}
         {classGroups?.length === 3 && (
-          <LSideLinks to="/groups/classgroups">See More</LSideLinks>
+          <LSideLinks to="/coursegroups">
+            <BiDotsHorizontalRounded size={18} /> See More
+          </LSideLinks>
         )}
       </LSideItem>
       <Line />
@@ -69,7 +77,7 @@ const LeftSideBar = () => {
                 </DropdownButtons>
               }
             >
-              <FaPenSquare size={20} class="button-icon" />
+              <FaPenSquare size={20} className="button-icon" />
             </Dropdown>
           </button>
         </h4>
@@ -81,8 +89,11 @@ const LeftSideBar = () => {
                 <p title={name}>{name}</p>
               </LSideLinks>
             ))}
+
         {studyGroups?.length === 3 && (
-          <LSideLinks to="/groups/studygroups">See More</LSideLinks>
+          <LSideLinks to="/studygroups">
+            <BiDotsHorizontalRounded size={18} /> See More
+          </LSideLinks>
         )}
       </LSideItem>
     </LSideContainer>
@@ -117,12 +128,16 @@ const LSideItem = styled.div`
     margin-bottom: 20px;
     font-weight: normal;
     button {
-      justify-content: flex-end;
+      justify-content: center;
       margin-left: auto;
       padding: 0;
       border: none;
       background: none;
       cursor: pointer;
+      text-align: center;
+    }
+    p {
+      padding: 1em;
     }
   }
 `;

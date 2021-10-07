@@ -105,35 +105,26 @@ const ClassGroup = () => {
             </Route>
             <Route path={`/group/${id}/files`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Files</h1>
-                </div>
+                <h1>Files</h1>
               </LeftContainer>
             </Route>
             <Route path={`/group/${id}/activities`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Activities</h1>
-                </div>
+                <h1>Activities</h1>
               </LeftContainer>
             </Route>
             <Route path={`/group/${id}/members`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Members</h1>
-                </div>
+                <h1>Members</h1>
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
-                    : students?.data?.map(({ user }) => (
-                        <>
-                          <h5>
-                            <li>
-                              {user.lastName}, {user.firstName}{" "}
-                              {user.middleName}
-                            </li>
-                          </h5>
-                        </>
+                    : students?.data?.map(({ id, user }) => (
+                        <ul key={id}>
+                          <li>
+                            {user.lastName}, {user.firstName} {user.middleName}
+                          </li>
+                        </ul>
                       ))}
                 </div>
               </LeftContainer>
@@ -276,7 +267,7 @@ const NavMenu = styled(NavLink)`
   font-size: 18px;
   align-items: center;
   text-decoration: none;
-  padding: 10px 1em;
+  padding: 7px 1em;
   margin: 0 1em;
   &:hover,
   &.active {
@@ -292,29 +283,33 @@ const CGPostHeader = styled.div`
   padding-top: 10px;
   width: 100%;
   background: white;
+  z-index: 1;
 `;
 
 const LeftContainer = styled.div`
   display: flex;
   border-radius: 1em;
   background-color: #f2f2f2;
-  margin: 2em 0;
+  margin-top: 1.5em;
+  overflow-y: scroll;
   width: 100%;
-  padding: 2em;
+  height: 550px;
   flex-direction: column;
-  .leftHeader {
-    height: 20%;
-    h1 {
+  h1 {
+    color: #0f482f;
+    padding: 0.5em 1.5em;
+  }
+  .leftContent {
+    position: absolute;
+    padding: 6em 2em;
+    h5 {
+      font-size: 20px;
       color: #0f482f;
     }
-  }
-  h5 {
-    font-weight: normal;
-    color: #0f482f;
-    font-size: 20px;
-  }
-  li {
-    margin: 0 2em;
+    ul {
+      list-style-type: none;
+      font-size: 20px;
+    }
   }
 `;
 

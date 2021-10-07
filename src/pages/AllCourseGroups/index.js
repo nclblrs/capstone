@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { GET_COURSES } from "./gql";
-import { useQuery } from "@apollo/client";
 import { Link } from "react-router-dom";
+import { GET_CLASSGROUPS } from "./gql";
+import { useQuery } from "@apollo/client";
 
-const AllCourses = () => {
-  const { loading, data } = useQuery(GET_COURSES);
+const AllCourseGroups = () => {
+  const { loading, data } = useQuery(GET_CLASSGROUPS);
 
   return (
     <PageContainer>
@@ -14,7 +14,7 @@ const AllCourses = () => {
           <NavMenu to="/classes">
             <li>Classes</li>
           </NavMenu>
-          <NavMenu to="/coursegroups" exact>
+          <NavMenu to="/" exact>
             <li>Course Groups</li>
           </NavMenu>
           <NavMenu to="/studygroups">
@@ -22,22 +22,21 @@ const AllCourses = () => {
           </NavMenu>
         </AllContainer>
         <div className="buttoncontainer">
-          <h2>ALL CLASSES</h2>
+          <h2>ALL COURSE GROUPS</h2>
           <button>Show Inactive</button>
         </div>
         <div className="itemcontainer">
           {loading
             ? "Loading..."
-            : data?.studentCourses?.data?.map(
-                ({ id, name, yearAndSection, teacher, studentCount }) => (
-                  <Link className="items" key={id} to={`/class/${id}`}>
+            : data?.studentClassGroups?.data?.map(
+                ({ id, name, leader, studentCount }) => (
+                  <Link className="items" key={id} to={`/group/${id}`}>
                     <h1>{name}</h1>
                     <p>
-                      Teacher: {teacher?.user?.lastName},{" "}
-                      {teacher?.user?.firstName}
+                      Leader: {leader?.user?.lastName},{" "}
+                      {leader?.user?.firstName}
                     </p>
-                    <p>Year and Section: {yearAndSection}</p>
-                    <p> {studentCount + 1} members</p>
+                    <p>{studentCount} members</p>
                   </Link>
                 )
               )}
@@ -168,5 +167,4 @@ const MainContainer = styled.div`
     }
   }
 `;
-
-export default AllCourses;
+export default AllCourseGroups;

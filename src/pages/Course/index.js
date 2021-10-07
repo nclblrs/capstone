@@ -13,11 +13,13 @@ import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
-import { FaLaptop } from "react-icons/fa";
+import { FaLaptop, FaPenSquare } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { RiFileCopy2Fill } from "react-icons/ri";
+
+import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const Course = () => {
   let { id } = useParams();
@@ -116,34 +118,25 @@ const Course = () => {
             </Route>
             <Route path={`/class/${id}/files`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Files</h1>
-                </div>
+                <h1>Files</h1>
               </LeftContainer>
             </Route>
             <Route path={`/class/${id}/members`}>
               <LeftContainer>
-                <div className="leftHeader">
-                  <h1>Members</h1>
-                </div>
+                <h1>Members</h1>
                 <div className="leftContent">
                   <h5>
-                    <p>
-                      Teacher: {lastName}, {firstName}
-                    </p>
-                    {loading
-                      ? "Loading..."
-                      : students?.data?.map(({ user }) => (
-                          <>
-                            <h5>
-                              <li>
-                                {user.lastName}, {user.firstName}{" "}
-                                {user.middleName}
-                              </li>
-                            </h5>
-                          </>
-                        ))}
+                    Teacher : {lastName}, {firstName}
                   </h5>
+                  {loading
+                    ? "Loading..."
+                    : students?.data?.map(({ id, user }) => (
+                        <ul key={id}>
+                          <li>
+                            {user.lastName}, {user.firstName} {user.middleName}
+                          </li>
+                        </ul>
+                      ))}
                 </div>
               </LeftContainer>
             </Route>
@@ -152,22 +145,39 @@ const Course = () => {
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
-                    : groups?.data?.map(({ name, students, leader }) => (
+                    : groups?.data?.map(({ id, name, students, leader }) => (
                         <>
-                          <div className="groupcontainer">
-                            <h5>{name}</h5>&nbsp;
+                          <div key={id} className="groupcontainer">
+                            <h5>
+                              {name}
+                              <button>
+                                <Dropdown
+                                  popperComponent={
+                                    <DropdownButtons>
+                                      <button>Edit Information</button>
+                                    </DropdownButtons>
+                                  }
+                                >
+                                  <FaPenSquare
+                                    size={20}
+                                    color="#0e5937"
+                                    className="pen"
+                                  />
+                                </Dropdown>
+                              </button>
+                            </h5>
                             <p>
-                              Leader:{" "}
+                              Leader: &nbsp;
                               {leader &&
                                 `${leader?.user?.lastName}, ${leader?.user?.firstName}`}
                             </p>
                             <p>Members: </p>
-                            {students?.data?.map(({ user }) => (
-                              <>
+                            {students?.data?.map(({ id, user }) => (
+                              <ul key={id}>
                                 <li>
                                   {user.lastName}, {user.firstName}
                                 </li>
-                              </>
+                              </ul>
                             ))}
                           </div>
                         </>
@@ -246,6 +256,18 @@ const CourseFilter = styled.nav`
   align-items: center;
   margin: 15px 0px auto;
   border-bottom: solid #0f482f 3px;
+
+  button {
+    display: flex;
+    background-color: white;
+    color: #0f482f;
+    font-size: 18px;
+    justify-content: center;
+    align-items: center;
+    &:hover {
+      background-color: #0e5937;
+    }
+  }
 `;
 
 const RSideContainer = styled.div`
@@ -327,7 +349,7 @@ const NavMenu = styled(NavLink)`
   font-size: 18px;
   align-items: center;
   text-decoration: none;
-  padding: 10px 1em;
+  padding: 7px 1em;
   margin: 0 1em;
   &:hover,
   &.active {
@@ -341,28 +363,26 @@ const LeftContainer = styled.div`
   display: flex;
   border-radius: 1em;
   background-color: #f2f2f2;
-  margin: 1.5em 0;
-  padding: 2em;
   flex-direction: column;
-  .leftHeader {
-    height: 20%;
-    h1 {
-      color: #0f482f;
-    }
-  }
-  h5 {
-    font-weight: normal;
+  width: 100%;
+  height: 550px;
+  margin-top: 1.5em;
+  overflow-y: scroll;
+  h1 {
     color: #0f482f;
-    font-size: 20px;
-  }
-  li {
-    margin: 0 2em;
+    padding: 0.5em 1.5em;
   }
   .leftContent {
-    width: 100%;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
+    position: absolute;
+    padding: 4.2em 3em;
+    ul {
+      list-style-type: none;
+      font-size: 20px;
+    }
+    h5 {
+      font-size: 20px;
+      color: #0f482f;
+    }
   }
 `;
 
@@ -372,14 +392,32 @@ const GroupContainer = styled.div`
   padding: 1.5em 0;
   flex-direction: column;
 
+  h5 {
+    font-weight: bold;
+    color: #0f482f;
+    text-align: left;
+    font-size: 20px;
+    display: flex;
+    margin: 0;
+    margin-bottom: 1em;
+  }
+
+  button {
+    justify-content: center;
+    margin-left: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
   .leftContent {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    li {
-      padding: 10px 8px;
-    }
+
     .groupcontainer {
       border-radius: 1em;
       flex-direction: column;
@@ -390,11 +428,15 @@ const GroupContainer = styled.div`
       height: 350px;
       margin-bottom: 20px;
 
-      > h5 {
-        font-weight: bold;
+      p {
+        margin-top: 7px;
         color: #0f482f;
-        font-size: 20px;
-        margin: 0;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      ul {
+        list-style-type: none;
+        margin: 10px;
       }
     }
   }

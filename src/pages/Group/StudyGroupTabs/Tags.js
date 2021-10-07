@@ -17,7 +17,7 @@ const TagsInfo = () => {
         ? "Loading..."
         : tags.map(({ name: tagName, count }) => (
             <TagLink key={id} to={`/group/${id}?tag=${tagName}`}>
-              #{tagName} <span>{count}</span>
+              #{tagName} <span>{count} posts</span>
             </TagLink>
           ))}
     </>
@@ -30,11 +30,11 @@ const TagLink = styled(Link)`
   font-size: 18px;
   color: #0e5937;
   span {
-    font-size: 16px;
-    border-radius: 50%;
-    padding: 3px 6px;
+    font-size: 12px;
+    padding: 4px 8px;
     background: #0e5937;
-    border: 2px solid white;
+    border: none;
+    margin-left: 10px;
     color: white;
     text-align: center;
   }

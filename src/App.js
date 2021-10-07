@@ -17,12 +17,14 @@ import Calendar from "pages/Calendar";
 import Logout from "components/Logout";
 import Course from "pages/Course";
 import AllCourses from "pages/AllCourses";
-import AllGroups from "pages/AllGroups";
+import AllCourseGroups from "pages/AllCourseGroups";
+import AllStudyGroups from "pages/AllStudyGroups";
 import Group from "pages/Group";
 import Settings from "pages/Settings";
 import ResetPassword from "pages/ResetPassword";
 import ForgotPassword from "pages/ForgotPassword";
 import Admin from "pages/Admin";
+import Progress from "pages/Progress";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 function App() {
@@ -65,15 +67,20 @@ function App() {
               <Route path="/calendar">
                 <Calendar />
               </Route>
-              <Route path="/progress"></Route>
+              <Route path="/progress">
+                <Progress />
+              </Route>
               <Route path="/classes">
                 <AllCourses />
               </Route>
               <Route path="/class/:id">
                 <Course />
               </Route>
-              <Route path="/groups">
-                <AllGroups />
+              <Route path="/coursegroups">
+                <AllCourseGroups />
+              </Route>
+              <Route path="/studygroups">
+                <AllStudyGroups />
               </Route>
               <Route path="/group/:id">
                 <Group />
