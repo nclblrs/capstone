@@ -19,6 +19,8 @@ const PostsFeed = ({ posts }) => {
           activity,
           groupActivity,
           attachment,
+          group,
+          course,
           tags,
         }) => {
           const { id: userId, firstName, lastName } = user;
@@ -31,6 +33,8 @@ const PostsFeed = ({ posts }) => {
           const { original_filename, secure_url } =
             JSON.parse(attachment) ?? {};
 
+          const postedIn = group || course;
+
           return (
             <PostContainer key={id}>
               <Post>
@@ -41,6 +45,21 @@ const PostsFeed = ({ posts }) => {
                 <PostContent>
                   <h3>
                     {firstName} {lastName}
+                    {postedIn && (
+                      <>
+                        {" "}
+                        <span>in</span>{" "}
+                        <Link
+                          to={
+                            (postedIn.__typename === "Group"
+                              ? "/group/"
+                              : "/class/") + postedIn.id
+                          }
+                        >
+                          {postedIn.name}
+                        </Link>
+                      </>
+                    )}
                   </h3>
                   <h4>
                     <span className="category">
@@ -164,6 +183,15 @@ const PostContent = styled.div`
     font-size: 20px;
     font-weight: 400;
     margin: 8px 0;
+
+    > span {
+      color: #646464;
+    }
+
+    a {
+      color: #0f482f;
+      text-decoration: none;
+    }
   }
   > h4 {
     margin: 0;
@@ -187,16 +215,14 @@ const PostContent = styled.div`
       margin-right: 12px;
     }
 
-    .tags {
+    .TagLink {
+      width: 100%;
       padding: 4px 10px;
       border-radius: 4px;
       margin-right: 12px;
       background: #0e5937;
       border-radius: 4px;
       margin-left: 12px;
-      > span {
-        background: #646464;
-      }
     }
   }
   > p {
