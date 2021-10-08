@@ -23,9 +23,11 @@ export const GET_FEED = gql`
         attachment
         content
         tags
+        createdAt
         group {
           id
           name
+          type
         }
         course {
           id
