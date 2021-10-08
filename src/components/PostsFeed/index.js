@@ -29,6 +29,7 @@ const PostsFeed = ({ posts }) => {
             description,
             attachment: activityAttachment,
           } = activity ?? groupActivity ?? {};
+          const { type: groupType } = group ?? {};
 
           const { original_filename, secure_url } =
             JSON.parse(attachment) ?? {};
@@ -59,6 +60,16 @@ const PostsFeed = ({ posts }) => {
                         >
                           {postedIn.name}
                         </Link>
+                        <span className="type">
+                          {" "}
+                          (
+                          {postedIn.__typename === "Group"
+                            ? groupType === "CLASS"
+                              ? "Class Group"
+                              : "Study Group"
+                            : "Class"}
+                          )
+                        </span>
                       </>
                     )}
                   </h3>
@@ -198,6 +209,10 @@ const PostContent = styled.div`
       color: #0f482f;
       text-decoration: none;
     }
+    > .type {
+      font-size: 16px;
+      margin-left: 5px;
+    }
   }
   > h4 {
     margin: 0;
@@ -225,10 +240,8 @@ const PostContent = styled.div`
       width: 100%;
       padding: 4px 10px;
       border-radius: 4px;
-      margin-right: 12px;
       background: #0e5937;
-      border-radius: 4px;
-      margin-left: 12px;
+      margin: 0 4px;
     }
   }
   > p {
