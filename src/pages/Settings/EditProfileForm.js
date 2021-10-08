@@ -30,7 +30,6 @@ const EditProfileForm = () => {
 };
 
 const Form = styled.form`
-  z-index: 1;
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
