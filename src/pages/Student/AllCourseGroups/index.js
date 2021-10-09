@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { GET_COURSES } from "./gql";
+import { Link, NavLink } from "react-router-dom";
+import { GET_CLASSGROUPS } from "./gql";
 import { useQuery } from "@apollo/client";
-import { Link } from "react-router-dom";
 
-const AllCourses = () => {
-  const { loading, data } = useQuery(GET_COURSES);
+const AllCourseGroups = () => {
+  const { loading, data } = useQuery(GET_CLASSGROUPS);
 
   return (
     <PageContainer>
@@ -59,7 +59,7 @@ const AllContainer = styled.nav`
   gap: 50px;
 `;
 
-const NavMenu = styled(Link)`
+const NavMenu = styled(NavLink)`
   text-decoration: none;
   display: flex;
   flex-wrap: wrap;
@@ -168,5 +168,4 @@ const MainContainer = styled.div`
     }
   }
 `;
-
-export default AllCourses;
+export default AllCourseGroups;

@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { GET_STUDYGROUPS } from "./gql";
 import { useQuery } from "@apollo/client";
 
@@ -63,7 +63,7 @@ const AllContainer = styled.nav`
   gap: 50px;
 `;
 
-const NavMenu = styled(Link)`
+const NavMenu = styled(NavLink)`
   text-decoration: none;
   display: flex;
   flex-wrap: wrap;

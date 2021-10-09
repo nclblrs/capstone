@@ -9,9 +9,9 @@ import { FaPlusCircle, FaLaptop, FaPenSquare } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { useState } from "react";
 import Modal from "components/Modal";
-import JoinClassForm from "pages/Course/CourseForms/JoinClassForm";
-import JoinSGroupForm from "pages/Group/GroupForms/JoinSGroupForm";
-import CreateSGroupForm from "pages/Group/GroupForms/CreateSGroupForm";
+import JoinClassForm from "pages/Student/Course/CourseForms/JoinClassForm";
+import JoinSGroupForm from "pages/Student/Group/GroupForms/JoinSGroupForm";
+import CreateSGroupForm from "pages/Student/Group/GroupForms/CreateSGroupForm";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);

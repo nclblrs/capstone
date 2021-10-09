@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import { Link } from "react-router-dom";
-import { GET_CLASSGROUPS } from "./gql";
+import { GET_COURSES } from "./gql";
 import { useQuery } from "@apollo/client";
+import { Link, NavLink } from "react-router-dom";
 
-const AllCourseGroups = () => {
-  const { loading, data } = useQuery(GET_CLASSGROUPS);
+const AllCourses = () => {
+  const { loading, data } = useQuery(GET_COURSES);
 
   return (
     <PageContainer>
@@ -14,7 +14,7 @@ const AllCourseGroups = () => {
           <NavMenu to="/classes">
             <li>Classes</li>
           </NavMenu>
-          <NavMenu to="/" exact>
+          <NavMenu to="/coursegroups" exact>
             <li>Course Groups</li>
           </NavMenu>
           <NavMenu to="/studygroups">
@@ -22,21 +22,22 @@ const AllCourseGroups = () => {
           </NavMenu>
         </AllContainer>
         <div className="buttoncontainer">
-          <h2>ALL COURSE GROUPS</h2>
+          <h2>ALL CLASSES</h2>
           <button>Show Inactive</button>
         </div>
         <div className="itemcontainer">
           {loading
             ? "Loading..."
-            : data?.studentClassGroups?.data?.map(
-                ({ id, name, leader, studentCount }) => (
-                  <Link className="items" key={id} to={`/group/${id}`}>
+            : data?.studentCourses?.data?.map(
+                ({ id, name, yearAndSection, teacher, studentCount }) => (
+                  <Link className="items" key={id} to={`/class/${id}`}>
                     <h1>{name}</h1>
                     <p>
-                      Leader: {leader?.user?.lastName},{" "}
-                      {leader?.user?.firstName}
+                      Teacher: {teacher?.user?.lastName},{" "}
+                      {teacher?.user?.firstName}
                     </p>
-                    <p>{studentCount} members</p>
+                    <p>Year and Section: {yearAndSection}</p>
+                    <p> {studentCount + 1} members</p>
                   </Link>
                 )
               )}
@@ -58,7 +59,7 @@ const AllContainer = styled.nav`
   gap: 50px;
 `;
 
-const NavMenu = styled(Link)`
+const NavMenu = styled(NavLink)`
   text-decoration: none;
   display: flex;
   flex-wrap: wrap;
@@ -167,4 +168,5 @@ const MainContainer = styled.div`
     }
   }
 `;
-export default AllCourseGroups;
+
+export default AllCourses;
