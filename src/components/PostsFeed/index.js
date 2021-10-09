@@ -65,7 +65,7 @@ const PostsFeed = ({ posts }) => {
                           (
                           {postedIn.__typename === "Group"
                             ? groupType === "CLASS"
-                              ? "Class Group"
+                              ? "Course Group"
                               : "Study Group"
                             : "Class"}
                           )
