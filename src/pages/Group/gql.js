@@ -113,3 +113,11 @@ export const GET_TAGS = gql`
     }
   }
 `;
+
+export const CREATE_STUDYGROUP = gql`
+  mutation createStudyGroup($name: String!) {
+    createStudyGroup(name: $name) {
+      id
+    }
+  }
+`;
