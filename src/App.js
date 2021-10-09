@@ -10,9 +10,10 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 import Navbar from "components/Navbar";
+import Sidebar from "components/Sidebar";
 import Login from "components/Login";
 import Home from "pages/Home";
-import ClassSched from "pages/ClassSchedule";
+import ClassSched from "pages/ClassSchedule/ScheduleContainer";
 import Calendar from "pages/Calendar";
 import Logout from "components/Logout";
 import Course from "pages/Course";
@@ -25,11 +26,14 @@ import ResetPassword from "pages/ResetPassword";
 import ForgotPassword from "pages/ForgotPassword";
 import Admin from "pages/Admin";
 import Progress from "pages/Progress";
+import THome from "pages/Teacher/THome";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 function App() {
   const { user } = useCurrentUserContext();
   const isAdmin = user?.isAdmin;
+  const teacher = user?.teacher;
+  const student = user?.student;
 
   return (
     <AppContainer>
@@ -58,37 +62,52 @@ function App() {
                   <Redirect from="/" to="/admin" />
                 </Switch>
               )}
-              <Route path="/" exact>
-                <Home />
-              </Route>
-              <Route path="/class-schedule">
-                <ClassSched />
-              </Route>
-              <Route path="/calendar">
-                <Calendar />
-              </Route>
-              <Route path="/progress">
-                <Progress />
-              </Route>
-              <Route path="/classes">
-                <AllCourses />
-              </Route>
-              <Route path="/class/:id">
-                <Course />
-              </Route>
-              <Route path="/coursegroups">
-                <AllCourseGroups />
-              </Route>
-              <Route path="/studygroups">
-                <AllStudyGroups />
-              </Route>
-              <Route path="/group/:id">
-                <Group />
-              </Route>
-              <Route path="/settings">
-                <Settings />
-              </Route>
-              <Redirect from="/" exact to="/" />
+              {student && (
+                <Switch>
+                  <Route path="/" exact>
+                    <Home />
+                  </Route>
+                  <Route path="/class-schedule">
+                    <ClassSched />
+                  </Route>
+                  <Route path="/calendar">
+                    <Calendar />
+                  </Route>
+                  <Route path="/progress">
+                    <Progress />
+                  </Route>
+                  <Route path="/classes">
+                    <AllCourses />
+                  </Route>
+                  <Route path="/class/:id">
+                    <Course />
+                  </Route>
+                  <Route path="/coursegroups">
+                    <AllCourseGroups />
+                  </Route>
+                  <Route path="/studygroups">
+                    <AllStudyGroups />
+                  </Route>
+                  <Route path="/group/:id">
+                    <Group />
+                  </Route>
+                  <Route path="/settings">
+                    <Settings />
+                  </Route>
+                  <Redirect from="/" exact to="/" />
+                </Switch>
+              )}
+              {teacher && (
+                <>
+                  <Sidebar />
+                  <Switch>
+                    <Route path="/" exact>
+                      <THome />
+                    </Route>
+                    <Redirect from="/" exact to="/" />
+                  </Switch>
+                </>
+              )}
             </Switch>
           </>
         </Switch>

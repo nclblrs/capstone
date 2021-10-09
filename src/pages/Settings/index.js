@@ -3,11 +3,15 @@ import styled from "styled-components";
 import { NavLink, Switch, Route } from "react-router-dom";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import { BsPencilSquare } from "react-icons/bs";
+import { useState } from "react";
+import Modal from "components/Modal";
+import EditProfileForm from "./EditProfileForm";
 
 const Settings = () => {
   const { user, loading } = useCurrentUserContext();
   const { firstName, middleName, lastName, schoolIdNumber, student, emails } =
     user ?? {};
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   return (
     <SettingsContainer>
       <LSideContainer>
@@ -39,7 +43,10 @@ const Settings = () => {
                   <li class="idnum">{schoolIdNumber}</li>
                   <li class="role">{student ? "Student" : "Teacher"}</li>
                 </ul>
-                <button class="editprofile">
+                <button
+                  class="editprofile"
+                  onClick={() => setShowEditProfileModal(true)}
+                >
                   Edit Profile &nbsp;
                   <BsPencilSquare size={30} class="editicon" />
                 </button>
@@ -121,6 +128,13 @@ const Settings = () => {
           </Route>
         </Switch>
       </RSideContainer>
+      <Modal
+        show={showEditProfileModal}
+        closeModal={() => setShowEditProfileModal(false)}
+        title="Edit Profile"
+      >
+        <EditProfileForm />
+      </Modal>
     </SettingsContainer>
   );
 };
