@@ -13,6 +13,7 @@ import Dropdown, { DropdownButtons } from "components/Dropdown";
 const Navbar = () => {
   const { user, loading } = useCurrentUserContext();
   const isAdmin = user?.isAdmin;
+  const teacher = user?.teacher;
 
   return (
     <Nav>
@@ -20,7 +21,7 @@ const Navbar = () => {
         <img src={logo} alt="ChumStudies logo" />
         ChumStudies
       </NavLogo>
-      {!isAdmin && (
+      {!isAdmin && !teacher && (
         <NavbarContainer>
           <NavMenu to="/" exact>
             <img src={home} alt="Home" />
