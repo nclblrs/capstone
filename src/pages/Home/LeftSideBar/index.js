@@ -9,9 +9,9 @@ import { FaPlusCircle, FaLaptop, FaPenSquare } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { useState } from "react";
 import Modal from "components/Modal";
-import JoinClassForm from "./JoinClassForm";
-import JoinSGroupForm from "./JoinSGroupForm";
-import CreateSGroupForm from "./CreateSGroupForm";
+import JoinClassForm from "pages/Course/CourseForms/JoinClassForm";
+import JoinSGroupForm from "pages/Group/GroupForms/JoinSGroupForm";
+import CreateSGroupForm from "pages/Group/GroupForms/CreateSGroupForm";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
@@ -108,28 +108,28 @@ const LeftSideBar = () => {
             <BiDotsHorizontalRounded size={18} /> See More
           </LSideLinks>
         )}
-        <Modal
-          show={showJoinClassModal}
-          closeModal={() => setShowJoinClassModal(false)}
-          title="Join Class"
-        >
-          <JoinClassForm />
-        </Modal>
-        <Modal
-          show={showJoinSGroupModal}
-          closeModal={() => setShowJoinSGroupModal(false)}
-          title="Join Study Group"
-        >
-          <JoinSGroupForm />
-        </Modal>
-        <Modal
-          show={showCreateSGroupModal}
-          closeModal={() => setShowCreateSGroupModal(false)}
-          title="Create Study Group"
-        >
-          <CreateSGroupForm />
-        </Modal>
       </LSideItem>
+      <Modal
+        show={showJoinClassModal}
+        closeModal={() => setShowJoinClassModal(false)}
+        title="Join Class"
+      >
+        <JoinClassForm />
+      </Modal>
+      <Modal
+        show={showJoinSGroupModal}
+        closeModal={() => setShowJoinSGroupModal(false)}
+        title="Join Study Group"
+      >
+        <JoinSGroupForm />
+      </Modal>
+      <Modal
+        show={showCreateSGroupModal}
+        closeModal={() => setShowCreateSGroupModal(false)}
+        title="Create Study Group"
+      >
+        <CreateSGroupForm />
+      </Modal>
     </LSideContainer>
   );
 };

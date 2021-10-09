@@ -9,7 +9,7 @@ import EditSchedForm from "./EditSchedForm";
 import AddNewSchedForm from "./AddNewSchedForm";
 import { useState } from "react";
 import Modal from "components/Modal";
-import JoinClassForm from "./JoinClassForm";
+import JoinClassForm from "pages/Course/CourseForms/JoinClassForm";
 
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 

@@ -112,3 +112,11 @@ export const ADD_ATTACHMENT_TO_POST = gql`
     }
   }
 `;
+
+export const JOIN_COURSE = gql`
+  mutation joinCourse($courseCode: String!) {
+    joinCourse(courseCode: $courseCode) {
+      id
+    }
+  }
+`;

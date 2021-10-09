@@ -107,24 +107,9 @@ const PostFormContainer = styled.div`
 const PostsContainer = styled.div`
   margin: 0 2em;
   display: flex;
+  width: 100%;
   flex-direction: column;
   align-items: center;
-
-  .tagtitle {
-    position: sticky;
-    top: 351px;
-    height: 75px;
-    background-color: white;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    padding: 1em;
-    z-index: 1;
-    > h1 {
-      margin: 0;
-      color: #0f482f;
-    }
-  }
 `;
 
 export default Feed;

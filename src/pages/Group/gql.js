@@ -114,9 +114,17 @@ export const GET_TAGS = gql`
   }
 `;
 
-export const CREATE_STUDYGROUP = gql`
+export const CREATE_STUDY_GROUP = gql`
   mutation createStudyGroup($name: String!) {
     createStudyGroup(name: $name) {
+      id
+    }
+  }
+`;
+
+export const JOIN_STUDY_GROUP = gql`
+  mutation joinStudyGroup($groupCode: String!) {
+    joinStudyGroup(groupCode: $groupCode) {
       id
     }
   }
