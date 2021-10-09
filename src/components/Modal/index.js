@@ -1,6 +1,9 @@
 import styled from "styled-components";
+import usePortal from "react-useportal";
 
 const Modal = ({ title, show, closeModal, width, children }) => {
+  const { Portal } = usePortal();
+
   const handleClickOutside = () => {
     closeModal();
   };
@@ -12,17 +15,19 @@ const Modal = ({ title, show, closeModal, width, children }) => {
   if (!show) return null;
 
   return (
-    <ModalBackground onClick={handleClickOutside}>
-      <Container width={width} onClick={handleClickInside}>
-        <Header>
-          <span>{title}</span>
-          <span className="closeButton" onClick={closeModal}>
-            ×
-          </span>
-        </Header>
-        <Content>{children}</Content>
-      </Container>
-    </ModalBackground>
+    <Portal>
+      <ModalBackground onClick={handleClickOutside}>
+        <Container width={width} onClick={handleClickInside}>
+          <Header>
+            <span>{title}</span>
+            <span className="closeButton" onClick={closeModal}>
+              ×
+            </span>
+          </Header>
+          <Content>{children}</Content>
+        </Container>
+      </ModalBackground>
+    </Portal>
   );
 };
 

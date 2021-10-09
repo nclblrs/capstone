@@ -7,12 +7,21 @@ import { HiOutlineLightBulb } from "react-icons/hi";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 import { FaPlusCircle, FaLaptop, FaPenSquare } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { useState } from "react";
+import Modal from "components/Modal";
+import JoinClassForm from "./JoinClassForm";
+import JoinSGroupForm from "./JoinSGroupForm";
+import CreateSGroupForm from "./CreateSGroupForm";
 
 const LeftSideBar = () => {
   const { loading, data } = useQuery(GET_STUDLEFTSIDEBAR);
   const courses = data?.studentLeftSidePanel?.courses ?? [];
   const studyGroups = data?.studentLeftSidePanel?.studyGroups ?? [];
   const classGroups = data?.studentLeftSidePanel?.classGroups ?? [];
+  const [showJoinClassModal, setShowJoinClassModal] = useState(false);
+  const [showJoinSGroupModal, setShowJoinSGroupModal] = useState(false);
+  const [showCreateSGroupModal, setShowCreateSGroupModal] = useState(false);
+
   return (
     <LSideContainer>
       <LSideItem>
@@ -22,7 +31,7 @@ const LeftSideBar = () => {
             <Dropdown
               popperComponent={
                 <DropdownButtons>
-                  <button>
+                  <button onClick={() => setShowJoinClassModal(true)}>
                     <p> Join Class </p>
                   </button>
                 </DropdownButtons>
@@ -72,8 +81,12 @@ const LeftSideBar = () => {
             <Dropdown
               popperComponent={
                 <DropdownButtons>
-                  <button>Join Group</button>
-                  <button>Create Study Group</button>
+                  <button onClick={() => setShowJoinSGroupModal(true)}>
+                    Join Group
+                  </button>
+                  <button onClick={() => setShowCreateSGroupModal(true)}>
+                    Create Study Group
+                  </button>
                 </DropdownButtons>
               }
             >
@@ -95,6 +108,27 @@ const LeftSideBar = () => {
             <BiDotsHorizontalRounded size={18} /> See More
           </LSideLinks>
         )}
+        <Modal
+          show={showJoinClassModal}
+          closeModal={() => setShowJoinClassModal(false)}
+          title="Join Class"
+        >
+          <JoinClassForm />
+        </Modal>
+        <Modal
+          show={showJoinSGroupModal}
+          closeModal={() => setShowJoinSGroupModal(false)}
+          title="Join Study Group"
+        >
+          <JoinSGroupForm />
+        </Modal>
+        <Modal
+          show={showCreateSGroupModal}
+          closeModal={() => setShowCreateSGroupModal(false)}
+          title="Create Study Group"
+        >
+          <CreateSGroupForm />
+        </Modal>
       </LSideItem>
     </LSideContainer>
   );
