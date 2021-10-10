@@ -34,7 +34,7 @@ const PostForm = ({ onSubmit, withTags }) => {
       <div>
         {withTags && <TagsInput tags={tags} setTags={setTags} />}
         <select {...register("category")}>
-          <option value="post" defaultValue="selected" disabled>
+          <option value="post" defaultValue="selected" disabled selected>
             Category
           </option>
           <option value="post">Post</option>
@@ -90,7 +90,8 @@ const StyledForm = styled.form`
     text-align: center;
     cursor: pointer;
     outline: none;
-    padding: 8px 20px;
+    padding: 5px 20px;
+    height: 32px;
 
     &:hover {
       background-color: #157348;
@@ -103,6 +104,7 @@ const StyledForm = styled.form`
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    padding: 8px;
   }
 
   .postbutton {
