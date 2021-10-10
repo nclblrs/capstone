@@ -22,21 +22,21 @@ const AllCourseGroups = () => {
           </NavMenu>
         </AllContainer>
         <div className="buttoncontainer">
-          <h2>ALL CLASSES</h2>
+          <h2>ALL COURSE GROUPS</h2>
           <button>Show Inactive</button>
         </div>
         <div className="itemcontainer">
           {loading
             ? "Loading..."
-            : data?.studentCourses?.data?.map(
-                ({ id, name, yearAndSection, teacher, studentCount }) => (
+            : data?.studentClassGroups?.data?.map(
+                ({ id, name, course, leader, studentCount }) => (
                   <Link className="items" key={id} to={`/class/${id}`}>
                     <h1>{name}</h1>
                     <p>
-                      Teacher: {teacher?.user?.lastName},{" "}
-                      {teacher?.user?.firstName}
+                      Leader: {leader?.user?.lastName},{" "}
+                      {leader?.user?.firstName}
                     </p>
-                    <p>Year and Section: {yearAndSection}</p>
+                    <p>Subject: {course.name}</p>
                     <p> {studentCount + 1} members</p>
                   </Link>
                 )
