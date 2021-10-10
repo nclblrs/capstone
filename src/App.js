@@ -29,6 +29,7 @@ import Progress from "pages/Student/Progress";
 import THome from "pages/Teacher/THome";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import TeacherAllClass from "pages/Teacher/AllCourses";
+import TeacherSchedule from "pages/Teacher/ClassSched";
 
 function App() {
   const { user } = useCurrentUserContext();
@@ -105,9 +106,11 @@ function App() {
                     <Route path="/" exact>
                       <THome />
                     </Route>
-                    <Redirect from="/" exact to="/" />
                     <Route path="/">
-                    <TeacherAllClass />
+                      <TeacherAllClass />
+                    </Route>
+                    <Route path="/">
+                      <TeacherSchedule />
                     </Route>
                   </Switch>
                 </>
