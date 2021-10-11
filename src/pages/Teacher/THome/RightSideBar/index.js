@@ -4,11 +4,18 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_COURSES } from "./gql";
 import { FaPlusCircle, FaLaptop, FaRegLightbulb } from "react-icons/fa";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
+import { BiDotsHorizontalRounded, BiChevronDown } from "react-icons/bi";
+import { useState } from "react";
+import Modal from "components/Modal";
+import CreateActivityForm from "pages/Teacher/THome/Forms/CreateActivityForm";
+import CreateCourseForm from "pages/Teacher/THome/Forms/CreateCourseForm";
+import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const RightSideBar = () => {
   const { loading, data } = useQuery(GET_COURSES);
   const courses = data?.teacherCourses?.data ?? [];
+  const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
+  const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
 
   var today = new Date(),
     date =
@@ -67,17 +74,42 @@ const RightSideBar = () => {
         </RSideItem>
       </RSideReminder>
       <RSideClasses>
+        <Modal
+          show={showCreateActivityModal}
+          closeModal={() => setShowCreateActivityModal(false)}
+          title="Create Activity"
+        >
+          <CreateActivityForm />
+        </Modal>
+        <Modal
+          show={showCreateCourseModal}
+          closeModal={() => setShowCreateCourseModal(false)}
+          title="Create Course"
+        >
+          <CreateCourseForm />
+        </Modal>
         <RSideItem>
           <h4>
             CLASSES
-            <select>
-              <option value="create" disabled selected>
-                Create
-              </option>
-              <option value="activity">Activity</option>
-              <option value="class">Class</option>
-              <option value="quiz">Quiz</option>
-            </select>
+            <button>
+              <Dropdown
+                popperComponent={
+                  <DropdownButtons>
+                    <button onClick={() => setShowCreateActivityModal(true)}>
+                      Activity
+                    </button>
+                    <button onClick={() => setShowCreateCourseModal(true)}>
+                      Course
+                    </button>
+                    <button>Quiz</button>
+                  </DropdownButtons>
+                }
+              >
+                <button className="Create">
+                  Create &nbsp; <BiChevronDown size={18} />
+                </button>
+              </Dropdown>
+            </button>
           </h4>
         </RSideItem>
         <RSideItem>
@@ -135,7 +167,23 @@ const RSideClasses = styled.div`
   background-color: #f2f2f2;
   height: max-content;
   border-radius: 10px;
-  padding: 2em;
+  padding: 1.7em 2em 0 2em;
+  button {
+    font-size: 16px;
+    justify-content: center;
+    margin-left: auto;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+  }
+  .Create {
+    background-color: #0e5937;
+    width: 120px;
+    height: 33px;
+  }
 `;
 
 const RSideItem = styled.div`
@@ -148,52 +196,16 @@ const RSideItem = styled.div`
     margin: 0;
     margin-bottom: 20px;
     display: flex;
-    align-items: center;
     font-weight: normal;
     img {
       margin-left: 10px;
       width: 16px;
-    }
-    select {
-      display: flex;
-      width: 120px;
-      height: 33px;
-      font-size: 16px;
-      align-items: center;
-      justify-content: center;
-      background-color: #0e5937;
-      color: white;
-      border: none;
-      text-align: center;
-      margin-left: auto;
-      &:hover {
-        background-color: #157348;
-        color: white;
-        cursor: pointer;
-      }
     }
   }
   p {
     font-size: 16px;
     margin: 0;
     margin-bottom: 30px;
-  }
-  button {
-    display: flex;
-    width: 150px;
-    height: 33px;
-    font-size: 16px;
-    align-items: center;
-    justify-content: center;
-    background-color: #0e5937;
-    color: white;
-    border: none;
-    text-align: center;
-    &:hover {
-      background-color: #157348;
-      color: white;
-      cursor: pointer;
-    }
   }
 `;
 
