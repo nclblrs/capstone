@@ -8,7 +8,7 @@ import PostForm from "components/PostForm";
 
 const Feed = () => {
   const { loading, data } = useQuery(GET_FEED);
-  const posts = data?.PostsResult?.data ?? [];
+  const posts = data?.teacherHomeFeed?.data ?? [];
   return (
     <FeedContainer>
       <PostsContainer>

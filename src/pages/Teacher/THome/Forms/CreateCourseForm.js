@@ -1,18 +1,55 @@
 import styled from "styled-components";
+import { useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router";
+import { CREATE_COURSE } from "./gql";
 
 const CreateCourseForm = () => {
+  const history = useHistory();
+  const [createCourse, { loading }] = useMutation(CREATE_COURSE);
+  const { register, handleSubmit } = useForm();
+
+  const onSubmit = async (data) => {
+    console.log(data);
+
+    const { name, yearAndSection } = data;
+
+    try {
+      const { data } = await createCourse({
+        variables: {
+          name,
+          yearAndSection,
+        },
+      });
+
+      if (data?.createCourse?.id) {
+        toast.success("Created successfully");
+        history.push(`/group/${data?.createCourse?.id}`);
+      } else {
+        throw Error("something is wrong");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(onSubmit)}>
       <div>
-        <label>Group Name</label>
-        <input />
+        <label>Course Name</label>
+        <input {...register("name", { required: true })} />
+      </div>
+      <div>
+        <label>Year and Section</label>
+        <input {...register("yearAndSection", { required: true })} />
       </div>
       <div>
         <label>Activate Until</label>
         <input />
       </div>
 
-      <button>Submit</button>
+      <button disabled={loading}>Submit</button>
     </Form>
   );
 };

@@ -19,7 +19,7 @@ const CreateActivityForm = () => {
       <div>
         <label>Activity Type</label>
         <select>
-          <option Disabled Selected>
+          <option disabled selected>
             Select Type
           </option>
           <option>Individual Activity</option>
@@ -29,7 +29,7 @@ const CreateActivityForm = () => {
       <div>
         <label>Course</label>
         <select>
-          <option Disabled Selected>
+          <option disabled selected>
             Select Course
           </option>
         </select>
