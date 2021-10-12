@@ -28,6 +28,8 @@ import Admin from "pages/Admin";
 import Progress from "pages/Student/Progress";
 import THome from "pages/Teacher/THome";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import TeacherAllClass from "pages/Teacher/AllCourses";
+import TeacherSchedule from "pages/Teacher/ClassSched";
 
 function App() {
   const { user } = useCurrentUserContext();
@@ -101,10 +103,15 @@ function App() {
                 <>
                   <Sidebar />
                   <Switch>
-                    <Route path="/" exact>
+                    <Route path="/teacher" exact>
                       <THome />
                     </Route>
-                    <Redirect from="/" exact to="/" />
+                    <Route path="/classes">
+                      <TeacherAllClass />
+                    </Route>
+                    <Route path="/class-schedule">
+                      <TeacherSchedule />
+                    </Route>
                   </Switch>
                 </>
               )}
