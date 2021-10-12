@@ -34,7 +34,7 @@ const TeacherSchedule = () => {
                 <th class="index"> </th>
                 <th class="firstcol">Subject Code</th>
                 <th class="secondcol">Subject Name</th>
-                <th class="thirdcol">Course Year and Section</th>
+                <th class="thirdcol">Course, Year and Section</th>
                 <th class="forthcol">Schedule</th>
               </tr>
             </thead>
@@ -51,13 +51,13 @@ const TeacherSchedContainer = styled.div`
   position: sticky;
   margin-top: 10px;
   background-color: #f2f2f2;
-  width: 80%;
+  width: 50%;
   min-width: 250px;
   border-radius: 10px;
   height: max-content;
   margin-right: 3em;
   margin-left: 2.5em;
-  z-index: -5;
+  z-index: -3;
   ul {
     color: white;
     font-size: 18px;

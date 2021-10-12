@@ -103,13 +103,13 @@ function App() {
                 <>
                   <Sidebar />
                   <Switch>
-                    <Route path="/" exact>
+                    <Route path="/teacher" exact>
                       <THome />
                     </Route>
-                    <Route path="/">
+                    <Route path="/classes">
                       <TeacherAllClass />
                     </Route>
-                    <Route path="/">
+                    <Route path="/class-schedule">
                       <TeacherSchedule />
                     </Route>
                   </Switch>
