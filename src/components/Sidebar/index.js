@@ -27,7 +27,7 @@ const Nav = styled.nav`
   align-items: center;
   justify-content: space-between;
   font-size: 12px;
-  z-index: 1;
+  z-index: 2;
   top: 80px;
   left: 0;
   margin-right: auto;

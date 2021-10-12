@@ -17,6 +17,7 @@ import ClassSched from "pages/Student/ClassSchedule/ScheduleContainer";
 import Calendar from "pages/Student/Calendar";
 import Logout from "components/Logout";
 import Course from "pages/Student/Course";
+import TCourse from "pages/Teacher/Course";
 import AllCourses from "pages/Student/AllCourses";
 import AllCourseGroups from "pages/Student/AllCourseGroups";
 import AllStudyGroups from "pages/Student/AllStudyGroups";
@@ -103,6 +104,9 @@ function App() {
                   <Switch>
                     <Route path="/" exact>
                       <THome />
+                    </Route>
+                    <Route path="/course/:id">
+                      <TCourse />
                     </Route>
                     <Redirect from="/" exact to="/" />
                   </Switch>
