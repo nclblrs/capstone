@@ -104,19 +104,19 @@ function App() {
                 <>
                   <Sidebar />
                   <Switch>
-                    <Route path="/teacher" exact>
+                    <Route path="/" exact>
                       <THome />
                     </Route>
                     <Route path="/course/:id">
                       <TCourse />
                     </Route>
-                    <Redirect from="/" exact to="/" />
                     <Route path="/classes">
                       <TeacherAllClass />
                     </Route>
                     <Route path="/class-schedule">
                       <TeacherSchedule />
                     </Route>
+                    <Redirect from="/" exact to="/" />
                   </Switch>
                 </>
               )}
