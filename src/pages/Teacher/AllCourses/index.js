@@ -111,15 +111,14 @@ const TeacherAllClass = () => {
 };
 
 const PageContainer = styled.div`
-  display: flex;
   justify-content: center;
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
-  width: 75%;
+  width: 100%;
   height: 100%;
-  justify-content: center;
+  margin-left: 20%; 
 
   button {
     border: none;
@@ -144,6 +143,7 @@ const MainContainer = styled.div`
   flex-wrap: wrap;
   gap: 30px;
   margin: 1em;
+  margin-left: 20%;
 
   .buttoncontainer {
     display: flex;
