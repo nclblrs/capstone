@@ -139,14 +139,13 @@ const RSideContainer = styled.div`
   display: flex;
   position: sticky;
   top: 100px;
-  width: 400px;
-  min-width: 400px;
+  width: 21%;
   height: 100px;
   gap: 20px;
   flex-direction: column;
   border-radius: 10px;
-  margin: 0 1.3em;
   margin-left: auto;
+  margin-right: 55px;
   margin-top: 20px;
 `;
 

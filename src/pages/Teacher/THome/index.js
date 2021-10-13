@@ -13,9 +13,7 @@ const Home = () => {
 };
 const HomeContainer = styled.div`
   display: flex;
-  justify-content: center;
-  margin: 0 30px;
-  position: relative;
+  width: 100%;
 `;
 
 export default Home;

@@ -33,12 +33,11 @@ const Feed = () => {
 };
 
 const FeedContainer = styled.div`
-  position: relative;
-  margin-left: 20em;
+  position: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 100%;
   button,
   select {
     display: flex;
@@ -98,15 +97,16 @@ const FeedItemsContainer = styled.div`
 `;
 
 const PostFormContainer = styled.div`
+  width: 100%;
   display: flex;
   position: sticky;
   top: 100px;
-  width: 63em;
   z-index: 1;
 `;
 
 const PostsContainer = styled.div`
-  margin: 0 2em;
+  width: 52%;
+  margin: 0 200px 0 80px;
   display: flex;
   flex-direction: column;
   align-items: center;
