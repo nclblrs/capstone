@@ -21,7 +21,7 @@ import AllCourses from "pages/Student/AllCourses";
 import AllCourseGroups from "pages/Student/AllCourseGroups";
 import AllStudyGroups from "pages/Student/AllStudyGroups";
 import Group from "pages/Student/Group";
-import Settings from "pages/Student/Settings";
+import Settings from "pages/Settings";
 import ResetPassword from "pages/ResetPassword";
 import ForgotPassword from "pages/ForgotPassword";
 import Admin from "pages/Admin";
@@ -30,6 +30,7 @@ import THome from "pages/Teacher/THome";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import TeacherAllClass from "pages/Teacher/AllCourses";
 import TeacherSchedule from "pages/Teacher/ClassSched";
+import Activity from "pages/Student/Activity";
 
 function App() {
   const { user } = useCurrentUserContext();
@@ -96,6 +97,9 @@ function App() {
                   <Route path="/settings">
                     <Settings />
                   </Route>
+                  <Route path="/activity">
+                    <Activity />
+                  </Route>
                   <Redirect from="/" exact to="/" />
                 </Switch>
               )}
@@ -103,7 +107,7 @@ function App() {
                 <>
                   <Sidebar />
                   <Switch>
-                    <Route path="/teacher" exact>
+                    <Route path="/" exact>
                       <THome />
                     </Route>
                     <Route path="/classes">
@@ -111,6 +115,9 @@ function App() {
                     </Route>
                     <Route path="/class-schedule">
                       <TeacherSchedule />
+                    </Route>
+                    <Route path="/settings">
+                      <Settings />
                     </Route>
                   </Switch>
                 </>
