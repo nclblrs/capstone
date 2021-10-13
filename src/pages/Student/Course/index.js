@@ -101,6 +101,10 @@ const Course = () => {
             <NavMenu to={`/class/${id}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
             </NavMenu>
+            <NavMenu to={`/class/${id}/activities`}>
+              <FaLaptop size={18} />
+              &nbsp; Activities
+            </NavMenu>
             <NavMenu to={`/class/${id}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
@@ -119,6 +123,12 @@ const Course = () => {
             <Route path={`/class/${id}/files`}>
               <LeftContainer>
                 <h1>Files</h1>
+              </LeftContainer>
+            </Route>
+            <Route path={`/class/${id}/activities`}>
+              <LeftContainer>
+                <h1>Activities</h1>
+                <div className="leftContent"></div>
               </LeftContainer>
             </Route>
             <Route path={`/class/${id}/members`}>
