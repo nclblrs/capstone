@@ -13,22 +13,23 @@ const Sidebar = () => {
       <SidebarContainer>
         <ul>
           <NavMenu to="/" exact>
-            <FaSchool size={20} /> <p> Home </p>
+            <FaSchool size={20} /> Home
           </NavMenu>
           <NavMenu to="/classes">
-            <SiGoogleclassroom size={20} /> <p>Classes </p>
+            <SiGoogleclassroom size={20} />
+            Classes
           </NavMenu>
           <NavMenu to="/class-schedule">
             <FiClock size={20} />
-            <p> Class Schedule </p>
+            Class Schedule
           </NavMenu>
           <NavMenu to="/calendar">
             <BiCalendar size={20} />
-            <p> Calendar </p>
+            Calendar
           </NavMenu>
           <NavMenu to="/progress">
             <AiFillPieChart size={20} />
-            <p> Progress </p>
+            Progress
           </NavMenu>
         </ul>
       </SidebarContainer>
@@ -42,34 +43,34 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
   z-index: 2;
   top: 80px;
-  text-align: center;
+  left: 0;
+  margin-right: auto;
   position: fixed;
   padding: 0 3em;
   width: 18%;
 `;
 
 const SidebarContainer = styled.div`
-  position: relative;
+  position: sticky;
   display: flex;
   justify-content: center;
   margin-top: 50px;
   height: 100%;
   padding-bottom: 35em;
-  width: 90%;
 `;
 
 const NavMenu = styled(NavLink)`
+  display: flex;
   flex-direction: column;
   color: white;
-  margin: 0 1em;
   justify-content: center;
   align-items: center;
   text-align: center;
   cursor: pointer;
-  font-size: 23px;
+  font-size: 20px;
+  margin: 0 1em;
   margin-top: 2.2em;
   display: flex;
   align-items: center;

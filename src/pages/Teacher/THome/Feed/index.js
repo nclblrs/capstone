@@ -33,7 +33,8 @@ const Feed = () => {
 };
 
 const FeedContainer = styled.div`
-  position: fixed;
+  margin-left: 345px;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -105,8 +106,7 @@ const PostFormContainer = styled.div`
 `;
 
 const PostsContainer = styled.div`
-  width: 52%;
-  margin: 0 200px 0 80px;
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;

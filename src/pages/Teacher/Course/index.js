@@ -243,27 +243,25 @@ const TCourse = () => {
 };
 
 const CourseContainer = styled.div`
+  margin-left: auto;
+  width: 100%;
   display: flex;
-  justify-content: center;
-  margin: 0 30px;
   position: relative;
 `;
 
 const CoursePostsContainer = styled.div`
-  margin: 0 2em;
+  margin-left: 345px;
+  margin-right: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 100%;
 `;
 
 const PostFormContainer = styled.div`
+  width: 100%;
   display: flex;
   position: sticky;
-  flex-direction: column;
-  margin-left: 20em;
-  align-items: center;
-  width: 92%;
   top: 100px;
   z-index: 1;
 `;
@@ -272,7 +270,7 @@ const CoursePostHeader = styled.div`
   position: sticky;
   top: 80px;
   padding-top: 10px;
-  width: 100%;
+  width: 89.9%;
   background: white;
   display: flex;
   flex-direction: column;
@@ -284,11 +282,10 @@ const CourseFilter = styled.nav`
   position: sticky;
   top: 400px;
   height: 50px;
-  width: 63.5em;
+  width: 100%;
   align-items: center;
   margin: 15px 0px auto;
   border-bottom: solid #0f482f 3px;
-  margin-left: 20em;
 
   button {
     display: flex;
@@ -306,11 +303,11 @@ const CourseFilter = styled.nav`
 const NavMenu = styled(NavLink)`
   color: #0f482f;
   cursor: pointer;
-  font-size: 18px;
+  font-size: 17px;
   align-items: center;
   text-decoration: none;
-  padding: 7px 1em;
-  margin: 0 1em;
+  padding: 7px;
+  margin: 5px 15px;
   &:hover,
   &.active {
     background-color: #0e5937;
@@ -376,8 +373,7 @@ const GroupContainer = styled.div`
 `;
 
 const ItemsContainer = styled.div`
-  width: 92%;
-  margin-left: 34.5em;
+  width: 89.9%;
 `;
 
 const LeftContainer = styled.div`
@@ -411,13 +407,14 @@ const RSideContainer = styled.div`
   display: flex;
   position: sticky;
   top: 100px;
-  width: 400px;
+  width: 36.9%;
   height: 100px;
-  min-width: 400px;
+  gap: 20px;
   flex-direction: column;
-  border-radius: 10px;
-  margin: 20px 1.3em;
   margin-left: auto;
+  margin-right: 55px;
+  border-radius: 10px;
+  margin-top: 20px;
   h3 {
     color: #646464;
     text-align: left;
@@ -460,7 +457,6 @@ const RSideContainer = styled.div`
     padding: 8px 8px;
   }
   .buttoncontainer {
-    margin-top: 20px;
     margin-left: auto;
     button {
       border: none;

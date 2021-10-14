@@ -29,7 +29,7 @@ import Admin from "pages/Admin";
 import Progress from "pages/Student/Progress";
 import THome from "pages/Teacher/THome";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
-import TeacherAllClass from "pages/Teacher/AllCourses";
+import TeacherAllClass from "pages/Teacher/Classes";
 import TeacherSchedule from "pages/Teacher/ClassSched";
 
 function App() {

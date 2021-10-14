@@ -8,12 +8,6 @@ export const GET_TEACHERCLASSES = gql`
         name
         yearAndSection
         studentCount
-        teacher {
-          user {
-            firstName
-            lastName
-          }
-        }
       }
     }
   }

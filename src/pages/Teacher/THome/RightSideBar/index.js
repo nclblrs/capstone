@@ -166,7 +166,7 @@ const RSideClasses = styled.div`
   background-color: #f2f2f2;
   height: max-content;
   border-radius: 10px;
-  padding: 1.7em 2em 0 2em;
+  padding: 1.7em 2em 1.7em 2em;
   button {
     font-size: 16px;
     justify-content: center;
