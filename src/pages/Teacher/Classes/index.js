@@ -14,6 +14,10 @@ const TeacherAllClass = () => {
     <PageContainer>
       <MainContainer>
         <ButtonContainer>
+          <button className="createclass">
+            Create Class
+            <IoIosAddCircle size={18} />
+          </button>
           <button className="sortbutton">
             <Dropdown
               popperComponent={
@@ -26,10 +30,6 @@ const TeacherAllClass = () => {
               Sort By
               <FaFilter size={18} />
             </Dropdown>
-          </button>
-          <button className="createclass">
-            Create Class
-            <IoIosAddCircle size={18} />
           </button>
           <div className="leftbuttoncontainer">
             <button className="showinactive">Show Inactive</button>
@@ -55,11 +55,7 @@ const TeacherAllClass = () => {
 
 const PageContainer = styled.div`
   display: flex;
-  justify-content: center;
-  flex-direction: column;
-  position: sticky;
-  width: 95%;
-  margin-left: auto;
+  width: 100%;
 `;
 
 const ButtonContainer = styled.div`
@@ -100,7 +96,7 @@ const ButtonContainer = styled.div`
     font-size: 16px;
     width: 120px;
     height: 49px;
-    margin-right: 30px;
+    margin-right: auto;
     background-color: #0e5937;
     &:hover {
       background-color: #157348;

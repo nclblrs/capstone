@@ -7,54 +7,54 @@ import { useState } from "react";
 import Modal from "components/Modal";
 import EditProfileForm from "./EditProfileForm";
 
-const Settings = () => {
+const TSettings = () => {
   const { user, loading } = useCurrentUserContext();
   const { firstName, middleName, lastName, schoolIdNumber, student, emails } =
     user ?? {};
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   return (
     <SettingsContainer>
-      <LSideContainer>
-        <Nav>
-          <NavMenu to="/settings" exact>
-            Personal Information
-          </NavMenu>
-          <NavMenu to="/settings/change-password">Password</NavMenu>
-        </Nav>
-      </LSideContainer>
+      <AllContainer>
+        <NavMenu to="/settings">
+          <li>Personal Information</li>
+        </NavMenu>
+        <NavMenu to="/settings/change-password">
+          <li>Change Password</li>
+        </NavMenu>
+      </AllContainer>
       <RSideContainer>
         <Switch>
           <Route path="/settings" exact>
             <RSideBar>
               <ProfileTop>
                 <img
-                  class="profilepic"
+                  className="profilepic"
                   src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
                   alt="Your profile pic"
                 />
                 <ul>
-                  <li class="name">
+                  <li className="name">
                     {loading
                       ? "Loading..."
                       : [firstName, middleName, lastName]
                           .filter((n) => n)
                           .join(" ")}
                   </li>
-                  <li class="idnum">{schoolIdNumber}</li>
-                  <li class="role">{student ? "Student" : "Teacher"}</li>
+                  <li className="idnum">{schoolIdNumber}</li>
+                  <li className="role">{student ? "Student" : "Teacher"}</li>
                 </ul>
                 <button
-                  class="editprofile"
+                  className="editprofile"
                   onClick={() => setShowEditProfileModal(true)}
                 >
                   Edit Profile &nbsp;
-                  <BsPencilSquare size={30} class="editicon" />
+                  <BsPencilSquare size={30} className="editicon" />
                 </button>
               </ProfileTop>
               <ProfileBottom>
                 <hr></hr>
-                <div class="row">
-                  <div class="nameInput">
+                <div className="row">
+                  <div className="nameInput">
                     <label for="FN">First Name</label>
                     <input
                       type="text"
@@ -63,7 +63,7 @@ const Settings = () => {
                       placeholder={firstName}
                     />
                   </div>
-                  <div class="nameInput">
+                  <div className="nameInput">
                     <label for="MN">Middle Name</label>
                     <input
                       type="text"
@@ -72,7 +72,7 @@ const Settings = () => {
                       placeholder={middleName ?? ""}
                     />
                   </div>
-                  <div class="nameInput">
+                  <div className="nameInput">
                     <label for="LN">Last Name</label>
                     <input
                       type="text"
@@ -82,8 +82,8 @@ const Settings = () => {
                     />
                   </div>
                 </div>
-                <div class="row">
-                  <div class="snInput">
+                <div className="row">
+                  <div className="snInput">
                     <label for="SN">Student Number</label>
                     <input
                       type="text"
@@ -92,7 +92,7 @@ const Settings = () => {
                       placeholder={schoolIdNumber}
                     />
                   </div>
-                  <div class="emailInput">
+                  <div className="emailInput">
                     <label for="Email">Email</label>
                     <input
                       type="text"
@@ -108,12 +108,12 @@ const Settings = () => {
           <Route path="/settings/change-password">
             <RSideBar>
               <PasswordContainer>
-                <div class="pwHeader">
+                <div className="pwHeader">
                   <h3>Change Password</h3>
                   <hr></hr>
                 </div>
-                <div class="pwBottom">
-                  <div class="pwInputs">
+                <div className="pwBottom">
+                  <div className="pwInputs">
                     <label for="CurP">Current Password</label>
                     <input type="text" id="CurP" />
                     <label for="NP">New Password</label>
@@ -142,51 +142,16 @@ const Settings = () => {
 const SettingsContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin: 0 50px;
-`;
-
-const LSideContainer = styled.div`
-  margin-top: 20px;
-  width: 30%;
-  min-width: 300px;
-  margin-right: 50px;
-`;
-
-const Nav = styled.nav`
-  display: flex;
-  top: 100px;
   width: 100%;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  height: 30%;
-  border-radius: 10px;
-  justify-content: center;
-  font-size: 18px;
-  border: none;
-`;
-
-const NavMenu = styled(NavLink)`
-  color: #0e5937;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 18px;
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  font-weight: normal;
-  padding: 1em 0;
-  &.active,
-  &:hover {
-    background-color: #0e5937;
-    color: white;
-  }
 `;
 
 const RSideContainer = styled.div`
-  margin-top: 20px;
+  margin-top: 7em;
   display: flex;
-  width: 100%;
-  min-width: 880px;
+  width: 76%;
+  min-width: 700px;
+  margin-left: auto;
+  margin-right: 57px;
 `;
 
 const RSideBar = styled.div`
@@ -348,4 +313,43 @@ const PasswordContainer = styled.div`
   }
 `;
 
-export default Settings;
+const AllContainer = styled.nav`
+  display: flex;
+  position: fixed;
+  gap: 50px;
+  margin-right: auto;
+  margin-left: 404px;
+  margin-top: 30px;
+`;
+
+const NavMenu = styled(NavLink)`
+  text-decoration: none;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 1px;
+  font-size: 18px;
+  color: #646464;
+  cursor: pointer;
+  padding: 10px;
+  font-weight: bold;
+  padding-bottom: 0;
+  font-weight: normal;
+
+  li {
+    list-style-type: none;
+    border-bottom: 4px solid #0e5937;
+    height: 35px;
+    margin-top: 0;
+  }
+
+  &:hover,
+  &.active {
+    color: white;
+    background-color: #0e5937;
+    border-radius: 10px;
+  }
+`;
+
+export default TSettings;
