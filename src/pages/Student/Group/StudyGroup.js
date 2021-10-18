@@ -19,6 +19,7 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
 import { useUrlQuery } from "hooks/useUrlQuery";
 import TagsInfo from "./StudyGroupTabs/Tags";
+import Files from "./StudyGroupTabs/Files";
 
 const StudyGroup = () => {
   let { id } = useParams();
@@ -115,6 +116,11 @@ const StudyGroup = () => {
             <Route path={`/group/:id/files`}>
               <LeftContainer>
                 <h1>Files</h1>
+                <div className="filescontainer">
+                  <Files />
+                  <Files />
+                  <Files />
+                </div>
               </LeftContainer>
             </Route>
             <Route path={`/group/:id/tags`}>
@@ -347,6 +353,15 @@ const LeftContainer = styled.div`
     align-content: flex-start;
     height: 220px;
     margin-left: 3em;
+    gap: 10px;
+  }
+
+  .filescontainer {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    height: 220px;
+    margin: 0 3em;
   }
   .leftContent {
     position: absolute;
