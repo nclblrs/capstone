@@ -120,3 +120,19 @@ export const JOIN_COURSE = gql`
     }
   }
 `;
+
+export const COURSE_FROM_COURSECODE = gql`
+  query ($courseCode: String!) {
+    courseFromCourseCode(courseCode: $courseCode) {
+      id
+      teacher {
+        user {
+          firstName
+          lastName
+        }
+      }
+      courseCode
+      yearAndSection
+    }
+  }
+`;
