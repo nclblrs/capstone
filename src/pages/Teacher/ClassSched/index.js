@@ -39,7 +39,7 @@ const TeacherSchedule = () => {
               </tr>
             </thead>
           </colgroup>
-        </table>
+        </table>+
       </SchedTable>
     </TeacherSchedContainer>
   );

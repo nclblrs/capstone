@@ -1,39 +1,50 @@
 import React from "react";
 import styled from "styled-components";
+import { useState } from "react";
+import Modal from "components/Modal";
 import { Link } from "react-router-dom";
 import { GET_TEACHERCLASSES } from "./gql";
 import { useQuery } from "@apollo/client";
 import { FaFilter } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
+import CreateCourseForm from "pages/Teacher/THome/Forms/CreateCourseForm";
 
 const TeacherAllClass = () => {
   const { loading, data } = useQuery(GET_TEACHERCLASSES);
+  const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
 
   return (
     <PageContainer>
+      <Modal
+        show={showCreateCourseModal}
+        closeModal={() => setShowCreateCourseModal(false)}
+        title="Create Course"
+      >
+        <CreateCourseForm />
+      </Modal>
       <MainContainer>
         <ButtonContainer>
-          <button className="createclass">
-            Create Class
-            <IoIosAddCircle size={18} />
+          <Dropdown
+            popperComponent={
+              <DropdownButtons>
+                <button>Class Name</button>
+                <button>Section</button>
+              </DropdownButtons>
+            }
+          >
+            <button className="sortbutton">
+              Sort By &nbsp;
+              <FaFilter size={18} className="filtericon" />
+            </button>
+          </Dropdown>
+          <button
+            className="createclass"
+            onClick={() => setShowCreateCourseModal(true)}
+          >
+            Create Class &nbsp;
+            <IoIosAddCircle size={20} className="createicon" />
           </button>
-          <button className="sortbutton">
-            <Dropdown
-              popperComponent={
-                <DropdownButtons>
-                  <button>Class Name</button>
-                  <button>Year and Section</button>
-                </DropdownButtons>
-              }
-            >
-              Sort By
-              <FaFilter size={18} />
-            </Dropdown>
-          </button>
-          <div className="leftbuttoncontainer">
-            <button className="showinactive">Show Inactive</button>
-          </div>
         </ButtonContainer>
         <div className="itemcontainer">
           {loading
@@ -49,66 +60,25 @@ const TeacherAllClass = () => {
               )}
         </div>
       </MainContainer>
+      <button className="showinactive">Show Inactive</button>
     </PageContainer>
   );
 };
 
 const PageContainer = styled.div`
   display: flex;
-  width: 100%;
-`;
-
-const ButtonContainer = styled.div`
-  position: sticky;
-  display: flex;
-  flex-direction: row;
-  margin-left: auto;
-  button {
+  justify-content: center;
+  .showinactive {
+    margin-left: auto;
+    margin-top: 15px;
+    margin-right: 57px;
     border: none;
     color: white;
-    justify-content: center;
-    margin-left: auto;
-    margin-top: 10px;
-    height: 50px;
-    cursor: pointer;
-  }
-
-  .leftbuttoncontainer {
-    margin-left: auto;
-    margin-right: 57px;
-    button {
-      font-size: 16px;
-      width: 150px;
-      height: 49px;
-      color: white;
-      background-color: #0e5937;
-      border: none;
-      &:hover {
-        background-color: #157348;
-        color: white;
-        cursor: pointer;
-      }
-    }
-  }
-
-  .sortbutton {
-    justify-content: center;
-    font-size: 16px;
-    width: 120px;
-    height: 49px;
-    margin-right: auto;
     background-color: #0e5937;
-    &:hover {
-      background-color: #157348;
-      color: white;
-      cursor: pointer;
-    }
-  }
-  .createclass {
-    font-size: 16px;
     width: 150px;
-    margin-right: 63.2em;
-    background-color: #0e5937;
+    height: 50px;
+    font-size: 16px;
+    cursor: pointer;
     &:hover {
       background-color: #157348;
       color: white;
@@ -122,29 +92,29 @@ const MainContainer = styled.div`
   flex-direction: column;
   align-items: center;
   border-radius: 10px;
-  margin-top: 20px;
-  margin-left: auto;
+  padding: 1em;
+  margin-right: auto;
+  margin-left: 390px;
 
   .itemcontainer {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    gap: 22px;
-    margin: 1em;
+    gap: 25px;
+    margin-top: 40px;
     li {
       padding: 10px 8px;
     }
   }
   .items {
-    margin-top: 50px;
     border-radius: 1em;
     flex-direction: column;
     display: flex;
     padding: 2em;
-    width: 20%;
+    width: 345px;
     background-color: #f2f2f2;
     height: max-content;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     text-decoration: none;
 
     :hover {
@@ -163,6 +133,45 @@ const MainContainer = styled.div`
       white-space: nowrap;
       overflow: hidden;
       margin: 0;
+    }
+  }
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  button {
+    justify-content: center;
+    border: none;
+    color: white;
+    width: 150px;
+    height: 50px;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .createclass {
+    margin-right: auto;
+    margin-left: 15px;
+    background-color: #0e5937;
+    width: 170px;
+    &:hover {
+      background-color: #157348;
+      color: white;
+      cursor: pointer;
+    }
+    .createicon {
+      padding-top: 0.3em;
+    }
+  }
+  .sortbutton {
+    margin-right: 22px;
+    background-color: #0e5937;
+    &:hover {
+      background-color: #157348;
+      color: white;
+      cursor: pointer;
+    }
+    .filtericon {
+      padding-top: 0.3em;
     }
   }
 `;
