@@ -1,21 +1,24 @@
 import styled from "styled-components";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
 
-import { JOIN_COURSE } from "../gql";
+import { JOIN_COURSE, COURSE_FROM_COURSECODE } from "../gql";
 
 const JoinClassForm = () => {
   const history = useHistory();
+  const { register, handleSubmit, watch } = useForm();
+  const courseCode = watch("courseCode", "");
 
+  const { data } = useQuery(COURSE_FROM_COURSECODE, {
+    variables: { courseCode },
+  });
   const [joinCourse, { loading }] = useMutation(JOIN_COURSE);
 
-  const { register, handleSubmit } = useForm();
+  const { teacher, yearAndSection = "" } = data?.courseFromCourseCode ?? {};
 
   const onSubmit = async (data) => {
-    console.log(data);
-
     const { courseCode } = data;
 
     try {
@@ -44,11 +47,16 @@ const JoinClassForm = () => {
       </div>
       <div>
         <label>Year and Section</label>
-        <input disabled />
+        <input disabled value={yearAndSection} />
       </div>
       <div>
         <label>Professor</label>
-        <input disabled />
+        <input
+          disabled
+          value={
+            teacher ? `${teacher.user.firstName} ${teacher.user.lastName}` : ""
+          }
+        />
       </div>
 
       <button disabled={loading}>Submit</button>
