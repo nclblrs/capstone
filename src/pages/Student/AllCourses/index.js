@@ -11,7 +11,7 @@ const AllCourses = () => {
     <PageContainer>
       <MainContainer>
         <AllContainer>
-          <NavMenu to="/classes">
+          <NavMenu to="/classes" exact>
             <li>Classes</li>
           </NavMenu>
           <NavMenu to="/coursegroups">

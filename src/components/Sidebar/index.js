@@ -11,27 +11,25 @@ const Sidebar = () => {
   return (
     <Nav>
       <SidebarContainer>
-        <ul>
-          <NavMenu to="/" exact>
-            <FaSchool size={20} /> Home
-          </NavMenu>
-          <NavMenu to="/classes">
-            <SiGoogleclassroom size={20} />
-            Classes
-          </NavMenu>
-          <NavMenu to="/class-schedule">
-            <FiClock size={20} />
-            Class Schedule
-          </NavMenu>
-          <NavMenu to="/calendar">
-            <BiCalendar size={20} />
-            Calendar
-          </NavMenu>
-          <NavMenu to="/progress">
-            <AiFillPieChart size={20} />
-            Progress
-          </NavMenu>
-        </ul>
+        <NavMenu to="/" exact>
+          <FaSchool size={20} /> Home
+        </NavMenu>
+        <NavMenu to="/classes">
+          <SiGoogleclassroom size={20} />
+          Classes
+        </NavMenu>
+        <NavMenu to="/class-schedule">
+          <FiClock size={20} />
+          Class Schedule
+        </NavMenu>
+        <NavMenu to="/calendar">
+          <BiCalendar size={20} />
+          Calendar
+        </NavMenu>
+        <NavMenu to="/progress">
+          <AiFillPieChart size={20} />
+          Progress
+        </NavMenu>
       </SidebarContainer>
     </Nav>
   );
@@ -39,26 +37,20 @@ const Sidebar = () => {
 
 const Nav = styled.nav`
   background-color: #0f482f;
-  height: 100%;
+  height: auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  z-index: 2;
-  top: 80px;
-  left: 0;
-  margin-right: auto;
+  width: 300px;
   position: fixed;
-  padding: 0 3em;
-  width: 18%;
+  overflow-x: hidden;
+  top: 0;
+  left: 0;
+  height: 100%;
+  justify-content: center;
 `;
 
 const SidebarContainer = styled.div`
-  position: sticky;
-  display: flex;
-  justify-content: center;
-  margin-top: 50px;
-  height: 100%;
-  padding-bottom: 35em;
+  display: block;
 `;
 
 const NavMenu = styled(NavLink)`
@@ -67,14 +59,20 @@ const NavMenu = styled(NavLink)`
   color: white;
   justify-content: center;
   align-items: center;
-  text-align: center;
   cursor: pointer;
   font-size: 20px;
-  margin: 0 1em;
-  margin-top: 2.2em;
+  margin-top: 2em;
   display: flex;
   align-items: center;
   text-decoration: none;
+  padding: 25px 80px;
+
+  &:hover,
+  &.active {
+    background-color: #1b6344;
+    color: white;
+    border-radius: 5px;
+  }
 `;
 
 export default Sidebar;

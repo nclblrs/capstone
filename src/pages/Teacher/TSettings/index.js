@@ -15,7 +15,7 @@ const TSettings = () => {
   return (
     <SettingsContainer>
       <AllContainer>
-        <NavMenu to="/settings">
+        <NavMenu to="/settings" exact>
           <li>Personal Information</li>
         </NavMenu>
         <NavMenu to="/settings/change-password">
@@ -148,10 +148,9 @@ const SettingsContainer = styled.div`
 const RSideContainer = styled.div`
   margin-top: 7em;
   display: flex;
-  width: 76%;
-  min-width: 700px;
-  margin-left: auto;
-  margin-right: 57px;
+  width: 100%;
+  margin-left: 23em;
+  margin-right: 3em;
 `;
 
 const RSideBar = styled.div`
@@ -215,10 +214,10 @@ const ProfileTop = styled.div`
     color: white;
     border: none;
     position: absolute;
-    right: 81px;
-    margin-left: auto;
-    margin-top: 88px;
+    right: 90px;
+    top: 230px;
     cursor: pointer;
+    flex-wrap: wrap;
 
     &:hover {
       background-color: #157348;

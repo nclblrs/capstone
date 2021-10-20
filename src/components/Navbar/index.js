@@ -113,17 +113,6 @@ const NavMenu = styled(NavLink)`
     background-color: #0f482f;
     color: white;
     border-radius: 5px;
-    img {
-      filter: brightness(0) invert(1);
-    }
-  }
-  img {
-    padding-right: 10px;
-    width: 35px;
-    filter: brightness(0) invert(1);
-  }
-  img:hover {
-    filter: brightness(0) invert(1);
   }
 `;
 
