@@ -1,6 +1,11 @@
 import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
+import { FaSchool } from "react-icons/fa";
+import { SiGoogleclassroom } from "react-icons/si";
+import { FiClock } from "react-icons/fi";
+import { BiCalendar } from "react-icons/bi";
+import { AiFillPieChart } from "react-icons/ai";
 
 const Sidebar = () => {
   return (
@@ -8,12 +13,24 @@ const Sidebar = () => {
       <SidebarContainer>
         <ul>
           <NavMenu to="/" exact>
-            Home
+            <FaSchool size={20} /> Home
           </NavMenu>
-          <NavMenu to="/classes">Classes</NavMenu>
-          <NavMenu to="/class-schedule">Class Schedule</NavMenu>
-          <NavMenu to="/calendar">Calendar</NavMenu>
-          <NavMenu to="/progress">Progress</NavMenu>
+          <NavMenu to="/classes">
+            <SiGoogleclassroom size={20} />
+            Classes
+          </NavMenu>
+          <NavMenu to="/class-schedule">
+            <FiClock size={20} />
+            Class Schedule
+          </NavMenu>
+          <NavMenu to="/calendar">
+            <BiCalendar size={20} />
+            Calendar
+          </NavMenu>
+          <NavMenu to="/progress">
+            <AiFillPieChart size={20} />
+            Progress
+          </NavMenu>
         </ul>
       </SidebarContainer>
     </Nav>
@@ -26,14 +43,13 @@ const Nav = styled.nav`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 12px;
-  z-index: 1;
+  z-index: 2;
   top: 80px;
   left: 0;
   margin-right: auto;
   position: fixed;
   padding: 0 3em;
-  width: 350px;
+  width: 18%;
 `;
 
 const SidebarContainer = styled.div`
@@ -49,12 +65,12 @@ const NavMenu = styled(NavLink)`
   display: flex;
   flex-direction: column;
   color: white;
-  margin: 0 1em;
   justify-content: center;
   align-items: center;
   text-align: center;
   cursor: pointer;
-  font-size: 23px;
+  font-size: 20px;
+  margin: 0 1em;
   margin-top: 2.2em;
   display: flex;
   align-items: center;

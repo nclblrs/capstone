@@ -39,7 +39,7 @@ const TeacherSchedule = () => {
               </tr>
             </thead>
           </colgroup>
-        </table>
+        </table>+
       </SchedTable>
     </TeacherSchedContainer>
   );
@@ -49,15 +49,14 @@ const TeacherSchedContainer = styled.div`
   display: flex;
   flex-direction: column;
   position: sticky;
-  margin-top: 10px;
+  margin-top: 20px;
   background-color: #f2f2f2;
-  width: 50%;
-  min-width: 250px;
+  width: 76%;
+  min-width: 700px;
   border-radius: 10px;
   height: max-content;
-  margin-right: 3em;
-  margin-left: 2.5em;
-  z-index: -3;
+  margin-left: auto;
+  margin-right: 57px;
   ul {
     color: white;
     font-size: 18px;

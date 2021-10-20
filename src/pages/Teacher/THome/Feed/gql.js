@@ -1,9 +1,8 @@
 import { gql } from "@apollo/client";
 
-
 export const GET_FEED = gql`
-  query PostsResult {
-    PostsResult {
+  query teacherHomeFeed {
+    teacherHomeFeed {
       data {
         id
         attachment
