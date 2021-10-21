@@ -157,9 +157,9 @@ const StudyGroup = () => {
           <h3>ABOUT</h3>
           {loading
             ? "Loading..."
-            : admins?.data?.map(({ user }) => (
+            : admins?.data?.map(({ id, user }) => (
                 <>
-                  <h4>{name}</h4>
+                  <h4 key={id}>{name}</h4>
                   <h5>
                     Group Code: <p>&nbsp; {groupCode}</p>
                   </h5>

@@ -8,6 +8,12 @@ import { JOIN_STUDY_GROUP, GROUP_FROM_GROUPCODE } from "../gql";
 
 const JoinSGroupForm = () => {
   const history = useHistory();
+  const { register, handleSubmit, watch } = useForm();
+  const groupCode = watch("groupCode", "");
+
+  const { data } = useQuery(GROUP_FROM_GROUPCODE, {
+    variables: { groupCode },
+  });
 
   const [joinStudyGroup, { loading }] = useMutation(JOIN_STUDY_GROUP);
 
@@ -19,11 +25,9 @@ const JoinSGroupForm = () => {
     variables: { groupCode },
   });
 
-  const { name, admins = "" } = data?.groupFromGroupCode ?? {};
+  const { name, admins } = data?.groupFromGroupCode ?? {};
 
   const onSubmit = async (data) => {
-    console.log(data);
-
     const { groupCode } = data;
 
     try {
@@ -56,9 +60,15 @@ const JoinSGroupForm = () => {
       </div>
       <div>
         <label>Admin</label>
-        <input disabled value={admins} />
+        <input
+          disabled
+          value={
+            admins
+              ? `${admins?.data?.[0].user.firstName} ${admins?.data?.[0].user.lastName}`
+              : ""
+          }
+        />
       </div>
-
       <button disabled={loading}>Submit</button>
     </Form>
   );
