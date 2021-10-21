@@ -136,3 +136,4 @@ export const COURSE_FROM_COURSECODE = gql`
     }
   }
 `;
+

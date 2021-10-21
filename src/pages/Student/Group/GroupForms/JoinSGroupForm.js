@@ -1,17 +1,25 @@
 import styled from "styled-components";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router";
 
-import { JOIN_STUDY_GROUP } from "../gql";
+import { JOIN_STUDY_GROUP, GROUP_FROM_GROUPCODE } from "../gql";
 
 const JoinSGroupForm = () => {
   const history = useHistory();
 
   const [joinStudyGroup, { loading }] = useMutation(JOIN_STUDY_GROUP);
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, watch } = useForm();
+
+  const groupCode = watch("groupCode", "");
+
+  const { data } = useQuery(GROUP_FROM_GROUPCODE, {
+    variables: { groupCode },
+  });
+
+  const { name, admins = "" } = data?.groupFromGroupCode ?? {};
 
   const onSubmit = async (data) => {
     console.log(data);
@@ -44,11 +52,11 @@ const JoinSGroupForm = () => {
       </div>
       <div>
         <label>Group Name</label>
-        <input disabled />
+        <input disabled value={name} />
       </div>
       <div>
         <label>Admin</label>
-        <input disabled />
+        <input disabled value={admins} />
       </div>
 
       <button disabled={loading}>Submit</button>
