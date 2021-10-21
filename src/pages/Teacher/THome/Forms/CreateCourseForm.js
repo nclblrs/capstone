@@ -26,7 +26,7 @@ const CreateCourseForm = () => {
 
       if (data?.createCourse?.id) {
         toast.success("Created successfully");
-        history.push(`/course/${data?.createStudyGroup?.id}`);
+        history.push(`/course/${data?.createCourse.id}`);
       } else {
         throw Error("something is wrong");
       }
