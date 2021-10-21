@@ -17,14 +17,6 @@ const JoinSGroupForm = () => {
 
   const [joinStudyGroup, { loading }] = useMutation(JOIN_STUDY_GROUP);
 
-  const { register, handleSubmit, watch } = useForm();
-
-  const groupCode = watch("groupCode", "");
-
-  const { data } = useQuery(GROUP_FROM_GROUPCODE, {
-    variables: { groupCode },
-  });
-
   const { name, admins } = data?.groupFromGroupCode ?? {};
 
   const onSubmit = async (data) => {
