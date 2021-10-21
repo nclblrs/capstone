@@ -102,7 +102,7 @@ function App() {
                   <Route path="/activity">
                     <Activity />
                   </Route>
-                  <Redirect from="/" exact to="/" />
+                  <Redirect from="/" to="/" />
                 </Switch>
               )}
               {teacher && (
@@ -124,7 +124,7 @@ function App() {
                     <Route path="/settings">
                       <TSettings />
                     </Route>
-                    <Redirect from="/" exact to="/" />
+                    <Redirect from="/" to="/" />
                   </Switch>
                 </>
               )}
