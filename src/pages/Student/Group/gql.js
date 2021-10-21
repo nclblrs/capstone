@@ -129,3 +129,20 @@ export const JOIN_STUDY_GROUP = gql`
     }
   }
 `;
+
+export const GROUP_FROM_GROUPCODE = gql`
+  query ($groupCode: String!) {
+    groupFromGroupCode(groupCode: $groupCode) {
+      id
+      name
+      admins {
+        data {
+          user {
+            firstName
+            lastName
+          }
+        }
+      }
+    }
+  }
+`;
