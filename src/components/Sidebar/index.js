@@ -47,6 +47,7 @@ const Nav = styled.nav`
   left: 0;
   height: 100%;
   justify-content: center;
+  z-index: 1;
 `;
 
 const SidebarContainer = styled.div`
