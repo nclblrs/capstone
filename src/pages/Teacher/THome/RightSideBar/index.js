@@ -7,8 +7,8 @@ import { FaPlusCircle, FaLaptop, FaRegLightbulb } from "react-icons/fa";
 import { BiDotsHorizontalRounded, BiChevronDown } from "react-icons/bi";
 import { useState } from "react";
 import Modal from "components/Modal";
-import CreateActivityForm from "pages/Teacher/THome/Forms/CreateActivityForm";
-import CreateCourseForm from "pages/Teacher/THome/Forms/CreateCourseForm";
+import CreateActivityForm from "pages/Teacher/Classes/Forms/CreateActivityForm";
+import CreateCourseForm from "pages/Teacher/Classes/Forms/CreateCourseForm";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const RightSideBar = () => {

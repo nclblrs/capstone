@@ -8,7 +8,7 @@ import { useQuery } from "@apollo/client";
 import { FaFilter } from "react-icons/fa";
 import { IoIosAddCircle } from "react-icons/io";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
-import CreateCourseForm from "pages/Teacher/THome/Forms/CreateCourseForm";
+import CreateCourseForm from "pages/Teacher/Classes/Forms/CreateCourseForm";
 
 const TeacherAllClass = () => {
   const { loading, data } = useQuery(GET_TEACHERCLASSES);

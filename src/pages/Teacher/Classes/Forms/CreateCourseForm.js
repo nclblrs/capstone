@@ -13,19 +13,22 @@ const CreateCourseForm = () => {
   const onSubmit = async (data) => {
     console.log(data);
 
-    const { name, yearAndSection } = data;
+    const { name, subjCode, yearAndSection, startsAt, endsAt } = data;
 
     try {
       const { data } = await createCourse({
         variables: {
           name,
+          subjCode,
           yearAndSection,
+          startsAt,
+          endsAt,
         },
       });
 
       if (data?.createCourse?.id) {
         toast.success("Created successfully");
-        history.push(`/group/${data?.createCourse?.id}`);
+        history.push(`/course/${data?.createCourse.id}`);
       } else {
         throw Error("something is wrong");
       }
@@ -41,12 +44,20 @@ const CreateCourseForm = () => {
         <input {...register("name", { required: true })} />
       </div>
       <div>
+        <label>Subject Code</label>
+        <input {...register("subjCode", { required: true })} />
+      </div>
+      <div>
         <label>Year and Section</label>
         <input {...register("yearAndSection", { required: true })} />
       </div>
       <div>
-        <label>Activate Until</label>
-        <input />
+        <label>Starts At: (YYYY-MM-DD)</label>
+        <input {...register("startsAt", { required: true })} />
+      </div>
+      <div>
+        <label>Ends At: (YYYY-MM-DD)</label>
+        <input {...register("endsAt", { required: true })} />
       </div>
 
       <button disabled={loading}>Submit</button>
