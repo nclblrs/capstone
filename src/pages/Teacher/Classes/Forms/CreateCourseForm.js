@@ -13,7 +13,7 @@ const CreateCourseForm = () => {
   const onSubmit = async (data) => {
     console.log(data);
 
-    const { name, subjCode, yearAndSection } = data;
+    const { name, subjCode, yearAndSection, startsAt, endsAt } = data;
 
     try {
       const { data } = await createCourse({
@@ -21,6 +21,8 @@ const CreateCourseForm = () => {
           name,
           subjCode,
           yearAndSection,
+          startsAt,
+          endsAt,
         },
       });
 
@@ -50,8 +52,12 @@ const CreateCourseForm = () => {
         <input {...register("yearAndSection", { required: true })} />
       </div>
       <div>
-        <label>Activate Until</label>
-        <input />
+        <label>Starts At: (YYYY-MM-DD)</label>
+        <input {...register("startsAt", { required: true })} />
+      </div>
+      <div>
+        <label>Ends At: (YYYY-MM-DD)</label>
+        <input {...register("endsAt", { required: true })} />
       </div>
 
       <button disabled={loading}>Submit</button>

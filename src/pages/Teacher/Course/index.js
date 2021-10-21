@@ -11,7 +11,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
 import Modal from "components/Modal";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
-import CreateActivityForm from "pages/Teacher/THome/Forms/CreateActivityForm";
+import CreateActivityForm from "pages/Teacher/Classes/Forms/CreateActivityForm";
 import PostForm from "components/PostForm";
 import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
