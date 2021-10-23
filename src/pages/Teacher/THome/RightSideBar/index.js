@@ -7,8 +7,8 @@ import { FaPlusCircle, FaLaptop, FaRegLightbulb } from "react-icons/fa";
 import { BiDotsHorizontalRounded, BiChevronDown } from "react-icons/bi";
 import { useState } from "react";
 import Modal from "components/Modal";
-import CreateActivityForm from "pages/Teacher/Classes/Forms/CreateActivityForm";
-import CreateCourseForm from "pages/Teacher/Classes/Forms/CreateCourseForm";
+import CreateActivityForm from "pages/Teacher/Course/Forms/CreateActivityForm";
+import CreateCourseForm from "pages/Teacher/Course/Forms/CreateCourseForm";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const RightSideBar = () => {
@@ -168,6 +168,7 @@ const RSideClasses = styled.div`
   border-radius: 10px;
   padding: 1.7em 2em 1.7em 2em;
   button {
+    display: flex;
     font-size: 16px;
     justify-content: center;
     margin-left: auto;
@@ -175,7 +176,7 @@ const RSideClasses = styled.div`
     border: none;
     background: none;
     cursor: pointer;
-    text-align: center;
+    align-items: center;
     color: white;
   }
   .Create {
