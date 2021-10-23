@@ -11,20 +11,23 @@ import { useQuery, useMutation } from "@apollo/client";
 import { useState } from "react";
 import Modal from "components/Modal";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
-import CreateActivityForm from "pages/Teacher/Classes/Forms/CreateActivityForm";
+import CreateActivityForm from "pages/Teacher/Course/Forms/CreateActivityForm";
+import CreateClassGroupForm from "pages/Teacher/Course/Forms/CreateClassGroupForm";
 import PostForm from "components/PostForm";
 import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import { toast } from "react-toastify";
-import { FaLaptop, FaPlusCircle, FaPenSquare } from "react-icons/fa";
+import { FaLaptop, FaPenSquare } from "react-icons/fa";
 import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
-import { BiMessageDetail } from "react-icons/bi";
+import { BiMessageDetail, BiChevronDown } from "react-icons/bi";
 import { RiFileCopy2Fill, RiFileEditLine } from "react-icons/ri";
 
 const TCourse = () => {
   const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
+  const [showCreateClassGroupModal, setShowCreateClassGroupModal] =
+    useState(false);
 
   let { id } = useParams();
   const { user } = useCurrentUserContext();
@@ -148,7 +151,7 @@ const TCourse = () => {
                 </div>
               </LeftContainer>
             </Route>
-            <Route path={`/courrse/${id}/groups`}>
+            <Route path={`/course/${id}/groups`}>
               <GroupContainer>
                 <div className="leftContent">
                   {loading
@@ -225,9 +228,23 @@ const TCourse = () => {
           )}
         </RSideAbout>
         <div className="buttoncontainer">
-          <button onClick={() => setShowCreateActivityModal(true)}>
-            Create Activity &nbsp;
-            <FaPlusCircle size={18} />
+          <button>
+            <Dropdown
+              popperComponent={
+                <DropdownButtons>
+                  <button onClick={() => setShowCreateActivityModal(true)}>
+                    Activity
+                  </button>
+                  <button onClick={() => setShowCreateClassGroupModal(true)}>
+                    Class Groups
+                  </button>
+                </DropdownButtons>
+              }
+            >
+              <button className="Create">
+                Create &nbsp; <BiChevronDown size={18} />
+              </button>
+            </Dropdown>
           </button>
         </div>
       </RSideContainer>
@@ -237,6 +254,13 @@ const TCourse = () => {
         title="Create Activity"
       >
         <CreateActivityForm />
+      </Modal>
+      <Modal
+        show={showCreateClassGroupModal}
+        closeModal={() => setShowCreateClassGroupModal(false)}
+        title="Create Group"
+      >
+        <CreateClassGroupForm />
       </Modal>
     </CourseContainer>
   );
@@ -459,17 +483,23 @@ const RSideContainer = styled.div`
   .buttoncontainer {
     margin-left: auto;
     button {
-      border: none;
       display: flex;
-      color: white;
-      background-color: #0f482f;
-      font-size: 18px;
+      font-size: 16px;
       justify-content: center;
-      align-items: center;
-      padding: 10px;
+      margin-left: auto;
+      padding: 0;
+      border: none;
+      background: none;
       cursor: pointer;
+      align-items: center;
+      color: white;
       &:hover {
         background-color: #0e5937;
+      }
+      .Create {
+        background-color: #0e5937;
+        width: 120px;
+        height: 40px;
       }
     }
   }

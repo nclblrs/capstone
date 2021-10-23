@@ -3,6 +3,8 @@ import Modal from "components/Modal";
 import { useState } from "react";
 import styled from "styled-components";
 import { useHistory, useLocation } from "react-router";
+import { MdAddCircle, MdAccountCircle } from "react-icons/md";
+import { FaTrashAlt, FaPenSquare } from "react-icons/fa";
 
 import { useUrlQuery } from "hooks/useUrlQuery";
 
@@ -40,12 +42,21 @@ const Admin = () => {
   return (
     <Container>
       <UsersCount>
-        <div>{countLoading ? "Loading..." : `${teachersCount} Teachers`}</div>
-        <div>{countLoading ? "Loading..." : `${studentsCount} Students`}</div>
+        <div>
+          <MdAccountCircle size={30} /> &nbsp;
+          {countLoading ? "Loading..." : `${teachersCount} Teachers`}
+        </div>
+        <div>
+          <MdAccountCircle size={30} /> &nbsp;
+          {countLoading ? "Loading..." : `${studentsCount} Students`}
+        </div>
       </UsersCount>
 
       <Header>
-        <button onClick={() => setShowNewUserModal(true)}>New User</button>
+        <button onClick={() => setShowNewUserModal(true)}>
+          New User &nbsp;
+          <MdAddCircle size={18} className="add" />
+        </button>
 
         <Filters onSubmit={handleSearch}>
           <input placeholder="Search" name="search" />
@@ -102,10 +113,14 @@ const Admin = () => {
                       : "None"}
                   </td>
                   <td>
-                    <button>Edit</button>
+                    <button className="edit">
+                      <FaPenSquare size={18} />
+                    </button>
                   </td>
                   <td>
-                    <button>Delete</button>
+                    <button className="delete">
+                      <FaTrashAlt size={18} />
+                    </button>
                   </td>
                 </tr>
               )
@@ -143,6 +158,7 @@ const UsersCount = styled.div`
   gap: 20px;
 
   & > div {
+    cursor: pointer;
     background: #f2f2f2;
     width: 300px;
     height: 110px;
@@ -161,12 +177,16 @@ const Header = styled.div`
   justify-content: space-between;
 
   button {
+    display: flex;
     cursor: pointer;
     background: #0e5937;
-    padding: 10px 40px;
+    width: 150px;
+    height: 50px;
     color: white;
     border: none;
     font-size: 18px;
+    align-items: center;
+    justify-content: center;
   }
   input {
     font-size: 18px;
@@ -179,6 +199,7 @@ const Filters = styled.form`
 
   input {
     width: 500px;
+    padding-left: 0.5em;
   }
 `;
 
@@ -186,6 +207,21 @@ const UsersTable = styled.table`
   background: #f2f2f2;
   padding: 20px;
   border-radius: 12px;
+
+  button {
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    background: #f2f2f2;
+  }
+  .edit {
+    color: #0e5937;
+  }
+  .delete {
+    color: #9b1313;
+  }
 
   tr {
     height: 48px;
