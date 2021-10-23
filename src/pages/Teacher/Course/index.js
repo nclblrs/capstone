@@ -31,7 +31,11 @@ const TCourse = () => {
 
   let { id } = useParams();
   const { user } = useCurrentUserContext();
-  const { loading, data } = useQuery(GET_COURSE, {
+  const {
+    loading,
+    data,
+    refetch: refetchCourse,
+  } = useQuery(GET_COURSE, {
     variables: { courseId: id },
   });
 
@@ -260,7 +264,13 @@ const TCourse = () => {
         closeModal={() => setShowCreateClassGroupModal(false)}
         title="Create Group"
       >
-        <CreateClassGroupForm />
+        <CreateClassGroupForm
+          courseId={id}
+          onCreateFinish={() => {
+            refetchCourse();
+            setShowCreateClassGroupModal(false);
+          }}
+        />
       </Modal>
     </CourseContainer>
   );
