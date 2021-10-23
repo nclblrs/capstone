@@ -14,7 +14,6 @@ const httpLink = createHttpLink({
 });
 
 const linkErrorHandle = onError(({ graphQLErrors, networkError }) => {
-  console.log(graphQLErrors);
   if (graphQLErrors)
     graphQLErrors.forEach(({ message, locations, path }) => {
       if (
