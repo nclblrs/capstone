@@ -14,6 +14,9 @@ export const GET_STUDLEFTSIDEBAR = gql`
       classGroups {
         id
         name
+        course {
+          name
+        }
       }
     }
   }

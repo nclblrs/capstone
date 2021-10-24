@@ -61,10 +61,12 @@ const LeftSideBar = () => {
         <h4>GROUPS</h4>
         {loading
           ? "Loading..."
-          : classGroups.map(({ id, name }) => (
+          : classGroups.map(({ id, name, course }) => (
               <LSideLinks key={id} to={`/group/${id}`}>
                 <HiOutlineLightBulb size={18} />
-                <p title={name}>{name}</p>
+                <p>
+                  {name} ({course.name})
+                </p>
               </LSideLinks>
             ))}
         {classGroups?.length === 3 && (
