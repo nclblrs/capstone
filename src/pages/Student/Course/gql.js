@@ -137,3 +137,30 @@ export const COURSE_FROM_COURSECODE = gql`
   }
 `;
 
+export const COURSE_FILES = gql`
+  query ($courseId: ID!) {
+    courseFiles(courseId: $courseId) {
+      postFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+      activityFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+      groupActivityFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;

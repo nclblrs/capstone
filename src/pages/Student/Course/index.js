@@ -18,6 +18,7 @@ import { BiMessageDetail } from "react-icons/bi";
 import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { RiFileCopy2Fill } from "react-icons/ri";
+import Files from "./CourseTabs/Files";
 
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 
@@ -117,21 +118,22 @@ const Course = () => {
         </CoursePostHeader>
         <ItemsContainer>
           <Switch>
-            <Route path={`/class/${id}`} exact>
+            <Route path={`/class/:id`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/class/${id}/files`}>
+            <Route path={`/class/:id/files`}>
               <LeftContainer>
                 <h1>Files</h1>
+                <Files />
               </LeftContainer>
             </Route>
-            <Route path={`/class/${id}/activities`}>
+            <Route path={`/class/:id/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
                 <div className="leftContent"></div>
               </LeftContainer>
             </Route>
-            <Route path={`/class/${id}/members`}>
+            <Route path={`/class/:id/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">
@@ -150,7 +152,7 @@ const Course = () => {
                 </div>
               </LeftContainer>
             </Route>
-            <Route path={`/class/${id}/groups`}>
+            <Route path={`/class/:id/groups`}>
               <GroupContainer>
                 <div className="leftContent">
                   {loading
@@ -246,7 +248,7 @@ const CoursePostsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 100%;
 `;
 
 const PostFormContainer = styled.div`
@@ -266,18 +268,6 @@ const CourseFilter = styled.nav`
   align-items: center;
   margin: 15px 0px auto;
   border-bottom: solid #0f482f 3px;
-
-  button {
-    display: flex;
-    background-color: white;
-    color: #0f482f;
-    font-size: 18px;
-    justify-content: center;
-    align-items: center;
-    &:hover {
-      background-color: #0e5937;
-    }
-  }
 `;
 
 const RSideContainer = styled.div`
@@ -321,17 +311,6 @@ const RSideContainer = styled.div`
     margin: 0;
     color: #646464;
   }
-
-  ul {
-    font-size: 20px;
-    color: #646464;
-    font-weight: normal;
-    list-style-type: none;
-    margin-top: 20px;
-  }
-  li {
-    padding: 8px 8px;
-  }
 `;
 
 const RSideAbout = styled.div`
@@ -360,7 +339,7 @@ const NavMenu = styled(NavLink)`
   align-items: center;
   text-decoration: none;
   padding: 7px 1em;
-  margin: 0 1em;
+  margin: 0 10px;
   &:hover,
   &.active {
     background-color: #0e5937;
@@ -378,7 +357,7 @@ const LeftContainer = styled.div`
   height: 550px;
   margin-top: 1.5em;
   overflow-y: scroll;
-  h1 {
+  > h1 {
     color: #0f482f;
     padding: 0.5em 1.5em;
   }
@@ -389,7 +368,7 @@ const LeftContainer = styled.div`
       list-style-type: none;
       font-size: 20px;
     }
-    h5 {
+    > h5 {
       font-size: 20px;
       color: #0f482f;
     }
