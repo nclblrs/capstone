@@ -149,7 +149,7 @@ const RSideContainer = styled.div`
   margin-top: 7em;
   display: flex;
   width: 100%;
-  margin-left: 23em;
+  margin-left: 20em;
   margin-right: 3em;
 `;
 

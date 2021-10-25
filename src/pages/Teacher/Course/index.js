@@ -104,23 +104,23 @@ const TCourse = () => {
             <PostForm onSubmit={handleCreatePost} />
           </PostFormContainer>
           <CourseFilter>
-            <NavMenu to={`/course/${id}`} exact>
+            <NavMenu to={`/class/${id}`} exact>
               <BiMessageDetail size={18} /> &nbsp; Posts
             </NavMenu>
-            <NavMenu to={`/course/${id}/files`}>
+            <NavMenu to={`/class/${id}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
             </NavMenu>
-            <NavMenu to={`/course/${id}/activities`}>
-              <RiFileEditLine size={18} /> &nbsp; Acitivities
+            <NavMenu to={`/class/${id}/activities`}>
+              <RiFileEditLine size={18} /> &nbsp; Activities
             </NavMenu>
-            <NavMenu to={`/course/${id}/submissions`}>
+            <NavMenu to={`/class/${id}/submissions`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Submissions
             </NavMenu>
-            <NavMenu to={`/course/${id}/members`}>
+            <NavMenu to={`/class/${id}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
             </NavMenu>
-            <NavMenu to={`/course/${id}/groups`}>
+            <NavMenu to={`/class/${id}/groups`}>
               <TiGroup size={18} />
               &nbsp; Groups
             </NavMenu>
@@ -128,15 +128,25 @@ const TCourse = () => {
         </CoursePostHeader>
         <ItemsContainer>
           <Switch>
-            <Route path={`/course/${id}`} exact>
+            <Route path={`/class/${id}`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/course/${id}/files`}>
+            <Route path={`/class/${id}/files`}>
               <LeftContainer>
                 <h1>Files</h1>
               </LeftContainer>
             </Route>
-            <Route path={`/course/${id}/members`}>
+            <Route path={`/class/${id}/activities`}>
+              <LeftContainer>
+                <h1>Activities</h1>
+              </LeftContainer>
+            </Route>
+            <Route path={`/class/${id}/submissions`}>
+              <LeftContainer>
+                <h1>Submissions</h1>
+              </LeftContainer>
+            </Route>
+            <Route path={`/class/${id}/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">
@@ -155,7 +165,7 @@ const TCourse = () => {
                 </div>
               </LeftContainer>
             </Route>
-            <Route path={`/course/${id}/groups`}>
+            <Route path={`/class/${id}/groups`}>
               <GroupContainer>
                 <div className="leftContent">
                   {loading
@@ -277,14 +287,13 @@ const TCourse = () => {
 };
 
 const CourseContainer = styled.div`
-  margin-left: auto;
   width: 100%;
   display: flex;
   position: relative;
 `;
 
 const CoursePostsContainer = styled.div`
-  margin-left: 345px;
+  margin-left: 275px;
   margin-right: auto;
   display: flex;
   flex-direction: column;
@@ -340,8 +349,8 @@ const NavMenu = styled(NavLink)`
   font-size: 17px;
   align-items: center;
   text-decoration: none;
-  padding: 7px;
-  margin: 5px 15px;
+  padding: 7px 6px;
+  margin: 0 5px;
   &:hover,
   &.active {
     background-color: #0e5937;
@@ -380,7 +389,7 @@ const GroupContainer = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: space-evenly;
 
     .groupcontainer {
       border-radius: 1em;
