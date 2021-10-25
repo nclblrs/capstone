@@ -112,7 +112,7 @@ function App() {
                     <Route path="/" exact>
                       <THome />
                     </Route>
-                    <Route path="/course/:id">
+                    <Route path="/class/:id">
                       <TCourse />
                     </Route>
                     <Route path="/classes">
