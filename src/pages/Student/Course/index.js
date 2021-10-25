@@ -248,7 +248,7 @@ const CoursePostsContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 60%;
 `;
 
 const PostFormContainer = styled.div`
@@ -310,6 +310,17 @@ const RSideContainer = styled.div`
   p {
     margin: 0;
     color: #646464;
+  }
+
+  ul {
+    font-size: 20px;
+    color: #646464;
+    font-weight: normal;
+    list-style-type: none;
+    margin-top: 20px;
+  }
+  li {
+    padding: 8px 8px;
   }
 `;
 
