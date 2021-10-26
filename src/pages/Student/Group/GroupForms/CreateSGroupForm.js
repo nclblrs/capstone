@@ -44,7 +44,7 @@ const CreateSGroupForm = () => {
       </div>
       <div>
         <label>Activate Until</label>
-        <input />
+        <input type="date" />
       </div>
 
       <button disabled={loading}>Submit</button>

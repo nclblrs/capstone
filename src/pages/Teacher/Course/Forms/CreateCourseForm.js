@@ -52,12 +52,12 @@ const CreateCourseForm = () => {
         <input {...register("yearAndSection", { required: true })} />
       </div>
       <div>
-        <label>Starts At: (YYYY-MM-DD)</label>
-        <input {...register("startsAt", { required: true })} />
+        <label>Starts At</label>
+        <input type="date" {...register("startsAt", { required: true })} />
       </div>
       <div>
-        <label>Ends At: (YYYY-MM-DD)</label>
-        <input {...register("endsAt", { required: true })} />
+        <label>Ends At</label>
+        <input type="date" {...register("endsAt", { required: true })} />
       </div>
 
       <button disabled={loading}>Submit</button>
