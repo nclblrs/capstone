@@ -28,7 +28,7 @@ const CreateCourseForm = () => {
 
       if (data?.createCourse?.id) {
         toast.success("Created successfully");
-        history.push(`/course/${data?.createCourse.id}`);
+        history.push(`/class/${data?.createCourse.id}`);
       } else {
         throw Error("something is wrong");
       }
@@ -52,12 +52,21 @@ const CreateCourseForm = () => {
         <input {...register("yearAndSection", { required: true })} />
       </div>
       <div>
+<<<<<<< HEAD
         <label>Starts At </label>
         <input {...register("startsAt", { required: true })} />
       </div>
       <div>
         <label>Ends At</label>
         <input {...register("endsAt", { required: true })} />
+=======
+        <label>Starts At</label>
+        <input type="date" {...register("startsAt", { required: true })} />
+      </div>
+      <div>
+        <label>Ends At</label>
+        <input type="date" {...register("endsAt", { required: true })} />
+>>>>>>> ef4b9f99916956ca1f78bb47692c2f8b7328a0dc
       </div>
 
       <button disabled={loading}>Submit</button>

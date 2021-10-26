@@ -118,6 +118,7 @@ function App() {
                     <Route path="/classes">
                       <TeacherAllClass />
                     </Route>
+
                     <Route path="/class-schedule">
                       <TeacherSchedule />
                     </Route>
