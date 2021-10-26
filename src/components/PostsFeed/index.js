@@ -103,10 +103,6 @@ const PostsFeed = ({ posts }) => {
                   </h4>
                   {groupActivity || activity ? (
                     <Activity>
-                      <img
-                        src={`https://picsum.photos/seed/${userId}/80/80`}
-                        alt="a"
-                      />
                       <ActivityContent>
                         <h3>{title}</h3>
                         <p>{description}</p>

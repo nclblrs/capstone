@@ -23,6 +23,7 @@ import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { BiMessageDetail, BiChevronDown } from "react-icons/bi";
 import { RiFileCopy2Fill, RiFileEditLine } from "react-icons/ri";
+import Files from "./Tabs/Files";
 
 const TCourse = () => {
   const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
@@ -128,16 +129,22 @@ const TCourse = () => {
         </CoursePostHeader>
         <ItemsContainer>
           <Switch>
-            <Route path={`/class/${id}`} exact>
+            <Route path={`/class/:id`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/class/${id}/files`}>
+            <Route path={`/class/:id/files`}>
               <LeftContainer>
                 <h1>Files</h1>
+                <Files />
               </LeftContainer>
             </Route>
+<<<<<<< HEAD
             <Route path={`/class/${id}/activities`}>
               <div className="actcontainer">
+=======
+            <Route path={`/class/:id/activities`}>
+              <LeftContainer>
+>>>>>>> 4dfeaff04bae78ae6bd82260f520b7efb1d07eef
                 <h1>Activities</h1>
                 <ActNavBar>
                   <ActNavMenu to={`/class/${id}/activities`} exact>
@@ -154,12 +161,12 @@ const TCourse = () => {
                 </ActNavBar>
               </div>
             </Route>
-            <Route path={`/class/${id}/submissions`}>
+            <Route path={`/class/:id/submissions`}>
               <LeftContainer>
                 <h1>Submissions</h1>
               </LeftContainer>
             </Route>
-            <Route path={`/class/${id}/members`}>
+            <Route path={`/class/:id/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">
@@ -178,7 +185,7 @@ const TCourse = () => {
                 </div>
               </LeftContainer>
             </Route>
-            <Route path={`/class/${id}/groups`}>
+            <Route path={`/class/:id/groups`}>
               <GroupContainer>
                 <div className="leftContent">
                   {loading
@@ -472,7 +479,7 @@ const LeftContainer = styled.div`
   height: 550px;
   margin-top: 1.5em;
   overflow-y: scroll;
-  h1 {
+  > h1 {
     color: #0f482f;
     padding: 0.5em 1.5em;
   }

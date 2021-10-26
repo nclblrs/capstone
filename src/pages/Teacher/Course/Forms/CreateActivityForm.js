@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { upload } from "utils/upload";
 import { useParams } from "react-router-dom";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import {
   CREATE_ACTIVITY,
   ACTIVITY_ATTACHMENT,
@@ -15,6 +16,7 @@ import { toast } from "react-toastify";
 
 const CreateActivityForm = ({ onCreateFinish }) => {
   let { id } = useParams();
+  const { user } = useCurrentUserContext();
   const { register, watch, handleSubmit } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
 
@@ -47,6 +49,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
         if (file) {
           const { cloudinaryString } = await upload(
             file,
+            user.uploadPreset,
             `Activity_${activityId}`
           );
 
@@ -84,6 +87,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
         if (file) {
           const { cloudinaryString } = await upload(
             file,
+            user.uploadPreset,
             `GroupActivity_${groupActivityId}`
           );
 

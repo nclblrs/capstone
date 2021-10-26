@@ -113,6 +113,7 @@ export const COURSE_POSTS = gql`
   }
 `;
 
+<<<<<<< HEAD
 export const GET_ACTIVITIES = gql`
   query course($courseId: ID!) {
     course(courseId: $courseId) {
@@ -124,6 +125,30 @@ export const GET_ACTIVITIES = gql`
           attachment
           dueAt
           type
+=======
+export const COURSE_FILES = gql`
+  query ($courseId: ID!) {
+    courseFiles(courseId: $courseId) {
+      postFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+      activityFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+      groupActivityFiles {
+        attachment
+        user {
+          firstName
+          lastName
+>>>>>>> 4dfeaff04bae78ae6bd82260f520b7efb1d07eef
         }
       }
     }
