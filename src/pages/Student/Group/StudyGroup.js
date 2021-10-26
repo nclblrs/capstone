@@ -125,8 +125,8 @@ const StudyGroup = () => {
             </Route>
             <Route path={`/group/:id/tags`}>
               <LeftContainer>
+                <h1>Tags</h1>
                 <div className="leftHeader">
-                  <h1>Tags</h1>
                   <div className="tagcontainer">
                     <TagsInfo />
                   </div>
@@ -331,19 +331,20 @@ const LeftContainer = styled.div`
   height: 550px;
   margin-top: 1.5em;
   overflow-y: scroll;
-  h1 {
+  > h1 {
     color: #0f482f;
     padding: 0.5em 1.5em;
-    .leftHeader {
-      height: 20%;
-      h1 {
-        color: #0e5937;
-      }
-    }
-    h5 {
-      font-weight: normal;
-      color: #0e5937;
+  }
+  .leftContent {
+    position: absolute;
+    padding: 4.2em 3em;
+    ul {
+      list-style-type: none;
       font-size: 20px;
+    }
+    > h5 {
+      font-size: 20px;
+      color: #0f482f;
     }
   }
   .tagcontainer {
@@ -370,7 +371,7 @@ const LeftContainer = styled.div`
       list-style-type: none;
       font-size: 20px;
     }
-    h5 {
+    > h5 {
       font-size: 20px;
       color: #0f482f;
     }

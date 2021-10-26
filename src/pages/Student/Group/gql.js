@@ -146,3 +146,24 @@ export const GROUP_FROM_GROUPCODE = gql`
     }
   }
 `;
+
+export const STUDYGROUP_FILES = gql`
+  query studyGroupFiles($groupId: ID!) {
+    studyGroupFiles(groupId: $groupId) {
+      postFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+      groupActivityFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;
