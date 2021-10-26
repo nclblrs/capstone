@@ -15,7 +15,7 @@ import { toast } from "react-toastify";
 
 const CreateActivityForm = ({ onCreateFinish }) => {
   let { id } = useParams();
-  const { register, watch } = useForm();
+  const { register, watch, handleSubmit } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
 
   const [createActivity, { loading: mutationLoading }] =
@@ -72,6 +72,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
             title,
             description,
             dueAt,
+            type: type === "groupActivity",
           },
         });
 
@@ -108,7 +109,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
   };
 
   return (
-    <Form onSubmit={handleCreateActivity}>
+    <Form onSubmit={handleSubmit(handleCreateActivity)}>
       <div>
         <label>Activity Name</label>
         <input {...register("title", { required: true })} />
