@@ -113,19 +113,6 @@ export const COURSE_POSTS = gql`
   }
 `;
 
-<<<<<<< HEAD
-export const GET_ACTIVITIES = gql`
-  query course($courseId: ID!) {
-    course(courseId: $courseId) {
-      activities {
-        data {
-          id
-          title
-          description
-          attachment
-          dueAt
-          type
-=======
 export const COURSE_FILES = gql`
   query ($courseId: ID!) {
     courseFiles(courseId: $courseId) {
@@ -148,7 +135,6 @@ export const COURSE_FILES = gql`
         user {
           firstName
           lastName
->>>>>>> 4dfeaff04bae78ae6bd82260f520b7efb1d07eef
         }
       }
     }

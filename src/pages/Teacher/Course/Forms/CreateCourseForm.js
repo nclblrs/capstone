@@ -53,11 +53,11 @@ const CreateCourseForm = () => {
       </div>
       <div>
         <label>Starts At </label>
-        <input type="date" {...register("startsAt", { required: true })} />
+        <input {...register("startsAt", { required: true })} />
       </div>
       <div>
         <label>Ends At</label>
-        <input type="date" {...register("endsAt", { required: true })} />
+        <input {...register("endsAt", { required: true })} />
       </div>
 
       <button disabled={loading}>Submit</button>

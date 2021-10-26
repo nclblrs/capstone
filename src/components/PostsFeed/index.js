@@ -106,7 +106,11 @@ const PostsFeed = ({ posts }) => {
                       <ActivityContent>
                         <h3>{title}</h3>
                         <p>{description}</p>
-                        {activityAttachment && <Attachment>...</Attachment>}
+                        {activityAttachment && (
+                          <Attachment href={secure_url} download>
+                            ...
+                          </Attachment>
+                        )}
                       </ActivityContent>
                     </Activity>
                   ) : (

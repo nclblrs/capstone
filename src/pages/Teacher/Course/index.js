@@ -89,7 +89,6 @@ const TCourse = () => {
         if (!addAttachmentToPostData?.addAttachmentToPost?.id)
           throw Error("something is wrong");
       }
-
       refetch();
       toast.success("Created Post");
     } catch (error) {
@@ -138,13 +137,8 @@ const TCourse = () => {
                 <Files />
               </LeftContainer>
             </Route>
-<<<<<<< HEAD
-            <Route path={`/class/${id}/activities`}>
-              <div className="actcontainer">
-=======
             <Route path={`/class/:id/activities`}>
               <LeftContainer>
->>>>>>> 4dfeaff04bae78ae6bd82260f520b7efb1d07eef
                 <h1>Activities</h1>
                 <ActNavBar>
                   <ActNavMenu to={`/class/${id}/activities`} exact>
@@ -159,7 +153,7 @@ const TCourse = () => {
                     Group Activities
                   </ActNavMenu>
                 </ActNavBar>
-              </div>
+              </LeftContainer>
             </Route>
             <Route path={`/class/:id/submissions`}>
               <LeftContainer>
@@ -287,7 +281,13 @@ const TCourse = () => {
         closeModal={() => setShowCreateActivityModal(false)}
         title="Create Activity"
       >
-        <CreateActivityForm />
+        <CreateActivityForm
+          courseId={id}
+          onCreateFinish={() => {
+            refetchCourse();
+            setShowCreateActivityModal(false);
+          }}
+        />
       </Modal>
       <Modal
         show={showCreateClassGroupModal}

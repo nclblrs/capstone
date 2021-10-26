@@ -65,7 +65,7 @@ export const CREATE_ACTIVITY = gql`
 
 export const ACTIVITY_ATTACHMENT = gql`
   mutation addAttachmentToActivity($id: ID!, $attachment: String!) {
-    addAttachmentToPost(id: $id, attachment: $attachment) {
+    addAttachmentToActivity(id: $id, attachment: $attachment) {
       id
     }
   }
@@ -91,7 +91,7 @@ export const CREATE_GROUP_ACTIVITY = gql`
 
 export const GROUP_ACTIVITY_ATTACHMENT = gql`
   mutation addAttachmentToGroupActivity($id: ID!, $attachment: String!) {
-    addAttachmentToPost(id: $id, attachment: $attachment) {
+    addAttachmentToGroupActivity(id: $id, attachment: $attachment) {
       id
     }
   }
