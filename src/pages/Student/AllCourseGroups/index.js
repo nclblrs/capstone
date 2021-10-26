@@ -14,15 +14,15 @@ const AllCourseGroups = () => {
           <NavMenu to="/classes">
             <li>Classes</li>
           </NavMenu>
-          <NavMenu to="/coursegroups" exact>
-            <li>Course Groups</li>
+          <NavMenu to="/classgroups" exact>
+            <li>Class Groups</li>
           </NavMenu>
           <NavMenu to="/studygroups">
             <li>Study Groups</li>
           </NavMenu>
         </AllContainer>
         <div className="buttoncontainer">
-          <h2>ALL COURSE GROUPS</h2>
+          <h2>ALL CLASS GROUPS</h2>
           <button>Show Inactive</button>
         </div>
         <div className="itemcontainer">

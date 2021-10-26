@@ -116,7 +116,7 @@ const RightSideBar = () => {
           {loading
             ? "Loading..."
             : courses.map(({ id, yearAndSection, name }) => (
-                <RSideLinks key={id} to={`/course/${id}`}>
+                <RSideLinks key={id} to={`/class/${id}`}>
                   <FaLaptop size={18} />
                   <p title={yearAndSection}>
                     {yearAndSection} {name}
