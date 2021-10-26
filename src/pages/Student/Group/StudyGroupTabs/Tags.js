@@ -29,7 +29,7 @@ const TagLink = styled(Link)`
   text-decoration: none;
   font-size: 18px;
   color: #0e5937;
-  span {
+  > span {
     font-size: 12px;
     padding: 4px 8px;
     background: #0e5937;
