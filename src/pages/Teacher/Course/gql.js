@@ -112,3 +112,20 @@ export const COURSE_POSTS = gql`
     }
   }
 `;
+
+export const GET_ACTIVITIES = gql`
+  query course($courseId: ID!) {
+    course(courseId: $courseId) {
+      activities {
+        data {
+          id
+          title
+          description
+          attachment
+          dueAt
+          type
+        }
+      }
+    }
+  }
+`;

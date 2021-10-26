@@ -1,51 +1,140 @@
+import React from "react";
 import styled from "styled-components";
 import { BsPaperclip } from "react-icons/bs";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { upload } from "utils/upload";
+import { useParams } from "react-router-dom";
+import {
+  CREATE_ACTIVITY,
+  ACTIVITY_ATTACHMENT,
+  CREATE_GROUP_ACTIVITY,
+  GROUP_ACTIVITY_ATTACHMENT,
+} from "./gql";
+import { toast } from "react-toastify";
 
-const CreateActivityForm = () => {
+const CreateActivityForm = ({ onCreateFinish }) => {
+  let { id } = useParams();
   const { register, watch } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
 
+  const [createActivity, { loading: mutationLoading }] =
+    useMutation(CREATE_ACTIVITY);
+  const [addAttachmentToActivity] = useMutation(ACTIVITY_ATTACHMENT);
+  const [createGroupActivity] = useMutation(CREATE_GROUP_ACTIVITY);
+  const [addAttachmentToGroupActivity] = useMutation(GROUP_ACTIVITY_ATTACHMENT);
+
+  const handleCreateActivity = async (data) => {
+    const { title, description, dueAt, type, file: files } = data;
+    const file = files[0];
+
+    if (type === "activity") {
+      try {
+        const { data: createActivityData } = await createActivity({
+          variables: {
+            courseId: id,
+            title,
+            description,
+            dueAt,
+            type,
+          },
+        });
+
+        const activityId = createActivityData?.createActivity?.id;
+
+        if (!activityId) throw Error("something is wrong");
+
+        if (file) {
+          const { cloudinaryString } = await upload(
+            file,
+            `Activity_${activityId}`
+          );
+
+          const { data: addAttachmentToActivityData } =
+            await addAttachmentToActivity({
+              variables: { id: activityId, attachment: cloudinaryString },
+            });
+
+          if (!addAttachmentToActivityData?.addAttachmentToActivity?.id)
+            throw Error("something is wrong");
+        }
+
+        toast.success("Created Activity");
+        onCreateFinish();
+      } catch (error) {
+        toast.error(error.message);
+      }
+    } else {
+      try {
+        const { data: createGroupActivityData } = await createGroupActivity({
+          variables: {
+            courseId: id,
+            title,
+            description,
+            dueAt,
+          },
+        });
+
+        const groupActivityId =
+          createGroupActivityData?.createGroupActivity?.id;
+
+        if (!groupActivityId) throw Error("Something is wrong");
+
+        if (file) {
+          const { cloudinaryString } = await upload(
+            file,
+            `GroupActivity_${groupActivityId}`
+          );
+
+          const { data: addAttachmentToGroupActivityData } =
+            await addAttachmentToGroupActivity({
+              variables: {
+                id: groupActivityId,
+                attachment: cloudinaryString,
+              },
+            });
+
+          if (
+            !addAttachmentToGroupActivityData?.addAttachmentToGroupActivity?.id
+          )
+            throw Error("something is wrong");
+        }
+        toast.success("Created Group Activity");
+        onCreateFinish();
+      } catch (error) {
+        toast.error(error.message);
+      }
+    }
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleCreateActivity}>
       <div>
         <label>Activity Name</label>
-        <input />
+        <input {...register("title", { required: true })} />
       </div>
       <div>
         <label>Due Date</label>
-        <input />
+        <input {...register("dueAt")} />
       </div>
       <div>
         <label>Activity Type</label>
-        <select>
+        <select {...register("type", { required: true })}>
           <option disabled selected>
             Select Type
           </option>
-          <option>Individual Activity</option>
-          <option>Group Activity</option>
+          <option value="activity">Individual Activity</option>
+          <option value="groupActivity">Group Activity</option>
         </select>
-      </div>
-      <div>
-        <label>Course</label>
-        <select>
-          <option disabled selected>
-            Select Course
-          </option>
-        </select>
-      </div>
-      <div>
-        <label>Total Points</label>
-        <input />
       </div>
       <div>
         <label className="file"> File </label>
-        <label for="attach-file-post" className="attachmentLabel">
+        <label for="attach-file-activity" className="attachmentLabel">
           {attachedFileName ? attachedFileName : "Attach File"}
           <BsPaperclip size={15} className="attachicon" />
         </label>
         <input
-          id="attach-file-post"
+          id="attach-file-activity"
           type="file"
           {...register("file")}
           className="attachmentInput"
@@ -53,10 +142,11 @@ const CreateActivityForm = () => {
       </div>
       <div>
         <label>Description</label>
-        <input className="desc" />
+        <input className="desc" {...register("description")} />
       </div>
-
-      <button>Submit</button>
+      <button disabled={mutationLoading}>
+        {mutationLoading ? "Creating..." : "Submit "}
+      </button>
     </Form>
   );
 };
@@ -91,7 +181,7 @@ const Form = styled.form`
     margin-top: 10px;
   }
   select {
-    width: 130px;
+    width: 140px;
     margin-top: 5px;
     text-overflow: ellipsis;
   }

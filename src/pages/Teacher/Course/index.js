@@ -137,9 +137,22 @@ const TCourse = () => {
               </LeftContainer>
             </Route>
             <Route path={`/class/${id}/activities`}>
-              <LeftContainer>
+              <div className="actcontainer">
                 <h1>Activities</h1>
-              </LeftContainer>
+                <ActNavBar>
+                  <ActNavMenu to={`/class/${id}/activities`} exact>
+                    Activities
+                  </ActNavMenu>
+                  <ActNavMenu
+                    to={`/class/${id}/activities/individual-activity`}
+                  >
+                    Individual Activities
+                  </ActNavMenu>
+                  <ActNavMenu to={`/class/${id}/activities/group-activities`}>
+                    Group Activities
+                  </ActNavMenu>
+                </ActNavBar>
+              </div>
             </Route>
             <Route path={`/class/${id}/submissions`}>
               <LeftContainer>
@@ -358,6 +371,30 @@ const NavMenu = styled(NavLink)`
     border-radius: 5px;
   }
 `;
+const ActNavBar = styled.div`
+  display: flex;
+  height: 70px;
+  width: 100%;
+  align-items: center;
+  padding: 0 0.5em;
+`;
+
+const ActNavMenu = styled(NavLink)`
+  color: #0f482f;
+  cursor: pointer;
+  font-size: 18px;
+  align-items: center;
+  text-decoration: none;
+  padding: 7px 1em;
+  margin: 0 10px;
+  border: 1px solid #0f482f;
+  &:hover,
+  &.active {
+    color: white;
+    background-color: #0f482f;
+    border-radius: 5px;
+  }
+`;
 
 const GroupContainer = styled.div`
   display: flex;
@@ -417,6 +454,13 @@ const GroupContainer = styled.div`
 
 const ItemsContainer = styled.div`
   width: 89.9%;
+  .actcontainer {
+    h1 {
+      color: #0f482f;
+      padding: 0.2em 0.5em;
+      padding-bottom: 0;
+    }
+  }
 `;
 
 const LeftContainer = styled.div`
