@@ -48,14 +48,12 @@ export const CREATE_ACTIVITY = gql`
     $title: String!
     $description: String!
     $dueAt: Date!
-    $type: String!
     $courseId: ID!
   ) {
     createActivity(
       title: $title
       description: $description
       dueAt: $dueAt
-      type: $type
       courseId: $courseId
     ) {
       id
