@@ -38,9 +38,9 @@ const Files = () => {
                 return (
                   <>
                     {attachment && (
-                      <File>
+                      <File key={id}>
                         <Attachment href={secure_url} download>
-                          <h1 title="">
+                          <h1 title={original_filename}>
                             {original_filename}.
                             {secure_url.split(".").slice(-1)}
                           </h1>
@@ -61,24 +61,22 @@ const Files = () => {
         <Route path={`/class/:id/files/activity`}>
           {loading
             ? "Loading..."
-            : activityFiles.map(({ id, attachment, user }) => {
+            : activityFiles.map(({ id, attachment }) => {
                 const { original_filename, secure_url, created_at, bytes } =
                   JSON.parse(attachment) ?? {};
 
                 return (
                   <>
                     {attachment && (
-                      <File>
+                      <File key={id}>
                         <Attachment href={secure_url} download>
-                          <h1 title="">
+                          <h1 title={original_filename}>
                             {original_filename}.
                             {secure_url.split(".").slice(-1)}
                           </h1>
                         </Attachment>
                         <span>{formatBytes(bytes)}</span>
-                        <span>
-                          Uploaded by: {user.firstName} {user.lastName}
-                        </span>
+                        <span>Uploaded by: </span>
                         <p className="date">
                           {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
                         </p>
@@ -91,24 +89,26 @@ const Files = () => {
         <Route path={`/class/:id/files/groupactivity`}>
           {loading
             ? "Loading..."
-            : groupActivityFiles.map(({ id, attachment, user }) => {
+            : groupActivityFiles.map(({ id, attachment }) => {
                 const { original_filename, secure_url, created_at, bytes } =
                   JSON.parse(attachment) ?? {};
 
                 return (
                   <>
                     {attachment && (
-                      <File>
+                      <File key={id}>
                         <Attachment href={secure_url} download>
-                          <h1 title="">
+                          <h1
+                            title={original_filename.secure_url
+                              .split(".")
+                              .slice(-1)}
+                          >
                             {original_filename}.
                             {secure_url.split(".").slice(-1)}
                           </h1>
                         </Attachment>
                         <span>{formatBytes(bytes)}</span>
-                        <span>
-                          Uploaded by: {user.firstName} {user.lastName}
-                        </span>
+                        <span>Uploaded by:</span>
                         <p className="date">
                           {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
                         </p>
