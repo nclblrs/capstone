@@ -284,7 +284,7 @@ const TCourse = () => {
         <CreateActivityForm
           courseId={id}
           onCreateFinish={() => {
-            refetchCourse();
+            refetch();
             setShowCreateActivityModal(false);
           }}
         />
