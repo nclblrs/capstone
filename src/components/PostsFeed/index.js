@@ -128,14 +128,14 @@ const PostsFeed = ({ posts }) => {
                 </PostContent>
                 {groupActivity && (
                   <Link
-                    to={`/class/${groupActivity.course.id}/group-activity/${groupActivity.id}`}
+                    to={`/class/${groupActivity.course}/group-activity/${groupActivity.id}`}
                   >
                     Open
                   </Link>
                 )}
                 {activity && (
                   <Link
-                    to={`/class/${activity.courseId}/activity/${activity.id}`}
+                    to={`/class/${activity.course}/activity/${activity.id}`}
                   >
                     Open
                   </Link>
