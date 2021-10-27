@@ -33,7 +33,7 @@ const Feed = () => {
 };
 
 const FeedContainer = styled.div`
-  margin-left: 345px;
+  margin-left: 290px;
   margin-right: auto;
   display: flex;
   flex-direction: column;
