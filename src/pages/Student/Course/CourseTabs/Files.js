@@ -38,7 +38,7 @@ const Files = () => {
                 return (
                   <>
                     {attachment && (
-                      <File>
+                      <File key={id}>
                         <Attachment href={secure_url} download>
                           <h1 title="">
                             {original_filename}.
@@ -68,7 +68,7 @@ const Files = () => {
                 return (
                   <>
                     {attachment && (
-                      <File>
+                      <File key={id}>
                         <Attachment href={secure_url} download>
                           <h1 title="">
                             {original_filename}.
@@ -76,9 +76,7 @@ const Files = () => {
                           </h1>
                         </Attachment>
                         <span>{formatBytes(bytes)}</span>
-                        <span>
-                          Uploaded by: {user.firstName} {user.lastName}
-                        </span>
+                        <span>Uploaded by:</span>
                         <p className="date">
                           {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
                         </p>
@@ -98,7 +96,7 @@ const Files = () => {
                 return (
                   <>
                     {attachment && (
-                      <File>
+                      <File key={id}>
                         <Attachment href={secure_url} download>
                           <h1 title="">
                             {original_filename}.
@@ -106,9 +104,7 @@ const Files = () => {
                           </h1>
                         </Attachment>
                         <span>{formatBytes(bytes)}</span>
-                        <span>
-                          Uploaded by: {user.firstName} {user.lastName}
-                        </span>
+                        <span>Uploaded by:</span>
                         <p className="date">
                           {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
                         </p>
