@@ -42,3 +42,57 @@ export const CREATE_CLASS_GROUP = gql`
     }
   }
 `;
+
+export const CREATE_ACTIVITY = gql`
+  mutation createActivity(
+    $title: String!
+    $description: String!
+    $dueAt: Date!
+    $type: String!
+    $courseId: ID!
+  ) {
+    createActivity(
+      title: $title
+      description: $description
+      dueAt: $dueAt
+      type: $type
+      courseId: $courseId
+    ) {
+      id
+    }
+  }
+`;
+
+export const ACTIVITY_ATTACHMENT = gql`
+  mutation addAttachmentToActivity($id: ID!, $attachment: String!) {
+    addAttachmentToActivity(id: $id, attachment: $attachment) {
+      id
+    }
+  }
+`;
+
+export const CREATE_GROUP_ACTIVITY = gql`
+  mutation createGroupActivity(
+    $title: String!
+    $description: String!
+    $dueAt: Date!
+    $courseId: ID!
+  ) {
+    createActivity(
+      title: $title
+      description: $description
+      dueAt: $dueAt
+      courseId: $courseId
+    ) {
+      id
+    }
+  }
+`;
+
+export const GROUP_ACTIVITY_ATTACHMENT = gql`
+  mutation addAttachmentToGroupActivity($id: ID!, $attachment: String!) {
+    addAttachmentToGroupActivity(id: $id, attachment: $attachment) {
+      id
+    }
+  }
+`;

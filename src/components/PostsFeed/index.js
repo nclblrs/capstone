@@ -27,12 +27,12 @@ const PostsFeed = ({ posts }) => {
           const {
             title,
             description,
-            attachment: activityAttachment,
+            attachment: activityAttachment = null,
           } = activity ?? groupActivity ?? {};
           const { type: groupType } = group ?? {};
 
           const { original_filename, secure_url } =
-            JSON.parse(attachment) ?? {};
+            JSON.parse(attachment) ?? JSON.parse(activityAttachment) ?? {};
 
           const postedIn = group || course;
 
@@ -103,14 +103,15 @@ const PostsFeed = ({ posts }) => {
                   </h4>
                   {groupActivity || activity ? (
                     <Activity>
-                      <img
-                        src={`https://picsum.photos/seed/${userId}/80/80`}
-                        alt="a"
-                      />
                       <ActivityContent>
                         <h3>{title}</h3>
                         <p>{description}</p>
-                        {activityAttachment && <Attachment>...</Attachment>}
+                        {activityAttachment && (
+                          <Attachment href={secure_url} download>
+                            {original_filename}.
+                            {secure_url.split(".").slice(-1)}
+                          </Attachment>
+                        )}
                       </ActivityContent>
                     </Activity>
                   ) : (
