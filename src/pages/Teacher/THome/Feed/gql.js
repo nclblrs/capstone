@@ -24,11 +24,19 @@ export const GET_FEED = gql`
           lastName
         }
         activity {
+          id
           title
           description
           attachment
           dueAt
           type
+        }
+        groupActivity {
+          id
+          title
+          description
+          attachment
+          dueAt
         }
       }
     }
