@@ -84,6 +84,12 @@ function App() {
                   <Route path="/classes">
                     <AllCourses />
                   </Route>
+                  <Route path="/class/:id/activity/:id">
+                    <Activity />
+                  </Route>
+                  <Route path="/class/:id/group-activity/:id">
+                    <Activity />
+                  </Route>
                   <Route path="/class/:id">
                     <Course />
                   </Route>
@@ -98,9 +104,6 @@ function App() {
                   </Route>
                   <Route path="/settings">
                     <Settings />
-                  </Route>
-                  <Route path="/activity">
-                    <Activity />
                   </Route>
                   <Redirect from="/" to="/" />
                 </Switch>
@@ -120,9 +123,6 @@ function App() {
                     </Route>
                     <Route path="/class-schedule">
                       <TeacherSchedule />
-                    </Route>
-                    <Route path="/activity">
-                      <Activity />
                     </Route>
                     <Route path="/settings">
                       <TSettings />
