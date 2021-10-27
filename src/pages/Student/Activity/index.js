@@ -3,59 +3,91 @@ import styled from "styled-components";
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
+import { COURSE_ACTIVITY } from "./gql";
+import { useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
+import dayjs from "dayjs";
 
 const Activity = () => {
+  let { id } = useParams();
+  const { loading, data } = useQuery(COURSE_ACTIVITY, {
+    variables: { activityId: id },
+  });
+  const {
+    title,
+    description,
+    dueAt,
+    course,
+    type,
+    attachment = null,
+  } = data?.activity ?? {};
+  const { teacher, name } = course ?? {};
+  const { firstName, lastName } = teacher?.user ?? {};
+
+  const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
+
   return (
     <ActivityContainer>
-      <LSideContainer>
-        <ActivityHeader>
-          <ActivityContent>
-            <h1>Group Activity 1</h1>
-            <span>Computer Programming | Due: August 30, 2021 7:00pm</span>
-          </ActivityContent>
-          <ActivityButtons>
-            <button>Assign Task</button>
-            <button>Attach File</button>
-          </ActivityButtons>
-        </ActivityHeader>
-      </LSideContainer>
-      <RSideContainer>
-        <RSideAbout>
-          <h3>ABOUT</h3>
-          <ul>
-            <li>
-              <TiGroup size={18} />
-              &nbsp; Due Date:
-            </li>
-            <li>
-              <MdAccountCircle size={18} />
-              &nbsp; Professor:
-            </li>
-            <li>
-              <MdAccountCircle size={18} />
-              &nbsp; Activity Type:
-            </li>
-            <li>
-              <FaLaptop size={18} />
-              &nbsp; Subject:
-            </li>
-            <li>
-              <TiGroup size={18} />
-              &nbsp; Description:{" "}
-              <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras
-                vel mauris facilisis, tristique magna quis, tristique augue.
-                Fusce dignissim elementum lorem a accumsan. Integer ac neque nec
-                leo sagittis convallis. Praesent arcu lacus, malesuada ac mollis
-                sit amet, interdum quis est.
-              </p>
-            </li>
-            <li>
-              Attachment:<Attachment></Attachment>
-            </li>
-          </ul>
-        </RSideAbout>
-      </RSideContainer>
+      {loading ? (
+        "Loading..."
+      ) : (
+        <>
+          <LSideContainer>
+            <ActivityHeader>
+              <ActivityContent>
+                <h1>{title}</h1>
+                <span>
+                  {name} || Due:{" "}
+                  {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                </span>
+              </ActivityContent>
+              <ActivityButtons>
+                {type === "activity" ? "" : [<button>Assign Task</button>]}
+                <button>Attach File</button>
+              </ActivityButtons>
+            </ActivityHeader>
+          </LSideContainer>
+          <RSideContainer>
+            <RSideAbout>
+              <h3>ABOUT</h3>
+              <ul>
+                <li>
+                  <TiGroup size={18} />
+                  &nbsp; Due Date:{" "}
+                  {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                </li>
+                <li>
+                  <MdAccountCircle size={18} />
+                  &nbsp; Professor: {firstName} {lastName}
+                </li>
+                <li>
+                  <MdAccountCircle size={18} />
+                  &nbsp; Activity Type:{" "}
+                  {type === "activity"
+                    ? "Individual Activity"
+                    : "Group Activity"}
+                </li>
+                <li>
+                  <FaLaptop size={18} />
+                  &nbsp; Subject: {name}
+                </li>
+                <li>
+                  <TiGroup size={18} />
+                  &nbsp; Description: <p>{description}</p>
+                </li>
+                <li>
+                  {attachment &&
+                    "Attachment:"(
+                      <Attachment href={secure_url} download>
+                        {original_filename}.{secure_url.split(".").slice(-1)}
+                      </Attachment>
+                    )}
+                </li>
+              </ul>
+            </RSideAbout>
+          </RSideContainer>
+        </>
+      )}
     </ActivityContainer>
   );
 };
