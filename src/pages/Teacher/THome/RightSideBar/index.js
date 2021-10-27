@@ -115,7 +115,7 @@ const RightSideBar = () => {
         <RSideItem>
           {loading
             ? "Loading..."
-            : courses.map(({ id, yearAndSection, name }) => (
+            : courses.slice(0, 5).map(({ id, yearAndSection, name }) => (
                 <RSideLinks key={id} to={`/class/${id}`}>
                   <FaLaptop size={18} />
                   <p title={yearAndSection}>
@@ -123,7 +123,7 @@ const RightSideBar = () => {
                   </p>
                 </RSideLinks>
               ))}
-          {courses?.length === 5 && (
+          {courses?.length > 5 && (
             <RSideLinks to="/classes">
               <BiDotsHorizontalRounded size={18} />
               See More

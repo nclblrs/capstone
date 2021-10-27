@@ -25,6 +25,7 @@ const PostsFeed = ({ posts }) => {
         }) => {
           const { id: userId, firstName, lastName } = user;
           const {
+            id: actId,
             title,
             description,
             attachment: activityAttachment = null,
@@ -105,7 +106,9 @@ const PostsFeed = ({ posts }) => {
                   {groupActivity || activity ? (
                     <Activity>
                       <ActivityContent>
-                        <h4> Due: {dayjs(dueAt).format("MMMM D, YYYY")}</h4>
+                        <h4>
+                          Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                        </h4>
                         <h3>{title}</h3>
                         <p>{description}</p>
 
@@ -127,18 +130,10 @@ const PostsFeed = ({ posts }) => {
                   )}
                 </PostContent>
                 {groupActivity && (
-                  <Link
-                    to={`/class/${groupActivity.course}/group-activity/${groupActivity.id}`}
-                  >
-                    Open
-                  </Link>
+                  <Link to={`/class/${id}/group-activity/${actId}`}>Open</Link>
                 )}
                 {activity && (
-                  <Link
-                    to={`/class/${activity.course}/activity/${activity.id}`}
-                  >
-                    Open
-                  </Link>
+                  <Link to={`/class/${id}/activity/${actId}`}>Open</Link>
                 )}
               </Post>
 

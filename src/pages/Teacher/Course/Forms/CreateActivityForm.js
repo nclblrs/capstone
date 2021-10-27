@@ -38,7 +38,6 @@ const CreateActivityForm = ({ onCreateFinish }) => {
             title,
             description,
             dueAt,
-            type,
           },
         });
 
@@ -75,7 +74,6 @@ const CreateActivityForm = ({ onCreateFinish }) => {
             title,
             description,
             dueAt,
-            type: type === "groupActivity",
           },
         });
 
@@ -119,8 +117,11 @@ const CreateActivityForm = ({ onCreateFinish }) => {
         <input {...register("title", { required: true })} />
       </div>
       <div>
-        <label>Due Date</label>
-        <input {...register("dueAt")} />
+        <label for="Due Date">Due Date</label>
+        <input
+          type="datetime-local"
+          {...register("dueAt", { required: true })}
+        />
       </div>
       <div>
         <label>Activity Type</label>
@@ -129,7 +130,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
             Select Type
           </option>
           <option value="activity">Individual Activity</option>
-          <option value="groupActivity">Group Activity</option>
+          <option value="groupactivity">Group Activity</option>
         </select>
       </div>
       <div>
