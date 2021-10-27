@@ -82,6 +82,10 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         <input {...register("lastName", { required: true })} />
       </div>
       <div>
+        <label> Year-Level: </label>
+        <input type="text" name="Year-Level" />
+      </div>
+      <div>
         <label>Email</label>
         <input {...register("email", { required: true })} />
       </div>
@@ -89,6 +93,7 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         <label>School Number</label>
         <input {...register("schoolIdNumber", { required: true })} />
       </div>
+
       <div>
         <label>User Type</label>
         <select {...register("type", { required: true })}>
