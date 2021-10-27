@@ -28,6 +28,7 @@ const PostsFeed = ({ posts }) => {
             title,
             description,
             attachment: activityAttachment = null,
+            dueAt,
           } = activity ?? groupActivity ?? {};
           const { type: groupType } = group ?? {};
 
@@ -104,8 +105,10 @@ const PostsFeed = ({ posts }) => {
                   {groupActivity || activity ? (
                     <Activity>
                       <ActivityContent>
+                        <h4> Due: {dayjs(dueAt).format("MMMM D, YYYY")}</h4>
                         <h3>{title}</h3>
                         <p>{description}</p>
+
                         {activityAttachment && (
                           <Attachment href={secure_url} download>
                             {original_filename}.
@@ -125,14 +128,14 @@ const PostsFeed = ({ posts }) => {
                 </PostContent>
                 {groupActivity && (
                   <Link
-                    to={`/class/${groupActivity.course.id}/group-activity/${groupActivity.id}`}
+                    to={`/class/${groupActivity.course}/group-activity/${groupActivity.id}`}
                   >
                     Open
                   </Link>
                 )}
                 {activity && (
                   <Link
-                    to={`/class/${activity.course.id}/activity/${activity.id}`}
+                    to={`/class/${activity.course}/activity/${activity.id}`}
                   >
                     Open
                   </Link>
@@ -265,6 +268,12 @@ const Activity = styled.div`
 `;
 
 const ActivityContent = styled.div`
+  > h4 {
+    color: #0e5937;
+    font-weight: normal;
+    font-size: 17px;
+    margin: 0 0 0.5em;
+  }
   > h3 {
     color: #0f482f;
     font-size: 18px;
