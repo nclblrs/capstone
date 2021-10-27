@@ -27,12 +27,12 @@ const PostsFeed = ({ posts }) => {
           const {
             title,
             description,
-            attachment: activityAttachment,
+            attachment: activityAttachment = null,
           } = activity ?? groupActivity ?? {};
           const { type: groupType } = group ?? {};
 
           const { original_filename, secure_url } =
-            JSON.parse(attachment) ?? {};
+            JSON.parse(attachment) ?? JSON.parse(activityAttachment) ?? {};
 
           const postedIn = group || course;
 
@@ -108,7 +108,8 @@ const PostsFeed = ({ posts }) => {
                         <p>{description}</p>
                         {activityAttachment && (
                           <Attachment href={secure_url} download>
-                            ...
+                            {original_filename}.
+                            {secure_url.split(".").slice(-1)}
                           </Attachment>
                         )}
                       </ActivityContent>
