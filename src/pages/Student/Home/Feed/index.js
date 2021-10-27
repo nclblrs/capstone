@@ -37,7 +37,7 @@ const FeedContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 50%;
   button,
   select {
     display: flex;
@@ -85,8 +85,7 @@ const FeedFilter = styled.div`
 
 const FeedHeader = styled.div`
   position: sticky;
-  top: 80px;
-  padding-top: 10px;
+  top: 100px;
   width: 100%;
   background: white;
   z-index: 1;

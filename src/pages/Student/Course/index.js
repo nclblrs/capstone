@@ -19,6 +19,7 @@ import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { RiFileCopy2Fill } from "react-icons/ri";
 import Files from "./CourseTabs/Files";
+import Activities from "./CourseTabs/Activities";
 
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 
@@ -130,7 +131,7 @@ const Course = () => {
             <Route path={`/class/:id/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
-                <div className="leftContent"></div>
+                <Activities />
               </LeftContainer>
             </Route>
             <Route path={`/class/:id/members`}>
