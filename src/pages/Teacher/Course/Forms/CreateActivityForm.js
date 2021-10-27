@@ -119,8 +119,8 @@ const CreateActivityForm = ({ onCreateFinish }) => {
         <input {...register("title", { required: true })} />
       </div>
       <div>
-        <label>Due Date</label>
-        <input {...register("dueAt")} />
+        <label for="Due Date">Due Date</label>
+        <input type="datetime-local" {...register("dueAt")} />
       </div>
       <div>
         <label>Activity Type</label>
