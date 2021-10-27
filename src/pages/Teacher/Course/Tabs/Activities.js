@@ -1,9 +1,29 @@
 import React from "react";
 import styled from "styled-components";
-import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
+import dayjs from "dayjs";
+import { Switch, NavLink, Route, useParams } from "react-router-dom";
+import { GET_ACTIVITIES, GET_GROUP_ACTIVITIES } from "../gql";
+import { useQuery } from "@apollo/client";
 
 const Activities = () => {
   let { id } = useParams();
+
+  const { loading: activityLoading, data: activityData } = useQuery(
+    GET_ACTIVITIES,
+    {
+      variables: { courseId: id },
+    }
+  );
+
+  const { loading: groupActivityLoading, data: groupActivityData } = useQuery(
+    GET_GROUP_ACTIVITIES,
+    {
+      variables: { courseId: id },
+    }
+  );
+
+  const activityInfo = activityData?.courseActivities.data ?? [];
+  const groupActivityInfo = groupActivityData?.courseGroupActivities.data ?? [];
 
   return (
     <ActivityContainer>
@@ -15,24 +35,44 @@ const Activities = () => {
       </NavBar>
       <Switch>
         <Route path={`/class/:id/activities`} exact>
-          <Activity>
-            <Content>
-              <h1 title="">
-                TESTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTTT
-              </h1>
-              <Attachment></Attachment>
-              <p className="date">Due: December 18, 2021</p>
-            </Content>
-          </Activity>
+          {activityLoading
+            ? "Loading..."
+            : activityInfo.map(({ id, title, dueAt, createdAt }) => {
+                return (
+                  <>
+                    <Activity key={id}>
+                      <Content>
+                        <h1>{title}</h1>
+                        <h4>
+                          {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
+                        </h4>
+                        <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
+                      </Content>
+                      <button>View</button>
+                    </Activity>
+                  </>
+                );
+              })}
         </Route>
         <Route path={`/class/:id/activities/group`}>
-          <Activity>
-            <Content>
-              <h1 title="">TEST</h1>
-              <Attachment></Attachment>
-              <p className="date">Due: December 18, 2021</p>
-            </Content>
-          </Activity>
+          {groupActivityLoading
+            ? "Loading..."
+            : groupActivityInfo.map(({ id, title, dueAt }) => {
+                const { created_at } = {};
+                return (
+                  <>
+                    <Activity key={id}>
+                      <Content>
+                        <h1>{title} </h1>
+                        <h4>
+                          {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
+                        </h4>
+                        <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
+                      </Content>
+                    </Activity>
+                  </>
+                );
+              })}
         </Route>
       </Switch>
     </ActivityContainer>
@@ -46,34 +86,50 @@ const ActivityContainer = styled.div`
 
 const Activity = styled.div`
   width: 100%;
-  border: 1px solid #0f482f;
-  border-radius: 10px;
-  padding: 10px;
+  border-left: 5px solid #0f482f;
+  height: 110px;
+  padding: 0 20px;
   text-align: left;
-  margin: 1em 0;
+  margin: 1em 1.4em;
+  display: flex;
+  button {
+    margin-left: auto;
+    font-size: 16px;
+    width: 130px;
+    height: 40px;
+    border: none;
+    color: white;
+    background-color: #0f482f;
+    cursor: pointer;
+    &:hover {
+      background-color: #0e5937;
+    }
+  }
 `;
 
-const Content = styled(Link)`
+const Content = styled.div`
   width: 100%;
-  cursor: pointer;
   text-decoration: none;
+  margin-top: 7px;
 
-  .date {
-    margin: 0;
-    font-size: 16px;
-  }
-  > span {
-    margin: 0;
-    padding: 0;
-    font-size: 16px;
-  }
-  > h1 {
-    white-space: nowrap;
+  h1 {
     overflow: hidden;
     text-overflow: ellipsis;
     margin: 0;
     padding: 0;
     font-size: 20px;
+    color: #0f482f;
+  }
+  h4 {
+    font-weight: normal;
+    margin-top: 5px;
+    color: #646464;
+  }
+  h3 {
+    font-weight: normal;
+    margin-top: 0;
+    color: #0f482f;
+    font-size: 18px;
   }
 `;
 
@@ -100,17 +156,6 @@ const NavMenu = styled(NavLink)`
     background-color: #0f482f;
     border-radius: 5px;
   }
-`;
-
-const Attachment = styled.a`
-  color: #0e5937;
-  width: 100%;
-  text-align: left;
-  border-radius: 5px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  cursor: pointer;
 `;
 
 export default Activities;
