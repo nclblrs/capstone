@@ -85,7 +85,8 @@ const FeedFilter = styled.div`
 
 const FeedHeader = styled.div`
   position: sticky;
-  top: 100px;
+  top: 80px;
+  padding-top: 10px;
   width: 100%;
   background: white;
   z-index: 1;

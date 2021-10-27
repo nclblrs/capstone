@@ -15,7 +15,7 @@ const Home = () => {
 };
 const HomeContainer = styled.div`
   display: flex;
-  margin: 20px;
+  margin: 0 10px;
   justify-content: center;
 `;
 
