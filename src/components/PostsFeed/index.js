@@ -105,7 +105,9 @@ const PostsFeed = ({ posts }) => {
                   {groupActivity || activity ? (
                     <Activity>
                       <ActivityContent>
-                        <h4> Due: {dayjs(dueAt).format("MMMM D, YYYY")}</h4>
+                        <h4>
+                          Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                        </h4>
                         <h3>{title}</h3>
                         <p>{description}</p>
 
