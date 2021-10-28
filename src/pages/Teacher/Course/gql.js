@@ -140,3 +140,27 @@ export const COURSE_FILES = gql`
     }
   }
 `;
+
+export const GET_ACTIVITIES = gql`
+  query ($courseId: ID!) {
+    courseActivities(courseId: $courseId) {
+      data {
+        id
+        title
+        dueAt
+      }
+    }
+  }
+`;
+
+export const GET_GROUP_ACTIVITIES = gql`
+  query ($courseId: ID!) {
+    courseGroupActivities(courseId: $courseId) {
+      data {
+        id
+        title
+        dueAt
+      }
+    }
+  }
+`;

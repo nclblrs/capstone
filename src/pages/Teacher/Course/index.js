@@ -244,26 +244,24 @@ const TCourse = () => {
             </>
           )}
         </RSideAbout>
-        <div className="buttoncontainer">
-          <button>
-            <Dropdown
-              popperComponent={
-                <DropdownButtons>
-                  <button onClick={() => setShowCreateActivityModal(true)}>
-                    Activity
-                  </button>
-                  <button onClick={() => setShowCreateClassGroupModal(true)}>
-                    Class Groups
-                  </button>
-                </DropdownButtons>
-              }
-            >
-              <button className="Create">
-                Create &nbsp; <BiChevronDown size={18} />
-              </button>
-            </Dropdown>
-          </button>
-        </div>
+        <button>
+          <Dropdown
+            popperComponent={
+              <DropdownButtons>
+                <button onClick={() => setShowCreateActivityModal(true)}>
+                  Activity
+                </button>
+                <button onClick={() => setShowCreateClassGroupModal(true)}>
+                  Class Groups
+                </button>
+              </DropdownButtons>
+            }
+          >
+            <button className="Create">
+              Create &nbsp; <BiChevronDown size={18} />
+            </button>
+          </Dropdown>
+        </button>
       </RSideContainer>
       <Modal
         show={showCreateActivityModal}
@@ -446,7 +444,7 @@ const LeftContainer = styled.div`
   overflow-y: scroll;
   > h1 {
     color: #0f482f;
-    padding: 0.5em 1.5em;
+    padding: 0.5em 1.5em 0;
   }
   .leftContent {
     position: absolute;
@@ -515,26 +513,23 @@ const RSideContainer = styled.div`
   li {
     padding: 8px 8px;
   }
-  .buttoncontainer {
+  button {
+    display: flex;
     margin-left: auto;
-    button {
-      display: flex;
-      font-size: 16px;
-      justify-content: center;
-      margin-left: auto;
-      padding: 0;
-      border: none;
-      background: none;
-      cursor: pointer;
-      align-items: center;
-      color: white;
+    font-size: 16px;
+    justify-content: center;
+    padding: 0;
+    border: none;
+    background: none;
+    cursor: pointer;
+    align-items: center;
+    color: white;
+    .Create {
+      background-color: #0e5937;
+      width: 120px;
+      height: 40px;
       &:hover {
-        background-color: #0e5937;
-      }
-      .Create {
-        background-color: #0e5937;
-        width: 120px;
-        height: 40px;
+        background-color: #1b6344;
       }
     }
   }
