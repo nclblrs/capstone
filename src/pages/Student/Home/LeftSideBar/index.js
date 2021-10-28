@@ -140,6 +140,7 @@ const LSideContainer = styled.div`
   display: flex;
   position: sticky;
   top: 100px;
+  margin-top: 20px;
   background-color: #f2f2f2;
   width: 300px;
   min-width: 300px;
