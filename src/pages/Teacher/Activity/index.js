@@ -38,7 +38,7 @@ const Activity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} || Due:{" "}
+                  {name} &nbsp;{"▏"}Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
               </ActivityContent>
@@ -102,7 +102,8 @@ const ActivityContainer = styled.div`
 const LSideContainer = styled.div`
   margin: 0 1em;
   display: flex;
-  width: 70%;
+  width: 60%;
+  min-width: 910px;
 `;
 
 const ActivityHeader = styled.div`
@@ -118,18 +119,20 @@ const ActivityHeader = styled.div`
 
 const ActivityContent = styled.div`
   width: 60%;
-  margin: 1em;
+  margin-top: 0.7em;
+  margin-left: 1em;
+  padding-left: 1em;
 
   > h1 {
     margin: 0;
     color: #0f482f;
     font-weight: normal;
-    font-size: 22px;
+    font-size: 26px;
   }
   > span {
-    margin: 0;
+    margin-top: 5px;
     color: #646464;
-    font-size: 16px;
+    font-size: 18px;
     display: flex;
     align-items: center;
   }
@@ -157,8 +160,9 @@ const ActivityButtons = styled.div`
 `;
 
 const RSideContainer = styled.div`
-  width: 30%;
-  margin: 0 1em;
+  width: 24%;
+  min-width: 400px;
+  margin-left: auto;
   h3 {
     color: #646464;
     text-align: left;

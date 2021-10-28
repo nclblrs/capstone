@@ -39,7 +39,7 @@ const TeacherSchedule = () => {
               </tr>
             </thead>
           </colgroup>
-        </table>+
+        </table>
       </SchedTable>
     </TeacherSchedContainer>
   );
@@ -51,7 +51,7 @@ const TeacherSchedContainer = styled.div`
   position: sticky;
   margin-top: 20px;
   background-color: #f2f2f2;
-  width: 76%;
+  width: 79%;
   min-width: 700px;
   border-radius: 10px;
   height: max-content;
@@ -147,7 +147,7 @@ const SchedTable = styled.div`
     width: 290px;
   }
   .forthcol {
-    width: 600px;
+    width: 620px;
   }
 `;
 

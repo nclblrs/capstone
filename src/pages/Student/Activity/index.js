@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "components/Modal";
-import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { COURSE_ACTIVITY } from "./gql";
@@ -42,7 +41,7 @@ const Activity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} || Due:{" "}
+                  {name} &nbsp;{"▏"}Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
               </ActivityContent>
@@ -69,10 +68,6 @@ const Activity = () => {
                 <li>
                   <MdAccountCircle size={18} />
                   &nbsp; Activity Type:{" "}
-                </li>
-                <li>
-                  <FaLaptop size={18} />
-                  &nbsp; Subject: {name}
                 </li>
                 <li>
                   <TiGroup size={18} />
@@ -121,7 +116,8 @@ const ActivityContainer = styled.div`
 const LSideContainer = styled.div`
   margin: 0 1em;
   display: flex;
-  width: 70%;
+  width: 60%;
+  min-width: 910px;
 `;
 
 const ActivityHeader = styled.div`
@@ -137,18 +133,20 @@ const ActivityHeader = styled.div`
 
 const ActivityContent = styled.div`
   width: 60%;
-  margin: 1em;
+  margin-top: 0.7em;
+  margin-left: 1em;
+  padding-left: 1em;
 
   > h1 {
     margin: 0;
     color: #0f482f;
     font-weight: normal;
-    font-size: 22px;
+    font-size: 26px;
   }
   > span {
-    margin: 0;
+    margin-top: 5px;
     color: #646464;
-    font-size: 16px;
+    font-size: 18px;
     display: flex;
     align-items: center;
   }
@@ -176,12 +174,13 @@ const ActivityButtons = styled.div`
 `;
 
 const RSideContainer = styled.div`
-  width: 30%;
+  width: 24%;
+  min-width: 400px;
   margin: 0 1em;
   h3 {
     color: #646464;
     text-align: left;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: normal;
     display: flex;
     margin: 0 10px;
