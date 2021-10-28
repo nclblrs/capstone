@@ -172,6 +172,7 @@ export const GET_ACTIVITIES = gql`
         id
         title
         dueAt
+        createdAt
       }
     }
   }
@@ -184,6 +185,7 @@ export const GET_GROUP_ACTIVITIES = gql`
         id
         title
         dueAt
+        createdAt
       }
     }
   }

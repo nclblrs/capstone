@@ -57,15 +57,14 @@ const Activities = () => {
         <Route path={`/class/:id/activities/group`}>
           {groupActivityLoading
             ? "Loading..."
-            : groupActivityInfo.map(({ id, title, dueAt }) => {
-                const { created_at } = {};
+            : groupActivityInfo.map(({ id, title, dueAt, createdAt }) => {
                 return (
                   <>
                     <Activity key={id}>
                       <Content>
                         <h1>{title} </h1>
                         <h4>
-                          {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
+                          {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                         </h4>
                         <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
                       </Content>
