@@ -38,6 +38,20 @@ export const GET_FEED = gql`
           firstName
           lastName
         }
+        activity {
+          id
+          title
+          description
+          attachment
+          dueAt
+        }
+        groupActivity {
+          id
+          title
+          description
+          attachment
+          dueAt
+        }
       }
     }
   }
