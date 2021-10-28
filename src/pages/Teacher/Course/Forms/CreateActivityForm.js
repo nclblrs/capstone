@@ -20,11 +20,14 @@ const CreateActivityForm = ({ onCreateFinish }) => {
   const { register, watch, handleSubmit } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
 
-  const [createActivity, { loading: mutationLoading }] =
+  const [createActivity, { loading: createActivityLoading }] =
     useMutation(CREATE_ACTIVITY);
   const [addAttachmentToActivity] = useMutation(ACTIVITY_ATTACHMENT);
-  const [createGroupActivity] = useMutation(CREATE_GROUP_ACTIVITY);
+  const [createGroupActivity, { loading: createGroupActivityLoading }] =
+    useMutation(CREATE_GROUP_ACTIVITY);
   const [addAttachmentToGroupActivity] = useMutation(GROUP_ACTIVITY_ATTACHMENT);
+
+  const loading = createActivityLoading || createGroupActivityLoading;
 
   const handleCreateActivity = async (data) => {
     const { title, description, dueAt, type, file: files } = data;
@@ -150,9 +153,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
         <label>Description</label>
         <input className="desc" {...register("description")} />
       </div>
-      <button disabled={mutationLoading}>
-        {mutationLoading ? "Creating..." : "Submit "}
-      </button>
+      <button disabled={loading}>{loading ? "Creating..." : "Submit "}</button>
     </Form>
   );
 };

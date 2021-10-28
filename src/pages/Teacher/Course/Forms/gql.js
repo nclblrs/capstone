@@ -76,7 +76,7 @@ export const CREATE_GROUP_ACTIVITY = gql`
     $dueAt: Date!
     $courseId: ID!
   ) {
-    createActivity(
+    createGroupActivity(
       title: $title
       description: $description
       dueAt: $dueAt

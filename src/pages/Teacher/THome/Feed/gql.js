@@ -29,7 +29,6 @@ export const GET_FEED = gql`
           description
           attachment
           dueAt
-          type
         }
         groupActivity {
           id
