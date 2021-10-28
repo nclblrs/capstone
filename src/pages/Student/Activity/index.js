@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
-import { COURSE_ACTIVITY, COURSE_GROUPACTIVITY } from "./gql";
+import { COURSE_ACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
@@ -13,12 +13,7 @@ const Activity = () => {
   const { loading, data } = useQuery(COURSE_ACTIVITY, {
     variables: { activityId: id },
   });
-  const { loading: groupActLoading, data: groupActData } = useQuery(
-    COURSE_GROUPACTIVITY,
-    {
-      variables: { groupActivityId: id },
-    }
-  );
+
   const {
     title,
     description,
@@ -26,21 +21,9 @@ const Activity = () => {
     course,
     attachment = null,
   } = data?.activity ?? {};
-  const {
-    title: groupActivityTitle,
-    description: groupActivityDesc,
-    dueAt: groupActivityDue,
-    course: groupActivityCourse,
-    attachment: groupActivityAttachment = null,
-  } = data?.groupActivity ?? {};
 
   const { teacher, name } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
-
-  const { teacher: groupActivityTeacher, name: groupActivityCourseName } =
-    groupActivityCourse ?? {};
-  const { firstName: teacherFirstName, lastName: teacherLastName } =
-    groupActivityTeacher?.user ?? {};
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
 
@@ -90,12 +73,14 @@ const Activity = () => {
                   &nbsp; Description: <p>{description}</p>
                 </li>
                 <li>
-                  {attachment &&
-                    "Attachment:"(
+                  {attachment && (
+                    <>
+                      Attachment:
                       <Attachment href={secure_url} download>
                         {original_filename}.{secure_url.split(".").slice(-1)}
                       </Attachment>
-                    )}
+                    </>
+                  )}
                 </li>
               </ul>
             </RSideAbout>
@@ -214,4 +199,5 @@ const Attachment = styled.a`
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
+  margin-top: 1em;
 `;

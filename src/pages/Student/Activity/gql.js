@@ -8,7 +8,6 @@ export const COURSE_ACTIVITY = gql`
       description
       dueAt
       attachment
-      type
       course {
         name
         teacher {
@@ -29,7 +28,6 @@ export const COURSE_GROUPACTIVITY = gql`
       description
       dueAt
       attachment
-      type
       course {
         name
         teacher {
