@@ -40,7 +40,11 @@ const Files = () => {
                     {attachment && (
                       <File key={id}>
                         <Attachment href={secure_url} download>
-                          <h1 title={original_filename}>
+                          <h1
+                            title={`${original_filename}.${secure_url
+                              .split(".")
+                              .slice(-1)}`}
+                          >
                             {original_filename}.
                             {secure_url.split(".").slice(-1)}
                           </h1>
@@ -70,13 +74,17 @@ const Files = () => {
                     {attachment && (
                       <File key={id}>
                         <Attachment href={secure_url} download>
-                          <h1 title={original_filename}>
+                          <h1
+                            title={`${original_filename}.${secure_url
+                              .split(".")
+                              .slice(-1)}`}
+                          >
                             {original_filename}.
                             {secure_url.split(".").slice(-1)}
                           </h1>
                         </Attachment>
                         <span>{formatBytes(bytes)}</span>
-                        <span>Uploaded by:</span>
+
                         <p className="date">
                           {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
                         </p>
@@ -99,16 +107,16 @@ const Files = () => {
                       <File key={id}>
                         <Attachment href={secure_url} download>
                           <h1
-                            title={original_filename.secure_url
+                            title={`${original_filename}.${secure_url
                               .split(".")
-                              .slice(-1)}
+                              .slice(-1)}`}
                           >
                             {original_filename}.
                             {secure_url.split(".").slice(-1)}
                           </h1>
                         </Attachment>
                         <span>{formatBytes(bytes)}</span>
-                        <span>Uploaded by:</span>
+
                         <p className="date">
                           {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
                         </p>
