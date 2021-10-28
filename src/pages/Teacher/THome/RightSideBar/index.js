@@ -183,6 +183,9 @@ const RSideClasses = styled.div`
     background-color: #0e5937;
     width: 120px;
     height: 33px;
+    &:hover {
+      background-color: #1b6344;
+    }
   }
 `;
 
