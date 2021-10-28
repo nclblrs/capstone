@@ -115,6 +115,12 @@ function App() {
                     <Route path="/" exact>
                       <THome />
                     </Route>
+                    <Route path="/class/:id/activity/:id">
+                      <Activity />
+                    </Route>
+                    <Route path="/class/:id/group-activity/:id">
+                      <Activity />
+                    </Route>
                     <Route path="/class/:id">
                       <TCourse />
                     </Route>
