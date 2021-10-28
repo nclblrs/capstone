@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import Modal from "components/Modal";
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
@@ -7,10 +8,13 @@ import { COURSE_ACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
+import CreateSubmissionForm from "pages/Student/Activity/Forms/CreateSubmissionForm";
 
 const Activity = () => {
+  const [showCreateSubmissionModal, setShowCreateSubmissionModal] =
+    useState(false);
   let { id } = useParams();
-  const { loading, data } = useQuery(COURSE_ACTIVITY, {
+  const { loading, data, refetch } = useQuery(COURSE_ACTIVITY, {
     variables: { activityId: id },
   });
 
@@ -43,7 +47,9 @@ const Activity = () => {
                 </span>
               </ActivityContent>
               <ActivityButtons>
-                <button>Attach File</button>
+                <button onClick={() => setShowCreateSubmissionModal(true)}>
+                  Submit
+                </button>
               </ActivityButtons>
             </ActivityHeader>
           </LSideContainer>
@@ -85,6 +91,19 @@ const Activity = () => {
               </ul>
             </RSideAbout>
           </RSideContainer>
+          <Modal
+            show={showCreateSubmissionModal}
+            closeModal={() => setShowCreateSubmissionModal(false)}
+            title="Create Submission"
+          >
+            <CreateSubmissionForm
+              activityId={id}
+              onCreateFinish={() => {
+                refetch();
+                setShowCreateSubmissionModal(false);
+              }}
+            />
+          </Modal>
         </>
       )}
     </ActivityContainer>

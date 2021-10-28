@@ -40,3 +40,19 @@ export const COURSE_GROUPACTIVITY = gql`
     }
   }
 `;
+
+export const CREATE_SUBMISSION = gql`
+  mutation createSubmission($description: String!, $activityId: ID!) {
+    createSubmission(description: $description, activityId: $activityId) {
+      id
+    }
+  }
+`;
+
+export const SUBMISSION_ATTACHMENT = gql`
+  mutation addAttachmentToSubmission($id: ID!, $attachment: String!) {
+    addAttachmentToSubmission(id: $id, attachment: $attachment) {
+      id
+    }
+  }
+`;
