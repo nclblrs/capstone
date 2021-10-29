@@ -5,10 +5,10 @@ import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-import { useLocation } from "react-router";
+/* import { useLocation } from "react-router"; */ // to be used for other submissions (right side bar)
 
 const Submission = () => {
-  const location = useLocation();
+  /* const location = useLocation(); */ // to be used for other submissions (right side bar)
   const { submissionId, activityId } = useParams();
   const { loading: submissionLoading, data: submissionData } = useQuery(
     GET_SUBMISSION,
@@ -20,9 +20,9 @@ const Submission = () => {
   const {
     description,
     createdAt,
-    grade,
+    /* grade, */ // to be used added
     student,
-    activity,
+    /* activity, */ // to be used added
     attachment = null,
   } = submissionData?.submission ?? {};
 
