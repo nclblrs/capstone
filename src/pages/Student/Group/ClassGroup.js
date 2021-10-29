@@ -19,7 +19,7 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
 
 const ClassGroup = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const { user } = useCurrentUserContext();
 
   const [createPost] = useMutation(CREATE_GROUP_POST);

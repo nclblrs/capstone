@@ -24,7 +24,7 @@ import Activities from "./CourseTabs/Activities";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const Course = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const { user } = useCurrentUserContext();
 
   const [createPost] = useMutation(CREATE_COURSE_POST);

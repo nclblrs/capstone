@@ -13,7 +13,7 @@ import CreateSubmissionForm from "pages/Student/Activity/Forms/CreateSubmissionF
 const Activity = () => {
   const [showCreateSubmissionModal, setShowCreateSubmissionModal] =
     useState(false);
-  let { id } = useParams();
+  const { id } = useParams();
   const { loading, data, refetch } = useQuery(COURSE_ACTIVITY, {
     variables: { activityId: id },
   });
@@ -25,7 +25,7 @@ const Activity = () => {
     course,
     attachment = null,
     mySubmission,
-    points
+    points,
   } = data?.activity ?? {};
 
   const { teacher, name } = course ?? {};
@@ -53,9 +53,7 @@ const Activity = () => {
                   {name} || Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
-                <span>
-                  {points}
-                </span>
+                <span>{points}</span>
               </ActivityContent>
               <ActivityButtons>
                 {!mySubmission ? (

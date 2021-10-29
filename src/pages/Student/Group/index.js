@@ -6,7 +6,7 @@ import StudyGroup from "./StudyGroup";
 import ClassGroup from "./ClassGroup";
 
 const Group = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const { data } = useQuery(GET_GROUP, {
     variables: { groupId: id },
   });
