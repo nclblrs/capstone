@@ -5,6 +5,7 @@ import {
   GROUP_POSTS,
   CREATE_GROUP_POST,
   GET_GROUP,
+  BECOME_LEADER,
 } from "./gql";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams, NavLink, Switch, Route } from "react-router-dom";
@@ -24,6 +25,7 @@ const ClassGroup = () => {
 
   const [createPost] = useMutation(CREATE_GROUP_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
+  const [becomeLeader] = useMutation(BECOME_LEADER);
 
   const { loading, data } = useQuery(GET_GROUP, {
     variables: { groupId: id },
@@ -40,6 +42,23 @@ const ClassGroup = () => {
 
   const { name, leader, course, students } = data?.group ?? {};
   const { firstName, lastName } = leader?.user ?? {};
+
+  const handleBecomeLeader = async (data) => {
+    const { leader } = data;
+
+    try {
+      const { data } = await becomeLeader({
+        variables: { groupId: id, leader },
+      });
+
+      if (data?.becomeLeader?.id) {
+        toast.success("Group Leader Assigned");
+        refetch();
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const handleCreatePost = async (data) => {
     const { content, category, file: files } = data;
@@ -115,7 +134,14 @@ const ClassGroup = () => {
             </Route>
             <Route path={`/group/${id}/members`}>
               <LeftContainer>
-                <h1>Members</h1>
+                <h1>
+                  Members
+                  {!leader && (
+                    <button onClick={handleBecomeLeader}>
+                      Become the Leader
+                    </button>
+                  )}
+                </h1>
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
@@ -296,8 +322,22 @@ const LeftContainer = styled.div`
   height: 550px;
   flex-direction: column;
   h1 {
+    display: flex;
     color: #0f482f;
     padding: 0.5em 1.5em;
+  }
+  button {
+    display: flex;
+    width: 150px;
+    height: 44px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    text-align: center;
+    margin-left: auto;
   }
   .leftContent {
     position: absolute;

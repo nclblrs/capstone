@@ -25,6 +25,7 @@ export const GET_COURSE = gql`
       }
       groups {
         data {
+          id
           name
           leader {
             user {
