@@ -17,6 +17,13 @@ export const COURSE_ACTIVITY = gql`
           }
         }
       }
+      mySubmission {
+        id
+        attachment
+        description
+        submittedAt
+        createdAt
+      }
     }
   }
 `;

@@ -24,12 +24,19 @@ const Activity = () => {
     dueAt,
     course,
     attachment = null,
+    mySubmission,
   } = data?.activity ?? {};
 
   const { teacher, name } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
-
+  const {
+    attachment: myAttachment = null,
+    description: myDescription,
+    createdAt,
+  } = mySubmission ?? {};
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
+  const { original_filename: original_filename2, secure_url: secure_url2 } =
+    JSON.parse(myAttachment) ?? {};
 
   return (
     <ActivityContainer>
@@ -47,11 +54,35 @@ const Activity = () => {
                 </span>
               </ActivityContent>
               <ActivityButtons>
-                <button onClick={() => setShowCreateSubmissionModal(true)}>
-                  Submit
-                </button>
+                {!mySubmission ? (
+                  <button onClick={() => setShowCreateSubmissionModal(true)}>
+                    Submit
+                  </button>
+                ) : (
+                  "Submitted!"
+                )}
               </ActivityButtons>
             </ActivityHeader>
+            {mySubmission && (
+              <ActivityHeader>
+                <ActivityContent>
+                  <h1>My Submission</h1>
+                  <span>
+                    Submitted at:{" "}
+                    {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
+                  </span>
+                  <span>{myDescription}</span>
+                  {myAttachment && (
+                    <>
+                      Attachment:
+                      <Attachment href={secure_url2} download>
+                        {original_filename2}.{secure_url2.split(".").slice(-1)}
+                      </Attachment>
+                    </>
+                  )}
+                </ActivityContent>
+              </ActivityHeader>
+            )}
           </LSideContainer>
           <RSideContainer>
             <RSideAbout>
@@ -122,22 +153,22 @@ const LSideContainer = styled.div`
   margin: 0 1em;
   display: flex;
   width: 70%;
+  flex-direction: column;
 `;
 
 const ActivityHeader = styled.div`
-  position: sticky;
+  position: relative;
   top: 0px;
   margin: 1em;
   padding: 2em 0;
   background-color: #f2f2f2;
   width: 100%;
   border-radius: 10px;
-  height: 150px;
 `;
 
 const ActivityContent = styled.div`
-  width: 60%;
-  margin: 1em;
+  padding: 1em;
+  width: 100%;
 
   > h1 {
     margin: 0;
