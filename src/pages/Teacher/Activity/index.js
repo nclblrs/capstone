@@ -7,16 +7,19 @@ import { COURSE_ACTIVITY, COURSE_ACTIVITYSUBMISSIONS } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
 
 const TActivity = () => {
-  let { id } = useParams();
+  const location = useLocation();
+  const { activityId } = useParams();
   const { loading, data: courseActivityData } = useQuery(COURSE_ACTIVITY, {
-    variables: { activityId: id },
+    variables: { activityId: activityId },
   });
 
   const { loading: activitySubmissionsLoading, data: activitySubmissionsData } =
     useQuery(COURSE_ACTIVITYSUBMISSIONS, {
-      variables: { activityId: id },
+      variables: { activityId: activityId },
     });
 
   const {
@@ -70,7 +73,12 @@ const TActivity = () => {
                               )}
                             </span>
                           </Content>
-                          <button>View</button>
+                          <Link
+                            className="buttons"
+                            to={`${location.pathname}/submission/${id}`}
+                          >
+                            View
+                          </Link>
                         </Submission>
                       </>
                     );
@@ -230,7 +238,7 @@ const Submission = styled.div`
   justify-content: center;
   margin: 1em 1.4em;
 
-  button {
+  .buttons {
     position: absolute;
     right: 30px;
     font-size: 16px;
@@ -240,6 +248,10 @@ const Submission = styled.div`
     color: white;
     background-color: #0f482f;
     cursor: pointer;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
     &:hover {
       background-color: #0e5937;
     }
