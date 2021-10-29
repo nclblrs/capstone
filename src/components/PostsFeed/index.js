@@ -30,6 +30,7 @@ const PostsFeed = ({ posts }) => {
             description,
             attachment: activityAttachment = null,
             dueAt,
+            mySubmission,
           } = activity ?? groupActivity ?? {};
           const { type: groupType } = group ?? {};
 
@@ -107,8 +108,14 @@ const PostsFeed = ({ posts }) => {
                     <Activity>
                       <ActivityContent>
                         <h4>
-                          Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                          Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}{" "}
+                          {mySubmission && (
+                            <span className="submitted">
+                              (Submitted on Time)
+                            </span>
+                          )}
                         </h4>
+
                         <h3>{title}</h3>
                         <p>{description}</p>
 
@@ -263,11 +270,16 @@ const Activity = styled.div`
 `;
 
 const ActivityContent = styled.div`
+  width: 100%;
   > h4 {
     color: #0e5937;
     font-weight: normal;
     font-size: 17px;
     margin: 0 0 0.5em;
+    .submitted {
+      color: #646464;
+      font-size: 15px;
+    }
   }
   > h3 {
     color: #0f482f;

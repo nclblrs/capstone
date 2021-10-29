@@ -44,6 +44,9 @@ export const GET_FEED = gql`
           description
           attachment
           dueAt
+          mySubmission {
+            id
+          }
         }
         groupActivity {
           id
