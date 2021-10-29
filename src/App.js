@@ -34,6 +34,7 @@ import TeacherSchedule from "pages/Teacher/ClassSched";
 import Activity from "pages/Student/Activity";
 import TActivity from "pages/Teacher/Activity";
 import TSettings from "pages/Teacher/TSettings";
+import Submission from "pages/Teacher/Submission";
 
 function App() {
   const { user } = useCurrentUserContext();
@@ -116,7 +117,10 @@ function App() {
                     <Route path="/" exact>
                       <THome />
                     </Route>
-                    <Route path="/class/:id/activity/:id">
+                    <Route path="/class/:classId/activity/:activityId/submission/:submissionId">
+                      <Submission />
+                    </Route>
+                    <Route path="/class/:id/activity/:activityId">
                       <TActivity />
                     </Route>
                     <Route path="/class/:id/group-activity/:id">
@@ -134,6 +138,7 @@ function App() {
                     <Route path="/settings">
                       <TSettings />
                     </Route>
+
                     <Redirect from="/" to="/" />
                   </Switch>
                 </>
