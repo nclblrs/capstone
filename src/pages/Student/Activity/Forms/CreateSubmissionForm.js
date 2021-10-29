@@ -8,6 +8,7 @@ import { useParams } from "react-router-dom";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import { CREATE_SUBMISSION, SUBMISSION_ATTACHMENT } from "../gql";
 import { toast } from "react-toastify";
+import { useState } from "react/cjs/react.development";
 
 const CreateSubmissionForm = ({ onCreateFinish }) => {
   let { id } = useParams();
@@ -15,8 +16,8 @@ const CreateSubmissionForm = ({ onCreateFinish }) => {
   const { register, watch, handleSubmit } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
 
-  const [createSubmission, { loading: createSubmissionLoading }] =
-    useMutation(CREATE_SUBMISSION);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [createSubmission] = useMutation(CREATE_SUBMISSION);
   const [addAttachmentToSubmission] = useMutation(SUBMISSION_ATTACHMENT);
 
   const handleCreateSubmission = async (data) => {
@@ -24,6 +25,7 @@ const CreateSubmissionForm = ({ onCreateFinish }) => {
     const file = files[0];
 
     try {
+      setIsSubmitting(true);
       const { data: createSubmissionData } = await createSubmission({
         variables: {
           activityId: id,
@@ -56,6 +58,8 @@ const CreateSubmissionForm = ({ onCreateFinish }) => {
     } catch (error) {
       toast.error(error.message);
     }
+
+    setIsSubmitting(false);
   };
 
   return (
@@ -77,8 +81,8 @@ const CreateSubmissionForm = ({ onCreateFinish }) => {
         <label>Description</label>
         <input className="desc" {...register("description")} />
       </div>
-      <button disabled={createSubmissionLoading}>
-        {createSubmissionLoading ? "Creating..." : "Submit "}
+      <button disabled={isSubmitting}>
+        {isSubmitting ? "Creating..." : "Submit "}
       </button>
     </Form>
   );
