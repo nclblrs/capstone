@@ -28,6 +28,7 @@ export const GET_FEED = gql`
           title
           description
           attachment
+          points
           dueAt
         }
         groupActivity {

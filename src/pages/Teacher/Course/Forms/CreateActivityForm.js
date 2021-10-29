@@ -30,7 +30,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
   const loading = createActivityLoading || createGroupActivityLoading;
 
   const handleCreateActivity = async (data) => {
-    const { title, description, dueAt, type, file: files } = data;
+    const { title, description, dueAt, type, file: files, points } = data;
     const file = files[0];
 
     if (type === "activity") {
@@ -41,6 +41,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
             title,
             description,
             dueAt,
+            points,
           },
         });
 
@@ -77,6 +78,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
             title,
             description,
             dueAt,
+            points,
           },
         });
 
@@ -125,6 +127,10 @@ const CreateActivityForm = ({ onCreateFinish }) => {
           type="datetime-local"
           {...register("dueAt", { required: true })}
         />
+      </div>
+      <div>
+        <label>Points</label>
+        <input type="number" min="0" {...register("points")} />
       </div>
       <div>
         <label>Activity Type</label>

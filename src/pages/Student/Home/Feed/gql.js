@@ -44,6 +44,10 @@ export const GET_FEED = gql`
           description
           attachment
           dueAt
+          points
+          mySubmission {
+            id
+          }
         }
         groupActivity {
           id

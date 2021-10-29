@@ -8,6 +8,7 @@ export const COURSE_ACTIVITY = gql`
       description
       dueAt
       attachment
+      points
       course {
         name
         teacher {
@@ -16,6 +17,13 @@ export const COURSE_ACTIVITY = gql`
             lastName
           }
         }
+      }
+      mySubmission {
+        id
+        attachment
+        description
+        submittedAt
+        createdAt
       }
     }
   }
