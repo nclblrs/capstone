@@ -94,6 +94,7 @@ export const COURSE_POSTS = gql`
           description
           attachment
           dueAt
+          points
           course {
             id
           }
@@ -104,6 +105,7 @@ export const COURSE_POSTS = gql`
           description
           attachment
           dueAt
+          points
           course {
             id
           }

@@ -8,6 +8,7 @@ export const COURSE_ACTIVITY = gql`
       description
       dueAt
       attachment
+      points
       course {
         name
         teacher {

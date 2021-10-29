@@ -31,6 +31,7 @@ const PostsFeed = ({ posts }) => {
             attachment: activityAttachment = null,
             dueAt,
             mySubmission,
+            points,
           } = activity ?? groupActivity ?? {};
           const { type: groupType } = group ?? {};
 
@@ -117,6 +118,7 @@ const PostsFeed = ({ posts }) => {
                         </h4>
 
                         <h3>{title}</h3>
+                        <p>{points}</p>
                         <p>{description}</p>
 
                         {activityAttachment && (

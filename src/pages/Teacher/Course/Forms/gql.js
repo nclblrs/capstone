@@ -49,12 +49,14 @@ export const CREATE_ACTIVITY = gql`
     $description: String!
     $dueAt: Date!
     $courseId: ID!
+    $points: Int
   ) {
     createActivity(
       title: $title
       description: $description
       dueAt: $dueAt
       courseId: $courseId
+      points: $points
     ) {
       id
     }
@@ -75,12 +77,14 @@ export const CREATE_GROUP_ACTIVITY = gql`
     $description: String!
     $dueAt: Date!
     $courseId: ID!
+    $points: Int
   ) {
     createGroupActivity(
       title: $title
       description: $description
       dueAt: $dueAt
       courseId: $courseId
+      points: $points
     ) {
       id
     }

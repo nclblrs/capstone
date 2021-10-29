@@ -25,6 +25,7 @@ const Activity = () => {
     course,
     attachment = null,
     mySubmission,
+    points
   } = data?.activity ?? {};
 
   const { teacher, name } = course ?? {};
@@ -51,6 +52,9 @@ const Activity = () => {
                 <span>
                   {name} || Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                </span>
+                <span>
+                  {points}
                 </span>
               </ActivityContent>
               <ActivityButtons>
