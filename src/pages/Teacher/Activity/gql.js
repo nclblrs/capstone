@@ -40,3 +40,25 @@ export const COURSE_GROUPACTIVITY = gql`
     }
   }
 `;
+
+export const COURSE_ACTIVITYSUBMISSIONS = gql`
+  query activitySubmissions($activityId: ID!) {
+    activitySubmissions(activityId: $activityId) {
+      data {
+        id
+        description
+        createdAt
+        activity {
+          points
+          id
+        }
+        student {
+          user {
+            firstName
+            lastName
+          }
+        }
+      }
+    }
+  }
+`;

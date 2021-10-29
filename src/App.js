@@ -32,6 +32,7 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import TeacherAllClass from "pages/Teacher/Classes";
 import TeacherSchedule from "pages/Teacher/ClassSched";
 import Activity from "pages/Student/Activity";
+import TActivity from "pages/Teacher/Activity";
 import TSettings from "pages/Teacher/TSettings";
 
 function App() {
@@ -116,10 +117,10 @@ function App() {
                       <THome />
                     </Route>
                     <Route path="/class/:id/activity/:id">
-                      <Activity />
+                      <TActivity />
                     </Route>
                     <Route path="/class/:id/group-activity/:id">
-                      <Activity />
+                      <TActivity />
                     </Route>
                     <Route path="/class/:id">
                       <TCourse />
