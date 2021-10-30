@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { GET_SUBMISSION, COURSE_ACTIVITYSUBMISSIONS } from "./gql";
 import { useQuery } from "@apollo/client";
@@ -6,10 +6,14 @@ import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
+import Modal from "components/Modal";
+import GradeSubmissionForm from "./Forms/GradeSubmissionForm";
 
 const Submission = () => {
-  const location = useLocation();
+  const [showGradeSubmissionModal, setShowGradeSubmissionModal] =
+    useState(false);
 
+  const location = useLocation();
   const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
   const { submissionId, activityId, classId } = useParams();
   const { loading: submissionLoading, data: submissionData } = useQuery(
@@ -22,9 +26,9 @@ const Submission = () => {
   const {
     description,
     createdAt,
-    /* grade, */ // to be used added
+    grade,
     student,
-    /* activity, */ // to be used added
+    activity,
     attachment = null,
   } = submissionData?.submission ?? {};
 
@@ -64,6 +68,20 @@ const Submission = () => {
                   </>
                 )}
               </ActivityContent>
+              <ActivityButtons>
+                {activity.points ? (
+                  !grade ? (
+                    <button onClick={() => setShowGradeSubmissionModal(true)}>
+                      Add Grade
+                    </button>
+                  ) : (
+                    `${grade}/`
+                  )
+                ) : (
+                  ""
+                )}
+                {activity.points}
+              </ActivityButtons>
             </ActivityHeader>
             <ActivityHeader>
               <ActivityContent>
@@ -109,6 +127,18 @@ const Submission = () => {
               Go back to Activity Page
             </GoBack>
           </RSideContainer>
+          <Modal
+            show={showGradeSubmissionModal}
+            closeModal={() => setShowGradeSubmissionModal(false)}
+            title="Create Submission"
+          >
+            <GradeSubmissionForm
+              submissionId={submissionId}
+              onCreateFinish={() => {
+                setShowGradeSubmissionModal(false);
+              }}
+            />
+          </Modal>
         </>
       )}
     </ActivityContainer>
@@ -264,5 +294,26 @@ const GoBack = styled(Link)`
   align-items: center;
   &:hover {
     background-color: #0e5937;
+  }
+`;
+
+const ActivityButtons = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  position: absolute;
+  right: 30px;
+  top: 50px;
+  > button {
+    font-size: 15px;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    height: 32px;
+    width: 120px;
   }
 `;

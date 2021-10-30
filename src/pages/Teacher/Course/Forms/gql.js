@@ -49,7 +49,7 @@ export const CREATE_ACTIVITY = gql`
     $description: String!
     $dueAt: Date!
     $courseId: ID!
-    $points: Int
+    $points: Int!
   ) {
     createActivity(
       title: $title
