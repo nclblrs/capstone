@@ -12,7 +12,7 @@ import { useLocation } from "react-router";
 
 const TActivity = () => {
   const location = useLocation();
-  const { activityId } = useParams();
+  const { activityId, classId } = useParams();
   const { loading, data: courseActivityData } = useQuery(COURSE_ACTIVITY, {
     variables: { activityId: activityId },
   });
@@ -122,6 +122,9 @@ const TActivity = () => {
                 </li>
               </ul>
             </RSideAbout>
+            <GoBack to={`/class/${classId}/activities`}>
+              Go to Activities Tab
+            </GoBack>
           </RSideContainer>
         </>
       )}
@@ -141,7 +144,7 @@ const ActivityContainer = styled.div`
 const LSideContainer = styled.div`
   margin: 0 1em;
   display: flex;
-  width: 70%;
+  width: 65%;
   flex-direction: column;
 `;
 
@@ -183,8 +186,11 @@ const ActivityContent = styled.div`
 `;
 
 const RSideContainer = styled.div`
-  width: 30%;
+  width: 35%;
   margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   h3 {
     color: #646464;
     text-align: left;
@@ -273,5 +279,22 @@ const Content = styled.div`
   }
   > span {
     color: #646464;
+  }
+`;
+
+const GoBack = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
   }
 `;
