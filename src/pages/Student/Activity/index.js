@@ -73,12 +73,8 @@ const Activity = () => {
                     Submitted at:{" "}
                     {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                   </span>
-<<<<<<< HEAD
-                  <span className="description">{myDescription}</span>
-=======
                   <span>{myDescription}</span>
                   <span>{grade}</span>
->>>>>>> cd7fa139d8440a99effafa7eb8914b824a07898b
                   {myAttachment && (
                     <>
                       Attachment:

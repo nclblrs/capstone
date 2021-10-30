@@ -49,7 +49,7 @@ const ClassGroup = () => {
 
     try {
       const { data } = await becomeLeader({
-        variables: { groupId: id, leader },
+        variables: { groupId, leader },
       });
 
       if (data?.becomeLeader?.id) {
@@ -340,6 +340,7 @@ const LeftContainer = styled.div`
     border: none;
     text-align: center;
     margin-left: auto;
+    cursor: pointer;
   }
   .leftContent {
     position: absolute;
