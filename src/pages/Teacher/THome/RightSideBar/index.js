@@ -10,12 +10,14 @@ import Modal from "components/Modal";
 import CreateActivityForm from "pages/Teacher/Course/Forms/CreateActivityForm";
 import CreateCourseForm from "pages/Teacher/Course/Forms/CreateCourseForm";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
+import CreateAgendaForm from "pages/Teacher/Course/Forms/CreateAgendaForm";
 
 const RightSideBar = () => {
   const { loading, data } = useQuery(GET_COURSES);
   const courses = data?.teacherCourses?.data ?? [];
   const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
   const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
+  const [showCreateAgendaModal, setShowCreateAgendaModal] = useState(false);
 
   var today = new Date(),
     date =
@@ -66,11 +68,18 @@ const RightSideBar = () => {
             </p>
           </RSideLinks>
           <ButtonContainer>
-            <button>
+            <button onClick={() => setShowCreateAgendaModal(true)}>
               Add Agenda &nbsp;
               <FaPlusCircle size={18} />
             </button>
           </ButtonContainer>
+          <Modal
+            show={showCreateAgendaModal}
+            closeModal={() => setShowCreateAgendaModal(false)}
+            title="Create Agenda"
+          >
+            <CreateAgendaForm />
+          </Modal>
         </RSideItem>
       </RSideReminder>
       <RSideClasses>
