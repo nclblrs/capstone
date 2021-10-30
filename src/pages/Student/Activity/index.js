@@ -72,7 +72,7 @@ const Activity = () => {
                     Submitted at:{" "}
                     {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                   </span>
-                  <span>{myDescription}</span>
+                  <span className="description">{myDescription}</span>
                   {myAttachment && (
                     <>
                       Attachment:
@@ -157,7 +157,7 @@ const ActivityHeader = styled.div`
   position: relative;
   top: 0px;
   margin: 1em;
-  padding: 2em 0;
+  padding: 2em 1em;
   background-color: #f2f2f2;
   width: 100%;
   border-radius: 10px;
@@ -179,6 +179,9 @@ const ActivityContent = styled.div`
     font-size: 18px;
     display: flex;
     align-items: center;
+  }
+  .description {
+    margin-top: 25px;
   }
 `;
 
