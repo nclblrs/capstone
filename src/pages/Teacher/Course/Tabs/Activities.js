@@ -9,35 +9,38 @@ import { useLocation } from "react-router";
 const Activities = () => {
   const location = useLocation();
   const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
-  const { id } = useParams();
+  const { classId } = useParams();
 
   const { loading: activityLoading, data: activityData } = useQuery(
     GET_ACTIVITIES,
     {
-      variables: { courseId: id },
+      variables: { courseId: classId },
     }
   );
 
   const { loading: groupActivityLoading, data: groupActivityData } = useQuery(
     GET_GROUP_ACTIVITIES,
     {
-      variables: { courseId: id },
+      variables: { courseId: classId },
     }
   );
 
-  const activityInfo = activityData?.courseActivities.data ?? [];
-  const groupActivityInfo = groupActivityData?.courseGroupActivities.data ?? [];
+  const activityInfo = activityData?.courseActivities?.data ?? [];
+  const groupActivityInfo =
+    groupActivityData?.courseGroupActivities?.data ?? [];
 
   return (
     <ActivityContainer>
       <NavBar>
-        <NavMenu to={`/class/${id}/activities`} exact>
+        <NavMenu to={`/class/${classId}/activities`} exact>
           Individual Activities
         </NavMenu>
-        <NavMenu to={`/class/${id}/activities/group`}>Group Activities</NavMenu>
+        <NavMenu to={`/class/${classId}/activities/group`}>
+          Group Activities
+        </NavMenu>
       </NavBar>
       <Switch>
-        <Route path={`/class/:id/activities`} exact>
+        <Route path={`/class/:classId/activities`} exact>
           {activityLoading
             ? "Loading..."
             : activityInfo.map(({ id, title, dueAt, createdAt }) => {
@@ -61,7 +64,7 @@ const Activities = () => {
                 );
               })}
         </Route>
-        <Route path={`/class/:id/activities/group`}>
+        <Route path={`/class/:classId/activities/group`}>
           {groupActivityLoading
             ? "Loading..."
             : groupActivityInfo.map(({ id, title, dueAt, createdAt }) => {

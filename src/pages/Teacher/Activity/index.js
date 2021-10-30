@@ -12,7 +12,7 @@ import { useLocation } from "react-router";
 
 const TActivity = () => {
   const location = useLocation();
-  const { activityId, classId } = useParams();
+  const { activityId } = useParams();
   const { loading, data: courseActivityData } = useQuery(COURSE_ACTIVITY, {
     variables: { activityId: activityId },
   });
@@ -33,7 +33,7 @@ const TActivity = () => {
   const activitySubmissions =
     activitySubmissionsData?.activitySubmissions?.data ?? [];
 
-  const { teacher, name } = course ?? {};
+  const { teacher, name, id: classId } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
