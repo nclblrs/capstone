@@ -22,7 +22,7 @@ import Files from "./CourseTabs/Files";
 import Activities from "./CourseTabs/Activities";
 
 const Course = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const { user } = useCurrentUserContext();
 
   const [createPost] = useMutation(CREATE_COURSE_POST);

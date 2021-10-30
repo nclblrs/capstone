@@ -7,7 +7,7 @@ import { useQuery } from "@apollo/client";
 import { formatBytes } from "utils/upload";
 
 const Files = () => {
-  let { id } = useParams();
+  const { id } = useParams();
 
   const { loading, data } = useQuery(COURSE_FILES, {
     variables: { courseId: id },

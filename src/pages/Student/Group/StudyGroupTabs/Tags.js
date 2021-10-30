@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const TagsInfo = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const { loading: tagLoading, data: tagData } = useQuery(GET_TAGS, {
     variables: { groupId: id },
   });

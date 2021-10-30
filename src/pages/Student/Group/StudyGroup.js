@@ -22,7 +22,7 @@ import TagsInfo from "./StudyGroupTabs/Tags";
 import Files from "./StudyGroupTabs/Files";
 
 const StudyGroup = () => {
-  let { id } = useParams();
+  const { id } = useParams();
   const { user } = useCurrentUserContext();
   const { tag } = useUrlQuery();
 

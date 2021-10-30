@@ -11,7 +11,7 @@ import { toast } from "react-toastify";
 import { useState } from "react/cjs/react.development";
 
 const CreateSubmissionForm = ({ onCreateFinish }) => {
-  let { id } = useParams();
+  const { id } = useParams();
   const { user } = useCurrentUserContext();
   const { register, watch, handleSubmit } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;

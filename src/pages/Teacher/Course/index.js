@@ -31,7 +31,7 @@ const TCourse = () => {
   const [showCreateClassGroupModal, setShowCreateClassGroupModal] =
     useState(false);
 
-  let { id } = useParams();
+  const { id } = useParams();
   const { user } = useCurrentUserContext();
   const {
     loading,

@@ -3,16 +3,24 @@ import styled from "styled-components";
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
-import { COURSE_ACTIVITY } from "./gql";
+import { COURSE_ACTIVITY, COURSE_ACTIVITYSUBMISSIONS } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
+import { Link } from "react-router-dom";
+import { useLocation } from "react-router";
 
-const Activity = () => {
-  let { id } = useParams();
-  const { loading, data } = useQuery(COURSE_ACTIVITY, {
-    variables: { activityId: id },
+const TActivity = () => {
+  const location = useLocation();
+  const { activityId, classId } = useParams();
+  const { loading, data: courseActivityData } = useQuery(COURSE_ACTIVITY, {
+    variables: { activityId: activityId },
   });
+
+  const { loading: activitySubmissionsLoading, data: activitySubmissionsData } =
+    useQuery(COURSE_ACTIVITYSUBMISSIONS, {
+      variables: { activityId: activityId },
+    });
 
   const {
     title,
@@ -20,7 +28,10 @@ const Activity = () => {
     dueAt,
     course,
     attachment = null,
-  } = data?.activity ?? {};
+  } = courseActivityData?.activity ?? {};
+
+  const activitySubmissions =
+    activitySubmissionsData?.activitySubmissions?.data ?? [];
 
   const { teacher, name } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
@@ -42,9 +53,36 @@ const Activity = () => {
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
               </ActivityContent>
-              <ActivityButtons>
-                <button>Attach File</button>
-              </ActivityButtons>
+            </ActivityHeader>
+            <ActivityHeader>
+              <h1 className="submissions">Submissions </h1>
+              {activitySubmissionsLoading
+                ? "Loading..."
+                : activitySubmissions.map(({ id, student, createdAt }) => {
+                    return (
+                      <>
+                        <Submission key={id}>
+                          <Content>
+                            <h1>
+                              {student.user.firstName} {student.user.lastName}
+                            </h1>
+                            <span>
+                              Submitted:{" "}
+                              {dayjs(createdAt).format(
+                                "MMMM D, YYYY [at] h:mm a"
+                              )}
+                            </span>
+                          </Content>
+                          <Link
+                            className="buttons"
+                            to={`${location.pathname}/submission/${id}`}
+                          >
+                            View
+                          </Link>
+                        </Submission>
+                      </>
+                    );
+                  })}
             </ActivityHeader>
           </LSideContainer>
           <RSideContainer>
@@ -62,7 +100,7 @@ const Activity = () => {
                 </li>
                 <li>
                   <MdAccountCircle size={18} />
-                  &nbsp; Activity Type:{" "}
+                  &nbsp; Activity Type: Individual Activity
                 </li>
                 <li>
                   <FaLaptop size={18} />
@@ -84,6 +122,9 @@ const Activity = () => {
                 </li>
               </ul>
             </RSideAbout>
+            <GoBack to={`/class/${classId}/activities`}>
+              Go to Activities Tab
+            </GoBack>
           </RSideContainer>
         </>
       )}
@@ -91,19 +132,25 @@ const Activity = () => {
   );
 };
 
-export default Activity;
+export default TActivity;
 
 const ActivityContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 30px;
+  margin-left: 270px;
 `;
 
 const LSideContainer = styled.div`
   margin: 0 1em;
   display: flex;
+<<<<<<< HEAD
   width: 60%;
   min-width: 910px;
+=======
+  width: 65%;
+  flex-direction: column;
+>>>>>>> 4ea6604e978a0bddae67584d77e18f5f5ee9e950
 `;
 
 const ActivityHeader = styled.div`
@@ -114,7 +161,14 @@ const ActivityHeader = styled.div`
   background-color: #f2f2f2;
   width: 100%;
   border-radius: 10px;
-  height: 150px;
+  .submissions {
+    padding: 1em;
+    font-size: 22px;
+    margin: 0;
+    padding: 0 10px;
+    font-weight: 400;
+    color: #0f482f;
+  }
 `;
 
 const ActivityContent = styled.div`
@@ -138,31 +192,18 @@ const ActivityContent = styled.div`
   }
 `;
 
-const ActivityButtons = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  position: absolute;
-  right: 30px;
-  top: 50px;
-  > button {
-    font-size: 15px;
-    background-color: #0e5937;
-    color: white;
-    border: none;
-    text-align: center;
-    cursor: pointer;
-    outline: none;
-    height: 32px;
-    width: 120px;
-  }
-`;
-
 const RSideContainer = styled.div`
+<<<<<<< HEAD
   width: 24%;
   min-width: 400px;
   margin-left: auto;
+=======
+  width: 35%;
+  margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+>>>>>>> 4ea6604e978a0bddae67584d77e18f5f5ee9e950
   h3 {
     color: #646464;
     text-align: left;
@@ -204,4 +245,69 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 1em;
+`;
+
+const Submission = styled.div`
+  width: 100%;
+  border-left: 5px solid #0f482f;
+  height: 65px;
+  padding: 0 20px;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  margin: 1em 1.4em;
+
+  .buttons {
+    position: absolute;
+    right: 30px;
+    font-size: 16px;
+    width: 110px;
+    height: 50px;
+    border: none;
+    color: white;
+    background-color: #0f482f;
+    cursor: pointer;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    &:hover {
+      background-color: #0e5937;
+    }
+  }
+`;
+
+const Content = styled.div`
+  width: 100%;
+  text-decoration: none;
+  margin-top: 7px;
+
+  > h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    color: #0f482f;
+  }
+  > span {
+    color: #646464;
+  }
+`;
+
+const GoBack = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
+  }
 `;
