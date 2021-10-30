@@ -5,11 +5,13 @@ import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
-/* import { useLocation } from "react-router"; */ // to be used for other submissions (right side bar)
+import { useLocation } from "react-router";
 
 const Submission = () => {
-  /* const location = useLocation(); */ // to be used for other submissions (right side bar)
-  const { submissionId, activityId } = useParams();
+  const location = useLocation();
+
+  const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
+  const { submissionId, activityId, classId } = useParams();
   const { loading: submissionLoading, data: submissionData } = useQuery(
     GET_SUBMISSION,
     {
@@ -79,15 +81,18 @@ const Submission = () => {
             </ActivityHeader>
           </LSideContainer>
           <RSideContainer>
-            <RSideAbout>
+            <RSideContent>
               <div className="submissionsheader">Other Submissions: </div>
               {activitySubmissionsLoading
                 ? "Loading..."
-                : activitySubmissions.map(({ id, student }) => {
-                    return (
-                      <>
+                : activitySubmissions
+                    .filter(({ id }) => submissionId !== id)
+                    .map(({ id, student }) => {
+                      return (
                         <Container key={id}>
-                          <Content>
+                          <Content
+                            to={`${removeLast(location.pathname)}/${id}`}
+                          >
                             <img
                               src={`https://picsum.photos/seed/${student.user.id}/80/80`}
                               alt="a"
@@ -97,10 +102,12 @@ const Submission = () => {
                             </h1>
                           </Content>
                         </Container>
-                      </>
-                    );
-                  })}
-            </RSideAbout>
+                      );
+                    })}
+            </RSideContent>
+            <GoBack to={`/class/${classId}/activity/${activityId}`}>
+              Go back to Activity Page
+            </GoBack>
           </RSideContainer>
         </>
       )}
@@ -120,7 +127,7 @@ const ActivityContainer = styled.div`
 const LSideContainer = styled.div`
   margin: 0 1em;
   display: flex;
-  width: 70%;
+  width: 65%;
   flex-direction: column;
 `;
 
@@ -162,8 +169,11 @@ const ActivityContent = styled.div`
 `;
 
 const RSideContainer = styled.div`
-  width: 30%;
+  width: 35%;
   margin: 0 1em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   > h3 {
     color: #646464;
     text-align: left;
@@ -175,14 +185,14 @@ const RSideContainer = styled.div`
   }
 `;
 
-const RSideAbout = styled.div`
+const RSideContent = styled.div`
   border-radius: 10px;
   margin: 1em 0;
   background-color: #f2f2f2;
   width: 100%;
   padding: 0 2em;
   padding-bottom: 1em;
-  max-height: 400px;
+  max-height: 500px;
   overflow-y: scroll;
   .submissionsheader {
     border-bottom: 3px solid #0f482f;
@@ -237,5 +247,22 @@ const Content = styled(Link)`
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
+  }
+`;
+
+const GoBack = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
   }
 `;

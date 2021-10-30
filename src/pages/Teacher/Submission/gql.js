@@ -27,6 +27,9 @@ export const COURSE_ACTIVITYSUBMISSIONS = gql`
         id
         activity {
           id
+          course {
+            id
+          }
         }
         student {
           user {
