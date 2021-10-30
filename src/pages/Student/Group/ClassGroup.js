@@ -19,21 +19,21 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
 
 const ClassGroup = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const { user } = useCurrentUserContext();
 
   const [createPost] = useMutation(CREATE_GROUP_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
 
   const { loading, data } = useQuery(GET_GROUP, {
-    variables: { groupId: id },
+    variables: { groupId: groupId },
   });
   const {
     data: postsData,
     loading: postsLoading,
     refetch,
   } = useQuery(GROUP_POSTS, {
-    variables: { groupId: id },
+    variables: { groupId: groupId },
   });
 
   const posts = postsData?.groupPosts?.data ?? [];
@@ -47,7 +47,7 @@ const ClassGroup = () => {
 
     try {
       const { data: createPostData } = await createPost({
-        variables: { groupId: id, content, category },
+        variables: { groupId: groupId, content, category },
       });
       const postId = createPostData?.createPost?.id;
 
@@ -83,16 +83,16 @@ const ClassGroup = () => {
             <PostForm onSubmit={handleCreatePost} />
           </PostFormContainer>
           <CGFilter>
-            <NavMenu to={`/group/${id}`} exact>
+            <NavMenu to={`/group/${groupId}`} exact>
               <BiMessageDetail size={18} /> &nbsp; Posts
             </NavMenu>
-            <NavMenu to={`/group/${id}/files`}>
+            <NavMenu to={`/group/${groupId}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
             </NavMenu>
-            <NavMenu to={`/group/${id}/activities`}>
+            <NavMenu to={`/group/${groupId}/activities`}>
               <FaLaptop size={18} /> &nbsp; Activities
             </NavMenu>
-            <NavMenu to={`/group/${id}/members`}>
+            <NavMenu to={`/group/${groupId}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
             </NavMenu>
@@ -100,20 +100,20 @@ const ClassGroup = () => {
         </CGPostHeader>
         <CGItemsContainer>
           <Switch>
-            <Route path={`/group/${id}`} exact>
+            <Route path={`/group/${groupId}`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/group/${id}/files`}>
+            <Route path={`/group/${groupId}/files`}>
               <LeftContainer>
                 <h1>Files</h1>
               </LeftContainer>
             </Route>
-            <Route path={`/group/${id}/activities`}>
+            <Route path={`/group/${groupId}/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
               </LeftContainer>
             </Route>
-            <Route path={`/group/${id}/members`}>
+            <Route path={`/group/${groupId}/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">

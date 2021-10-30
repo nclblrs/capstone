@@ -28,6 +28,7 @@ const TActivity = () => {
     dueAt,
     course,
     attachment = null,
+    points,
   } = courseActivityData?.activity ?? {};
 
   const activitySubmissions =
@@ -71,6 +72,9 @@ const TActivity = () => {
                               {dayjs(createdAt).format(
                                 "MMMM D, YYYY [at] h:mm a"
                               )}
+                            </span>
+                            <span>
+                              {points ? `${points} pts` : "No points assigned"}
                             </span>
                           </Content>
                           <Link

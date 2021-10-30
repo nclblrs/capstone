@@ -1,24 +1,27 @@
 import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import { Switch, NavLink, Route, useParams } from "react-router-dom";
+import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
 import { GET_ACTIVITIES, GET_GROUP_ACTIVITIES } from "../gql";
 import { useQuery } from "@apollo/client";
+import { useLocation } from "react-router";
 
 const Activities = () => {
-  const { id } = useParams();
+  const location = useLocation();
+  const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
+  const { classId } = useParams();
 
   const { loading: activityLoading, data: activityData } = useQuery(
     GET_ACTIVITIES,
     {
-      variables: { courseId: id },
+      variables: { courseId: classId },
     }
   );
 
   const { loading: groupActivityLoading, data: groupActivityData } = useQuery(
     GET_GROUP_ACTIVITIES,
     {
-      variables: { courseId: id },
+      variables: { courseId: classId },
     }
   );
 
@@ -29,13 +32,15 @@ const Activities = () => {
   return (
     <ActivityContainer>
       <NavBar>
-        <NavMenu to={`/class/${id}/activities`} exact>
+        <NavMenu to={`/class/${classId}/activities`} exact>
           Individual Activities
         </NavMenu>
-        <NavMenu to={`/class/${id}/activities/group`}>Group Activities</NavMenu>
+        <NavMenu to={`/class/${classId}/activities/group`}>
+          Group Activities
+        </NavMenu>
       </NavBar>
       <Switch>
-        <Route path={`/class/:id/activities`} exact>
+        <Route path={`/class/:classId/activities`} exact>
           {activityLoading
             ? "Loading..."
             : activityInfo.map(({ id, title, dueAt, createdAt }) => {
@@ -49,13 +54,17 @@ const Activities = () => {
                         </h4>
                         <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
                       </Content>
-                      <button>View</button>
+                      <ViewLink
+                        to={`${removeLast(location.pathname)}/activity/${id}`}
+                      >
+                        View
+                      </ViewLink>
                     </Activity>
                   </>
                 );
               })}
         </Route>
-        <Route path={`/class/:id/activities/group`}>
+        <Route path={`/class/:classId/activities/group`}>
           {groupActivityLoading
             ? "Loading..."
             : groupActivityInfo.map(({ id, title, dueAt, createdAt }) => {
@@ -104,6 +113,24 @@ const Activity = styled.div`
     &:hover {
       background-color: #0e5937;
     }
+  }
+`;
+
+const ViewLink = styled(Link)`
+  text-decoration: none;
+  margin-left: auto;
+  font-size: 16px;
+  width: 130px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
   }
 `;
 

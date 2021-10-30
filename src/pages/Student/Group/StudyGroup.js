@@ -22,7 +22,7 @@ import TagsInfo from "./StudyGroupTabs/Tags";
 import Files from "./StudyGroupTabs/Files";
 
 const StudyGroup = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const { user } = useCurrentUserContext();
   const { tag } = useUrlQuery();
 
@@ -30,7 +30,7 @@ const StudyGroup = () => {
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
 
   const { loading, data } = useQuery(GET_GROUP, {
-    variables: { groupId: id },
+    variables: { groupId: groupId },
   });
 
   const {
@@ -38,7 +38,7 @@ const StudyGroup = () => {
     loading: postsLoading,
     refetch,
   } = useQuery(GROUP_POSTS, {
-    variables: { groupId: id, tags: tag ? [tag] : [] },
+    variables: { groupId: groupId, tags: tag ? [tag] : [] },
   });
 
   const posts = postsData?.groupPosts?.data ?? [];
@@ -51,7 +51,7 @@ const StudyGroup = () => {
 
     try {
       const { data: createPostData } = await createPost({
-        variables: { groupId: id, content, category, tags },
+        variables: { groupId: groupId, content, category, tags },
       });
       const postId = createPostData?.createPost?.id;
 
@@ -87,17 +87,17 @@ const StudyGroup = () => {
             <PostForm withTags onSubmit={handleCreatePost} />
           </PostFormContainer>
           <SGFilter>
-            <NavMenu to={`/group/${id}`} exact>
+            <NavMenu to={`/group/${groupId}`} exact>
               <BiMessageDetail size={18} /> &nbsp; Posts
             </NavMenu>
-            <NavMenu to={`/group/${id}/files`}>
+            <NavMenu to={`/group/${groupId}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
             </NavMenu>
-            <NavMenu to={`/group/${id}/tags`}>
+            <NavMenu to={`/group/${groupId}/tags`}>
               <HiOutlineHashtag size={18} />
               &nbsp; Tags
             </NavMenu>
-            <NavMenu to={`/group/${id}/members`}>
+            <NavMenu to={`/group/${groupId}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
             </NavMenu>
@@ -110,10 +110,10 @@ const StudyGroup = () => {
         ) : null}
         <SGItemsContainer>
           <Switch>
-            <Route path={`/group/:id`} exact>
+            <Route path={`/group/:groupId`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/group/:id/files`}>
+            <Route path={`/group/:groupId/files`}>
               <LeftContainer>
                 <h1>Files</h1>
                 <div className="filescontainer">
@@ -123,7 +123,7 @@ const StudyGroup = () => {
                 </div>
               </LeftContainer>
             </Route>
-            <Route path={`/group/:id/tags`}>
+            <Route path={`/group/:groupId/tags`}>
               <LeftContainer>
                 <h1>Tags</h1>
                 <div className="leftHeader">
@@ -133,7 +133,7 @@ const StudyGroup = () => {
                 </div>
               </LeftContainer>
             </Route>
-            <Route path={`/group/:id/members`}>
+            <Route path={`/group/:groupId/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">
