@@ -175,3 +175,16 @@ export const BECOME_LEADER = gql`
     }
   }
 `;
+
+export const GET_GROUP_ACTIVITIES = gql`
+  query ($courseId: ID!) {
+    courseGroupActivities(courseId: $courseId) {
+      data {
+        id
+        title
+        dueAt
+        createdAt
+      }
+    }
+  }
+`;

@@ -18,6 +18,7 @@ import PostForm from "components/PostForm";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
+import Activities from "./StudyGroupTabs/Activities";
 
 const ClassGroup = () => {
   const { id } = useParams();
@@ -130,6 +131,7 @@ const ClassGroup = () => {
             <Route path={`/group/${id}/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
+                <Activities />
               </LeftContainer>
             </Route>
             <Route path={`/group/${id}/members`}>
