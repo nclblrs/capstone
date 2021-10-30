@@ -7,9 +7,9 @@ import { formatBytes } from "utils/upload";
 import { useParams } from "react-router-dom";
 
 const Files = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const { loading, data } = useQuery(STUDYGROUP_FILES, {
-    variables: { groupId: id },
+    variables: { groupId: groupId },
   });
   const postFiles = data?.studyGroupFiles?.postFiles ?? [];
   return (
