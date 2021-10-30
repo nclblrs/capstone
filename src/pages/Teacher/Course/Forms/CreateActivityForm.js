@@ -41,7 +41,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
             title,
             description,
             dueAt,
-            points,
+            points: parseInt(points),
           },
         });
 
@@ -130,7 +130,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
       </div>
       <div>
         <label>Points</label>
-        <input type="number" min="0" {...register("points")} />
+        <input type="number" {...register("points", { min: 0 })} />
       </div>
       <div>
         <label>Activity Type</label>

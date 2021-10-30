@@ -118,7 +118,7 @@ const PostsFeed = ({ posts }) => {
                         </h4>
 
                         <h3>{title}</h3>
-                        <p>{points}</p>
+                        <span>{points ? `${points} pts` : " "}</span>
                         <p>{description}</p>
 
                         {activityAttachment && (

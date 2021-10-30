@@ -53,7 +53,7 @@ const Activity = () => {
                   {name} || Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
-                <span>{points}</span>
+                <span>{points} pts</span>
               </ActivityContent>
               <ActivityButtons>
                 {!mySubmission ? (
