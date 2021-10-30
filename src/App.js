@@ -120,7 +120,7 @@ function App() {
                     <Route path="/class/:classId/activity/:activityId/submission/:submissionId">
                       <Submission />
                     </Route>
-                    <Route path="/class/:id/activity/:activityId">
+                    <Route path="/class/:classId/activity/:activityId">
                       <TActivity />
                     </Route>
                     <Route path="/class/:id/group-activity/:id">
