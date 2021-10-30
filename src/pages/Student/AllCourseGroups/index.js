@@ -30,7 +30,7 @@ const AllCourseGroups = () => {
             ? "Loading..."
             : data?.studentClassGroups?.data?.map(
                 ({ id, name, course, leader, studentCount }) => (
-                  <Link className="items" key={id} to={`/class/${id}`}>
+                  <Link className="items" key={id} to={`/group/${id}`}>
                     <h1>{name}</h1>
                     <p>
                       Leader: {leader?.user?.lastName},{" "}

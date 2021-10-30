@@ -140,19 +140,21 @@ const FileContainer = styled.div`
 
 const File = styled.div`
   width: 100%;
-  border: 1px solid #0f482f;
-  border-radius: 10px;
+  border-left: 5px solid #0f482f;
   height: 110px;
-  padding: 10px;
+  padding: 10px 20px;
   text-align: left;
-  margin: 1em 0;
+  margin: 1em 1.4em;
+  cursor: pointer;
   .date {
     margin: 0;
     font-size: 18px;
+    color: #646464;
   }
   > span {
     font-size: 18px;
     display: block;
+    color: #646464;
   }
 `;
 

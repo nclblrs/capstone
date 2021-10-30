@@ -50,7 +50,7 @@ const TActivity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} || Due:{" "}
+                  {name} &nbsp;{"▏"}Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
               </ActivityContent>
@@ -148,8 +148,13 @@ const ActivityContainer = styled.div`
 const LSideContainer = styled.div`
   margin: 0 1em;
   display: flex;
+<<<<<<< HEAD
+  width: 60%;
+  min-width: 910px;
+=======
   width: 65%;
   flex-direction: column;
+>>>>>>> 4ea6604e978a0bddae67584d77e18f5f5ee9e950
 `;
 
 const ActivityHeader = styled.div`
@@ -172,29 +177,37 @@ const ActivityHeader = styled.div`
 
 const ActivityContent = styled.div`
   width: 60%;
-  margin: 1em;
+  margin-top: 0.7em;
+  margin-left: 1em;
+  padding-left: 1em;
 
   > h1 {
     margin: 0;
     color: #0f482f;
     font-weight: normal;
-    font-size: 22px;
+    font-size: 26px;
   }
   > span {
-    margin: 0;
+    margin-top: 5px;
     color: #646464;
-    font-size: 16px;
+    font-size: 18px;
     display: flex;
     align-items: center;
   }
 `;
 
 const RSideContainer = styled.div`
+<<<<<<< HEAD
+  width: 24%;
+  min-width: 400px;
+  margin-left: auto;
+=======
   width: 35%;
   margin: 0 1em;
   display: flex;
   flex-direction: column;
   align-items: center;
+>>>>>>> 4ea6604e978a0bddae67584d77e18f5f5ee9e950
   h3 {
     color: #646464;
     text-align: left;

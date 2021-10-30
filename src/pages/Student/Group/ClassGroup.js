@@ -5,6 +5,7 @@ import {
   GROUP_POSTS,
   CREATE_GROUP_POST,
   GET_GROUP,
+  BECOME_LEADER,
 } from "./gql";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams, NavLink, Switch, Route } from "react-router-dom";
@@ -17,6 +18,7 @@ import PostForm from "components/PostForm";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
+import Activities from "./StudyGroupTabs/Activities";
 
 const ClassGroup = () => {
   const { groupId } = useParams();
@@ -24,6 +26,7 @@ const ClassGroup = () => {
 
   const [createPost] = useMutation(CREATE_GROUP_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
+  const [becomeLeader] = useMutation(BECOME_LEADER);
 
   const { loading, data } = useQuery(GET_GROUP, {
     variables: { groupId: groupId },
@@ -40,6 +43,23 @@ const ClassGroup = () => {
 
   const { name, leader, course, students } = data?.group ?? {};
   const { firstName, lastName } = leader?.user ?? {};
+
+  const handleBecomeLeader = async (data) => {
+    const { leader } = data;
+
+    try {
+      const { data } = await becomeLeader({
+        variables: { groupId, leader },
+      });
+
+      if (data?.becomeLeader?.id) {
+        toast.success("Group Leader Assigned");
+        refetch();
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
 
   const handleCreatePost = async (data) => {
     const { content, category, file: files } = data;
@@ -111,11 +131,19 @@ const ClassGroup = () => {
             <Route path={`/group/${groupId}/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
+                <Activities />
               </LeftContainer>
             </Route>
             <Route path={`/group/${groupId}/members`}>
               <LeftContainer>
-                <h1>Members</h1>
+                <h1>
+                  Members
+                  {!leader && (
+                    <button onClick={handleBecomeLeader}>
+                      Become the Leader
+                    </button>
+                  )}
+                </h1>
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
@@ -296,8 +324,23 @@ const LeftContainer = styled.div`
   height: 550px;
   flex-direction: column;
   h1 {
+    display: flex;
     color: #0f482f;
     padding: 0.5em 1.5em;
+  }
+  button {
+    display: flex;
+    width: 150px;
+    height: 44px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    text-align: center;
+    margin-left: auto;
+    cursor: pointer;
   }
   .leftContent {
     position: absolute;
