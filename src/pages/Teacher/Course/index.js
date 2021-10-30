@@ -31,14 +31,14 @@ const TCourse = () => {
   const [showCreateClassGroupModal, setShowCreateClassGroupModal] =
     useState(false);
 
-  const { id } = useParams();
+  const { classId } = useParams();
   const { user } = useCurrentUserContext();
   const {
     loading,
     data,
     refetch: refetchCourse,
   } = useQuery(GET_COURSE, {
-    variables: { courseId: id },
+    variables: { courseId: classId },
   });
 
   const {
@@ -60,7 +60,7 @@ const TCourse = () => {
     loading: postsLoading,
     refetch,
   } = useQuery(COURSE_POSTS, {
-    variables: { courseId: id },
+    variables: { courseId: classId },
   });
 
   const posts = postsData?.coursePosts?.data ?? [];
@@ -71,7 +71,7 @@ const TCourse = () => {
 
     try {
       const { data: createPostData } = await createPost({
-        variables: { courseId: id, content, category },
+        variables: { courseId: classId, content, category },
       });
       const postId = createPostData?.createPost?.id;
 
@@ -105,23 +105,23 @@ const TCourse = () => {
             <PostForm onSubmit={handleCreatePost} />
           </PostFormContainer>
           <CourseFilter>
-            <NavMenu to={`/class/${id}`} exact>
+            <NavMenu to={`/class/${classId}`} exact>
               <BiMessageDetail size={18} /> &nbsp; Posts
             </NavMenu>
-            <NavMenu to={`/class/${id}/files`}>
+            <NavMenu to={`/class/${classId}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
             </NavMenu>
-            <NavMenu to={`/class/${id}/activities`}>
+            <NavMenu to={`/class/${classId}/activities`}>
               <RiFileEditLine size={18} /> &nbsp; Activities
             </NavMenu>
-            <NavMenu to={`/class/${id}/submissions`}>
+            <NavMenu to={`/class/${classId}/submissions`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Submissions
             </NavMenu>
-            <NavMenu to={`/class/${id}/members`}>
+            <NavMenu to={`/class/${classId}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
             </NavMenu>
-            <NavMenu to={`/class/${id}/groups`}>
+            <NavMenu to={`/class/${classId}/groups`}>
               <TiGroup size={18} />
               &nbsp; Groups
             </NavMenu>
@@ -129,27 +129,27 @@ const TCourse = () => {
         </CoursePostHeader>
         <ItemsContainer>
           <Switch>
-            <Route path={`/class/:id`} exact>
+            <Route path={`/class/:classId`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/class/:id/files`}>
+            <Route path={`/class/:classId/files`}>
               <LeftContainer>
                 <h1>Files</h1>
                 <Files />
               </LeftContainer>
             </Route>
-            <Route path={`/class/:id/activities`}>
+            <Route path={`/class/:classId/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
                 <Activities />
               </LeftContainer>
             </Route>
-            <Route path={`/class/:id/submissions`}>
+            <Route path={`/class/:classId/submissions`}>
               <LeftContainer>
                 <h1>Submissions</h1>
               </LeftContainer>
             </Route>
-            <Route path={`/class/:id/members`}>
+            <Route path={`/class/:classId/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">
@@ -168,7 +168,7 @@ const TCourse = () => {
                 </div>
               </LeftContainer>
             </Route>
-            <Route path={`/class/:id/groups`}>
+            <Route path={`/class/:classId/groups`}>
               <GroupContainer>
                 <div className="leftContent">
                   {loading
@@ -269,7 +269,7 @@ const TCourse = () => {
         title="Create Activity"
       >
         <CreateActivityForm
-          courseId={id}
+          courseId={classId}
           onCreateFinish={() => {
             refetch();
             setShowCreateActivityModal(false);
@@ -282,7 +282,7 @@ const TCourse = () => {
         title="Create Group"
       >
         <CreateClassGroupForm
-          courseId={id}
+          courseId={classId}
           onCreateFinish={() => {
             refetchCourse();
             setShowCreateClassGroupModal(false);

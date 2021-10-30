@@ -13,7 +13,7 @@ import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
-import { FaLaptop, FaPenSquare } from "react-icons/fa";
+import { FaLaptop } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
@@ -21,24 +21,22 @@ import { RiFileCopy2Fill } from "react-icons/ri";
 import Files from "./CourseTabs/Files";
 import Activities from "./CourseTabs/Activities";
 
-import Dropdown, { DropdownButtons } from "components/Dropdown";
-
 const Course = () => {
-  const { id } = useParams();
+  const { classId } = useParams();
   const { user } = useCurrentUserContext();
 
   const [createPost] = useMutation(CREATE_COURSE_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
 
   const { loading, data } = useQuery(GET_COURSE, {
-    variables: { courseId: id },
+    variables: { courseId: classId },
   });
   const {
     data: postsData,
     loading: postsLoading,
     refetch,
   } = useQuery(COURSE_POSTS, {
-    variables: { courseId: id },
+    variables: { courseId: classId },
   });
 
   const posts = postsData?.coursePosts?.data ?? [];
@@ -61,7 +59,7 @@ const Course = () => {
 
     try {
       const { data: createPostData } = await createPost({
-        variables: { courseId: id, content, category },
+        variables: { courseId: classId, content, category },
       });
       const postId = createPostData?.createPost?.id;
 
@@ -97,21 +95,21 @@ const Course = () => {
             <PostForm onSubmit={handleCreatePost} />
           </PostFormContainer>
           <CourseFilter>
-            <NavMenu to={`/class/${id}`} exact>
+            <NavMenu to={`/class/${classId}`} exact>
               <BiMessageDetail size={18} /> &nbsp; Posts
             </NavMenu>
-            <NavMenu to={`/class/${id}/files`}>
+            <NavMenu to={`/class/${classId}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
             </NavMenu>
-            <NavMenu to={`/class/${id}/activities`}>
+            <NavMenu to={`/class/${classId}/activities`}>
               <FaLaptop size={18} />
               &nbsp; Activities
             </NavMenu>
-            <NavMenu to={`/class/${id}/members`}>
+            <NavMenu to={`/class/${classId}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
             </NavMenu>
-            <NavMenu to={`/class/${id}/groups`}>
+            <NavMenu to={`/class/${classId}/groups`}>
               <TiGroup size={18} />
               &nbsp; Groups
             </NavMenu>
@@ -119,22 +117,22 @@ const Course = () => {
         </CoursePostHeader>
         <ItemsContainer>
           <Switch>
-            <Route path={`/class/:id`} exact>
+            <Route path={`/class/:classId`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/class/:id/files`}>
+            <Route path={`/class/:classId/files`}>
               <LeftContainer>
                 <h1>Files</h1>
                 <Files />
               </LeftContainer>
             </Route>
-            <Route path={`/class/:id/activities`}>
+            <Route path={`/class/:classId/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
                 <Activities />
               </LeftContainer>
             </Route>
-            <Route path={`/class/:id/members`}>
+            <Route path={`/class/:classId/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">
@@ -161,24 +159,7 @@ const Course = () => {
                     : groups?.data?.map(({ id, name, students, leader }) => (
                         <>
                           <div key={id} className="groupcontainer">
-                            <h5>
-                              {name}
-                              <button>
-                                <Dropdown
-                                  popperComponent={
-                                    <DropdownButtons>
-                                      <button>Edit Information</button>
-                                    </DropdownButtons>
-                                  }
-                                >
-                                  <FaPenSquare
-                                    size={20}
-                                    color="#0e5937"
-                                    className="pen"
-                                  />
-                                </Dropdown>
-                              </button>
-                            </h5>
+                            <h5>{name}</h5>
                             <p>
                               Leader: &nbsp;
                               {leader &&
@@ -401,16 +382,6 @@ const GroupContainer = styled.div`
     display: flex;
     margin: 0;
     margin-bottom: 1em;
-  }
-
-  button {
-    justify-content: center;
-    margin-left: auto;
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: center;
   }
 
   .leftContent {

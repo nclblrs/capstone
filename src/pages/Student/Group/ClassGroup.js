@@ -5,6 +5,7 @@ import {
   GROUP_POSTS,
   CREATE_GROUP_POST,
   GET_GROUP,
+  BECOME_LEADER,
 } from "./gql";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams, NavLink, Switch, Route } from "react-router-dom";
@@ -17,23 +18,25 @@ import PostForm from "components/PostForm";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
+import Activities from "./StudyGroupTabs/Activities";
 
 const ClassGroup = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const { user } = useCurrentUserContext();
 
   const [createPost] = useMutation(CREATE_GROUP_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
+  const [becomeLeader] = useMutation(BECOME_LEADER);
 
   const { loading, data } = useQuery(GET_GROUP, {
-    variables: { groupId: id },
+    variables: { groupId: groupId },
   });
   const {
     data: postsData,
     loading: postsLoading,
     refetch,
   } = useQuery(GROUP_POSTS, {
-    variables: { groupId: id },
+    variables: { groupId: groupId },
   });
 
   const posts = postsData?.groupPosts?.data ?? [];
@@ -41,13 +44,30 @@ const ClassGroup = () => {
   const { name, leader, course, students } = data?.group ?? {};
   const { firstName, lastName } = leader?.user ?? {};
 
+  const handleBecomeLeader = async (data) => {
+    const { leader } = data;
+
+    try {
+      const { data } = await becomeLeader({
+        variables: { groupId, leader },
+      });
+
+      if (data?.becomeLeader?.id) {
+        toast.success("Group Leader Assigned");
+        refetch();
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   const handleCreatePost = async (data) => {
     const { content, category, file: files } = data;
     const file = files[0];
 
     try {
       const { data: createPostData } = await createPost({
-        variables: { groupId: id, content, category },
+        variables: { groupId: groupId, content, category },
       });
       const postId = createPostData?.createPost?.id;
 
@@ -83,16 +103,16 @@ const ClassGroup = () => {
             <PostForm onSubmit={handleCreatePost} />
           </PostFormContainer>
           <CGFilter>
-            <NavMenu to={`/group/${id}`} exact>
+            <NavMenu to={`/group/${groupId}`} exact>
               <BiMessageDetail size={18} /> &nbsp; Posts
             </NavMenu>
-            <NavMenu to={`/group/${id}/files`}>
+            <NavMenu to={`/group/${groupId}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
             </NavMenu>
-            <NavMenu to={`/group/${id}/activities`}>
+            <NavMenu to={`/group/${groupId}/activities`}>
               <FaLaptop size={18} /> &nbsp; Activities
             </NavMenu>
-            <NavMenu to={`/group/${id}/members`}>
+            <NavMenu to={`/group/${groupId}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
             </NavMenu>
@@ -100,22 +120,30 @@ const ClassGroup = () => {
         </CGPostHeader>
         <CGItemsContainer>
           <Switch>
-            <Route path={`/group/${id}`} exact>
+            <Route path={`/group/${groupId}`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/group/${id}/files`}>
+            <Route path={`/group/${groupId}/files`}>
               <LeftContainer>
                 <h1>Files</h1>
               </LeftContainer>
             </Route>
-            <Route path={`/group/${id}/activities`}>
+            <Route path={`/group/${groupId}/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
+                <Activities />
               </LeftContainer>
             </Route>
-            <Route path={`/group/${id}/members`}>
+            <Route path={`/group/${groupId}/members`}>
               <LeftContainer>
-                <h1>Members</h1>
+                <h1>
+                  Members
+                  {!leader && (
+                    <button onClick={handleBecomeLeader}>
+                      Become the Leader
+                    </button>
+                  )}
+                </h1>
                 <div className="leftContent">
                   {loading
                     ? "Loading..."
@@ -296,8 +324,23 @@ const LeftContainer = styled.div`
   height: 550px;
   flex-direction: column;
   h1 {
+    display: flex;
     color: #0f482f;
     padding: 0.5em 1.5em;
+  }
+  button {
+    display: flex;
+    width: 150px;
+    height: 44px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    text-align: center;
+    margin-left: auto;
+    cursor: pointer;
   }
   .leftContent {
     position: absolute;

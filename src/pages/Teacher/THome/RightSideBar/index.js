@@ -4,13 +4,14 @@ import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_COURSES } from "./gql";
 import { FaPlusCircle, FaLaptop, FaRegLightbulb } from "react-icons/fa";
-import { BiDotsHorizontalRounded, BiChevronDown } from "react-icons/bi";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { useState } from "react";
 import Modal from "components/Modal";
 import CreateActivityForm from "pages/Teacher/Course/Forms/CreateActivityForm";
 import CreateCourseForm from "pages/Teacher/Course/Forms/CreateCourseForm";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 import CreateAgendaForm from "pages/Teacher/Course/Forms/CreateAgendaForm";
+
 
 const RightSideBar = () => {
   const { loading, data } = useQuery(GET_COURSES);
@@ -67,6 +68,7 @@ const RightSideBar = () => {
               <BiDotsHorizontalRounded size={18} /> See More
             </p>
           </RSideLinks>
+<<<<<<< HEAD
           <ButtonContainer>
             <button onClick={() => setShowCreateAgendaModal(true)}>
               Add Agenda &nbsp;
@@ -80,6 +82,12 @@ const RightSideBar = () => {
           >
             <CreateAgendaForm />
           </Modal>
+=======
+          <button>
+            Add Agenda &nbsp;
+            <FaPlusCircle size={18} />
+          </button>
+>>>>>>> 927fccb327b5fc90d837828edb64be6c49c51683
         </RSideItem>
       </RSideReminder>
       <RSideClasses>
@@ -98,28 +106,7 @@ const RightSideBar = () => {
           <CreateCourseForm />
         </Modal>
         <RSideItem>
-          <h4>
-            CLASSES
-            <button>
-              <Dropdown
-                popperComponent={
-                  <DropdownButtons>
-                    <button onClick={() => setShowCreateActivityModal(true)}>
-                      Activity
-                    </button>
-                    <button onClick={() => setShowCreateCourseModal(true)}>
-                      Course
-                    </button>
-                    <button>Quiz</button>
-                  </DropdownButtons>
-                }
-              >
-                <button className="Create">
-                  Create &nbsp; <BiChevronDown size={18} />
-                </button>
-              </Dropdown>
-            </button>
-          </h4>
+          <h4>CLASSES</h4>
         </RSideItem>
         <RSideItem>
           {loading
@@ -166,6 +153,24 @@ const RSideReminder = styled.div`
   height: max-content;
   border-radius: 10px;
   padding: 2em;
+  button {
+    display: flex;
+    width: 150px;
+    height: 33px;
+    font-size: 16px;
+    align-items: center;
+    margin-left: auto;
+    justify-content: center;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    text-align: center;
+    &:hover {
+      background-color: #157348;
+      color: white;
+      cursor: pointer;
+    }
+  }
 `;
 
 const RSideClasses = styled.div`
@@ -176,26 +181,6 @@ const RSideClasses = styled.div`
   height: max-content;
   border-radius: 10px;
   padding: 1.7em 2em 1.7em 2em;
-  button {
-    display: flex;
-    font-size: 16px;
-    justify-content: center;
-    margin-left: auto;
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-    align-items: center;
-    color: white;
-  }
-  .Create {
-    background-color: #0e5937;
-    width: 120px;
-    height: 33px;
-    &:hover {
-      background-color: #1b6344;
-    }
-  }
 `;
 
 const RSideItem = styled.div`
@@ -238,26 +223,6 @@ const RSideLinks = styled(Link)`
     text-overflow: ellipsis;
     margin: 0;
     font-size: 18px;
-  }
-`;
-
-const ButtonContainer = styled.div`
-  button {
-    display: flex;
-    width: 150px;
-    height: 33px;
-    font-size: 16px;
-    align-items: center;
-    justify-content: center;
-    background-color: #0e5937;
-    color: white;
-    border: none;
-    text-align: center;
-    &:hover {
-      background-color: #157348;
-      color: white;
-      cursor: pointer;
-    }
   }
 `;
 

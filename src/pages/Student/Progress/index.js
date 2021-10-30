@@ -29,7 +29,7 @@ const Progress = () => {
           <div className="taskscontainer">
             <table>
               <th></th>
-              <td>Chapter 1 (Test)</td>
+              <td></td>
             </table>
           </div>
         </TasksContainer>
@@ -37,15 +37,6 @@ const Progress = () => {
       <RightSideContainer>
         <AboutContainer>
           <h3>ABOUT</h3>
-          <div className="dropdownbutton">
-            <select>
-              <option value="Progress" selected disabled>
-                Progress
-              </option>
-              <option value="MyProgress">My Progress</option>
-              <option value="GroupProgress">Group Progress</option>
-            </select>
-          </div>
         </AboutContainer>
         <ToDoContainer>
           <h3>TO-DO</h3>
@@ -67,6 +58,7 @@ const LeftSideContainer = styled.div`
 `;
 
 const UpperContainer = styled.div`
+  width: 100%;
   display: flex;
   flex-direction: row;
   gap: 20px;
@@ -100,7 +92,7 @@ const UpperContainer = styled.div`
     }
   }
   .todo {
-    margin-left: 20px;
+    margin-left: 45px;
   }
   .inprogress {
     h4 {
@@ -129,35 +121,40 @@ const TasksContainer = styled.div`
   flex-direction: row;
   margin-top: 30px;
   margin-bottom: 10px;
+  width: 100%;
   .taskscontainer {
     background-color: #f2f2f2;
-    width: 100%;
     border-radius: 10px;
+    width: 100%;
+    min-width: 500px;
     height: 645px;
     overflow-y: scroll;
   }
   table {
-    width: auto;
-    border-bottom: 1px solid black;
     position: absolute;
     display: flex;
     flex-direction: row;
+    margin-left: 0.7em;
   }
   th {
-    width: auto;
+    width: 100%;
     padding: 3.5em;
     margin: 0 35.21em;
   }
   td {
+    border-bottom: 1px solid black;
+    width: 100%;
+    height: 130px;
     position: absolute;
-    padding: 2em;
+    padding: 3em 2em;
   }
 `;
 
 const RightSideContainer = styled.div`
   display: flex;
   position: sticky;
-  width: 400px;
+  width: 24%;
+  min-width: 400px;
   gap: 20px;
   flex-direction: column;
   margin-left: 60px;
@@ -181,14 +178,7 @@ const AboutContainer = styled.div`
   height: max-content;
   padding: 2em;
   border-radius: 10px;
-  .dropdownbutton {
-    border: none;
-    position: absolute;
-    right: 2em;
-    margin-left: auto;
-  }
-  button,
-  select {
+  button {
     border: none;
     background-color: #0e5937;
     color: white;

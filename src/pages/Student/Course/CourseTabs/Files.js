@@ -7,10 +7,10 @@ import { useQuery } from "@apollo/client";
 import { formatBytes } from "utils/upload";
 
 const Files = () => {
-  const { id } = useParams();
+  const { classId } = useParams();
 
   const { loading, data } = useQuery(COURSE_FILES, {
-    variables: { courseId: id },
+    variables: { courseId: classId },
   });
   const postFiles = data?.courseFiles?.postFiles ?? [];
   const activityFiles = data?.courseFiles?.activityFiles ?? [];
@@ -19,11 +19,13 @@ const Files = () => {
   return (
     <FileContainer>
       <NavBar>
-        <NavMenu to={`/class/${id}/files`} exact>
+        <NavMenu to={`/class/${classId}/files`} exact>
           Post Files
         </NavMenu>
-        <NavMenu to={`/class/${id}/files/activity`}>Activity Files</NavMenu>
-        <NavMenu to={`/class/${id}/files/groupactivity`}>
+        <NavMenu to={`/class/${classId}/files/activity`}>
+          Activity Files
+        </NavMenu>
+        <NavMenu to={`/class/${classId}/files/groupactivity`}>
           Group Activity Files
         </NavMenu>
       </NavBar>
@@ -62,7 +64,7 @@ const Files = () => {
                 );
               })}
         </Route>
-        <Route path={`/class/:id/files/activity`}>
+        <Route path={`/class/:classId/files/activity`}>
           {loading
             ? "Loading..."
             : activityFiles.map(({ id, attachment, user }) => {
@@ -94,7 +96,7 @@ const Files = () => {
                 );
               })}
         </Route>
-        <Route path={`/class/:id/files/groupactivity`}>
+        <Route path={`/class/:classId/files/groupactivity`}>
           {loading
             ? "Loading..."
             : groupActivityFiles.map(({ id, attachment, user }) => {
@@ -138,19 +140,21 @@ const FileContainer = styled.div`
 
 const File = styled.div`
   width: 100%;
-  border: 1px solid #0f482f;
-  border-radius: 10px;
+  border-left: 5px solid #0f482f;
   height: 110px;
-  padding: 10px;
+  padding: 10px 20px;
   text-align: left;
-  margin: 1em 0;
+  margin: 1em 1.4em;
+  cursor: pointer;
   .date {
     margin: 0;
     font-size: 18px;
+    color: #646464;
   }
   > span {
     font-size: 18px;
     display: block;
+    color: #646464;
   }
 `;
 

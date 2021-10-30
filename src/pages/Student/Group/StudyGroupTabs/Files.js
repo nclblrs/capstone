@@ -7,16 +7,16 @@ import { formatBytes } from "utils/upload";
 import { useParams } from "react-router-dom";
 
 const Files = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const { loading, data } = useQuery(STUDYGROUP_FILES, {
-    variables: { groupId: id },
+    variables: { groupId: groupId },
   });
   const postFiles = data?.studyGroupFiles?.postFiles ?? [];
   return (
     <FileContainer>
       {loading
         ? "Loading..."
-        : postFiles.map(({ id, attachment, user }) => {
+        : postFiles.map(({ attachment, user }) => {
             const { original_filename, secure_url, created_at, bytes } =
               JSON.parse(attachment) ?? {};
 
@@ -47,24 +47,26 @@ const Files = () => {
 
 const FileContainer = styled.div`
   width: 100%;
-  padding: 0 2em;
+  padding-left: 1em;
 `;
 
 const File = styled.div`
   width: 100%;
-  border: 1px solid #0f482f;
-  border-radius: 10px;
+  border-left: 5px solid #0f482f;
   height: 110px;
-  padding: 10px;
+  padding: 10px 20px;
   text-align: left;
-  margin: 1em 0;
+  margin-top: 1em;
+  cursor: pointer;
   .date {
     margin: 0;
     font-size: 18px;
+    color: #646464;
   }
   > span {
     font-size: 18px;
     display: block;
+    color: #646464;
   }
 `;
 

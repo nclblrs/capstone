@@ -6,16 +6,16 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 const TagsInfo = () => {
-  const { id } = useParams();
+  const { groupId } = useParams();
   const { loading: tagLoading, data: tagData } = useQuery(GET_TAGS, {
-    variables: { groupId: id },
+    variables: { groupId: groupId },
   });
   const tags = tagData?.groupPostTags ?? [];
   return (
     <>
       {tagLoading
         ? "Loading..."
-        : tags.map(({ name: tagName, count }) => (
+        : tags.map(({ id, name: tagName, count }) => (
             <TagLink key={id} to={`/group/${id}?tag=${tagName}`}>
               #{tagName} <span>{count} posts</span>
             </TagLink>

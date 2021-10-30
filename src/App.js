@@ -86,13 +86,13 @@ function App() {
                   <Route path="/classes">
                     <AllCourses />
                   </Route>
-                  <Route path="/class/:id/activity/:id">
+                  <Route path="/class/:classId/activity/:activityId">
                     <Activity />
                   </Route>
-                  <Route path="/class/:id/group-activity/:id">
+                  <Route path="/class/:classId/group-activity/:activityId">
                     <Activity />
                   </Route>
-                  <Route path="/class/:id">
+                  <Route path="/class/:classId">
                     <Course />
                   </Route>
                   <Route path="/coursegroups">
@@ -101,7 +101,7 @@ function App() {
                   <Route path="/studygroups">
                     <AllStudyGroups />
                   </Route>
-                  <Route path="/group/:id">
+                  <Route path="/group/:groupId">
                     <Group />
                   </Route>
                   <Route path="/settings">
@@ -123,10 +123,10 @@ function App() {
                     <Route path="/class/:classId/activity/:activityId">
                       <TActivity />
                     </Route>
-                    <Route path="/class/:id/group-activity/:id">
+                    <Route path="/class/:classId/group-activity/:activityId">
                       <TActivity />
                     </Route>
-                    <Route path="/class/:id">
+                    <Route path="/class/:classId">
                       <TCourse />
                     </Route>
                     <Route path="/classes">

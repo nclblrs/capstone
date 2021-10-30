@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "components/Modal";
-import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { COURSE_ACTIVITY } from "./gql";
@@ -13,9 +12,9 @@ import CreateSubmissionForm from "pages/Student/Activity/Forms/CreateSubmissionF
 const Activity = () => {
   const [showCreateSubmissionModal, setShowCreateSubmissionModal] =
     useState(false);
-  const { id } = useParams();
+  const { activityId } = useParams();
   const { loading, data, refetch } = useQuery(COURSE_ACTIVITY, {
-    variables: { activityId: id },
+    variables: { activityId: activityId },
   });
 
   const {
@@ -34,6 +33,7 @@ const Activity = () => {
     attachment: myAttachment = null,
     description: myDescription,
     createdAt,
+    grade,
   } = mySubmission ?? {};
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
   const { original_filename: original_filename2, secure_url: secure_url2 } =
@@ -50,10 +50,10 @@ const Activity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} || Due:{" "}
+                  {name} &nbsp;{"▏"}Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
-                <span>{points}</span>
+                <span>{points ? `${points} pts` : "No points assigned"}</span>
               </ActivityContent>
               <ActivityButtons>
                 {!mySubmission ? (
@@ -74,6 +74,7 @@ const Activity = () => {
                     {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                   </span>
                   <span>{myDescription}</span>
+                  <span>{grade}</span>
                   {myAttachment && (
                     <>
                       Attachment:
@@ -104,10 +105,6 @@ const Activity = () => {
                   &nbsp; Activity Type:{" "}
                 </li>
                 <li>
-                  <FaLaptop size={18} />
-                  &nbsp; Subject: {name}
-                </li>
-                <li>
                   <TiGroup size={18} />
                   &nbsp; Description: <p>{description}</p>
                 </li>
@@ -130,7 +127,7 @@ const Activity = () => {
             title="Create Submission"
           >
             <CreateSubmissionForm
-              activityId={id}
+              activityId={activityId}
               onCreateFinish={() => {
                 refetch();
                 setShowCreateSubmissionModal(false);
@@ -162,7 +159,7 @@ const ActivityHeader = styled.div`
   position: relative;
   top: 0px;
   margin: 1em;
-  padding: 2em 0;
+  padding: 2em 1em;
   background-color: #f2f2f2;
   width: 100%;
   border-radius: 10px;
@@ -176,14 +173,17 @@ const ActivityContent = styled.div`
     margin: 0;
     color: #0f482f;
     font-weight: normal;
-    font-size: 22px;
+    font-size: 26px;
   }
   > span {
-    margin: 0;
+    margin-top: 5px;
     color: #646464;
-    font-size: 16px;
+    font-size: 18px;
     display: flex;
     align-items: center;
+  }
+  .description {
+    margin-top: 25px;
   }
 `;
 
@@ -209,12 +209,13 @@ const ActivityButtons = styled.div`
 `;
 
 const RSideContainer = styled.div`
-  width: 30%;
+  width: 24%;
+  min-width: 400px;
   margin: 0 1em;
   h3 {
     color: #646464;
     text-align: left;
-    font-size: 18px;
+    font-size: 22px;
     font-weight: normal;
     display: flex;
     margin: 0 10px;
