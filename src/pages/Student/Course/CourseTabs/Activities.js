@@ -22,8 +22,9 @@ const Activities = () => {
     }
   );
 
-  const activityInfo = activityData?.courseActivities.data ?? [];
-  const groupActivityInfo = groupActivityData?.courseGroupActivities.data ?? [];
+  const activityInfo = activityData?.courseActivities?.data ?? [];
+  const groupActivityInfo =
+    groupActivityData?.courseGroupActivities?.data ?? [];
 
   return (
     <ActivityContainer>
