@@ -13,15 +13,13 @@ import PostsFeed from "components/PostsFeed";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
-import { FaLaptop, FaPenSquare } from "react-icons/fa";
+import { FaLaptop } from "react-icons/fa";
 import { BiMessageDetail } from "react-icons/bi";
 import { MdAccountCircle, MdGroupAdd } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { RiFileCopy2Fill } from "react-icons/ri";
 import Files from "./CourseTabs/Files";
 import Activities from "./CourseTabs/Activities";
-
-import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const Course = () => {
   const { classId } = useParams();
@@ -161,24 +159,7 @@ const Course = () => {
                     : groups?.data?.map(({ id, name, students, leader }) => (
                         <>
                           <div key={id} className="groupcontainer">
-                            <h5>
-                              {name}
-                              <button>
-                                <Dropdown
-                                  popperComponent={
-                                    <DropdownButtons>
-                                      <button>Edit Information</button>
-                                    </DropdownButtons>
-                                  }
-                                >
-                                  <FaPenSquare
-                                    size={20}
-                                    color="#0e5937"
-                                    className="pen"
-                                  />
-                                </Dropdown>
-                              </button>
-                            </h5>
+                            <h5>{name}</h5>
                             <p>
                               Leader: &nbsp;
                               {leader &&
@@ -401,16 +382,6 @@ const GroupContainer = styled.div`
     display: flex;
     margin: 0;
     margin-bottom: 1em;
-  }
-
-  button {
-    justify-content: center;
-    margin-left: auto;
-    padding: 0;
-    border: none;
-    background: none;
-    cursor: pointer;
-    text-align: center;
   }
 
   .leftContent {

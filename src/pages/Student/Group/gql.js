@@ -167,3 +167,24 @@ export const STUDYGROUP_FILES = gql`
     }
   }
 `;
+
+export const BECOME_LEADER = gql`
+  mutation becomeLeader($groupId: ID!) {
+    becomeLeader(groupId: $groupId) {
+      id
+    }
+  }
+`;
+
+export const GET_GROUP_ACTIVITIES = gql`
+  query ($courseId: ID!) {
+    courseGroupActivities(courseId: $courseId) {
+      data {
+        id
+        title
+        dueAt
+        createdAt
+      }
+    }
+  }
+`;

@@ -60,7 +60,6 @@ const TeacherAllClass = () => {
               )}
         </div>
       </MainContainer>
-      <button className="showinactive">Show Inactive</button>
     </PageContainer>
   );
 };
@@ -68,23 +67,6 @@ const TeacherAllClass = () => {
 const PageContainer = styled.div`
   display: flex;
   justify-content: center;
-  .showinactive {
-    margin-left: auto;
-    margin-top: 15px;
-    margin-right: 57px;
-    border: none;
-    color: white;
-    background-color: #0e5937;
-    width: 150px;
-    height: 50px;
-    font-size: 16px;
-    cursor: pointer;
-    &:hover {
-      background-color: #157348;
-      color: white;
-      cursor: pointer;
-    }
-  }
 `;
 
 const MainContainer = styled.div`
@@ -94,7 +76,7 @@ const MainContainer = styled.div`
   border-radius: 10px;
   padding: 1em;
   margin-right: auto;
-  margin-left: 390px;
+  margin-left: 335px;
 
   .itemcontainer {
     width: 100%;
@@ -111,7 +93,7 @@ const MainContainer = styled.div`
     flex-direction: column;
     display: flex;
     padding: 2em;
-    width: 345px;
+    width: 360px;
     background-color: #f2f2f2;
     height: max-content;
     margin-bottom: 10px;
@@ -139,6 +121,9 @@ const MainContainer = styled.div`
 
 const ButtonContainer = styled.div`
   display: flex;
+  gap: 20px;
+  margin-right: auto;
+
   button {
     justify-content: center;
     border: none;
@@ -150,7 +135,6 @@ const ButtonContainer = styled.div`
   }
   .createclass {
     margin-right: auto;
-    margin-left: 15px;
     background-color: #0e5937;
     width: 170px;
     &:hover {
@@ -163,7 +147,7 @@ const ButtonContainer = styled.div`
     }
   }
   .sortbutton {
-    margin-right: 22px;
+    margin-right: auto;
     background-color: #0e5937;
     &:hover {
       background-color: #157348;
