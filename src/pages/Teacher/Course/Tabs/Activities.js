@@ -1,11 +1,14 @@
 import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import { Switch, NavLink, Route, useParams } from "react-router-dom";
+import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
 import { GET_ACTIVITIES, GET_GROUP_ACTIVITIES } from "../gql";
 import { useQuery } from "@apollo/client";
+import { useLocation } from "react-router";
 
 const Activities = () => {
+  const location = useLocation();
+  const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
   const { id } = useParams();
 
   const { loading: activityLoading, data: activityData } = useQuery(
@@ -48,7 +51,11 @@ const Activities = () => {
                         </h4>
                         <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
                       </Content>
-                      <button>View</button>
+                      <ViewLink
+                        to={`${removeLast(location.pathname)}/activity/${id}`}
+                      >
+                        View
+                      </ViewLink>
                     </Activity>
                   </>
                 );
@@ -91,18 +98,23 @@ const Activity = styled.div`
   text-align: left;
   margin: 1em 1.4em;
   display: flex;
-  button {
-    margin-left: auto;
-    font-size: 16px;
-    width: 130px;
-    height: 40px;
-    border: none;
-    color: white;
-    background-color: #0f482f;
-    cursor: pointer;
-    &:hover {
-      background-color: #0e5937;
-    }
+`;
+
+const ViewLink = styled(Link)`
+  text-decoration: none;
+  margin-left: auto;
+  font-size: 16px;
+  width: 130px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
   }
 `;
 
