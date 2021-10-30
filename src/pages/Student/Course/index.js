@@ -22,21 +22,21 @@ import Files from "./CourseTabs/Files";
 import Activities from "./CourseTabs/Activities";
 
 const Course = () => {
-  const { id } = useParams();
+  const { classId } = useParams();
   const { user } = useCurrentUserContext();
 
   const [createPost] = useMutation(CREATE_COURSE_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
 
   const { loading, data } = useQuery(GET_COURSE, {
-    variables: { courseId: id },
+    variables: { courseId: classId },
   });
   const {
     data: postsData,
     loading: postsLoading,
     refetch,
   } = useQuery(COURSE_POSTS, {
-    variables: { courseId: id },
+    variables: { courseId: classId },
   });
 
   const posts = postsData?.coursePosts?.data ?? [];
@@ -59,7 +59,7 @@ const Course = () => {
 
     try {
       const { data: createPostData } = await createPost({
-        variables: { courseId: id, content, category },
+        variables: { courseId: classId, content, category },
       });
       const postId = createPostData?.createPost?.id;
 
@@ -95,21 +95,21 @@ const Course = () => {
             <PostForm onSubmit={handleCreatePost} />
           </PostFormContainer>
           <CourseFilter>
-            <NavMenu to={`/class/${id}`} exact>
+            <NavMenu to={`/class/${classId}`} exact>
               <BiMessageDetail size={18} /> &nbsp; Posts
             </NavMenu>
-            <NavMenu to={`/class/${id}/files`}>
+            <NavMenu to={`/class/${classId}/files`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Files
             </NavMenu>
-            <NavMenu to={`/class/${id}/activities`}>
+            <NavMenu to={`/class/${classId}/activities`}>
               <FaLaptop size={18} />
               &nbsp; Activities
             </NavMenu>
-            <NavMenu to={`/class/${id}/members`}>
+            <NavMenu to={`/class/${classId}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members
             </NavMenu>
-            <NavMenu to={`/class/${id}/groups`}>
+            <NavMenu to={`/class/${classId}/groups`}>
               <TiGroup size={18} />
               &nbsp; Groups
             </NavMenu>
@@ -117,22 +117,22 @@ const Course = () => {
         </CoursePostHeader>
         <ItemsContainer>
           <Switch>
-            <Route path={`/class/:id`} exact>
+            <Route path={`/class/:classId`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
-            <Route path={`/class/:id/files`}>
+            <Route path={`/class/:classId/files`}>
               <LeftContainer>
                 <h1>Files</h1>
                 <Files />
               </LeftContainer>
             </Route>
-            <Route path={`/class/:id/activities`}>
+            <Route path={`/class/:classId/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
                 <Activities />
               </LeftContainer>
             </Route>
-            <Route path={`/class/:id/members`}>
+            <Route path={`/class/:classId/members`}>
               <LeftContainer>
                 <h1>Members</h1>
                 <div className="leftContent">

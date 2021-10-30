@@ -9,6 +9,7 @@ export const COURSE_ACTIVITY = gql`
       dueAt
       attachment
       course {
+        id
         name
         teacher {
           user {
@@ -29,6 +30,7 @@ export const COURSE_GROUPACTIVITY = gql`
       dueAt
       attachment
       course {
+        id
         name
         teacher {
           user {

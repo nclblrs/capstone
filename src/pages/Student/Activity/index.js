@@ -12,9 +12,9 @@ import CreateSubmissionForm from "pages/Student/Activity/Forms/CreateSubmissionF
 const Activity = () => {
   const [showCreateSubmissionModal, setShowCreateSubmissionModal] =
     useState(false);
-  const { id } = useParams();
+  const { activityId } = useParams();
   const { loading, data, refetch } = useQuery(COURSE_ACTIVITY, {
-    variables: { activityId: id },
+    variables: { activityId: activityId },
   });
 
   const {
@@ -33,6 +33,7 @@ const Activity = () => {
     attachment: myAttachment = null,
     description: myDescription,
     createdAt,
+    grade,
   } = mySubmission ?? {};
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
   const { original_filename: original_filename2, secure_url: secure_url2 } =
@@ -52,7 +53,7 @@ const Activity = () => {
                   {name} &nbsp;{"▏"}Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
-                <span>{points}</span>
+                <span>{points ? `${points} pts` : "No points assigned"}</span>
               </ActivityContent>
               <ActivityButtons>
                 {!mySubmission ? (
@@ -72,7 +73,12 @@ const Activity = () => {
                     Submitted at:{" "}
                     {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                   </span>
+<<<<<<< HEAD
                   <span className="description">{myDescription}</span>
+=======
+                  <span>{myDescription}</span>
+                  <span>{grade}</span>
+>>>>>>> cd7fa139d8440a99effafa7eb8914b824a07898b
                   {myAttachment && (
                     <>
                       Attachment:
@@ -125,7 +131,7 @@ const Activity = () => {
             title="Create Submission"
           >
             <CreateSubmissionForm
-              activityId={id}
+              activityId={activityId}
               onCreateFinish={() => {
                 refetch();
                 setShowCreateSubmissionModal(false);

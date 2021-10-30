@@ -9,6 +9,7 @@ export const GET_SUBMISSION = gql`
       grade
       activity {
         id
+        points
       }
       student {
         user {
@@ -39,6 +40,15 @@ export const COURSE_ACTIVITYSUBMISSIONS = gql`
           }
         }
       }
+    }
+  }
+`;
+
+export const GRADE_SUBMISSION = gql`
+  mutation gradeSubmission($submissionId: ID!, $grade: Int!) {
+    gradeSubmission(submissionId: $submissionId, grade: $grade) {
+      id
+      grade
     }
   }
 `;
