@@ -121,7 +121,7 @@ const ClassGroup = () => {
         </CGPostHeader>
         <CGItemsContainer>
           <Switch>
-            <Route path={`/group/:groupId}`} exact>
+            <Route path={`/group/:groupId`} exact>
               {postsLoading ? "Loading..." : <PostsFeed posts={posts} />}
             </Route>
             <Route path={`/group/:groupId/files`}>

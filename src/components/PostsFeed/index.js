@@ -25,7 +25,7 @@ const PostsFeed = ({ posts }) => {
         }) => {
           const { id: userId, firstName, lastName } = user;
           const {
-            id: actId,
+            id: activityId,
             title,
             description,
             attachment: activityAttachment = null,
@@ -139,10 +139,12 @@ const PostsFeed = ({ posts }) => {
                   )}
                 </PostContent>
                 {groupActivity && (
-                  <Link to={`/class/${id}/group-activity/${actId}`}>Open</Link>
+                  <Link to={`/class/${id}/groupactivity/${activityId}`}>
+                    Open
+                  </Link>
                 )}
                 {activity && (
-                  <Link to={`/class/${id}/activity/${actId}`}>Open</Link>
+                  <Link to={`/class/${id}/activity/${activityId}`}>Open</Link>
                 )}
               </Post>
 
