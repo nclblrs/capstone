@@ -108,7 +108,7 @@ const File = styled.div`
   height: 110px;
   padding: 10px 20px;
   text-align: left;
-  margin: 1em 1.4em;
+  margin: 1em 1em;
   cursor: pointer;
   .date {
     margin: 0;
