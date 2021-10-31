@@ -1,7 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 import { SEND_RESET_PASSWORD } from "./gql";
 
@@ -31,6 +33,9 @@ const ForgotPassword = () => {
   return (
     <Base>
       <ForgotContainer>
+        <BackButton to="/login">
+          <FaArrowAltCircleLeft size={20} /> &nbsp; Back
+        </BackButton>
         <h1> Forgot Password </h1>
         <p>
           {" "}
@@ -53,14 +58,25 @@ const Base = styled.div`
   display: flex;
 `;
 
+const BackButton = styled(Link)`
+  margin-top: 0;
+  display: flex;
+  align-items: center;
+  color: #6fb9b9;
+  cursor: pointer;
+  text-decoration: none;
+  font-size: 18px;
+`;
+
 const ForgotContainer = styled.div`
   background-color: #36393f;
   width: 30%;
-  height: 300px;
+  height: 320px;
   padding: 2em;
   margin: auto;
   border-radius: 10px;
   font-family: "Roboto", sans-serif;
+
   h1 {
     text-align: center;
     color: white;
