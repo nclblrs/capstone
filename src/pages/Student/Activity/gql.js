@@ -28,26 +28,6 @@ export const COURSE_ACTIVITY = gql`
     }
   }
 `;
-export const COURSE_GROUPACTIVITY = gql`
-  query groupActivity($activityId: ID!) {
-    groupActivity(activityId: $activityId) {
-      id
-      title
-      description
-      dueAt
-      attachment
-      course {
-        name
-        teacher {
-          user {
-            firstName
-            lastName
-          }
-        }
-      }
-    }
-  }
-`;
 
 export const CREATE_SUBMISSION = gql`
   mutation createSubmission($description: String!, $activityId: ID!) {

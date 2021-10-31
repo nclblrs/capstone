@@ -3,18 +3,19 @@ import styled from "styled-components";
 import Modal from "components/Modal";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
-import { COURSE_ACTIVITY } from "./gql";
+import { COURSE_GROUPACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
-import CreateSubmissionForm from "pages/Student/Activity/Forms/CreateSubmissionForm";
+import AssignTaskForm from "pages/Student/GroupActivity/Forms/AssignTaskForm";
+import { Link } from "react-router-dom";
+import { FaLaptop } from "react-icons/fa";
 
-const Activity = () => {
-  const [showCreateSubmissionModal, setShowCreateSubmissionModal] =
-    useState(false);
+const GroupActivityPage = () => {
+  const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
   const { activityId } = useParams();
-  const { loading, data, refetch } = useQuery(COURSE_ACTIVITY, {
-    variables: { activityId: activityId },
+  const { loading, data, refetch } = useQuery(COURSE_GROUPACTIVITY, {
+    variables: { groupActivityId: activityId },
   });
 
   const {
@@ -23,21 +24,13 @@ const Activity = () => {
     dueAt,
     course,
     attachment = null,
-    mySubmission,
     points,
-  } = data?.activity ?? {};
+  } = data?.groupActivity ?? {};
 
   const { teacher, name } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
-  const {
-    attachment: myAttachment = null,
-    description: myDescription,
-    createdAt,
-    grade,
-  } = mySubmission ?? {};
+
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
-  const { original_filename: original_filename2, secure_url: secure_url2 } =
-    JSON.parse(myAttachment) ?? {};
 
   return (
     <ActivityContainer>
@@ -50,42 +43,59 @@ const Activity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} &nbsp;{"▏"} Due:{" "}
+                  {name} {"▏"} Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
               </ActivityContent>
               <ActivityButtons>
-                {!mySubmission ? (
-                  <button onClick={() => setShowCreateSubmissionModal(true)}>
-                    Submit
-                  </button>
-                ) : (
-                  "Submitted!"
-                )}
+                <button onClick={() => setShowAssignTaskModal(true)}>
+                  Assign Task
+                </button>
+                <button>Submit</button>
               </ActivityButtons>
             </ActivityHeader>
-            {mySubmission && (
-              <ActivityHeader>
-                <ActivityContent>
-                  <h1>My Submission</h1>
-                  <span>
-                    Submitted at:{" "}
-                    {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
-                  </span>
-                  <span>{myDescription}</span>
-                  <span>{grade}</span>
-                  {myAttachment && (
-                    <>
-                      Attachment:
-                      <Attachment href={secure_url2} download>
-                        {original_filename2}.{secure_url2.split(".").slice(-1)}
-                      </Attachment>
-                    </>
-                  )}
-                </ActivityContent>
-              </ActivityHeader>
-            )}
+
+            <ActivityHeader>
+              <ActivityContent>
+                <h1>Tasks</h1>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST <span>Name | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST<span>Name | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST<span>Name | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST<span>Name | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST<span>Name | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+              </ActivityContent>
+            </ActivityHeader>
           </LSideContainer>
           <RSideContainer>
             <RSideAbout>
@@ -102,7 +112,11 @@ const Activity = () => {
                 </li>
                 <li>
                   <MdAccountCircle size={18} />
-                  &nbsp; Activity Type: <span>By Individual</span>
+                  &nbsp; Activity Type: <span>By Group</span>
+                </li>
+                <li>
+                  <FaLaptop size={18} />
+                  &nbsp; Subject: <span>{name}</span>
                 </li>
                 <li>
                   <TiGroup size={18} />
@@ -122,15 +136,13 @@ const Activity = () => {
             </RSideAbout>
           </RSideContainer>
           <Modal
-            show={showCreateSubmissionModal}
-            closeModal={() => setShowCreateSubmissionModal(false)}
-            title="Create Submission"
+            show={showAssignTaskModal}
+            closeModal={() => setShowAssignTaskModal(false)}
+            title="Assign Task"
           >
-            <CreateSubmissionForm
-              activityId={activityId}
+            <AssignTaskForm
               onCreateFinish={() => {
-                refetch();
-                setShowCreateSubmissionModal(false);
+                setShowAssignTaskModal(false);
               }}
             />
           </Modal>
@@ -140,7 +152,7 @@ const Activity = () => {
   );
 };
 
-export default Activity;
+export default GroupActivityPage;
 
 const ActivityContainer = styled.div`
   display: flex;
@@ -259,4 +271,47 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 1em;
+`;
+
+const Container = styled.div`
+  width: 100%;
+  height: 60px;
+  text-align: left;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 10px;
+  border-left: 5px solid #0f482f;
+  padding: 0 20px;
+  text-align: left;
+  margin: 1em 1.4em;
+  display: flex;
+`;
+
+const Content = styled(Link)`
+  width: 100%;
+  text-decoration: none;
+  margin-top: 7px;
+  display: flex;
+
+  > h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    color: #0f482f;
+    font-weight: 500;
+    > span {
+      font-size: 16px;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+  }
+  > img {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
 `;
