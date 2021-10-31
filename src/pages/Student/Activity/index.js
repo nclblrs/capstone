@@ -50,7 +50,7 @@ const Activity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} &nbsp;{"▏"}Due:{" "}
+                  {name} &nbsp;{"▏"} Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
@@ -94,7 +94,7 @@ const Activity = () => {
                 <li>
                   <TiGroup size={18} />
                   &nbsp; Due Date:{" "}
-                  {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                  <span>{dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}</span>
                 </li>
                 <li>
                   <MdAccountCircle size={18} />
@@ -102,7 +102,7 @@ const Activity = () => {
                 </li>
                 <li>
                   <MdAccountCircle size={18} />
-                  &nbsp; Activity Type:{" "}
+                  &nbsp; Activity Type: <span>By Individual</span>
                 </li>
                 <li>
                   <TiGroup size={18} />
@@ -238,6 +238,12 @@ const RSideAbout = styled.div`
   }
   li {
     padding: 6px 0px;
+    > p {
+      color: #0e5937;
+    }
+    > span {
+      color: #0e5937;
+    }
   }
 `;
 
