@@ -13,11 +13,11 @@ const Login = () => {
     e.preventDefault();
     const email = e.target.email.value;
     const password = e.target.password.value;
-    const code = e.target.code.value;
+    /* const code = e.target.code.value; */
 
     try {
       const { data } = await authenticate({
-        variables: { email, password, code },
+        variables: { email, password /* code */ },
       });
       const accessToken = data?.authenticate?.tokens?.accessToken ?? null;
 
