@@ -17,7 +17,7 @@ const Login = () => {
 
     try {
       const { data } = await authenticate({
-        variables: { email, password /* code */ },
+        variables: { email, password } /* add "code" to variables */,
       });
       const accessToken = data?.authenticate?.tokens?.accessToken ?? null;
 
