@@ -26,7 +26,7 @@ const Files = () => {
         </NavMenu>
       </NavBar>
       <Switch>
-        <Route path={`/group/:id/files`} exact>
+        <Route path={`/group/:groupId/files`} exact>
           {loading
             ? "Loading..."
             : postFiles.map(({ id, attachment, user }) => {
