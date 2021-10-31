@@ -19,6 +19,7 @@ import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
 import Activities from "./StudyGroupTabs/Activities";
+import Files from "./StudyGroupTabs/ClassGroupFiles";
 
 const ClassGroup = () => {
   const { groupId } = useParams();
@@ -126,6 +127,7 @@ const ClassGroup = () => {
             <Route path={`/group/${groupId}/files`}>
               <LeftContainer>
                 <h1>Files</h1>
+                <Files />
               </LeftContainer>
             </Route>
             <Route path={`/group/${groupId}/activities`}>
