@@ -32,6 +32,7 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import TeacherAllClass from "pages/Teacher/Classes";
 import TeacherSchedule from "pages/Teacher/ClassSched";
 import Activity from "pages/Student/Activity";
+import GroupActivityPage from "pages/Student/GroupActivity";
 import TActivity from "pages/Teacher/Activity";
 import TSettings from "pages/Teacher/TSettings";
 import Submission from "pages/Teacher/Submission";
@@ -89,8 +90,8 @@ function App() {
                   <Route path="/class/:classId/activity/:activityId">
                     <Activity />
                   </Route>
-                  <Route path="/class/:classId/group-activity/:activityId">
-                    <Activity />
+                  <Route path="/class/:classId/groupactivity/:activityId">
+                    <GroupActivityPage />
                   </Route>
                   <Route path="/class/:classId">
                     <Course />
@@ -123,7 +124,7 @@ function App() {
                     <Route path="/class/:classId/activity/:activityId">
                       <TActivity />
                     </Route>
-                    <Route path="/class/:classId/group-activity/:activityId">
+                    <Route path="/class/:classId/groupactivity/:activityId">
                       <TActivity />
                     </Route>
                     <Route path="/class/:classId">
