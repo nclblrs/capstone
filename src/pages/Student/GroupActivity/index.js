@@ -10,10 +10,12 @@ import dayjs from "dayjs";
 import AssignTaskForm from "pages/Student/GroupActivity/Forms/AssignTaskForm";
 import { Link } from "react-router-dom";
 import { FaLaptop } from "react-icons/fa";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const GroupActivityPage = () => {
   const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
   const { activityId } = useParams();
+  const { user } = useCurrentUserContext();
   const { loading, data, refetch } = useQuery(COURSE_GROUPACTIVITY, {
     variables: { groupActivityId: activityId },
   });
@@ -27,11 +29,11 @@ const GroupActivityPage = () => {
     points,
   } = data?.groupActivity ?? {};
 
-  const { teacher, name } = course ?? {};
+  const { teacher, name, myGroup, id: classId } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
+  const { leader } = myGroup ?? {};
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
-
   return (
     <ActivityContainer>
       {loading ? (
@@ -49,48 +51,25 @@ const GroupActivityPage = () => {
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
               </ActivityContent>
               <ActivityButtons>
-                <button onClick={() => setShowAssignTaskModal(true)}>
-                  Assign Task
-                </button>
+                {user?.id === leader?.id ? (
+                  <>
+                    <button onClick={() => setShowAssignTaskModal(true)}>
+                      Assign Task
+                    </button>
+                  </>
+                ) : (
+                  ""
+                )}
                 <button>Submit</button>
               </ActivityButtons>
             </ActivityHeader>
-
             <ActivityHeader>
               <ActivityContent>
-                <h1>Tasks</h1>
+                <h1>Your Group's Submission</h1>
                 <Container>
                   <Content>
                     <h1>
                       TEST <span>Name | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST<span>Name | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST<span>Name | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST<span>Name | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST<span>Name | Date here</span>
                     </h1>
                   </Content>
                 </Container>
@@ -134,6 +113,9 @@ const GroupActivityPage = () => {
                 </li>
               </ul>
             </RSideAbout>
+            <GoBack to={`/class/${classId}/activities/group`}>
+              Go to Group Activities Tab
+            </GoBack>
           </RSideContainer>
           <Modal
             show={showAssignTaskModal}
@@ -142,6 +124,19 @@ const GroupActivityPage = () => {
           >
             <AssignTaskForm
               onCreateFinish={() => {
+                refetch();
+                setShowAssignTaskModal(false);
+              }}
+            />
+          </Modal>
+          <Modal
+            show={showAssignTaskModal}
+            closeModal={() => setShowAssignTaskModal(false)}
+            title="Assign Task"
+          >
+            <AssignTaskForm
+              onCreateFinish={() => {
+                refetch();
                 setShowAssignTaskModal(false);
               }}
             />
@@ -313,5 +308,22 @@ const Content = styled(Link)`
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
+  }
+`;
+
+const GoBack = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
   }
 `;

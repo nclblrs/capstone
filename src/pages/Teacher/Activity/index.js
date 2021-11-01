@@ -53,6 +53,7 @@ const TActivity = () => {
                   {name} &nbsp;{"▏"}Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
+                <span>{points ? `${points} pts` : "No points assigned"}</span>
               </ActivityContent>
             </ActivityHeader>
             <ActivityHeader>
@@ -72,9 +73,6 @@ const TActivity = () => {
                               {dayjs(createdAt).format(
                                 "MMMM D, YYYY [at] h:mm a"
                               )}
-                            </span>
-                            <span>
-                              {points ? `${points} pts` : "No points assigned"}
                             </span>
                           </Content>
                           <Link
@@ -142,29 +140,23 @@ const ActivityContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 30px;
-  margin-left: 270px;
+  margin-left: 260px;
 `;
 
 const LSideContainer = styled.div`
   margin: 0 1em;
   display: flex;
-<<<<<<< HEAD
-  width: 60%;
-  min-width: 910px;
-=======
-  width: 65%;
+  width: 70%;
   flex-direction: column;
->>>>>>> 4ea6604e978a0bddae67584d77e18f5f5ee9e950
 `;
 
 const ActivityHeader = styled.div`
-  position: sticky;
-  top: 0px;
   margin: 1em;
-  padding: 2em 0;
+  padding: 2em 1em;
   background-color: #f2f2f2;
   width: 100%;
   border-radius: 10px;
+
   .submissions {
     padding: 1em;
     font-size: 22px;
@@ -176,10 +168,8 @@ const ActivityHeader = styled.div`
 `;
 
 const ActivityContent = styled.div`
-  width: 60%;
-  margin-top: 0.7em;
-  margin-left: 1em;
-  padding-left: 1em;
+  padding: 1em;
+  width: 100%;
 
   > h1 {
     margin: 0;
@@ -197,17 +187,9 @@ const ActivityContent = styled.div`
 `;
 
 const RSideContainer = styled.div`
-<<<<<<< HEAD
   width: 24%;
   min-width: 400px;
-  margin-left: auto;
-=======
-  width: 35%;
   margin: 0 1em;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
->>>>>>> 4ea6604e978a0bddae67584d77e18f5f5ee9e950
   h3 {
     color: #646464;
     text-align: left;
@@ -262,8 +244,6 @@ const Submission = styled.div`
   margin: 1em 1.4em;
 
   .buttons {
-    position: absolute;
-    right: 30px;
     font-size: 16px;
     width: 110px;
     height: 50px;

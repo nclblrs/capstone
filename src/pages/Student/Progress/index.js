@@ -11,26 +11,28 @@ const Progress = () => {
           </div>
           <div className="todo">
             <h4>To-do</h4>
+            <h4>5</h4>
           </div>
           <div className="inprogress">
             <h4>In Progress</h4>
+            <h4>5</h4>
           </div>
           <div className="underreview">
             <h4>Under Review</h4>
+            <h4>5</h4>
           </div>
           <div className="missing">
             <h4>Missing</h4>
+            <h4>5</h4>
           </div>
           <div className="done">
             <h4>Done</h4>
+            <h4>5</h4>
           </div>
         </UpperContainer>
         <TasksContainer>
           <div className="taskscontainer">
-            <table>
-              <th></th>
-              <td></td>
-            </table>
+            <div className="content"></div>
           </div>
         </TasksContainer>
       </LeftSideContainer>
@@ -48,20 +50,21 @@ const Progress = () => {
 
 const ProgressContainer = styled.div`
   display: flex;
-  margin: 20px 50px;
+  margin: 1em;
+  justify-content: center;
 `;
 
 const LeftSideContainer = styled.div`
   display: flex;
   flex-direction: column;
-  margin-left: 55px;
+  width: 72%;
 `;
 
 const UpperContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 20px;
+  gap: 10px;
   height: 130px;
   h4 {
     font-weight: normal;
@@ -70,7 +73,7 @@ const UpperContainer = styled.div`
   }
   .taskprogress {
     background-color: #f2f2f2;
-    width: 350px;
+    width: 100%;
     border-radius: 10px;
     h4 {
       color: #0f482f;
@@ -82,17 +85,15 @@ const UpperContainer = styled.div`
   .missing,
   .done {
     background-color: #f2f2f2;
-    width: 150px;
+    width: 50%;
     align-items: center;
     text-align: center;
     border-radius: 10px;
-    margin-left: 5px;
     h4 {
       color: #164aae;
+      height: 50px;
+      margin-top: 10px;
     }
-  }
-  .todo {
-    margin-left: 45px;
   }
   .inprogress {
     h4 {
@@ -119,46 +120,24 @@ const UpperContainer = styled.div`
 const TasksContainer = styled.div`
   display: flex;
   flex-direction: row;
-  margin-top: 30px;
+  margin-top: 20px;
   margin-bottom: 10px;
   width: 100%;
-  .taskscontainer {
-    background-color: #f2f2f2;
-    border-radius: 10px;
-    width: 100%;
-    min-width: 500px;
-    height: 645px;
-    overflow-y: scroll;
-  }
-  table {
-    position: absolute;
-    display: flex;
-    flex-direction: row;
-    margin-left: 0.7em;
-  }
-  th {
-    width: 100%;
-    padding: 3.5em;
-    margin: 0 35.21em;
-  }
-  td {
-    border-bottom: 1px solid black;
-    width: 100%;
-    height: 130px;
-    position: absolute;
-    padding: 3em 2em;
-  }
+  overflow-y: scroll;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+  width: 100%;
+  min-width: 500px;
+  height: 645px;
 `;
 
 const RightSideContainer = styled.div`
   display: flex;
-  position: sticky;
-  width: 24%;
-  min-width: 400px;
+  width: 27%;
   gap: 20px;
   flex-direction: column;
-  margin-left: 60px;
-  margin-right: 40px;
+  margin-left: 1em;
+
   h3 {
     color: #646464;
     text-align: left;
@@ -178,6 +157,7 @@ const AboutContainer = styled.div`
   height: max-content;
   padding: 2em;
   border-radius: 10px;
+
   button {
     border: none;
     background-color: #0e5937;
