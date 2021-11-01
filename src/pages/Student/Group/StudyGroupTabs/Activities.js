@@ -6,12 +6,12 @@ import { GET_GROUP_ACTIVITIES } from "../gql";
 import { useQuery } from "@apollo/client";
 
 const Activities = () => {
-  const { id } = useParams();
+  const { classId } = useParams();
 
   const { loading: groupActivityLoading, data: groupActivityData } = useQuery(
     GET_GROUP_ACTIVITIES,
     {
-      variables: { courseId: id },
+      variables: { courseId: classId },
     }
   );
 

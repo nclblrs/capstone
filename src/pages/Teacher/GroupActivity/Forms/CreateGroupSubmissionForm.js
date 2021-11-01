@@ -6,52 +6,35 @@ import { useMutation } from "@apollo/client";
 import { upload } from "utils/upload";
 import { useParams } from "react-router-dom";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
-import { CREATE_SUBMISSION, SUBMISSION_ATTACHMENT } from "../gql";
+import { CREATE_GROUPSUBMISSION } from "../gql";
 import { toast } from "react-toastify";
 import { useState } from "react/cjs/react.development";
 
-const CreateSubmissionForm = ({ onCreateFinish }) => {
+const CreateGroupSubmissionForm = ({ onCreateFinish }) => {
   const { activityId } = useParams();
   const { user } = useCurrentUserContext();
   const { register, watch, handleSubmit } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
 
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [createSubmission] = useMutation(CREATE_SUBMISSION);
-  const [addAttachmentToSubmission] = useMutation(SUBMISSION_ATTACHMENT);
+  const [createGroupSubmission] = useMutation(CREATE_GROUPSUBMISSION);
 
-  const handleCreateSubmission = async (data) => {
-    const { description, file: files } = data;
-    const file = files[0];
+  const handleCreateGroupSubmission = async (data) => {
+    const { description } = data;
 
     try {
       setIsSubmitting(true);
-      const { data: createSubmissionData } = await createSubmission({
+      const { data: createGroupSubmissionData } = await createGroupSubmission({
         variables: {
           activityId: activityId,
           description,
         },
       });
 
-      const submissionId = createSubmissionData?.createSubmission?.id;
+      const groupSubmissionId =
+        createGroupSubmissionData?.createGroupSubmission?.id;
 
-      if (!submissionId) throw Error("something is wrong");
-
-      if (file) {
-        const { cloudinaryString } = await upload(
-          file,
-          user.uploadPreset,
-          `Submission_${submissionId}`
-        );
-
-        const { data: addAttachmentToSubmissionData } =
-          await addAttachmentToSubmission({
-            variables: { id: submissionId, attachment: cloudinaryString },
-          });
-
-        if (!addAttachmentToSubmissionData?.addAttachmentToSubmission?.id)
-          throw Error("something is wrong");
-      }
+      if (!groupSubmissionId) throw Error("something is wrong");
 
       toast.success("Created Submission");
       onCreateFinish();
@@ -63,7 +46,7 @@ const CreateSubmissionForm = ({ onCreateFinish }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit(handleCreateSubmission)}>
+    <Form onSubmit={handleSubmit(handleCreateGroupSubmission)}>
       <div>
         <label className="file"> File </label>
         <label for="attach-file-submission" className="attachmentLabel">
@@ -160,4 +143,4 @@ const Form = styled.form`
   }
 `;
 
-export default CreateSubmissionForm;
+export default CreateGroupSubmissionForm;

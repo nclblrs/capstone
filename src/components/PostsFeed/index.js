@@ -3,6 +3,7 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import { useLocation } from "react-router";
 import Comments from "./Comments";
+import { RiFileCopy2Fill } from "react-icons/ri";
 
 const PostsFeed = ({ posts }) => {
   const location = useLocation();
@@ -31,7 +32,6 @@ const PostsFeed = ({ posts }) => {
             attachment: activityAttachment = null,
             dueAt,
             mySubmission,
-            points,
           } = activity ?? groupActivity ?? {};
           const { type: groupType } = group ?? {};
 
@@ -107,18 +107,20 @@ const PostsFeed = ({ posts }) => {
                   </h4>
                   {groupActivity || activity ? (
                     <Activity>
+                      <RiFileCopy2Fill className="activityLogo" size={18} />
                       <ActivityContent>
-                        <h4>
-                          Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}{" "}
+                        <h3>
+                          {title}{" "}
                           {mySubmission && (
                             <span className="submitted">
                               (Submitted on Time)
                             </span>
                           )}
+                        </h3>
+                        <h4>
+                          Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}{" "}
                         </h4>
 
-                        <h3>{title}</h3>
-                        <span>{points ? `${points} pts` : " "}</span>
                         <p>{description}</p>
 
                         {activityAttachment && (
@@ -258,7 +260,6 @@ const PostContent = styled.div`
     color: #0f482f;
     font-size: 16px;
     font-weight: 400;
-    letter-spacing: 0.5px;
   }
 `;
 
@@ -267,9 +268,8 @@ const Activity = styled.div`
   display: flex;
   gap: 10px;
 
-  > img {
-    width: 20px;
-    height: 20px;
+  .activityLogo {
+    color: #0e5937;
   }
 `;
 
@@ -287,16 +287,20 @@ const ActivityContent = styled.div`
   }
   > h3 {
     color: #0f482f;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 400;
     margin: 0;
+    margin-bottom: 10px;
+    > span {
+      color: #646464;
+      font-size: 14px;
+    }
   }
 
   > p {
-    color: #0f482f;
+    color: #646464;
     font-size: 16px;
     font-weight: 400;
-    letter-spacing: 0.5px;
   }
 `;
 

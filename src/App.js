@@ -33,9 +33,11 @@ import TeacherAllClass from "pages/Teacher/Classes";
 import TeacherSchedule from "pages/Teacher/ClassSched";
 import Activity from "pages/Student/Activity";
 import GroupActivityPage from "pages/Student/GroupActivity";
+import TGroupActivityPage from "pages/Teacher/GroupActivity";
 import TActivity from "pages/Teacher/Activity";
 import TSettings from "pages/Teacher/TSettings";
 import Submission from "pages/Teacher/Submission";
+import Task from "pages/Student/Task";
 
 function App() {
   const { user } = useCurrentUserContext();
@@ -108,6 +110,9 @@ function App() {
                   <Route path="/settings">
                     <Settings />
                   </Route>
+                  <Route path="/task">
+                    <Task />
+                  </Route>
                   <Redirect from="/" to="/" />
                 </Switch>
               )}
@@ -125,7 +130,7 @@ function App() {
                       <TActivity />
                     </Route>
                     <Route path="/class/:classId/groupactivity/:activityId">
-                      <TActivity />
+                      <TGroupActivityPage />
                     </Route>
                     <Route path="/class/:classId">
                       <TCourse />

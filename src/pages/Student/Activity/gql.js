@@ -10,6 +10,7 @@ export const COURSE_ACTIVITY = gql`
       attachment
       points
       course {
+        id
         name
         teacher {
           user {

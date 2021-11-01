@@ -6,6 +6,7 @@ import { TiGroup } from "react-icons/ti";
 import { COURSE_ACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import CreateSubmissionForm from "pages/Student/Activity/Forms/CreateSubmissionForm";
 
@@ -27,7 +28,7 @@ const Activity = () => {
     points,
   } = data?.activity ?? {};
 
-  const { teacher, name } = course ?? {};
+  const { teacher, name, id: classId } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
   const {
     attachment: myAttachment = null,
@@ -65,27 +66,32 @@ const Activity = () => {
                 )}
               </ActivityButtons>
             </ActivityHeader>
-            {mySubmission && (
-              <ActivityHeader>
-                <ActivityContent>
-                  <h1>My Submission</h1>
-                  <span>
-                    Submitted at:{" "}
-                    {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
-                  </span>
-                  <span>{myDescription}</span>
-                  <span>{grade}</span>
-                  {myAttachment && (
-                    <>
-                      Attachment:
-                      <Attachment href={secure_url2} download>
-                        {original_filename2}.{secure_url2.split(".").slice(-1)}
-                      </Attachment>
-                    </>
-                  )}
-                </ActivityContent>
-              </ActivityHeader>
-            )}
+
+            <ActivityHeader>
+              <ActivityContent>
+                <h1>My Submission</h1>
+                {mySubmission ? (
+                  <>
+                    <span>
+                      Submitted at:{" "}
+                      {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
+                    </span>
+                    <span>{myDescription}</span>
+                    <span>{grade}</span>
+                  </>
+                ) : (
+                  <span>You haven't submitted anything yet.</span>
+                )}
+                {myAttachment && (
+                  <>
+                    Attachment:
+                    <Attachment href={secure_url2} download>
+                      {original_filename2}.{secure_url2.split(".").slice(-1)}
+                    </Attachment>
+                  </>
+                )}
+              </ActivityContent>
+            </ActivityHeader>
           </LSideContainer>
           <RSideContainer>
             <RSideAbout>
@@ -120,6 +126,9 @@ const Activity = () => {
                 </li>
               </ul>
             </RSideAbout>
+            <GoBack to={`/class/${classId}/activities/`}>
+              Go to Activities Tab
+            </GoBack>
           </RSideContainer>
           <Modal
             show={showCreateSubmissionModal}
@@ -259,4 +268,21 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 1em;
+`;
+
+const GoBack = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
+  }
 `;
