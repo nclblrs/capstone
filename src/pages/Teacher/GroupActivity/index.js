@@ -10,12 +10,10 @@ import dayjs from "dayjs";
 import AssignTaskForm from "pages/Student/GroupActivity/Forms/AssignTaskForm";
 import { Link } from "react-router-dom";
 import { FaLaptop } from "react-icons/fa";
-import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
-const GroupActivityPage = () => {
+const TGroupActivityPage = () => {
   const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
   const { activityId } = useParams();
-  const { user } = useCurrentUserContext();
   const { loading, data, refetch } = useQuery(COURSE_GROUPACTIVITY, {
     variables: { groupActivityId: activityId },
   });
@@ -29,11 +27,11 @@ const GroupActivityPage = () => {
     points,
   } = data?.groupActivity ?? {};
 
-  const { teacher, name, myGroup, id: classId } = course ?? {};
+  const { teacher, name } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
-  const { leader } = myGroup ?? {};
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
+
   return (
     <ActivityContainer>
       {loading ? (
@@ -50,26 +48,51 @@ const GroupActivityPage = () => {
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
               </ActivityContent>
-              <ActivityButtons>
-                {user?.id === leader?.id ? (
-                  <>
-                    <button onClick={() => setShowAssignTaskModal(true)}>
-                      Assign Task
-                    </button>
-                  </>
-                ) : (
-                  ""
-                )}
-                <button>Submit</button>
-              </ActivityButtons>
+              <ActivityButtons></ActivityButtons>
             </ActivityHeader>
+
             <ActivityHeader>
               <ActivityContent>
-                <h1>Your Group's Submission</h1>
+                <h1>Group Submissions</h1>
                 <Container>
                   <Content>
                     <h1>
-                      TEST <span>Name | Date here</span>
+                      TEST <span> | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST <span> | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST <span> | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST <span> | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST <span> | Date here</span>
+                    </h1>
+                  </Content>
+                </Container>
+                <Container>
+                  <Content>
+                    <h1>
+                      TEST <span> | Date here</span>
                     </h1>
                   </Content>
                 </Container>
@@ -113,9 +136,6 @@ const GroupActivityPage = () => {
                 </li>
               </ul>
             </RSideAbout>
-            <GoBack to={`/class/${classId}/activities/group`}>
-              Go to Group Activities Tab
-            </GoBack>
           </RSideContainer>
           <Modal
             show={showAssignTaskModal}
@@ -135,12 +155,13 @@ const GroupActivityPage = () => {
   );
 };
 
-export default GroupActivityPage;
+export default TGroupActivityPage;
 
 const ActivityContainer = styled.div`
   display: flex;
   justify-content: center;
   margin: 0 30px;
+  margin-left: 260px;
 `;
 
 const LSideContainer = styled.div`
@@ -189,7 +210,7 @@ const ActivityButtons = styled.div`
   margin-top: 10px;
   position: absolute;
   right: 30px;
-  top: 50px;
+  top: 37px;
   > button {
     font-size: 15px;
     background-color: #0e5937;
@@ -204,9 +225,9 @@ const ActivityButtons = styled.div`
 `;
 
 const RSideContainer = styled.div`
-  width: 24%;
-  min-width: 400px;
-  margin: 0 1em;
+  width: 20%;
+  min-width: 350px;
+  margin: 0 10px;
   h3 {
     color: #646464;
     text-align: left;
@@ -296,22 +317,5 @@ const Content = styled(Link)`
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
-  }
-`;
-
-const GoBack = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  width: 200px;
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover {
-    background-color: #0e5937;
   }
 `;

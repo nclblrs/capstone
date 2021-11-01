@@ -2,31 +2,55 @@ import React from "react";
 import styled from "styled-components";
 import { BsPaperclip } from "react-icons/bs";
 import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { upload } from "utils/upload";
+import { useParams } from "react-router-dom";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import { CREATE_GROUPSUBMISSION } from "../gql";
+import { toast } from "react-toastify";
+import { useState } from "react/cjs/react.development";
 
-const AssignTaskForm = () => {
-  const { register } = useForm();
+const CreateGroupSubmissionForm = ({ onCreateFinish }) => {
+  const { activityId } = useParams();
+  const { user } = useCurrentUserContext();
+  const { register, watch, handleSubmit } = useForm();
+  const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [createGroupSubmission] = useMutation(CREATE_GROUPSUBMISSION);
+
+  const handleCreateGroupSubmission = async (data) => {
+    const { description } = data;
+
+    try {
+      setIsSubmitting(true);
+      const { data: createGroupSubmissionData } = await createGroupSubmission({
+        variables: {
+          activityId: activityId,
+          description,
+        },
+      });
+
+      const groupSubmissionId =
+        createGroupSubmissionData?.createGroupSubmission?.id;
+
+      if (!groupSubmissionId) throw Error("something is wrong");
+
+      toast.success("Created Submission");
+      onCreateFinish();
+    } catch (error) {
+      toast.error(error.message);
+    }
+
+    setIsSubmitting(false);
+  };
 
   return (
-    <Form>
-      <div>
-        <label>Task Title</label>
-        <input className="title" {...register("title")} />
-      </div>
-      <div>
-        <label>Due</label>
-        <input type="datetime-local" className="due" {...register("dueAt")} />
-      </div>
-      <div>
-        <label>Progress Count</label>
-        <input className="progress" {...register("progress")} />
-      </div>
-      <div>
-        <label>Member</label>
-        <input className="member" {...register("member")} />
-      </div>
+    <Form onSubmit={handleSubmit(handleCreateGroupSubmission)}>
       <div>
         <label className="file"> File </label>
         <label for="attach-file-submission" className="attachmentLabel">
+          {attachedFileName ? attachedFileName : "Attach File"}
           <BsPaperclip size={15} className="attachicon" />
         </label>
         <input
@@ -40,7 +64,9 @@ const AssignTaskForm = () => {
         <label>Description</label>
         <input className="desc" {...register("description")} />
       </div>
-      <button>Submit</button>
+      <button disabled={isSubmitting}>
+        {isSubmitting ? "Creating..." : "Submit "}
+      </button>
     </Form>
   );
 };
@@ -117,4 +143,4 @@ const Form = styled.form`
   }
 `;
 
-export default AssignTaskForm;
+export default CreateGroupSubmissionForm;

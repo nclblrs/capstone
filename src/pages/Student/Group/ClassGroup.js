@@ -44,7 +44,6 @@ const ClassGroup = () => {
 
   const { name, leader, course, students } = data?.group ?? {};
   const { firstName, lastName } = leader?.user ?? {};
-
   const handleBecomeLeader = async (data) => {
     const { leader } = data;
 
@@ -133,7 +132,7 @@ const ClassGroup = () => {
             <Route path={`/group/:groupId/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
-                <Activities />
+                <Activities courseId={course?.id} />
               </LeftContainer>
             </Route>
             <Route path={`/group/:groupId/members`}>
