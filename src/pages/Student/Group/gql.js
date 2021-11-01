@@ -188,3 +188,24 @@ export const GET_GROUP_ACTIVITIES = gql`
     }
   }
 `;
+
+export const CLASSGROUP_FILES = gql`
+  query classGroupFiles($groupId: ID!) {
+    classGroupFiles(groupId: $groupId) {
+      postFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+      groupActivityFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+    }
+  }
+`;
