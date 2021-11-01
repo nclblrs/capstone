@@ -9,12 +9,14 @@ import { useState } from "react";
 import Modal from "components/Modal";
 import CreateActivityForm from "pages/Teacher/Course/Forms/CreateActivityForm";
 import CreateCourseForm from "pages/Teacher/Course/Forms/CreateCourseForm";
+import CreateAgendaForm from "pages/Teacher/Course/Forms/CreateAgendaForm";
 
 const RightSideBar = () => {
   const { loading, data } = useQuery(GET_COURSES);
   const courses = data?.teacherCourses?.data ?? [];
   const [showCreateActivityModal, setShowCreateActivityModal] = useState(false);
   const [showCreateCourseModal, setShowCreateCourseModal] = useState(false);
+  const [showCreateAgendaModal, setShowCreateAgendaModal] = useState(false);
 
   var today = new Date(),
     date =
@@ -59,15 +61,22 @@ const RightSideBar = () => {
               Introduction to Computing
             </p>
           </RSideLinks>
-          <RSideLinks>
-            <p>
-              <BiDotsHorizontalRounded size={18} /> See More
-            </p>
+
+          <RSideLinks to="/calendar">
+            <BiDotsHorizontalRounded size={18} /> See More
           </RSideLinks>
-          <button>
+          <button onClick={() => setShowCreateAgendaModal(true)}>
             Add Agenda &nbsp;
             <FaPlusCircle size={18} />
           </button>
+          <Modal
+            show={showCreateAgendaModal}
+            closeModal={() => setShowCreateAgendaModal(false)}
+            g
+            title="New Agenda"
+          >
+            <CreateAgendaForm />
+          </Modal>
         </RSideItem>
       </RSideReminder>
       <RSideClasses>
