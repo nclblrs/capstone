@@ -18,8 +18,8 @@ import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostForm from "components/PostForm";
 import { useUrlQuery } from "hooks/useUrlQuery";
-import TagsInfo from "./StudyGroupTabs/Tags";
-import Files from "./StudyGroupTabs/Files";
+import TagsInfo from "./Tabs/Tags";
+import Files from "./Tabs/Files";
 
 const StudyGroup = () => {
   const { groupId } = useParams();

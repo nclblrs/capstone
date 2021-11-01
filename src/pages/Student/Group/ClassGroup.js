@@ -18,8 +18,8 @@ import PostForm from "components/PostForm";
 import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
-import Activities from "./StudyGroupTabs/Activities";
-import Files from "./StudyGroupTabs/ClassGroupFiles";
+import Activities from "./Tabs/Activities";
+import Files from "./Tabs/ClassGroupFiles";
 
 const ClassGroup = () => {
   const { groupId } = useParams();
