@@ -9,9 +9,7 @@ import { useState } from "react";
 import Modal from "components/Modal";
 import CreateActivityForm from "pages/Teacher/Course/Forms/CreateActivityForm";
 import CreateCourseForm from "pages/Teacher/Course/Forms/CreateCourseForm";
-import Dropdown, { DropdownButtons } from "components/Dropdown";
 import CreateAgendaForm from "pages/Teacher/Course/Forms/CreateAgendaForm";
-
 
 const RightSideBar = () => {
   const { loading, data } = useQuery(GET_COURSES);
@@ -63,31 +61,22 @@ const RightSideBar = () => {
               Introduction to Computing
             </p>
           </RSideLinks>
-          <RSideLinks>
-            <p>
-              <BiDotsHorizontalRounded size={18} /> See More
-            </p>
+
+          <RSideLinks to="/calendar">
+            <BiDotsHorizontalRounded size={18} /> See More
           </RSideLinks>
-<<<<<<< HEAD
-          <ButtonContainer>
-            <button onClick={() => setShowCreateAgendaModal(true)}>
-              Add Agenda &nbsp;
-              <FaPlusCircle size={18} />
-            </button>
-          </ButtonContainer>
-          <Modal
-            show={showCreateAgendaModal}
-            closeModal={() => setShowCreateAgendaModal(false)}
-            title="Create Agenda"
-          >
-            <CreateAgendaForm />
-          </Modal>
-=======
-          <button>
+          <button onClick={() => setShowCreateAgendaModal(true)}>
             Add Agenda &nbsp;
             <FaPlusCircle size={18} />
           </button>
->>>>>>> 927fccb327b5fc90d837828edb64be6c49c51683
+          <Modal
+            show={showCreateAgendaModal}
+            closeModal={() => setShowCreateAgendaModal(false)}
+            g
+            title="New Agenda"
+          >
+            <CreateAgendaForm />
+          </Modal>
         </RSideItem>
       </RSideReminder>
       <RSideClasses>

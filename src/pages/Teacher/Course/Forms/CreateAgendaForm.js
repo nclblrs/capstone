@@ -38,6 +38,10 @@ const CreateAgendaForm = () => {
         <label>Description</label>
         <input className="desc" />
       </div>
+      <div class="SetPriority">
+        <input type="checkbox" name="Priority" value="" />
+        Set Priority
+      </div>
     </Form>
   );
 };
