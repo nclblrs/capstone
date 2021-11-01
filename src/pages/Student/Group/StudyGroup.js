@@ -118,8 +118,6 @@ const StudyGroup = () => {
                 <h1>Files</h1>
                 <div className="filescontainer">
                   <Files />
-                  <Files />
-                  <Files />
                 </div>
               </LeftContainer>
             </Route>

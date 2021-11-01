@@ -5,13 +5,11 @@ import { useParams } from "react-router-dom";
 import { GET_GROUP_ACTIVITIES } from "../gql";
 import { useQuery } from "@apollo/client";
 
-const Activities = () => {
-  const { classId } = useParams();
-
+const Activities = ({ courseId }) => {
   const { loading: groupActivityLoading, data: groupActivityData } = useQuery(
     GET_GROUP_ACTIVITIES,
     {
-      variables: { courseId: classId },
+      variables: { courseId },
     }
   );
 
