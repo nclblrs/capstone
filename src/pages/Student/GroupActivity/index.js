@@ -129,18 +129,6 @@ const GroupActivityPage = () => {
               }}
             />
           </Modal>
-          <Modal
-            show={showAssignTaskModal}
-            closeModal={() => setShowAssignTaskModal(false)}
-            title="Assign Task"
-          >
-            <AssignTaskForm
-              onCreateFinish={() => {
-                refetch();
-                setShowAssignTaskModal(false);
-              }}
-            />
-          </Modal>
         </>
       )}
     </ActivityContainer>

@@ -19,6 +19,7 @@ import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
 import Activities from "./StudyGroupTabs/Activities";
+import Files from "./StudyGroupTabs/ClassGroupFiles";
 
 const ClassGroup = () => {
   const { groupId } = useParams();
@@ -43,7 +44,6 @@ const ClassGroup = () => {
 
   const { name, leader, course, students } = data?.group ?? {};
   const { firstName, lastName } = leader?.user ?? {};
-
   const handleBecomeLeader = async (data) => {
     const { leader } = data;
 
@@ -126,12 +126,13 @@ const ClassGroup = () => {
             <Route path={`/group/:groupId/files`}>
               <LeftContainer>
                 <h1>Files</h1>
+                <Files />
               </LeftContainer>
             </Route>
             <Route path={`/group/:groupId/activities`}>
               <LeftContainer>
                 <h1>Activities</h1>
-                <Activities />
+                <Activities courseId={course?.id} />
               </LeftContainer>
             </Route>
             <Route path={`/group/:groupId/members`}>

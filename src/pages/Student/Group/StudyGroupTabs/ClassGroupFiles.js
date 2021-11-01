@@ -2,35 +2,31 @@ import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
 import { Switch, NavLink, Route, useParams } from "react-router-dom";
-import { COURSE_FILES } from "../gql";
+import { CLASSGROUP_FILES } from "../gql";
 import { useQuery } from "@apollo/client";
 import { formatBytes } from "utils/upload";
 
 const Files = () => {
-  const { classId } = useParams();
+  const { groupId } = useParams();
 
-  const { loading, data } = useQuery(COURSE_FILES, {
-    variables: { courseId: classId },
+  const { loading, data } = useQuery(CLASSGROUP_FILES, {
+    variables: { groupId: groupId },
   });
-  const postFiles = data?.courseFiles?.postFiles ?? [];
-  const activityFiles = data?.courseFiles?.activityFiles ?? [];
-  const groupActivityFiles = data?.courseFiles?.groupActivityFiles ?? [];
+  const postFiles = data?.classGroupFiles?.postFiles ?? [];
+  const groupActivityFiles = data?.classGroupFiles?.groupActivityFiles ?? [];
 
   return (
     <FileContainer>
       <NavBar>
-        <NavMenu to={`/class/${classId}/files`} exact>
+        <NavMenu to={`/group/${groupId}/files`} exact>
           Post Files
         </NavMenu>
-        <NavMenu to={`/class/${classId}/files/activity`}>
-          Activity Files
-        </NavMenu>
-        <NavMenu to={`/class/${classId}/files/groupactivity`}>
+        <NavMenu to={`/group/${groupId}/files/groupactivity`}>
           Group Activity Files
         </NavMenu>
       </NavBar>
       <Switch>
-        <Route path={`/class/:id/files`} exact>
+        <Route path={`/group/:groupId/files`} exact>
           {loading
             ? "Loading..."
             : postFiles.map(({ id, attachment, user }) => {
@@ -64,39 +60,7 @@ const Files = () => {
                 );
               })}
         </Route>
-        <Route path={`/class/:classId/files/activity`}>
-          {loading
-            ? "Loading..."
-            : activityFiles.map(({ id, attachment }) => {
-                const { original_filename, secure_url, created_at, bytes } =
-                  JSON.parse(attachment) ?? {};
-
-                return (
-                  <>
-                    {attachment && (
-                      <File key={id}>
-                        <Attachment href={secure_url} download>
-                          <h1
-                            title={`${original_filename}.${secure_url
-                              .split(".")
-                              .slice(-1)}`}
-                          >
-                            {original_filename}.
-                            {secure_url.split(".").slice(-1)}
-                          </h1>
-                        </Attachment>
-                        <span>{formatBytes(bytes)}</span>
-
-                        <p className="date">
-                          {dayjs(created_at).format("MMMM D, YYYY [at] h:mm a")}
-                        </p>
-                      </File>
-                    )}
-                  </>
-                );
-              })}
-        </Route>
-        <Route path={`/class/:classId/files/groupactivity`}>
+        <Route path={`/group/:groupId/files/groupactivity`}>
           {loading
             ? "Loading..."
             : groupActivityFiles.map(({ id, attachment, user }) => {
@@ -144,7 +108,7 @@ const File = styled.div`
   height: 110px;
   padding: 10px 20px;
   text-align: left;
-  margin: 1em 1.4em;
+  margin: 1em 1em;
   cursor: pointer;
   .date {
     margin: 0;

@@ -112,7 +112,7 @@ const Form = styled.form`
   padding: 10px 20px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 15px;
 
   label {
     display: inline-block;
@@ -121,6 +121,19 @@ const Form = styled.form`
 
   input {
     width: 400px;
+    font-size: 16px;
+  }
+
+  button,
+  select {
+    color: white;
+    border: none;
+    background-color: #0e5937;
+    width: 100px;
+    padding: 0.4em;
+    font-size: 15px;
+    margin-left: auto;
+    cursor: pointer;
   }
 `;
 

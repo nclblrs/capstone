@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 
-import { useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 const Task = () => {

@@ -177,13 +177,34 @@ export const BECOME_LEADER = gql`
 `;
 
 export const GET_GROUP_ACTIVITIES = gql`
-  query ($courseId: ID!) {
+  query courseGroupActivities($courseId: ID!) {
     courseGroupActivities(courseId: $courseId) {
       data {
         id
         title
         dueAt
         createdAt
+      }
+    }
+  }
+`;
+
+export const CLASSGROUP_FILES = gql`
+  query classGroupFiles($groupId: ID!) {
+    classGroupFiles(groupId: $groupId) {
+      postFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
+      }
+      groupActivityFiles {
+        attachment
+        user {
+          firstName
+          lastName
+        }
       }
     }
   }
