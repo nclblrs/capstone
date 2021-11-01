@@ -25,6 +25,7 @@ export const COURSE_ACTIVITY = gql`
         description
         submittedAt
         createdAt
+        grade
       }
     }
   }

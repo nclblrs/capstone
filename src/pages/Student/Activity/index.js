@@ -77,7 +77,15 @@ const Activity = () => {
                       {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                     </span>
                     <span>{myDescription}</span>
-                    <span>{grade}</span>
+                    <span className="activityGrade">
+                      {grade ? (
+                        <>
+                          {grade} / {points}
+                        </>
+                      ) : (
+                        "Not graded yet."
+                      )}
+                    </span>
                   </>
                 ) : (
                   <span>You haven't submitted anything yet.</span>
@@ -193,6 +201,15 @@ const ActivityContent = styled.div`
   }
   .description {
     margin-top: 25px;
+  }
+  .activityGrade {
+    background-color: #0e5937;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    color: white;
   }
 `;
 
