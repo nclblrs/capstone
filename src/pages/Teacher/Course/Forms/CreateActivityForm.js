@@ -15,7 +15,7 @@ import {
 import { toast } from "react-toastify";
 
 const CreateActivityForm = ({ onCreateFinish }) => {
-  const { id } = useParams();
+  const { classId } = useParams();
   const { user } = useCurrentUserContext();
   const { register, watch, handleSubmit } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
@@ -37,7 +37,7 @@ const CreateActivityForm = ({ onCreateFinish }) => {
       try {
         const { data: createActivityData } = await createActivity({
           variables: {
-            courseId: id,
+            courseId: classId,
             title,
             description,
             dueAt,
@@ -74,11 +74,11 @@ const CreateActivityForm = ({ onCreateFinish }) => {
       try {
         const { data: createGroupActivityData } = await createGroupActivity({
           variables: {
-            courseId: id,
+            courseId: classId,
             title,
             description,
             dueAt,
-            points,
+            points: parseInt(points),
           },
         });
 
