@@ -77,7 +77,7 @@ export const CREATE_GROUP_ACTIVITY = gql`
     $description: String!
     $dueAt: Date!
     $courseId: ID!
-    $points: Int
+    $points: Int!
   ) {
     createGroupActivity(
       title: $title
