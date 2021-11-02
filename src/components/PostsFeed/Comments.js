@@ -69,7 +69,7 @@ const Comments = ({ postId }) => {
 
       {!!comments.length &&
         comments.map(({ id, content, createdAt, user, vote, score }) => {
-          const { firstName, lastName, id: userId, profilePicture } = user;
+          const { firstName, lastName, profilePicture } = user;
           const { secure_url } = JSON.parse(profilePicture) ?? {};
           return (
             <Comment key={id}>

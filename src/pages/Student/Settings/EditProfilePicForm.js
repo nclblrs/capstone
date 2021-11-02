@@ -9,10 +9,9 @@ import { CHANGE_PROFILEPIC } from "./gql";
 
 const EditProfilePicForm = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { register, watch, handleSubmit } = useForm();
+  const { register, handleSubmit } = useForm();
   const { user } = useCurrentUserContext();
   const [changeProfilePicture] = useMutation(CHANGE_PROFILEPIC);
-  const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
 
   const handleChangeProfilePicture = async (data) => {
     const { file: files } = data;

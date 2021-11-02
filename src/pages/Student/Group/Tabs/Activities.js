@@ -1,7 +1,6 @@
 import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import { useParams } from "react-router-dom";
 import { GET_GROUP_ACTIVITIES } from "../gql";
 import { useQuery } from "@apollo/client";
 
