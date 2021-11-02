@@ -15,6 +15,7 @@ export const GET_SUBMISSION = gql`
         user {
           firstName
           lastName
+          profilePicture
         }
       }
     }
@@ -37,6 +38,7 @@ export const COURSE_ACTIVITYSUBMISSIONS = gql`
             id
             firstName
             lastName
+            profilePicture
           }
         }
       }

@@ -13,6 +13,7 @@ export const GET_COURSE = gql`
         user {
           firstName
           lastName
+          profilePicture
         }
       }
       students {
@@ -20,6 +21,7 @@ export const GET_COURSE = gql`
           user {
             firstName
             lastName
+            profilePicture
           }
         }
       }

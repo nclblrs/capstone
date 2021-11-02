@@ -11,6 +11,7 @@ export const GET_COURSE = gql`
       teacher {
         id
         user {
+          profilePicture
           firstName
           lastName
         }
@@ -18,6 +19,7 @@ export const GET_COURSE = gql`
       students {
         data {
           user {
+            profilePicture
             firstName
             lastName
           }

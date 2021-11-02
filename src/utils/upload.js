@@ -49,3 +49,10 @@ export const formatBytes = (bytes, decimals = 2) => {
 
   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + " " + sizes[i];
 };
+
+export const smallProfpicUrl = (url) => {
+  if (!url)
+    return "https://cdn.discordapp.com/attachments/803530289653481475/905158223995220008/9311412861606062171-512.png";
+  const splitUrl = url.split("upload");
+  return `${splitUrl[0]}upload/w_100,ar_1:1,c_fill,g_auto${splitUrl[1]}`;
+};

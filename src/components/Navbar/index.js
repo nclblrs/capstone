@@ -6,7 +6,7 @@ import home from "./images/home.svg";
 import clock from "./images/clock.svg";
 import calendar from "./images/calendar.svg";
 import progress from "./images/progress.svg";
-
+import { smallProfpicUrl } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 
@@ -14,7 +14,8 @@ const Navbar = () => {
   const { user, loading } = useCurrentUserContext();
   const isAdmin = user?.isAdmin;
   const teacher = user?.teacher;
-
+  const { firstName, lastName, profilePicture = null } = user ?? {};
+  const { secure_url } = JSON.parse(profilePicture) ?? {};
   return (
     <Nav>
       <NavLogo to="">
@@ -50,11 +51,8 @@ const Navbar = () => {
         }
       >
         <Profile to="#">
-          <img
-            src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-            alt="Your profile pic"
-          />
-          {loading ? "Loading..." : `${user?.firstName} ${user?.lastName}`}
+          <img src={smallProfpicUrl(secure_url)} alt="Your profile pic" />
+          {loading ? "Loading..." : `${firstName} ${lastName}`}
         </Profile>
       </Dropdown>
     </Nav>
@@ -138,11 +136,9 @@ const Profile = styled(NavLink)`
   color: white;
   align-items: center;
   img {
-    border-top-left-radius: 50% 50%;
-    border-top-right-radius: 50% 50%;
-    border-bottom-right-radius: 50% 50%;
-    border-bottom-left-radius: 50% 50%;
+    border-radius: 50%;
     width: 50px;
+    height: 50px;
     margin-right: 10px;
     object-fit: cover;
   }

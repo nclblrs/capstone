@@ -4,6 +4,7 @@ import dayjs from "dayjs";
 import { useLocation } from "react-router";
 import Comments from "./Comments";
 import { RiFileCopy2Fill } from "react-icons/ri";
+import { smallProfpicUrl } from "utils/upload";
 
 const PostsFeed = ({ posts }) => {
   const location = useLocation();
@@ -24,7 +25,7 @@ const PostsFeed = ({ posts }) => {
           course,
           tags,
         }) => {
-          const { id: userId, firstName, lastName } = user;
+          const { firstName, lastName, profilePicture = null } = user ?? {};
           const {
             id: activityId,
             title,
@@ -38,15 +39,14 @@ const PostsFeed = ({ posts }) => {
           const { original_filename, secure_url } =
             JSON.parse(attachment) ?? JSON.parse(activityAttachment) ?? {};
 
+          const { secure_url: secure_url2 } = JSON.parse(profilePicture) ?? {};
+
           const postedIn = group || course;
 
           return (
             <PostContainer key={id}>
               <Post>
-                <img
-                  src={`https://picsum.photos/seed/${userId}/80/80`}
-                  alt="a"
-                />
+                <img src={smallProfpicUrl(secure_url2)} alt="a" />
                 <PostContent>
                   <h3>
                     {firstName} {lastName}

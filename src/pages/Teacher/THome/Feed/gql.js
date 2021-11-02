@@ -22,6 +22,7 @@ export const GET_FEED = gql`
           id
           firstName
           lastName
+          profilePicture
         }
         activity {
           id

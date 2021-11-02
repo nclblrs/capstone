@@ -6,12 +6,23 @@ import { BsPencilSquare } from "react-icons/bs";
 import { useState } from "react";
 import Modal from "components/Modal";
 import EditProfileForm from "./EditProfileForm";
+import EditProfilePicForm from "./EditProfilePicForm";
+import { smallProfpicUrl } from "utils/upload";
 
 const TSettings = () => {
   const { user, loading } = useCurrentUserContext();
-  const { firstName, middleName, lastName, schoolIdNumber, student, emails } =
-    user ?? {};
+  const {
+    firstName,
+    middleName,
+    lastName,
+    schoolIdNumber,
+    student,
+    emails,
+    profilePicture = null,
+  } = user ?? {};
   const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [showEditProfilePicModal, setShowEditProfilePicModal] = useState(false);
+  const { secure_url } = JSON.parse(profilePicture) ?? {};
   return (
     <SettingsContainer>
       <AllContainer>
@@ -29,9 +40,15 @@ const TSettings = () => {
               <ProfileTop>
                 <img
                   className="profilepic"
-                  src="https://images.unsplash.com/photo-1568822617270-2c1579f8dfe2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8Mnx8dGVhY2hlcnxlbnwwfDJ8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                  src={smallProfpicUrl(secure_url)}
                   alt="Your profile pic"
                 />
+                <button
+                  className="editpic"
+                  onClick={() => setShowEditProfilePicModal(true)}
+                >
+                  <BsPencilSquare size={20} />
+                </button>
                 <ul>
                   <li className="name">
                     {loading
@@ -135,6 +152,13 @@ const TSettings = () => {
       >
         <EditProfileForm />
       </Modal>
+      <Modal
+        show={showEditProfilePicModal}
+        closeModal={() => setShowEditProfilePicModal(false)}
+        title="Edit Profile Picture"
+      >
+        <EditProfilePicForm />
+      </Modal>
     </SettingsContainer>
   );
 };
@@ -218,6 +242,20 @@ const ProfileTop = styled.div`
     top: 230px;
     cursor: pointer;
     flex-wrap: wrap;
+
+    &:hover {
+      background-color: #157348;
+      color: white;
+    }
+  }
+  .editpic {
+    width: 40px;
+    height: 40px;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
 
     &:hover {
       background-color: #157348;

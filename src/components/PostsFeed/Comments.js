@@ -8,6 +8,7 @@ import dayjs from "dayjs";
 
 import { CREATE_POST_COMMENT, POST_COMMENTS, VOTE_COMMENT } from "./gql";
 import ViewportBlock from "components/ViewportBlock";
+import { smallProfpicUrl } from "utils/upload";
 
 const Comments = ({ postId }) => {
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -68,11 +69,11 @@ const Comments = ({ postId }) => {
 
       {!!comments.length &&
         comments.map(({ id, content, createdAt, user, vote, score }) => {
-          const { firstName, lastName, id: userId } = user;
-
+          const { firstName, lastName, id: userId, profilePicture } = user;
+          const { secure_url } = JSON.parse(profilePicture) ?? {};
           return (
             <Comment key={id}>
-              <img src={`https://picsum.photos/seed/${userId}/80/80`} alt="a" />
+              <img src={smallProfpicUrl(secure_url)} alt="a" />
               <CommentContent>
                 <h3>
                   {firstName} {lastName}
@@ -82,13 +83,13 @@ const Comments = ({ postId }) => {
               </CommentContent>
               <Votes>
                 <IoIosArrowUp
-                  size={30}
+                  size={25}
                   onClick={() => handleVote(id, vote === 1 ? 0 : 1)}
                   color={vote === 1 ? "#0f482f" : "#0f482f33"}
                 />
                 {score}
                 <IoIosArrowDown
-                  size={30}
+                  size={25}
                   onClick={() => handleVote(id, vote === -1 ? 0 : -1)}
                   color={vote === -1 ? "#0f482f" : "#0f482f33"}
                 />
@@ -113,14 +114,16 @@ const Comment = styled.div`
   border: 1px solid #646464;
   border-radius: 4px;
   width: 100%;
-  padding: 24px 18px;
+  padding: 15px 18px;
   padding-right: 40px;
   display: flex;
   gap: 20px;
+  height: 140px;
 
   > img {
-    width: 68px;
-    height: 68px;
+    margin-top: 10px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
   }
 `;
@@ -131,7 +134,7 @@ const CommentContent = styled.div`
   > h3 {
     margin: 0;
     color: #0f482f;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 400;
     margin: 8px 0;
   }
@@ -162,7 +165,7 @@ const CommentContent = styled.div`
   }
   > p {
     color: #0f482f;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: 400;
   }
 `;
@@ -199,7 +202,7 @@ const Votes = styled.div`
   align-items: center;
   justify-content: center;
   color: #646464;
-  font-size: 18px;
+  font-size: 16px;
 
   svg {
     cursor: pointer;

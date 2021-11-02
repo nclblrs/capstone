@@ -8,6 +8,7 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import Modal from "components/Modal";
 import GradeSubmissionForm from "./Forms/GradeSubmissionForm";
+import { smallProfpicUrl } from "utils/upload";
 
 const Submission = () => {
   const [showGradeSubmissionModal, setShowGradeSubmissionModal] =
@@ -15,6 +16,7 @@ const Submission = () => {
 
   const location = useLocation();
   const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
+
   const { submissionId, activityId, classId } = useParams();
   const { loading: submissionLoading, data: submissionData } = useQuery(
     GET_SUBMISSION,
@@ -106,17 +108,21 @@ const Submission = () => {
                 : activitySubmissions
                     .filter(({ id }) => submissionId !== id)
                     .map(({ id, student }) => {
+                      const {
+                        firstName,
+                        lastName,
+                        profilePicture = null,
+                      } = student?.user ?? {};
+                      const { secure_url: secure_url2 } =
+                        JSON.parse(profilePicture) ?? {};
                       return (
                         <Container key={id}>
                           <Content
                             to={`${removeLast(location.pathname)}/${id}`}
                           >
-                            <img
-                              src={`https://picsum.photos/seed/${student.user.id}/80/80`}
-                              alt="a"
-                            />
+                            <img src={smallProfpicUrl(secure_url2)} alt="a" />
                             <h1>
-                              {student.user.firstName} {student.user.lastName}
+                              {firstName} {lastName}
                             </h1>
                           </Content>
                         </Container>
