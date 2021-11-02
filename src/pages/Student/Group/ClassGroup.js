@@ -6,6 +6,7 @@ import {
   CREATE_GROUP_POST,
   GET_GROUP,
   BECOME_LEADER,
+  TRANSFER_LEADERSHIP,
 } from "./gql";
 import { useMutation, useQuery } from "@apollo/client";
 import { useParams, NavLink, Switch, Route } from "react-router-dom";
@@ -20,6 +21,7 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import PostsFeed from "components/PostsFeed";
 import Activities from "./Tabs/Activities";
 import Files from "./Tabs/ClassGroupFiles";
+import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const ClassGroup = () => {
   const { groupId } = useParams();
@@ -28,14 +30,15 @@ const ClassGroup = () => {
   const [createPost] = useMutation(CREATE_GROUP_POST);
   const [addAttachmentToPost] = useMutation(ADD_ATTACHMENT_TO_POST);
   const [becomeLeader] = useMutation(BECOME_LEADER);
+  const [transferLeadership] = useMutation(TRANSFER_LEADERSHIP);
 
-  const { loading, data } = useQuery(GET_GROUP, {
+  const { loading, data, refetch } = useQuery(GET_GROUP, {
     variables: { groupId: groupId },
   });
   const {
     data: postsData,
     loading: postsLoading,
-    refetch,
+    refetch: refetchPosts,
   } = useQuery(GROUP_POSTS, {
     variables: { groupId: groupId },
   });
@@ -54,6 +57,21 @@ const ClassGroup = () => {
 
       if (data?.becomeLeader?.id) {
         toast.success("Group Leader Assigned");
+        refetch();
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const handleTransferLeadership = async (id) => {
+    try {
+      const { data } = await transferLeadership({
+        variables: { groupId, studentId: id },
+      });
+
+      if (data?.transferLeadership?.id) {
+        toast.success("Group leadership transferred");
         refetch();
       }
     } catch (error) {
@@ -89,7 +107,7 @@ const ClassGroup = () => {
 
       toast.success("Created Post");
 
-      refetch();
+      refetchPosts();
     } catch (error) {
       toast.error(error.message);
     }
@@ -142,6 +160,27 @@ const ClassGroup = () => {
                   {!leader && (
                     <button onClick={handleBecomeLeader}>
                       Become the Leader
+                    </button>
+                  )}
+                  {leader?.id === user?.id && (
+                    <button>
+                      <Dropdown
+                        popperComponent={
+                          <DropdownButtons>
+                            {students?.data
+                              ?.filter(({ id }) => id !== user.id)
+                              .map(({ id, user }) => (
+                                <button
+                                  onClick={() => handleTransferLeadership(id)}
+                                >
+                                  {user.firstName} {user.lastName}
+                                </button>
+                              ))}
+                          </DropdownButtons>
+                        }
+                      >
+                        Transfer leadership
+                      </Dropdown>
                     </button>
                   )}
                 </h1>
