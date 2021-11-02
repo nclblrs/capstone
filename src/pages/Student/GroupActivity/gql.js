@@ -25,15 +25,7 @@ export const COURSE_GROUPACTIVITY = gql`
         }
       }
       mySubmission {
-        group {
-          leader {
-            id
-            user {
-              firstName
-              lastName
-            }
-          }
-        }
+        id
       }
     }
   }
@@ -43,17 +35,6 @@ export const CREATE_GROUPSUBMISSION = gql`
   mutation createGroupSubmission($groupActivityId: ID!) {
     createGroupSubmission(groupActivityId: $groupActivityId) {
       id
-    }
-  }
-`;
-export const GET_GROUPSUBMISSION = gql`
-  query groupSubmission($groupSubmissionId: ID!) {
-    groupSubmission(groupSubmissionId: $groupSubmissionId) {
-      id
-      group {
-        id
-        leader
-      }
     }
   }
 `;

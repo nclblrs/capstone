@@ -1,11 +1,25 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
+import { GET_GROUPSUBMISSION } from "./gql";
 import Modal from "components/Modal";
 import AssignTaskForm from "pages/Student/GroupActivity/Forms/AssignTaskForm";
+import { useQuery } from "@apollo/client";
+import { useParams } from "react-router-dom";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const Progress = () => {
+  const { user } = useCurrentUserContext();
   const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
+  const { groupSubmissionId } = useParams();
+  const { loading, data, refetch } = useQuery(GET_GROUPSUBMISSION, {
+    variables: { groupSubmissionId: groupSubmissionId },
+  });
+
+  const { group, tasks, groupActivity } = data?.groupSubmission ?? {};
+
+  const { name, leader, course } = group ?? {};
+  const taskInfo = tasks?.data ?? [];
+  const { title, description } = groupActivity ?? {};
 
   return (
     <ProgressContainer>
@@ -37,23 +51,39 @@ const Progress = () => {
         </UpperContainer>
         <TasksContainer>
           <Container>
-            <Content>
-              <h1>Chapter 3</h1>
-              <span>Assigned to:</span>
-            </Content>
+            {loading
+              ? "Loading..."
+              : taskInfo.map(
+                  ({ id, attachment, description, status, dueAt, student }) => {
+                    return (
+                      <Content>
+                        <h1>{description}</h1>
+                        <span>Assigned to:</span>
+                      </Content>
+                    );
+                  }
+                )}
           </Container>
         </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
         <AboutContainer>
           <h3>ABOUT</h3>
+          {name}
+          {course?.name}
+          {leader?.user?.firstName}
+          {leader?.user?.lastName}
+          {course?.teacher?.user?.firstName}
+          {course?.teacher?.user?.lastName}
         </AboutContainer>
         <ToDoContainer>
           <h3>TO-DO</h3>
         </ToDoContainer>
-        <button onClick={() => setShowAssignTaskModal(true)}>
-          Assign Task
-        </button>
+        {leader?.id === user.id && (
+          <button onClick={() => setShowAssignTaskModal(true)}>
+            Assign Task
+          </button>
+        )}
       </RightSideContainer>
       <Modal
         show={showAssignTaskModal}

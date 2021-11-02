@@ -27,11 +27,12 @@ const GroupActivityPage = () => {
     course,
     attachment = null,
     points,
+    mySubmission,
   } = data?.groupActivity ?? {};
 
-  const { teacher, name, myGroup, id: classId } = course ?? {};
+  const { teacher, name, id: classId } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
-  const { leader } = myGroup ?? {};
+  const { id: groupSubmissionId } = mySubmission ?? {};
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
   return (
@@ -51,21 +52,17 @@ const GroupActivityPage = () => {
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
               </ActivityContent>
               <ActivityButtons>
-                {user?.id === leader?.id ? (
-                  <>
-                    <button onClick={() => setShowAssignTaskModal(true)}>
-                      Assign Task
-                    </button>
-                  </>
-                ) : (
-                  ""
-                )}
                 <button>Submit</button>
               </ActivityButtons>
             </ActivityHeader>
             <ActivityHeader>
               <ActivityContent>
                 <h1>Your Group's Submission</h1>
+                <ActivityButtons>
+                  <Link to={`/progress/${groupSubmissionId}`}>
+                    Group Progress
+                  </Link>
+                </ActivityButtons>
                 <Container>
                   <Content>
                     <h1>
