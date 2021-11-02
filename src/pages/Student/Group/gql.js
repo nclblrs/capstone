@@ -12,6 +12,7 @@ export const GET_GROUP = gql`
         name
       }
       leader {
+        id
         user {
           firstName
           lastName
@@ -27,6 +28,7 @@ export const GET_GROUP = gql`
       }
       students {
         data {
+          id
           user {
             firstName
             middleName
@@ -171,6 +173,14 @@ export const STUDYGROUP_FILES = gql`
 export const BECOME_LEADER = gql`
   mutation becomeLeader($groupId: ID!) {
     becomeLeader(groupId: $groupId) {
+      id
+    }
+  }
+`;
+
+export const TRANSFER_LEADERSHIP = gql`
+  mutation transferLeadership($groupId: ID!, $studentId: ID!) {
+    transferLeadership(groupId: $groupId, studentId: $studentId) {
       id
     }
   }
