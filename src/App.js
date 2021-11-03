@@ -83,6 +83,9 @@ function App() {
                   <Route path="/calendar">
                     <Calendar />
                   </Route>
+                  <Route path="/progress/:groupSubmissionId/task/:taskId">
+                    <Task />
+                  </Route>
                   <Route path="/progress/:groupSubmissionId">
                     <Progress />
                   </Route>
