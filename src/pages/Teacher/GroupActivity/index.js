@@ -7,7 +7,7 @@ import { COURSE_GROUPACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
-import AssignTaskForm from "pages/Student/GroupActivity/Forms/AssignTaskForm";
+import AssignTaskForm from "pages/Student/Progress/Forms/AssignTaskForm";
 import { Link } from "react-router-dom";
 import { FaLaptop } from "react-icons/fa";
 
