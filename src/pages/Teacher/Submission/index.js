@@ -61,14 +61,6 @@ const Submission = () => {
                 <span>
                   {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
-                {attachment && (
-                  <>
-                    Attachment:
-                    <Attachment href={secure_url} download>
-                      {original_filename}.{secure_url.split(".").slice(-1)}
-                    </Attachment>
-                  </>
-                )}
               </ActivityContent>
               <ActivityButtons>
                 {activity.points ? (
@@ -77,12 +69,11 @@ const Submission = () => {
                       Add Grade
                     </button>
                   ) : (
-                    `${grade}/`
+                    `${grade}/${activity.points}`
                   )
                 ) : (
                   ""
                 )}
-                {activity.points}
               </ActivityButtons>
             </ActivityHeader>
             <ActivityHeader>
@@ -186,7 +177,7 @@ const ActivityHeader = styled.div`
 `;
 
 const ActivityContent = styled.div`
-  width: 60%;
+  width: 95%;
   margin: 1em;
 
   > h1 {

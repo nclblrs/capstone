@@ -7,6 +7,7 @@ export const GET_SUBMISSION = gql`
       description
       createdAt
       grade
+      attachment
       activity {
         id
         points
@@ -27,6 +28,7 @@ export const COURSE_ACTIVITYSUBMISSIONS = gql`
     activitySubmissions(activityId: $activityId) {
       data {
         id
+
         activity {
           id
           course {
