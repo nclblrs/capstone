@@ -24,6 +24,16 @@ export const GET_GROUPSUBMISSION = gql`
             }
           }
         }
+        students {
+          data {
+            id
+            user {
+              id
+              firstName
+              lastName
+            }
+          }
+        }
       }
       tasks {
         data {
@@ -45,6 +55,37 @@ export const GET_GROUPSUBMISSION = gql`
         title
         description
       }
+      myTask {
+        id
+      }
+    }
+  }
+`;
+export const CREATE_TASK = gql`
+  mutation createTask(
+    $groupSubmissionId: ID!
+    $studentId: ID!
+    $note: String!
+    $dueAt: Date!
+    $title: String!
+  ) {
+    createTask(
+      groupSubmissionId: $groupSubmissionId
+      studentId: $studentId
+      note: $note
+      dueAt: $dueAt
+      title: $title
+    ) {
+      id
+      dueAt
+    }
+  }
+`;
+export const CHANGE_TASK_STATUS = gql`
+  mutation changeTaskStatus($taskId: ID!, $status: TaskStatus!) {
+    changeTaskStatus(taskId: $taskId, status: $status) {
+      id
+      status
     }
   }
 `;
