@@ -8,6 +8,7 @@ export const COURSE_ACTIVITY = gql`
       description
       dueAt
       attachment
+      points
       course {
         id
         name
@@ -29,6 +30,7 @@ export const COURSE_GROUPACTIVITY = gql`
       description
       dueAt
       attachment
+      points
       course {
         id
         name

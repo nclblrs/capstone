@@ -28,9 +28,9 @@ export const COURSE_ACTIVITYSUBMISSIONS = gql`
     activitySubmissions(activityId: $activityId) {
       data {
         id
-
         activity {
           id
+          points
           course {
             id
           }

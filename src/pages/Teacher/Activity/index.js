@@ -50,7 +50,7 @@ const TActivity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} &nbsp;{"▏"}Due:{" "}
+                  {name} &nbsp;{"▏"} Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
