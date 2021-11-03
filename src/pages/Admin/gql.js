@@ -10,6 +10,7 @@ export const USERS = gql`
         lastName
         isAdmin
         schoolIdNumber
+        profilePicture
         student {
           id
         }

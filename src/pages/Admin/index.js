@@ -10,6 +10,7 @@ import { useUrlQuery } from "hooks/useUrlQuery";
 
 import AddNewUserForm from "./AddNewUserForm";
 import { USERS, USERS_COUNT } from "./gql";
+import { smallProfpicUrl } from "utils/upload";
 
 const Admin = () => {
   const history = useHistory();
@@ -90,40 +91,42 @@ const Admin = () => {
                 isAdmin,
                 student,
                 teacher,
-              }) => (
-                <tr key={id}>
-                  <td>
-                    <img
-                      src={`https://picsum.photos/seed/${id}/80/80`}
-                      alt="a"
-                    />
-                  </td>
-                  <td className="name">
-                    {firstName} {lastName}
-                  </td>
-                  <td>{schoolIdNumber}</td>
-                  <td>{emails[0].address}</td>
-                  <td>
-                    {isAdmin
-                      ? "Admin"
-                      : teacher
-                      ? "Teacher"
-                      : student
-                      ? "Student"
-                      : "None"}
-                  </td>
-                  <td>
-                    <button className="edit">
-                      <FaPenSquare size={18} />
-                    </button>
-                  </td>
-                  <td>
-                    <button className="delete">
-                      <FaTrashAlt size={18} />
-                    </button>
-                  </td>
-                </tr>
-              )
+                profilePicture = null,
+              }) => {
+                const { secure_url } = JSON.parse(profilePicture) ?? {};
+
+                return (
+                  <tr key={id}>
+                    <td>
+                      <img src={smallProfpicUrl(secure_url)} alt="a" />
+                    </td>
+                    <td className="name">
+                      {firstName} {lastName}
+                    </td>
+                    <td>{schoolIdNumber}</td>
+                    <td>{emails[0].address}</td>
+                    <td>
+                      {isAdmin
+                        ? "Admin"
+                        : teacher
+                        ? "Teacher"
+                        : student
+                        ? "Student"
+                        : "None"}
+                    </td>
+                    <td>
+                      <button className="edit">
+                        <FaPenSquare size={18} />
+                      </button>
+                    </td>
+                    <td>
+                      <button className="delete">
+                        <FaTrashAlt size={18} />
+                      </button>
+                    </td>
+                  </tr>
+                );
+              }
             )
           )}
         </tbody>
