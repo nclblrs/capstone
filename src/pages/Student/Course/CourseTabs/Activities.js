@@ -67,21 +67,30 @@ const Activities = () => {
         <Route path={`/class/:classId/activities/group`}>
           {groupActivityLoading
             ? "Loading..."
-            : groupActivityInfo.map(({ id, title, dueAt, createdAt }) => {
-                return (
-                  <>
-                    <Activity key={id}>
-                      <Content>
-                        <h1>{title} </h1>
-                        <h4>
-                          {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
-                        </h4>
-                        <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
-                      </Content>
-                    </Activity>
-                  </>
-                );
-              })}
+            : groupActivityInfo.map(
+                ({ id, title, dueAt, createdAt, course }) => {
+                  return (
+                    <>
+                      <Activity key={id}>
+                        <Content>
+                          <h1>{title} </h1>
+                          <h4>
+                            {dayjs(createdAt).format(
+                              "MMMM D, YYYY [at] h:mm a"
+                            )}
+                          </h4>
+                          <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
+                        </Content>
+                        <ViewLink
+                          to={`/class/${course.id}/groupactivity/${id}`}
+                        >
+                          View
+                        </ViewLink>
+                      </Activity>
+                    </>
+                  );
+                }
+              )}
         </Route>
       </Switch>
     </ActivityContainer>
