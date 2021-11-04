@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { FaSchool } from "react-icons/fa";
 import { SiGoogleclassroom } from "react-icons/si";
-import { FiClock } from "react-icons/fi";
+/* import { FiClock } from "react-icons/fi";
 import { BiCalendar } from "react-icons/bi";
-/*import { AiFillPieChart } from "react-icons/ai";*/
+import { AiFillPieChart } from "react-icons/ai";*/
 
 const Sidebar = () => {
   return (
@@ -18,6 +18,7 @@ const Sidebar = () => {
           <SiGoogleclassroom size={20} />
           Classes
         </NavMenu>
+        {/*
         <NavMenu to="/class-schedule">
           <FiClock size={20} />
           Class Schedule
@@ -26,7 +27,7 @@ const Sidebar = () => {
           <BiCalendar size={20} />
           Calendar
         </NavMenu>
-        {/*<NavMenu to="/progress">
+        <NavMenu to="/progress">
           <AiFillPieChart size={20} />
           Progress
   </NavMenu>*/}
@@ -66,7 +67,7 @@ const NavMenu = styled(NavLink)`
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 25px 68px;
+  padding: 25px 100px;
 
   &:hover,
   &.active {

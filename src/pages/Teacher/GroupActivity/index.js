@@ -43,7 +43,7 @@ const TGroupActivityPage = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} {"▏"} Due:{" "}
+                  {name} &thinsp; | &thinsp; Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>

@@ -29,9 +29,9 @@ const TSettings = () => {
         <NavMenu to="/settings" exact>
           <li>Personal Information</li>
         </NavMenu>
-        <NavMenu to="/settings/change-password">
-          <li>Change Password</li>
-        </NavMenu>
+        {/* <NavMenu to="/settings/change-password">
+          <li>Change Password</li> 
+  </NavMenu> */}
       </AllContainer>
       <RSideContainer>
         <Switch>
@@ -249,13 +249,15 @@ const ProfileTop = styled.div`
     }
   }
   .editpic {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background-color: #0e5937;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 50%;
+    position: absolute;
+    margin: 3em 11em;
 
     &:hover {
       background-color: #157348;

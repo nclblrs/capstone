@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { GET_COURSES } from "./gql";
-import { FaPlusCircle, FaLaptop, FaRegLightbulb } from "react-icons/fa";
+import { /* FaPlusCircle, */ FaLaptop, FaRegLightbulb } from "react-icons/fa";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { useState } from "react";
 import Modal from "components/Modal";
@@ -65,10 +65,10 @@ const RightSideBar = () => {
           <RSideLinks to="/calendar">
             <BiDotsHorizontalRounded size={18} /> See More
           </RSideLinks>
-          <button onClick={() => setShowCreateAgendaModal(true)}>
+          {/*  <button onClick={() => setShowCreateAgendaModal(true)}>
             Add Agenda &nbsp;
             <FaPlusCircle size={18} />
-          </button>
+  </button> */}
           <Modal
             show={showCreateAgendaModal}
             closeModal={() => setShowCreateAgendaModal(false)}
