@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 
 export const USERS = gql`
   query users($filter: UsersFilter) {
-    users(filter: $filter) {
+    users(pagination: { page: 1, limit: 200 }, filter: $filter) {
       data {
         id
         firstName

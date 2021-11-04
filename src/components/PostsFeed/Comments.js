@@ -118,7 +118,6 @@ const Comment = styled.div`
   padding-right: 40px;
   display: flex;
   gap: 20px;
-  height: 140px;
 
   > img {
     margin-top: 10px;

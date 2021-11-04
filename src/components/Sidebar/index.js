@@ -5,7 +5,7 @@ import { FaSchool } from "react-icons/fa";
 import { SiGoogleclassroom } from "react-icons/si";
 import { FiClock } from "react-icons/fi";
 import { BiCalendar } from "react-icons/bi";
-import { AiFillPieChart } from "react-icons/ai";
+/*import { AiFillPieChart } from "react-icons/ai";*/
 
 const Sidebar = () => {
   return (
@@ -26,10 +26,10 @@ const Sidebar = () => {
           <BiCalendar size={20} />
           Calendar
         </NavMenu>
-        <NavMenu to="/progress">
+        {/*<NavMenu to="/progress">
           <AiFillPieChart size={20} />
           Progress
-        </NavMenu>
+  </NavMenu>*/}
       </SidebarContainer>
     </Nav>
   );

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { toast } from "react-toastify";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 import { upload } from "utils/upload";
 import { CHANGE_PROFILEPIC } from "./gql";
 

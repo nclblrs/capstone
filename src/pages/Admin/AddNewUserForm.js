@@ -81,10 +81,10 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         <label>Last Name</label>
         <input {...register("lastName", { required: true })} />
       </div>
-      <div>
+      {/*<div>
         <label> Year-Level: </label>
         <input type="text" name="Year-Level" />
-      </div>
+      </div>*/}
       <div>
         <label>Email</label>
         <input {...register("email", { required: true })} />
