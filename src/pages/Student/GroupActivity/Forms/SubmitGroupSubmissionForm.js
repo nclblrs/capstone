@@ -70,7 +70,10 @@ const SubmitGroupSubmissionForm = ({ onCreateFinish, groupSubmissionId }) => {
       </div>
       <div>
         <label>Description</label>
-        <input className="desc" {...register("description")} />
+        <input
+          className="desc"
+          {...register("description", { required: true })}
+        />
       </div>
       <button disabled={isSubmitting}>
         {isSubmitting ? "Creating..." : "Submit "}
