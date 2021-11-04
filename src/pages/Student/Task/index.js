@@ -1,24 +1,177 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
-
+import { GET_TASK } from "./gql";
 import { Link } from "react-router-dom";
+import { useQuery, useMutation } from "@apollo/client";
+import { useParams } from "react-router";
+import dayjs from "dayjs";
+import Modal from "components/Modal";
+import SubmitTaskForm from "./Forms/SubmitTaskForm";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
+import { CHANGE_TASK_STATUS } from "./gql";
+import { toast } from "react-toastify";
+import Dropdown, { DropdownButtons } from "components/Dropdown";
 
 const Task = () => {
+  const [showSubmitTaskModal, setShowSubmitTaskModal] = useState(false);
+  const { user } = useCurrentUserContext();
+  const { taskId, groupSubmissionId } = useParams();
+  const [changeTaskStatus] = useMutation(CHANGE_TASK_STATUS);
+  const { loading, data, refetch } = useQuery(GET_TASK, {
+    variables: { taskId: taskId },
+  });
+
+  const {
+    id,
+    title,
+    note,
+    dueAt,
+    createdAt,
+    status,
+    groupSubmission,
+    student,
+  } = data?.task ?? {};
+
+  const { myTask, group } = groupSubmission ?? {};
+
+  const { description, attachment = null, submittedAt } = myTask ?? {};
+
+  const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
+
+  const handleChangeTaskStatus = async (id, status) => {
+    try {
+      const { data } = await changeTaskStatus({
+        variables: { taskId: id, status },
+      });
+
+      if (data?.changeTaskStatus?.id) {
+        toast.success("Changed");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <ActivityContainer>
       <>
         <LSideContainer>
           <ActivityHeader>
             <ActivityContent>
-              <h1>Chapter 3 - Requirements Analysis</h1>
-              <span>Submitted by: Krizia | August 30, 2021 7:00 PM</span>
+              {loading ? (
+                "Loading..."
+              ) : (
+                <>
+                  <h1>{title}</h1>
+                  <span>
+                    Task created:{" "}
+                    {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")} |{" "}
+                    {status === "TODO"
+                      ? "To-do"
+                      : status === "IN_PROGRESS"
+                      ? "In Progress"
+                      : status === "UNDER_REVIEW"
+                      ? "Under Review"
+                      : status === "DONE"
+                      ? "Done"
+                      : ""}
+                  </span>
+                </>
+              )}
             </ActivityContent>
-            <span>Attachment:</span>
-            <Attachment> TEST</Attachment>
-            <ActivityButtons></ActivityButtons>
+            <ActivityButtons>
+              {user.id === student?.id ? (
+                !myTask?.submittedAt ? (
+                  <button onClick={() => setShowSubmitTaskModal(true)}>
+                    Submit
+                  </button>
+                ) : (
+                  "Submitted!"
+                )
+              ) : (
+                ""
+              )}
+            </ActivityButtons>
+          </ActivityHeader>
+          <ActivityHeader>
+            <ActivityContent>
+              {loading ? (
+                "Loading..."
+              ) : (
+                <>
+                  {user.id === student?.id ? (
+                    <h1>My Submission</h1>
+                  ) : (
+                    <h1>
+                      {student?.user?.firstName} {student?.user?.lastName}
+                      's Submission
+                    </h1>
+                  )}
+                  {user.id === student.id ? (
+                    myTask?.attachment || myTask?.description ? (
+                      <>
+                        <span>
+                          {submittedAt &&
+                            `Submitted: ${dayjs(submittedAt).format(
+                              "MMMM D, YYYY [at] h:mm a"
+                            )}`}
+                        </span>
+                        <span>{description}</span>
+                      </>
+                    ) : (
+                      <span>You haven't submitted anything yet.</span>
+                    )
+                  ) : (
+                    "No submission yet."
+                  )}
+                  {attachment && (
+                    <>
+                      Attachment:
+                      <Attachment href={secure_url} download>
+                        {original_filename}.{secure_url.split(".").slice(-1)}
+                      </Attachment>
+                    </>
+                  )}
+                </>
+              )}
+            </ActivityContent>
+            <ActivityButtons>
+              <button>
+                <Dropdown
+                  popperComponent={
+                    <DropdownButtons>
+                      <button
+                        onClick={() => handleChangeTaskStatus(id, "DONE")}
+                      >
+                        Done
+                      </button>
+                      {group?.leader?.id === user.id && (
+                        <button
+                          onClick={() =>
+                            handleChangeTaskStatus(id, "UNDER_REVIEW")
+                          }
+                        >
+                          Under Review
+                        </button>
+                      )}
+                      {myTask?.id === id && (
+                        <button
+                          onClick={() =>
+                            handleChangeTaskStatus(id, "IN_PROGRESS")
+                          }
+                        >
+                          In Progress
+                        </button>
+                      )}
+                    </DropdownButtons>
+                  }
+                >
+                  Mark as
+                </Dropdown>
+              </button>
+            </ActivityButtons>
           </ActivityHeader>
         </LSideContainer>
         <RSideContainer>
@@ -27,28 +180,49 @@ const Task = () => {
             <ul>
               <li>
                 <TiGroup size={18} />
-                &nbsp; Due Date: <span></span>
+                &nbsp; Due Date:{" "}
+                <span>{dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}</span>
+              </li>
+
+              <li>
+                <MdAccountCircle size={18} />
+                &nbsp; Assigned by:{" "}
+                {user.id === group?.leader?.id
+                  ? "You"
+                  : group?.leader?.user?.firstName +
+                    " " +
+                    group?.leader?.user?.lastName}
               </li>
               <li>
                 <MdAccountCircle size={18} />
-                &nbsp; Assigned by: Nicole
-              </li>
-              <li>
-                <MdAccountCircle size={18} />
-                &nbsp; Activity to: <span>Krizia</span>
+                &nbsp; Assigned to:{" "}
+                <span>
+                  {user.id === student?.id
+                    ? "You"
+                    : student?.user?.firstName + " " + student?.user?.lastName}
+                </span>
               </li>
               <li>
                 <TiGroup size={18} />
-                &nbsp; Description:
-              </li>
-              <li>
-                Attachment:
-                <Attachment> TEST</Attachment>
+                &nbsp; Description: <p>{note}</p>
               </li>
             </ul>
           </RSideAbout>
-          <GoBack to={`/progress/:groupSubmissionId`}>Go back</GoBack>
+          <GoBack to={`/progress/${groupSubmissionId}`}>Go back</GoBack>
         </RSideContainer>
+        <Modal
+          show={showSubmitTaskModal}
+          closeModal={() => setShowSubmitTaskModal(false)}
+          title="Create Submission"
+        >
+          <SubmitTaskForm
+            taskId={taskId}
+            onCreateFinish={() => {
+              setShowSubmitTaskModal(false);
+              refetch();
+            }}
+          />
+        </Modal>
       </>
     </ActivityContainer>
   );
@@ -82,7 +256,6 @@ const ActivityHeader = styled.div`
 const ActivityContent = styled.div`
   padding: 1em;
   width: 100%;
-  border-bottom: 1px solid black;
   margin-bottom: 1em;
 
   > h1 {

@@ -90,72 +90,79 @@ const Progress = () => {
         </UpperContainer>
         <TasksContainer>
           <Container>
-            {taskInfo.length === 0 && <p>No assigned tasks yet.</p>}
-            {loading
-              ? "Loading..."
-              : taskInfo.map(({ id, description, status, dueAt, student }) => {
-                  return (
-                    <>
-                      <Content>
-                        <h1>{description}</h1>
-                        <span>
-                          Assigned to: {student.user.firstName}{" "}
-                          {student.user.lastName} | Due:{" "}
-                          {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
-                        </span>
-                        <button>
-                          <Dropdown
-                            popperComponent={
-                              <DropdownButtons>
+            {taskInfo.length === 0 ? (
+              <p>No assigned tasks yet.</p>
+            ) : loading ? (
+              "Loading..."
+            ) : (
+              taskInfo.map(({ id, title, status, dueAt, student }) => {
+                return (
+                  <>
+                    <Content>
+                      <h1>{title}</h1>
+                      <span>
+                        Assigned to:{" "}
+                        {user.id === student?.id
+                          ? "You"
+                          : student?.user?.firstName +
+                            " " +
+                            student?.user?.lastName}{" "}
+                        | Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                      </span>
+                      <button>
+                        <Dropdown
+                          popperComponent={
+                            <DropdownButtons>
+                              <button
+                                onClick={() =>
+                                  handleChangeTaskStatus(id, "DONE")
+                                }
+                              >
+                                Done
+                              </button>
+                              {leader?.id === user.id && (
                                 <button
                                   onClick={() =>
-                                    handleChangeTaskStatus(id, "DONE")
+                                    handleChangeTaskStatus(id, "UNDER_REVIEW")
                                   }
                                 >
-                                  Done
+                                  Under Review
                                 </button>
-                                {leader?.id === user.id && (
-                                  <button
-                                    onClick={() =>
-                                      handleChangeTaskStatus(id, "UNDER_REVIEW")
-                                    }
-                                  >
-                                    Under Review
-                                  </button>
-                                )}
-                                {myTask?.id === id && (
-                                  <button
-                                    onClick={() =>
-                                      handleChangeTaskStatus(id, "IN_PROGRESS")
-                                    }
-                                  >
-                                    In Progress
-                                  </button>
-                                )}
-                              </DropdownButtons>
-                            }
-                          >
-                            Mark as
-                          </Dropdown>
-                        </button>
-                        <ViewLink
-                          status={status}
-                          to={`/progress/:groupSubmissionId/task/${id}`}
+                              )}
+                              {myTask?.id === id && (
+                                <button
+                                  onClick={() =>
+                                    handleChangeTaskStatus(id, "IN_PROGRESS")
+                                  }
+                                >
+                                  In Progress
+                                </button>
+                              )}
+                            </DropdownButtons>
+                          }
                         >
-                          {status === "TODO"
-                            ? "View Submission"
-                            : status === "IN_PROGRESS"
-                            ? "In Progress"
-                            : status === "UNDER_REVIEW"
-                            ? "Under Review"
-                            : status === "DONE"
-                            ? "DONE"
-                            : ""}
-                        </ViewLink>
-                      </Content>
-                    </>
-                  );
-                })}
+                          Mark as
+                        </Dropdown>
+                      </button>
+                      <ViewLink
+                        status={status}
+                        to={`/progress/${groupSubmissionId}/task/${id}`}
+                      >
+                        {status === "TODO"
+                          ? "View Submission"
+                          : status === "IN_PROGRESS"
+                          ? "In Progress"
+                          : status === "UNDER_REVIEW"
+                          ? "Under Review"
+                          : status === "DONE"
+                          ? "Done"
+                          : ""}
+                      </ViewLink>
+                    </Content>
+                  </>
+                );
+              })
+            )}
           </Container>
         </TasksContainer>
       </LeftSideContainer>
@@ -166,7 +173,10 @@ const Progress = () => {
             <li>{name}</li>
             <li> Course: {course?.name}</li>
             <li>
-              Leader: {leader?.user?.firstName} {leader?.user?.lastName}
+              Leader:{" "}
+              {user.id === leader?.id
+                ? "You"
+                : leader?.user?.firstName + " " + leader?.user?.lastName}
             </li>
             <li>
               Professor: {course?.teacher?.user?.firstName}{" "}
@@ -178,14 +188,17 @@ const Progress = () => {
             )}
           </ul>
         </AboutContainer>
-        <ToDoContainer>
+        {/*<ToDoContainer>
           <h3>TO-DO</h3>
-        </ToDoContainer>
+        </ToDoContainer>*/}
         {leader?.id === user.id && (
           <button onClick={() => setShowAssignTaskModal(true)}>
             Assign Task
           </button>
         )}
+        <GoBack to={`/class/${course?.id}/groupactivity/${groupActivity?.id}`}>
+          Go back
+        </GoBack>
       </RightSideContainer>
       <Modal
         show={showAssignTaskModal}
@@ -407,7 +420,7 @@ const AboutContainer = styled.div`
   }
 `;
 
-const ToDoContainer = styled.div`
+/*const ToDoContainer = styled.div`
   display: flex;
   width: 100%;
   height: max-content;
@@ -415,7 +428,7 @@ const ToDoContainer = styled.div`
   background-color: #f2f2f2;
   padding: 2em;
   border-radius: 10px;
-`;
+`;*/
 
 const ViewLink = styled(Link)`
   ${({ status }) =>
@@ -441,6 +454,23 @@ const ViewLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const GoBack = styled(Link)`
+  text-decoration: none;
+  font-size: 16px;
+  width: 200px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
+  }
 `;
 
 export default Progress;

@@ -29,12 +29,70 @@ export const GET_GROUPSUBMISSION = gql`
     }
   }
 `;
-
 export const SUBMIT_TASK = gql`
-mutation submitTask($taskId: ID!, $attachment: String!){
-  submitTask(taskId: $taskId:, attachment: $attachment) {
-    id
-    attachment
+  mutation submitTask(
+    $taskId: ID!
+    $attachment: String
+    $description: String!
+  ) {
+    submitTask(
+      taskId: $taskId
+      attachment: $attachment
+      description: $description
+    ) {
+      id
+      attachment
+    }
   }
-}
+`;
+
+export const GET_TASK = gql`
+  query task($taskId: ID!) {
+    task(taskId: $taskId) {
+      id
+      title
+      note
+      attachment
+      description
+      dueAt
+      createdAt
+      status
+      student {
+        id
+        user {
+          firstName
+          lastName
+        }
+      }
+      groupSubmission {
+        id
+        group {
+          leader {
+            id
+            user {
+              firstName
+              lastName
+            }
+          }
+        }
+        myTask {
+          id
+          title
+          description
+          attachment
+          submittedAt
+          status
+        }
+      }
+    }
+  }
+`;
+
+export const CHANGE_TASK_STATUS = gql`
+  mutation changeTaskStatus($taskId: ID!, $status: TaskStatus!) {
+    changeTaskStatus(taskId: $taskId, status: $status) {
+      id
+      status
+    }
+  }
 `;

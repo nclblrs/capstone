@@ -39,10 +39,12 @@ export const GET_GROUPSUBMISSION = gql`
         data {
           id
           attachment
-          description
+          title
+          note
           status
           dueAt
           student {
+            id
             user {
               firstName
               lastName

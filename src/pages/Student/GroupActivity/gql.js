@@ -26,15 +26,46 @@ export const COURSE_GROUPACTIVITY = gql`
       }
       mySubmission {
         id
+        attachment
+        description
+        submittedAt
+        submittedBy {
+          user {
+            firstName
+            lastName
+          }
+        }
+        group {
+          id
+          name
+        }
       }
     }
   }
 `;
 
-export const CREATE_GROUPSUBMISSION = gql`
-  mutation createGroupSubmission($groupActivityId: ID!) {
-    createGroupSubmission(groupActivityId: $groupActivityId) {
+export const SUBMIT_GROUPSUBMISSION = gql`
+  mutation submitGroupSubmission(
+    $groupSubmissionId: ID!
+    $description: String!
+    $attachment: String
+  ) {
+    submitGroupSubmission(
+      groupSubmissionId: $groupSubmissionId
+      description: $description
+      attachment: $attachment
+    ) {
       id
+      description
+      attachment
+      submittedAt
+      submittedBy {
+        id
+        user {
+          id
+          firstName
+        }
+      }
     }
   }
 `;

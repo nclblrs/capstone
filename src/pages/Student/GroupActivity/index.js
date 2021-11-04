@@ -7,12 +7,13 @@ import { COURSE_GROUPACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
-import AssignTaskForm from "pages/Student/Progress/Forms/AssignTaskForm";
+import CreateGroupSubmissionForm from "./Forms/SubmitGroupSubmissionForm";
 import { Link } from "react-router-dom";
 import { FaLaptop } from "react-icons/fa";
 
 const GroupActivityPage = () => {
-  const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
+  const [showGroupSubmissionModal, setShowGroupSubmissionModal] =
+    useState(false);
   const { activityId } = useParams();
 
   const { loading, data, refetch } = useQuery(COURSE_GROUPACTIVITY, {
@@ -31,9 +32,18 @@ const GroupActivityPage = () => {
 
   const { teacher, name, id: classId } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
-  const { id: groupSubmissionId } = mySubmission ?? {};
+  const {
+    id: groupSubmissionId,
+    attachment: groupSubmissionAttachment = null,
+    description: groupSubmissionDescription,
+    submittedAt,
+    group,
+    submittedBy,
+  } = mySubmission ?? {};
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
+  const { original_filename: original_filename2, secure_url: secure_url2 } =
+    JSON.parse(groupSubmissionAttachment) ?? {};
   return (
     <ActivityContainer>
       {loading ? (
@@ -51,7 +61,13 @@ const GroupActivityPage = () => {
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
               </ActivityContent>
               <ActivityButtons>
-                <button>Submit</button>
+                {!mySubmission?.submittedAt ? (
+                  <button onClick={() => setShowGroupSubmissionModal(true)}>
+                    Submit
+                  </button>
+                ) : (
+                  "Submitted!"
+                )}
               </ActivityButtons>
             </ActivityHeader>
             <ActivityHeader>
@@ -62,13 +78,31 @@ const GroupActivityPage = () => {
                     Group Progress
                   </Link>
                 </ActivityButtons>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST <span>Name | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
+                {submittedAt ? (
+                  <Container>
+                    <Content>
+                      <h1>
+                        {group?.name}{" "}
+                        <span>
+                          Submitted by: {submittedBy?.user?.firstName}{" "}
+                          {submittedBy?.user?.lastName} |{" "}
+                          {dayjs(submittedAt).format(
+                            "MMMM D, YYYY [at] h:mm a"
+                          )}
+                        </span>
+                        {groupSubmissionDescription}
+                        {groupSubmissionAttachment && (
+                          <Attachment href={secure_url2} download>
+                            {original_filename2}.
+                            {secure_url2.split(".").slice(-1)}
+                          </Attachment>
+                        )}
+                      </h1>
+                    </Content>
+                  </Container>
+                ) : (
+                  <p>Nothing is submitted yet.</p>
+                )}
               </ActivityContent>
             </ActivityHeader>
           </LSideContainer>
@@ -114,14 +148,15 @@ const GroupActivityPage = () => {
             </GoBack>
           </RSideContainer>
           <Modal
-            show={showAssignTaskModal}
-            closeModal={() => setShowAssignTaskModal(false)}
-            title="Assign Task"
+            show={showGroupSubmissionModal}
+            closeModal={() => setShowGroupSubmissionModal(false)}
+            title="Submit Group Activity"
           >
-            <AssignTaskForm
+            <CreateGroupSubmissionForm
+              groupSubmissionId={groupSubmissionId}
               onCreateFinish={() => {
                 refetch();
-                setShowAssignTaskModal(false);
+                setShowGroupSubmissionModal(false);
               }}
             />
           </Modal>
@@ -254,7 +289,6 @@ const Attachment = styled.a`
 
 const Container = styled.div`
   width: 100%;
-  height: 60px;
   text-align: left;
   display: flex;
   justify-content: center;
@@ -273,8 +307,6 @@ const Content = styled(Link)`
   display: flex;
 
   > h1 {
-    overflow: hidden;
-    text-overflow: ellipsis;
     margin: 0;
     padding: 0;
     font-size: 20px;

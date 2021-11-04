@@ -4,37 +4,45 @@ import { BsPaperclip } from "react-icons/bs";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
 import { upload } from "utils/upload";
-import { useParams } from "react-router-dom";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
-import { CREATE_GROUPSUBMISSION } from "../gql";
+import { SUBMIT_GROUPSUBMISSION } from "../gql";
 import { toast } from "react-toastify";
 import { useState } from "react/cjs/react.development";
 
-const CreateGroupSubmissionForm = ({ onCreateFinish }) => {
-  const { activityId } = useParams();
+const SubmitGroupSubmissionForm = ({ onCreateFinish, groupSubmissionId }) => {
   const { user } = useCurrentUserContext();
   const { register, watch, handleSubmit } = useForm();
   const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
-
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [createGroupSubmission] = useMutation(CREATE_GROUPSUBMISSION);
-
-  const handleCreateGroupSubmission = async (data) => {
-    const { description } = data;
+  const [submitGroupSubmission] = useMutation(SUBMIT_GROUPSUBMISSION);
+  console.log(groupSubmissionId);
+  const handleSubmitGroupSubmission = async (data) => {
+    const { description, file: files } = data;
+    const file = files[0];
 
     try {
       setIsSubmitting(true);
-      const { data: createGroupSubmissionData } = await createGroupSubmission({
+      let attachment = undefined;
+      if (file) {
+        const { cloudinaryString } = await upload(
+          file,
+          user.uploadPreset,
+          `GroupSubmission_${groupSubmissionId}`
+        );
+        attachment = cloudinaryString;
+      }
+      const { data: submitGroupSubmissionData } = await submitGroupSubmission({
         variables: {
-          activityId: activityId,
+          groupSubmissionId: groupSubmissionId,
+          attachment,
           description,
         },
       });
 
-      const groupSubmissionId =
-        createGroupSubmissionData?.createGroupSubmission?.id;
+      const groupSubmissionsId =
+        submitGroupSubmissionData?.submitGroupSubmission?.id;
 
-      if (!groupSubmissionId) throw Error("something is wrong");
+      if (!groupSubmissionsId) throw Error("something is wrong");
 
       toast.success("Created Submission");
       onCreateFinish();
@@ -46,7 +54,7 @@ const CreateGroupSubmissionForm = ({ onCreateFinish }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit(handleCreateGroupSubmission)}>
+    <Form onSubmit={handleSubmit(handleSubmitGroupSubmission)}>
       <div>
         <label className="file"> File </label>
         <label for="attach-file-submission" className="attachmentLabel">
@@ -143,4 +151,4 @@ const Form = styled.form`
   }
 `;
 
-export default CreateGroupSubmissionForm;
+export default SubmitGroupSubmissionForm;
