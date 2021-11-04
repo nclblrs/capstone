@@ -62,7 +62,7 @@ const Activity = () => {
                     Submit
                   </button>
                 ) : (
-                  <p> Submitted!</p>
+                  <p> ✓ Submitted!</p>
                 )}
               </ActivityButtons>
             </ActivityHeader>
