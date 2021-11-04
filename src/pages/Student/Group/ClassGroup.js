@@ -219,9 +219,9 @@ const ClassGroup = () => {
             </>
           )}
         </RSideAbout>
-        <RSideToDo>
+        {/*  <RSideToDo>
           <h3>TO-DO</h3>
-        </RSideToDo>
+      </RSideToDo> */}
       </RSideContainer>
     </CGContainer>
   );
@@ -316,14 +316,14 @@ const RSideAbout = styled.div`
   padding: 2em;
 `;
 
-const RSideToDo = styled.div`
+/* const RSideToDo = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
   background-color: #f2f2f2;
   border-radius: 10px;
   padding: 2em;
-`;
+`; */
 
 const CGItemsContainer = styled.div`
   width: 100%;

@@ -5,9 +5,9 @@ import Modal from "components/Modal";
 import { Link } from "react-router-dom";
 import { GET_TEACHERCLASSES } from "./gql";
 import { useQuery } from "@apollo/client";
-import { FaFilter } from "react-icons/fa";
+/* import { FaFilter } from "react-icons/fa"; */
 import { IoIosAddCircle } from "react-icons/io";
-import Dropdown, { DropdownButtons } from "components/Dropdown";
+/* import Dropdown, { DropdownButtons } from "components/Dropdown"; */
 import CreateCourseForm from "pages/Teacher/Course/Forms/CreateCourseForm";
 
 const TeacherAllClass = () => {
@@ -25,6 +25,14 @@ const TeacherAllClass = () => {
       </Modal>
       <MainContainer>
         <ButtonContainer>
+          <button
+            className="createclass"
+            onClick={() => setShowCreateCourseModal(true)}
+          >
+            Create Class &nbsp;
+            <IoIosAddCircle size={20} className="createicon" />
+          </button>
+          {/*
           <Dropdown
             popperComponent={
               <DropdownButtons>
@@ -37,14 +45,7 @@ const TeacherAllClass = () => {
               Sort By &nbsp;
               <FaFilter size={18} className="filtericon" />
             </button>
-          </Dropdown>
-          <button
-            className="createclass"
-            onClick={() => setShowCreateCourseModal(true)}
-          >
-            Create Class &nbsp;
-            <IoIosAddCircle size={20} className="createicon" />
-          </button>
+          </Dropdown> */}
         </ButtonContainer>
         <div className="itemcontainer">
           {loading

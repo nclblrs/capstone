@@ -50,7 +50,7 @@ const TActivity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} &nbsp;{"▏"} Due:{" "}
+                  {name} &thinsp; | &thinsp; Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
@@ -246,7 +246,7 @@ const Submission = styled.div`
   .buttons {
     font-size: 16px;
     width: 110px;
-    height: 50px;
+    height: 40px;
     border: none;
     color: white;
     background-color: #0f482f;
@@ -291,6 +291,7 @@ const GoBack = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
   &:hover {
     background-color: #0e5937;
   }

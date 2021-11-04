@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import { useQuery } from "@apollo/client";
 import { GET_FEED } from "./gql";
-import { FaFilter } from "react-icons/fa";
+/* import { FaFilter } from "react-icons/fa"; */
 import PostsFeed from "components/PostsFeed";
 
 const Feed = () => {
@@ -15,10 +15,10 @@ const Feed = () => {
           <PostFormContainer></PostFormContainer>
           <FeedFilter>
             <p>What's new?</p>
-            <button className="filterbutton">
+            {/* <button className="filterbutton">
               Filter Posts &nbsp;
               <FaFilter size={15} className="filtericon" />
-            </button>
+  </button> */}
           </FeedFilter>
         </FeedHeader>
         <FeedItemsContainer>

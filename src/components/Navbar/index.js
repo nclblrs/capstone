@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import logo from "./images/logo.svg";
-import home from "./images/home.svg";
+/* import home from "./images/home.svg";
 import clock from "./images/clock.svg";
 import calendar from "./images/calendar.svg";
-/*import progress from "./images/progress.svg";*/
+import progress from "./images/progress.svg";*/
 import { smallProfpicUrl } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
@@ -24,6 +24,7 @@ const Navbar = () => {
       </NavLogo>
       {!isAdmin && !teacher && (
         <NavbarContainer>
+          {/*
           <NavMenu to="/" exact>
             <img src={home} alt="Home" />
             Home
@@ -36,16 +37,17 @@ const Navbar = () => {
             <img src={calendar} alt="Calendar" />
             Calendar
           </NavMenu>
-          {/*<NavMenu to="/progress">
+          <NavMenu to="/progress">
             <img src={progress} alt="Progress" />
             Progress
-      </NavMenu>*/}
+          </NavMenu>
+          */}
         </NavbarContainer>
       )}
       <Dropdown
         popperComponent={
           <DropdownButtons>
-            <NavMenu to="/settings">Settings</NavMenu>
+            {!isAdmin && <NavMenu to="/settings">Settings</NavMenu>}
             <NavMenu to="/logout">Logout</NavMenu>
           </DropdownButtons>
         }

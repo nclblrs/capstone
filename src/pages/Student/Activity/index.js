@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "components/Modal";
 import { MdAccountCircle } from "react-icons/md";
-import { TiGroup } from "react-icons/ti";
+import { FaRegCalendarAlt, FaLaptop } from "react-icons/fa";
+import { RiQuestionnaireLine } from "react-icons/ri";
 import { COURSE_ACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
@@ -51,7 +52,7 @@ const Activity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} &nbsp;{"▏"} Due:{" "}
+                  {name} &thinsp; | &thinsp; Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
@@ -62,7 +63,7 @@ const Activity = () => {
                     Submit
                   </button>
                 ) : (
-                  "Submitted!"
+                  <p> ✓ Submitted!</p>
                 )}
               </ActivityButtons>
             </ActivityHeader>
@@ -92,7 +93,7 @@ const Activity = () => {
                 )}
                 {myAttachment && (
                   <>
-                    Attachment:
+                    <p>Attachment:</p>
                     <Attachment href={secure_url2} download>
                       {original_filename2}.{secure_url2.split(".").slice(-1)}
                     </Attachment>
@@ -106,7 +107,7 @@ const Activity = () => {
               <h3>ABOUT</h3>
               <ul>
                 <li>
-                  <TiGroup size={18} />
+                  <FaRegCalendarAlt size={18} />
                   &nbsp; Due Date:{" "}
                   <span>{dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}</span>
                 </li>
@@ -115,11 +116,11 @@ const Activity = () => {
                   &nbsp; Professor: {firstName} {lastName}
                 </li>
                 <li>
-                  <MdAccountCircle size={18} />
+                  <FaLaptop size={18} />
                   &nbsp; Activity Type: <span>By Individual</span>
                 </li>
                 <li>
-                  <TiGroup size={18} />
+                  <RiQuestionnaireLine size={18} />
                   &nbsp; Description: <p>{description}</p>
                 </li>
                 <li>
@@ -208,7 +209,7 @@ const ActivityContent = styled.div`
     border-radius: 10px;
     position: absolute;
     top: 40px;
-    right: 40px;
+    right: 35px;
     color: white;
   }
 `;
@@ -231,6 +232,10 @@ const ActivityButtons = styled.div`
     outline: none;
     height: 32px;
     width: 120px;
+  }
+  p {
+    color: #164aae;
+    font-size: 18px;
   }
 `;
 
@@ -257,7 +262,7 @@ const RSideAbout = styled.div`
   padding: 2em;
   ul {
     padding: 0 1em;
-    font-size: 18px;
+    font-size: 17px;
     color: #646464;
     font-weight: normal;
     list-style-type: none;
@@ -299,6 +304,7 @@ const GoBack = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
   &:hover {
     background-color: #0e5937;
   }

@@ -179,6 +179,7 @@ const CommentForm = styled.form`
   > input {
     width: 100%;
     height: 40px;
+    padding: 1em;
   }
 
   > button {
@@ -191,6 +192,7 @@ const CommentForm = styled.form`
     align-items: center;
     justify-content: center;
     border-radius: 4px;
+    border: none;
   }
 `;
 

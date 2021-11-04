@@ -55,7 +55,7 @@ const GroupActivityPage = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} {"▏"} Due:{" "}
+                  {name} &thinsp; | &thinsp; Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
@@ -66,7 +66,7 @@ const GroupActivityPage = () => {
                     Submit
                   </button>
                 ) : (
-                  "Submitted!"
+                  <p>✓ Submitted!</p>
                 )}
               </ActivityButtons>
             </ActivityHeader>
@@ -74,7 +74,10 @@ const GroupActivityPage = () => {
               <ActivityContent>
                 <h1>Your Group's Submission</h1>
                 <ActivityButtons>
-                  <Link to={`/progress/${groupSubmissionId}`}>
+                  <Link
+                    className="groupprogress"
+                    to={`/progress/${groupSubmissionId}`}
+                  >
                     Group Progress
                   </Link>
                 </ActivityButtons>
@@ -217,7 +220,6 @@ const ActivityButtons = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 10px;
   position: absolute;
   right: 30px;
   top: 50px;
@@ -231,6 +233,16 @@ const ActivityButtons = styled.div`
     outline: none;
     height: 32px;
     width: 120px;
+  }
+  .groupprogress {
+    text-decoration: none;
+    color: white;
+    background-color: #0e5937;
+    padding: 1em;
+  }
+  p {
+    color: #164aae;
+    font-size: 18px;
   }
 `;
 
@@ -303,8 +315,8 @@ const Container = styled.div`
 const Content = styled(Link)`
   width: 100%;
   text-decoration: none;
-  margin-top: 7px;
   display: flex;
+  height: 50px;
 
   > h1 {
     margin: 0;
@@ -317,6 +329,7 @@ const Content = styled(Link)`
       margin: 0;
       padding: 0;
       display: flex;
+      margin-top: 5px;
     }
   }
   > img {
@@ -330,7 +343,7 @@ const Content = styled(Link)`
 const GoBack = styled(Link)`
   text-decoration: none;
   font-size: 16px;
-  width: 200px;
+  width: 220px;
   height: 40px;
   border: none;
   color: white;
@@ -339,6 +352,7 @@ const GoBack = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
   &:hover {
     background-color: #0e5937;
   }

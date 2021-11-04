@@ -211,9 +211,9 @@ const Course = () => {
             </>
           )}
         </RSideAbout>
-        <RSideToDo>
+        {/* <RSideToDo>
           <h3>TO-DO</h3>
-        </RSideToDo>
+       </RSideToDo> */}
       </RSideContainer>
     </CourseContainer>
   );
@@ -316,14 +316,14 @@ const RSideAbout = styled.div`
   padding: 2em;
 `;
 
-const RSideToDo = styled.div`
+/* const RSideToDo = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
   background-color: #f2f2f2;
   border-radius: 10px;
   padding: 2em;
-`;
+`; */
 
 const NavMenu = styled(NavLink)`
   color: #0f482f;
