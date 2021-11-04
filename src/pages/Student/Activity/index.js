@@ -51,7 +51,7 @@ const Activity = () => {
               <ActivityContent>
                 <h1>{title}</h1>
                 <span>
-                  {name} &nbsp;{"▏"} Due:{" "}
+                  {name} &thinsp; | &thinsp; Due:{" "}
                   {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>{points ? `${points} pts` : "No points assigned"}</span>
@@ -62,7 +62,7 @@ const Activity = () => {
                     Submit
                   </button>
                 ) : (
-                  "Submitted!"
+                  <p> Submitted!</p>
                 )}
               </ActivityButtons>
             </ActivityHeader>
@@ -92,7 +92,7 @@ const Activity = () => {
                 )}
                 {myAttachment && (
                   <>
-                    Attachment:
+                    <p>Attachment:</p>
                     <Attachment href={secure_url2} download>
                       {original_filename2}.{secure_url2.split(".").slice(-1)}
                     </Attachment>
@@ -208,7 +208,7 @@ const ActivityContent = styled.div`
     border-radius: 10px;
     position: absolute;
     top: 40px;
-    right: 40px;
+    right: 35px;
     color: white;
   }
 `;
@@ -231,6 +231,10 @@ const ActivityButtons = styled.div`
     outline: none;
     height: 32px;
     width: 120px;
+  }
+  p {
+    color: #164aae;
+    font-size: 18px;
   }
 `;
 
@@ -257,7 +261,7 @@ const RSideAbout = styled.div`
   padding: 2em;
   ul {
     padding: 0 1em;
-    font-size: 18px;
+    font-size: 17px;
     color: #646464;
     font-weight: normal;
     list-style-type: none;
