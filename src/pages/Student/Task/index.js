@@ -67,7 +67,8 @@ const Task = () => {
                   <h1>{title}</h1>
                   <span>
                     Task created:{" "}
-                    {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")} |{" "}
+                    {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
+                    &thinsp; | &thinsp;
                     {status === "TODO"
                       ? "To-do"
                       : status === "IN_PROGRESS"
@@ -84,7 +85,10 @@ const Task = () => {
             <ActivityButtons>
               {user.id === student?.id ? (
                 !myTask?.submittedAt ? (
-                  <button onClick={() => setShowSubmitTaskModal(true)}>
+                  <button
+                    className="submit"
+                    onClick={() => setShowSubmitTaskModal(true)}
+                  >
                     Submit
                   </button>
                 ) : (
@@ -138,39 +142,40 @@ const Task = () => {
               )}
             </ActivityContent>
             <ActivityButtons>
-              <button>
-                <Dropdown
-                  popperComponent={
-                    <DropdownButtons>
+              <Dropdown
+                popperComponent={
+                  <DropdownButtons>
+                    <button
+                      className="done"
+                      onClick={() => handleChangeTaskStatus(id, "DONE")}
+                    >
+                      Done
+                    </button>
+                    {group?.leader?.id === user.id && (
                       <button
-                        onClick={() => handleChangeTaskStatus(id, "DONE")}
+                        className="under"
+                        onClick={() =>
+                          handleChangeTaskStatus(id, "UNDER_REVIEW")
+                        }
                       >
-                        Done
+                        Under Review
                       </button>
-                      {group?.leader?.id === user.id && (
-                        <button
-                          onClick={() =>
-                            handleChangeTaskStatus(id, "UNDER_REVIEW")
-                          }
-                        >
-                          Under Review
-                        </button>
-                      )}
-                      {myTask?.id === id && (
-                        <button
-                          onClick={() =>
-                            handleChangeTaskStatus(id, "IN_PROGRESS")
-                          }
-                        >
-                          In Progress
-                        </button>
-                      )}
-                    </DropdownButtons>
-                  }
-                >
-                  Mark as
-                </Dropdown>
-              </button>
+                    )}
+                    {myTask?.id === id && (
+                      <button
+                        className="in"
+                        onClick={() =>
+                          handleChangeTaskStatus(id, "IN_PROGRESS")
+                        }
+                      >
+                        In Progress
+                      </button>
+                    )}
+                  </DropdownButtons>
+                }
+              >
+                <button className="mark">Mark as</button>
+              </Dropdown>
             </ActivityButtons>
           </ActivityHeader>
         </LSideContainer>
@@ -285,15 +290,39 @@ const ActivityButtons = styled.div`
   right: 30px;
   top: 50px;
   > button {
-    font-size: 15px;
+    font-size: 16px;
+    outline: none;
+    text-align: center;
+  }
+  .mark {
+    font-size: 16px;
+    width: 120px;
+    height: 40px;
     background-color: #0e5937;
     color: white;
-    border: none;
-    text-align: center;
     cursor: pointer;
-    outline: none;
-    height: 32px;
+    border: none;
+  }
+  .submit {
     width: 120px;
+    height: 40px;
+    background-color: #0e5937;
+    color: white;
+    cursor: pointer;
+    border: none;
+  }
+  .under {
+    padding: 1em;
+    font-size: 17px;
+    justify-content: center;
+  }
+  .done {
+    font-size: 17px;
+    justify-content: center;
+  }
+  .in {
+    font-size: 17px;
+    justify-content: center;
   }
 `;
 
@@ -320,7 +349,7 @@ const RSideAbout = styled.div`
   padding: 2em;
   ul {
     padding: 0 1em;
-    font-size: 18px;
+    font-size: 17px;
     color: #646464;
     font-weight: normal;
     list-style-type: none;
@@ -353,7 +382,7 @@ const Attachment = styled.a`
 const GoBack = styled(Link)`
   text-decoration: none;
   font-size: 16px;
-  width: 200px;
+  width: 150px;
   height: 40px;
   border: none;
   color: white;
@@ -362,6 +391,7 @@ const GoBack = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
   &:hover {
     background-color: #0e5937;
   }

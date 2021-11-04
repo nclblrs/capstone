@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Modal from "components/Modal";
 import { MdAccountCircle } from "react-icons/md";
-import { TiGroup } from "react-icons/ti";
+import { FaRegCalendarAlt, FaLaptop } from "react-icons/fa";
+import { RiQuestionnaireLine } from "react-icons/ri";
 import { COURSE_ACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
@@ -106,7 +107,7 @@ const Activity = () => {
               <h3>ABOUT</h3>
               <ul>
                 <li>
-                  <TiGroup size={18} />
+                  <FaRegCalendarAlt size={18} />
                   &nbsp; Due Date:{" "}
                   <span>{dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}</span>
                 </li>
@@ -115,11 +116,11 @@ const Activity = () => {
                   &nbsp; Professor: {firstName} {lastName}
                 </li>
                 <li>
-                  <MdAccountCircle size={18} />
+                  <FaLaptop size={18} />
                   &nbsp; Activity Type: <span>By Individual</span>
                 </li>
                 <li>
-                  <TiGroup size={18} />
+                  <RiQuestionnaireLine size={18} />
                   &nbsp; Description: <p>{description}</p>
                 </li>
                 <li>
@@ -303,6 +304,7 @@ const GoBack = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: auto;
   &:hover {
     background-color: #0e5937;
   }

@@ -9,6 +9,9 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import Dropdown, { DropdownButtons } from "components/Dropdown";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
+import { TiGroup } from "react-icons/ti";
+import { FaLaptop, FaArrowAltCircleLeft } from "react-icons/fa";
+import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
 
 const Progress = () => {
   const { user } = useCurrentUserContext();
@@ -59,6 +62,9 @@ const Progress = () => {
   return (
     <ProgressContainer>
       <LeftSideContainer>
+        <GoBack to={`/class/${course?.id}/groupactivity/${groupActivity?.id}`}>
+          <FaArrowAltCircleLeft /> &nbsp; <h4> Back </h4>
+        </GoBack>
         <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
             <h4>Progress</h4>
@@ -100,7 +106,7 @@ const Progress = () => {
                   <>
                     <Content>
                       <h1>{title}</h1>
-                      <span>
+                      <p>
                         Assigned to:{" "}
                         {user.id === student?.id
                           ? "You"
@@ -108,42 +114,38 @@ const Progress = () => {
                             " " +
                             student?.user?.lastName}{" "}
                         | Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
-                      </span>
-                      <button>
-                        <Dropdown
-                          popperComponent={
-                            <DropdownButtons>
+                      </p>
+                      <Dropdown
+                        popperComponent={
+                          <DropdownButtons>
+                            <button
+                              onClick={() => handleChangeTaskStatus(id, "DONE")}
+                            >
+                              Done
+                            </button>
+                            {leader?.id === user.id && (
                               <button
                                 onClick={() =>
-                                  handleChangeTaskStatus(id, "DONE")
+                                  handleChangeTaskStatus(id, "UNDER_REVIEW")
                                 }
                               >
-                                Done
+                                Under Review
                               </button>
-                              {leader?.id === user.id && (
-                                <button
-                                  onClick={() =>
-                                    handleChangeTaskStatus(id, "UNDER_REVIEW")
-                                  }
-                                >
-                                  Under Review
-                                </button>
-                              )}
-                              {myTask?.id === id && (
-                                <button
-                                  onClick={() =>
-                                    handleChangeTaskStatus(id, "IN_PROGRESS")
-                                  }
-                                >
-                                  In Progress
-                                </button>
-                              )}
-                            </DropdownButtons>
-                          }
-                        >
-                          Mark as
-                        </Dropdown>
-                      </button>
+                            )}
+                            {myTask?.id === id && (
+                              <button
+                                onClick={() =>
+                                  handleChangeTaskStatus(id, "IN_PROGRESS")
+                                }
+                              >
+                                In Progress
+                              </button>
+                            )}
+                          </DropdownButtons>
+                        }
+                      >
+                        <button className="mark">Mark as</button>
+                      </Dropdown>
                       <ViewLink
                         status={status}
                         to={`/progress/${groupSubmissionId}/task/${id}`}
@@ -170,21 +172,32 @@ const Progress = () => {
         <AboutContainer>
           <h3>ABOUT</h3>
           <ul>
-            <li>{name}</li>
-            <li> Course: {course?.name}</li>
             <li>
-              Leader:{" "}
+              <TiGroup /> &nbsp; {name}
+            </li>
+            <li>
+              {" "}
+              <FaLaptop /> &nbsp; Course: {course?.name}
+            </li>
+            <li>
+              <RiAccountCircleFill /> &nbsp; Leader:{" "}
               {user.id === leader?.id
                 ? "You"
                 : leader?.user?.firstName + " " + leader?.user?.lastName}
             </li>
             <li>
-              Professor: {course?.teacher?.user?.firstName}{" "}
+              <RiAccountCircleFill /> &nbsp; Professor:{" "}
+              {course?.teacher?.user?.firstName}{" "}
               {course?.teacher?.user?.lastName}
             </li>
-            <li>Group Activity: {groupActivityTitle}</li>
+            <li>
+              <FaLaptop /> &nbsp; Group Activity: {groupActivityTitle}
+            </li>
             {groupActivityDescription && (
-              <li>Group Activity Description: {groupActivityDescription}</li>
+              <li>
+                <RiQuestionnaireLine /> &nbsp; Description:{" "}
+                <p className="desc">{groupActivityDescription} </p>
+              </li>
             )}
           </ul>
         </AboutContainer>
@@ -192,13 +205,13 @@ const Progress = () => {
           <h3>TO-DO</h3>
         </ToDoContainer>*/}
         {leader?.id === user.id && (
-          <button onClick={() => setShowAssignTaskModal(true)}>
+          <button
+            className="assign"
+            onClick={() => setShowAssignTaskModal(true)}
+          >
             Assign Task
           </button>
         )}
-        <GoBack to={`/class/${course?.id}/groupactivity/${groupActivity?.id}`}>
-          Go back
-        </GoBack>
       </RightSideContainer>
       <Modal
         show={showAssignTaskModal}
@@ -226,15 +239,17 @@ const ProgressContainer = styled.div`
 const LeftSideContainer = styled.div`
   display: flex;
   flex-direction: column;
-  width: 72%;
+  width: 68%;
+  margin-left: 5em;
 `;
 
 const UpperContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 10px;
+  gap: 30px;
   height: 130px;
+  margin-top: 1em;
 
   > h4 {
     font-weight: normal;
@@ -330,7 +345,6 @@ const TasksContainer = styled.div`
   display: flex;
   border-radius: 1em;
   background-color: #f2f2f2;
-  flex-direction: column;
   width: 100%;
   height: 550px;
   margin-top: 1.5em;
@@ -339,36 +353,37 @@ const TasksContainer = styled.div`
 
 const Container = styled.div`
   width: 100%;
+  padding: 1.5em 2em;
 `;
+
 const Content = styled.div`
   width: 100%;
-  height: 150px;
+  height: 100px;
   text-align: left;
-  padding: 1.6em 2em;
   border-bottom: 1px solid black;
   > h1 {
-    padding: 5px 0;
     font-size: 20px;
     font-weight: normal;
   }
-  > span {
+  > p {
     font-size: 18px;
-    display: block;
     color: #646464;
   }
-  > button {
+  button {
     display: flex;
-    width: 130px;
-    height: 40px;
     font-size: 15px;
     align-items: center;
     justify-content: center;
-    background-color: #0e5937;
     color: white;
     border: none;
     text-align: center;
     margin-left: auto;
     cursor: pointer;
+  }
+  .mark {
+    width: 130px;
+    height: 40px;
+    background-color: #0e5937;
   }
 `;
 
@@ -377,7 +392,7 @@ const RightSideContainer = styled.div`
   width: 27%;
   gap: 20px;
   flex-direction: column;
-  margin-left: 1em;
+  margin-left: 3em;
 
   h3 {
     color: #646464;
@@ -388,16 +403,44 @@ const RightSideContainer = styled.div`
     margin: 0 10px;
     margin-bottom: 20px;
   }
+
+  .assign {
+    display: flex;
+    width: 130px;
+    height: 40px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    text-align: center;
+    cursor: pointer;
+  }
 `;
 
 const AboutContainer = styled.div`
-  display: flex;
-  width: 100%;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  height: max-content;
-  padding: 2em;
   border-radius: 10px;
+  background-color: #f2f2f2;
+  width: 85%;
+  padding: 2em;
+  margin-top: 3.5em;
+  ul {
+    padding: 0 1em;
+    font-size: 18px;
+    color: #646464;
+    font-weight: normal;
+    list-style-type: none;
+  }
+  li {
+    padding: 6px 0px;
+    > p {
+      color: #0e5937;
+    }
+    > span {
+      color: #0e5937;
+    }
+  }
 
   button {
     border: none;
@@ -407,16 +450,6 @@ const AboutContainer = styled.div`
     height: 33px;
     text-align: center;
     font-size: 16px;
-  }
-  ul {
-    font-size: 20px;
-    color: #646464;
-    font-weight: normal;
-    list-style-type: none;
-    margin-top: 20px;
-  }
-  li {
-    padding: 8px 8px;
   }
 `;
 
@@ -446,7 +479,7 @@ const ViewLink = styled(Link)`
   text-decoration: none;
   margin-left: auto;
   font-size: 16px;
-  width: 130px;
+  width: 150px;
   height: 40px;
   border: none;
   color: white;
@@ -458,19 +491,17 @@ const ViewLink = styled(Link)`
 
 const GoBack = styled(Link)`
   text-decoration: none;
-  font-size: 16px;
-  width: 200px;
+  font-size: 18px;
+  width: 100px;
   height: 40px;
   border: none;
-  color: white;
-  background-color: #0f482f;
+  color: #0f482f;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  &:hover {
-    background-color: #0e5937;
-  }
+  letter-spacing: 1px;
+  font-weight: normal;
 `;
 
 export default Progress;
