@@ -95,26 +95,17 @@ const Progress = () => {
           </div>
         </UpperContainer>
         <TasksContainer>
-          <Container>
-            {taskInfo.length === 0 ? (
-              <p>No assigned tasks yet.</p>
-            ) : loading ? (
-              "Loading..."
-            ) : (
-              taskInfo.map(({ id, title, status, dueAt, student }) => {
-                return (
-                  <>
-                    <Content>
-                      <h1>{title}</h1>
-                      <p>
-                        Assigned to:{" "}
-                        {user.id === student?.id
-                          ? "You"
-                          : student?.user?.firstName +
-                            " " +
-                            student?.user?.lastName}{" "}
-                        | Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
-                      </p>
+          {taskInfo.length === 0 ? (
+            <p>No assigned tasks yet.</p>
+          ) : loading ? (
+            "Loading..."
+          ) : (
+            taskInfo.map(({ id, title, status, dueAt, student }) => {
+              return (
+                <>
+                  <Content>
+                    <Task>
+                      <h1>{title} </h1>
                       <Dropdown
                         popperComponent={
                           <DropdownButtons>
@@ -160,12 +151,21 @@ const Progress = () => {
                           ? "Done"
                           : ""}
                       </ViewLink>
-                    </Content>
-                  </>
-                );
-              })
-            )}
-          </Container>
+                      <p>
+                        Assigned to:{" "}
+                        {user.id === student?.id
+                          ? "You"
+                          : student?.user?.firstName +
+                            " " +
+                            student?.user?.lastName}{" "}
+                        | Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                      </p>
+                    </Task>
+                  </Content>
+                </>
+              );
+            })
+          )}
         </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
@@ -351,24 +351,13 @@ const TasksContainer = styled.div`
   overflow-y: scroll;
 `;
 
-const Container = styled.div`
-  width: 100%;
-  padding: 1.5em 2em;
-`;
-
 const Content = styled.div`
   width: 100%;
-  height: 100px;
+  height: 110px;
   text-align: left;
+  padding: 0 20px;
+  margin: 2em 1.4em;
   border-bottom: 1px solid black;
-  > h1 {
-    font-size: 20px;
-    font-weight: normal;
-  }
-  > p {
-    font-size: 18px;
-    color: #646464;
-  }
   button {
     display: flex;
     font-size: 15px;
@@ -377,13 +366,29 @@ const Content = styled.div`
     color: white;
     border: none;
     text-align: center;
-    margin-left: auto;
     cursor: pointer;
   }
   .mark {
     width: 130px;
     height: 40px;
     background-color: #0e5937;
+    float: right;
+  }
+`;
+
+const Task = styled.div`
+  width: 100%;
+  h1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0;
+    font-size: 20px;
+    color: #0f482f;
+  }
+  p {
+    font-size: 17px;
+    margin-top: 5px;
+    color: #646464;
   }
 `;
 
@@ -477,7 +482,6 @@ const ViewLink = styled(Link)`
         : "#0e5937"};
     `}
   text-decoration: none;
-  margin-left: auto;
   font-size: 16px;
   width: 150px;
   height: 40px;
@@ -487,6 +491,9 @@ const ViewLink = styled(Link)`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: inline-block;
+  float: right;
+  margin-right: 1em;
 `;
 
 const GoBack = styled(Link)`

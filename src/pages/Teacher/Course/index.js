@@ -114,9 +114,10 @@ const TCourse = () => {
             <NavMenu to={`/class/${classId}/activities`}>
               <RiFileEditLine size={18} /> &nbsp; Activities
             </NavMenu>
+            {/*
             <NavMenu to={`/class/${classId}/submissions`}>
               <RiFileCopy2Fill size={18} /> &nbsp; Submissions
-            </NavMenu>
+            </NavMenu> */}
             <NavMenu to={`/class/${classId}/members`}>
               <MdGroupAdd size={18} />
               &nbsp; Members

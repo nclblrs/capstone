@@ -87,7 +87,7 @@ const Submission = () => {
                 <span>{description}</span>
                 {attachment && (
                   <>
-                    Attachment:
+                    <p>Attachment: </p>
                     <Attachment href={secure_url} download>
                       {original_filename}.{secure_url.split(".").slice(-1)}
                     </Attachment>
@@ -184,19 +184,31 @@ const ActivityHeader = styled.div`
 const ActivityContent = styled.div`
   width: 95%;
   margin: 1em;
+  padding: 1em;
 
   > h1 {
     margin: 0;
     color: #0f482f;
     font-weight: normal;
-    font-size: 22px;
+    font-size: 26px;
   }
   > span {
     margin: 0;
     color: #646464;
-    font-size: 16px;
+    font-size: 18px;
     display: flex;
+    margin-top: 5px;
     align-items: center;
+  }
+
+  .activityGrade {
+    background-color: #0e5937;
+    padding: 10px;
+    border-radius: 10px;
+    position: absolute;
+    top: 40px;
+    right: 35px;
+    color: white;
   }
 `;
 

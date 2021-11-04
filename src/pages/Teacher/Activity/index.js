@@ -101,7 +101,7 @@ const TActivity = () => {
                   &nbsp; Professor: {firstName} {lastName}
                 </li>
                 <li>
-                  <MdAccountCircle size={18} />
+                  <FaLaptop size={18} />
                   &nbsp; Activity Type: Individual Activity
                 </li>
                 <li>
