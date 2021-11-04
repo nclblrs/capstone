@@ -170,9 +170,9 @@ const StudyGroup = () => {
                 </>
               ))}
         </RSideAbout>
-        <RSideQuestion>
+        {/* <RSideQuestion>
           <h3>QUESTIONS</h3>
-        </RSideQuestion>
+       </RSideQuestion> */}
       </RSideContainer>
     </SGContainer>
   );
@@ -282,14 +282,14 @@ const RSideAbout = styled.div`
   padding: 2em;
 `;
 
-const RSideQuestion = styled.div`
+/* const RSideQuestion = styled.div`
   display: flex;
   width: 100%;
   flex-direction: column;
   background-color: #f2f2f2;
   border-radius: 10px;
   padding: 2em;
-`;
+`; */
 
 const SGItemsContainer = styled.div`
   width: 100%;
