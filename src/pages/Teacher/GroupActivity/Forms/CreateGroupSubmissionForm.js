@@ -8,7 +8,7 @@ import { useParams } from "react-router-dom";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import { CREATE_GROUPSUBMISSION } from "../gql";
 import { toast } from "react-toastify";
-import { useState } from "react/cjs/react.development";
+import { useState } from "react";
 
 const CreateGroupSubmissionForm = ({ onCreateFinish }) => {
   const { activityId } = useParams();

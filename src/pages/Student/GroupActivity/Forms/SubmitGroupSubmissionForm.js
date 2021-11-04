@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { BsPaperclip } from "react-icons/bs";
 import { useForm } from "react-hook-form";
@@ -7,7 +7,6 @@ import { upload } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import { SUBMIT_GROUPSUBMISSION } from "../gql";
 import { toast } from "react-toastify";
-import { useState } from "react/cjs/react.development";
 
 const SubmitGroupSubmissionForm = ({ onCreateFinish, groupSubmissionId }) => {
   const { user } = useCurrentUserContext();
