@@ -47,7 +47,7 @@ const Navbar = () => {
       <Dropdown
         popperComponent={
           <DropdownButtons>
-            <NavMenu to="/settings">Settings</NavMenu>
+            {!isAdmin && <NavMenu to="/settings">Settings</NavMenu>}
             <NavMenu to="/logout">Logout</NavMenu>
           </DropdownButtons>
         }
