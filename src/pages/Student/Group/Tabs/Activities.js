@@ -48,7 +48,7 @@ const Activity = styled.div`
   height: 110px;
   padding: 0 20px;
   text-align: left;
-  margin: 1em 1.4em;
+  margin: 1em 1em;
   display: flex;
   button {
     margin-left: auto;

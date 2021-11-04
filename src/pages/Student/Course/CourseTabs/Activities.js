@@ -78,6 +78,13 @@ const Activities = () => {
                         </h4>
                         <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
                       </Content>
+                      <ViewLink
+                        to={`${removeLast(
+                          location.pathname
+                        )}/groupactivity/${id}`}
+                      >
+                        View
+                      </ViewLink>
                     </Activity>
                   </>
                 );

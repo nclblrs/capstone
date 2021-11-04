@@ -47,7 +47,7 @@ const Settings = () => {
                   className="editpic"
                   onClick={() => setShowEditProfilePicModal(true)}
                 >
-                  <BsPencilSquare size={20} />
+                  <BsPencilSquare size={18} />
                 </button>
                 <ul>
                   <li className="name">
@@ -283,13 +283,15 @@ const ProfileTop = styled.div`
     }
   }
   .editpic {
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
     background-color: #0e5937;
     color: white;
     border: none;
     cursor: pointer;
     border-radius: 50%;
+    position: absolute;
+    margin: 3em 11em;
 
     &:hover {
       background-color: #157348;

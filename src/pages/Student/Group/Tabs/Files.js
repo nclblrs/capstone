@@ -47,7 +47,6 @@ const Files = () => {
 
 const FileContainer = styled.div`
   width: 100%;
-  padding-left: 1em;
 `;
 
 const File = styled.div`

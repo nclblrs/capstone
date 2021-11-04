@@ -110,8 +110,9 @@ const StyledForm = styled.form`
   .postbutton {
     position: absolute;
     bottom: 15px;
-    right: 35px;
+    right: 30px;
     background-color: #0f482f;
+    width: 110px;
   }
 
   textarea {
