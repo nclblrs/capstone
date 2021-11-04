@@ -47,7 +47,7 @@ const Task = () => {
               </li>
             </ul>
           </RSideAbout>
-          <GoBack to={`/`}>Go back</GoBack>
+          <GoBack to={`/progress/:groupSubmissionId`}>Go back</GoBack>
         </RSideContainer>
       </>
     </ActivityContainer>

@@ -7,15 +7,14 @@ import { COURSE_GROUPACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
-import AssignTaskForm from "pages/Student/GroupActivity/Forms/AssignTaskForm";
+import AssignTaskForm from "pages/Student/Progress/Forms/AssignTaskForm";
 import { Link } from "react-router-dom";
 import { FaLaptop } from "react-icons/fa";
-import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const GroupActivityPage = () => {
   const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
   const { activityId } = useParams();
-  const { user } = useCurrentUserContext();
+
   const { loading, data, refetch } = useQuery(COURSE_GROUPACTIVITY, {
     variables: { groupActivityId: activityId },
   });

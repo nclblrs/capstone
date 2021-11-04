@@ -31,7 +31,6 @@ const Submission = () => {
     grade,
     student,
     activity,
-    points,
     attachment = null,
   } = submissionData?.submission ?? {};
 
@@ -62,7 +61,11 @@ const Submission = () => {
                 <span>
                   {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
-                <span>{activity.points ? `${activity.points} pts` : "No points assigned"}</span>
+                <span>
+                  {activity.points
+                    ? `${activity.points} pts`
+                    : "No points assigned"}
+                </span>
               </ActivityContent>
               <ActivityButtons>
                 {activity.points ? (

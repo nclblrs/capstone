@@ -3,6 +3,7 @@ import styled from "styled-components";
 import dayjs from "dayjs";
 import { GET_GROUP_ACTIVITIES } from "../gql";
 import { useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 
 const Activities = ({ courseId }) => {
   const { loading: groupActivityLoading, data: groupActivityData } = useQuery(
@@ -18,7 +19,7 @@ const Activities = ({ courseId }) => {
     <ActivityContainer>
       {groupActivityLoading
         ? "Loading..."
-        : groupActivityInfo.map(({ id, title, dueAt, createdAt }) => {
+        : groupActivityInfo.map(({ id, title, dueAt, createdAt, course }) => {
             return (
               <>
                 <Activity key={id}>
@@ -29,6 +30,10 @@ const Activities = ({ courseId }) => {
                     </h4>
                     <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
                   </Content>
+
+                  <ViewLink to={`/class/${course.id}/groupactivity/${id}`}>
+                    View
+                  </ViewLink>
                 </Activity>
               </>
             );
@@ -88,6 +93,24 @@ const Content = styled.div`
     margin-top: 0;
     color: #0f482f;
     font-size: 18px;
+  }
+`;
+
+const ViewLink = styled(Link)`
+  text-decoration: none;
+  margin-left: auto;
+  font-size: 16px;
+  width: 130px;
+  height: 40px;
+  border: none;
+  color: white;
+  background-color: #0f482f;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  &:hover {
+    background-color: #0e5937;
   }
 `;
 

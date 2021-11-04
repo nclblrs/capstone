@@ -195,6 +195,9 @@ export const GET_GROUP_ACTIVITIES = gql`
         title
         dueAt
         createdAt
+        course {
+          id
+        }
       }
     }
   }
