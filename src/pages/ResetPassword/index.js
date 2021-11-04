@@ -88,9 +88,10 @@ const ResetContainer = styled.div`
     background-color: #1d935d;
     border: none;
     font-size: 16px;
-    width: 120px;
+    width: 140px;
     justify-content: center;
     padding: 0.5em;
+    cursor: pointer;
   }
 `;
 
