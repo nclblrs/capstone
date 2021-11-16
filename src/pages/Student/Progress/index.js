@@ -106,37 +106,41 @@ const Progress = () => {
                   <Content>
                     <Task>
                       <h1>{title} </h1>
-                      <Dropdown
-                        popperComponent={
-                          <DropdownButtons>
-                            <button
-                              onClick={() => handleChangeTaskStatus(id, "DONE")}
-                            >
-                              Done
-                            </button>
-                            {leader?.id === user.id && (
+                      {(leader?.id === user.id || myTask?.id === id) && (
+                        <Dropdown
+                          popperComponent={
+                            <DropdownButtons>
                               <button
                                 onClick={() =>
-                                  handleChangeTaskStatus(id, "UNDER_REVIEW")
+                                  handleChangeTaskStatus(id, "DONE")
                                 }
                               >
-                                Under Review
+                                Done
                               </button>
-                            )}
-                            {myTask?.id === id && (
-                              <button
-                                onClick={() =>
-                                  handleChangeTaskStatus(id, "IN_PROGRESS")
-                                }
-                              >
-                                In Progress
-                              </button>
-                            )}
-                          </DropdownButtons>
-                        }
-                      >
-                        <button className="mark">Mark as</button>
-                      </Dropdown>
+                              {leader?.id === user.id && (
+                                <button
+                                  onClick={() =>
+                                    handleChangeTaskStatus(id, "UNDER_REVIEW")
+                                  }
+                                >
+                                  Under Review
+                                </button>
+                              )}
+                              {myTask?.id === id && (
+                                <button
+                                  onClick={() =>
+                                    handleChangeTaskStatus(id, "IN_PROGRESS")
+                                  }
+                                >
+                                  In Progress
+                                </button>
+                              )}
+                            </DropdownButtons>
+                          }
+                        >
+                          <button className="mark">Mark as</button>
+                        </Dropdown>
+                      )}
                       <ViewLink
                         status={status}
                         to={`/progress/${groupSubmissionId}/task/${id}`}
@@ -349,6 +353,8 @@ const TasksContainer = styled.div`
   height: 550px;
   margin-top: 1.5em;
   overflow-y: scroll;
+  flex-direction: column;
+  padding: 10px;
 `;
 
 const Content = styled.div`
@@ -356,7 +362,7 @@ const Content = styled.div`
   height: 110px;
   text-align: left;
   padding: 0 20px;
-  margin: 2em 1.4em;
+  margin: 2em 0;
   border-bottom: 1px solid black;
   button {
     display: flex;
@@ -472,7 +478,7 @@ const ViewLink = styled(Link)`
   ${({ status }) =>
     css`
       background-color: ${status === "TODO"
-        ? "#0e5937"
+        ? "#164aae"
         : status === "DONE"
         ? "#0e5937"
         : status === "UNDER_REVIEW"

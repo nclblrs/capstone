@@ -316,7 +316,6 @@ const Content = styled(Link)`
   width: 100%;
   text-decoration: none;
   display: flex;
-  height: 50px;
 
   > h1 {
     margin: 0;

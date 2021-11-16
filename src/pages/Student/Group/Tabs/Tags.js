@@ -16,7 +16,7 @@ const TagsInfo = () => {
       {tagLoading
         ? "Loading..."
         : tags.map(({ id, name: tagName, count }) => (
-            <TagLink key={id} to={`/group/${id}?tag=${tagName}`}>
+            <TagLink key={id} to={`/group/${groupId}?tag=${tagName}`}>
               #{tagName} <span>{count} posts</span>
             </TagLink>
           ))}

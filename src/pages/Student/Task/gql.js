@@ -57,6 +57,7 @@ export const GET_TASK = gql`
       dueAt
       createdAt
       status
+      submittedAt
       student {
         id
         user {
@@ -82,6 +83,15 @@ export const GET_TASK = gql`
           attachment
           submittedAt
           status
+        }
+        tasks {
+          data {
+            id
+            title
+            attachment
+            description
+            status
+          }
         }
       }
     }

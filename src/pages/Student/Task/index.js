@@ -30,16 +30,18 @@ const Task = () => {
     dueAt,
     createdAt,
     status,
+    description,
     groupSubmission,
     student,
+    attachment = null,
+    submittedAt,
   } = data?.task ?? {};
 
   const { myTask, group } = groupSubmission ?? {};
 
-  const { description, attachment = null, submittedAt } = myTask ?? {};
+  const { leader } = group ?? {};
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
-
   const handleChangeTaskStatus = async (id, status) => {
     try {
       const { data } = await changeTaskStatus({
@@ -113,69 +115,69 @@ const Task = () => {
                       's Submission
                     </h1>
                   )}
-                  {user.id === student.id ? (
-                    myTask?.attachment || myTask?.description ? (
-                      <>
-                        <span>
-                          {submittedAt &&
-                            `Submitted: ${dayjs(submittedAt).format(
-                              "MMMM D, YYYY [at] h:mm a"
-                            )}`}
-                        </span>
-                        <span>{description}</span>
-                      </>
-                    ) : (
-                      <span>You haven't submitted anything yet.</span>
-                    )
-                  ) : (
-                    "No submission yet."
-                  )}
-                  {attachment && (
+                  {taskId === id && (attachment || description) ? (
                     <>
-                      Attachment:
-                      <Attachment href={secure_url} download>
-                        {original_filename}.{secure_url.split(".").slice(-1)}
-                      </Attachment>
+                      <span>
+                        {submittedAt &&
+                          `Submitted: ${dayjs(submittedAt).format(
+                            "MMMM D, YYYY [at] h:mm a"
+                          )}`}
+                      </span>
+                      <span>{description}</span>
+                      {attachment && (
+                        <>
+                          Attachment:
+                          <Attachment href={secure_url} download>
+                            {original_filename}.
+                            {secure_url.split(".").slice(-1)}
+                          </Attachment>
+                        </>
+                      )}
                     </>
+                  ) : (
+                    "Nothing submitted yet."
                   )}
                 </>
               )}
             </ActivityContent>
             <ActivityButtons>
-              <Dropdown
-                popperComponent={
-                  <DropdownButtons>
-                    <button
-                      className="done"
-                      onClick={() => handleChangeTaskStatus(id, "DONE")}
-                    >
-                      Done
-                    </button>
-                    {group?.leader?.id === user.id && (
+              {(leader?.id === user.id || myTask?.id === id) && (
+                <Dropdown
+                  popperComponent={
+                    <DropdownButtons>
                       <button
-                        className="under"
-                        onClick={() =>
-                          handleChangeTaskStatus(id, "UNDER_REVIEW")
-                        }
+                        className="done"
+                        onClick={() => handleChangeTaskStatus(id, "DONE")}
                       >
-                        Under Review
+                        Done
                       </button>
-                    )}
-                    {myTask?.id === id && (
-                      <button
-                        className="in"
-                        onClick={() =>
-                          handleChangeTaskStatus(id, "IN_PROGRESS")
-                        }
-                      >
-                        In Progress
-                      </button>
-                    )}
-                  </DropdownButtons>
-                }
-              >
-                <button className="mark">Mark as</button>
-              </Dropdown>
+
+                      {leader?.id === user.id && (
+                        <button
+                          className="under"
+                          onClick={() =>
+                            handleChangeTaskStatus(id, "UNDER_REVIEW")
+                          }
+                        >
+                          Under Review
+                        </button>
+                      )}
+                      {myTask?.id === id && (
+                        <button
+                          className="in"
+                          onClick={() =>
+                            handleChangeTaskStatus(id, "IN_PROGRESS")
+                          }
+                        >
+                          In Progress
+                        </button>
+                      )}
+                    </DropdownButtons>
+                  }
+                >
+                  <button className="mark">Mark as</button>
+                </Dropdown>
+              )}
             </ActivityButtons>
           </ActivityHeader>
         </LSideContainer>
@@ -192,11 +194,9 @@ const Task = () => {
               <li>
                 <MdAccountCircle size={18} />
                 &nbsp; Assigned by:{" "}
-                {user.id === group?.leader?.id
+                {user.id === leader?.id
                   ? "You"
-                  : group?.leader?.user?.firstName +
-                    " " +
-                    group?.leader?.user?.lastName}
+                  : leader?.user?.firstName + " " + leader?.user?.lastName}
               </li>
               <li>
                 <MdAccountCircle size={18} />
