@@ -75,23 +75,33 @@ const Progress = () => {
           </div>
           <div className="todo">
             <h4>To-do</h4>
-            <h5>{toDoCount}</h5>
+            <Link className="todoButton">
+              <div className="todoCircle">{toDoCount}</div>
+            </Link>
           </div>
           <div className="inprogress">
             <h4>In Progress</h4>
-            <h5>{inProgressCount}</h5>
+            <Link className="inprogressButton">
+              <div className="inprogressCircle">{inProgressCount}</div>
+            </Link>
           </div>
           <div className="underreview">
             <h4>Under Review</h4>
-            <h5>{underReviewCount}</h5>
+            <Link className="underreviewButton">
+              <div className="underreviewCircle">{underReviewCount}</div>
+            </Link>
           </div>
           <div className="missing">
             <h4>Missing</h4>
-            <h5>{missingCount}</h5>
+            <Link className="missingButton">
+              <div className="missingCircle">{missingCount}</div>
+            </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
-            <h5>{doneCount}</h5>
+            <Link className="doneButton">
+              <div className="doneCircle">{doneCount}</div>
+            </Link>
           </div>
         </UpperContainer>
         <TasksContainer>
@@ -244,14 +254,14 @@ const LeftSideContainer = styled.div`
   display: flex;
   flex-direction: column;
   width: 68%;
-  margin-left: 5em;
+  margin-left: 1em;
 `;
 
 const UpperContainer = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
-  gap: 30px;
+  gap: 15px;
   height: 130px;
   margin-top: 1em;
 
@@ -309,38 +319,114 @@ const UpperContainer = styled.div`
     border-radius: 10px;
     > h4 {
       color: #164aae;
-      height: 50px;
+      height: 40px;
       margin-top: 15px;
       margin-bottom: 0;
     }
-    > h5 {
-      color: #164aae;
+    .todoButton {
+      color: white;
       margin: 0;
       font-size: 22px;
+      text-decoration: none;
+
+      .todoCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #164aae;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
     }
   }
   .inprogress {
-    > h4,
-    h5 {
+    > h4 {
       color: #ae5f16;
+    }
+    .inprogressButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .inprogressCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #ae5f16;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
     }
   }
   .underreview {
-    > h4,
-    h5 {
+    > h4 {
       color: #ae1696;
+    }
+    .underreviewButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .underreviewCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #ae1696;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
     }
   }
   .missing {
-    > h4,
-    h5 {
+    > h4 {
       color: #9b1313;
+    }
+    .missingButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .missingCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #9b1313;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
     }
   }
   .done {
-    > h4,
-    h5 {
+    > h4 {
       color: #0e5937;
+    }
+    .doneButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .doneCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #0e5937;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
     }
   }
 `;
@@ -403,7 +489,7 @@ const RightSideContainer = styled.div`
   width: 27%;
   gap: 20px;
   flex-direction: column;
-  margin-left: 3em;
+  margin-left: 2em;
 
   h3 {
     color: #646464;
@@ -433,7 +519,7 @@ const RightSideContainer = styled.div`
 const AboutContainer = styled.div`
   border-radius: 10px;
   background-color: #f2f2f2;
-  width: 85%;
+  width: 100%;
   padding: 2em;
   margin-top: 3.5em;
   ul {
