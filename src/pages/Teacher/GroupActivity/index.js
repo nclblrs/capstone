@@ -61,41 +61,6 @@ const TGroupActivityPage = () => {
                     </h1>
                   </Content>
                 </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST <span> | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST <span> | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST <span> | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST <span> | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST <span> | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
               </ActivityContent>
             </ActivityHeader>
           </LSideContainer>

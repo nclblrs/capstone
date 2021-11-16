@@ -14,7 +14,8 @@ const Feed = () => {
         <FeedHeader>
           <PostFormContainer></PostFormContainer>
           <FeedFilter>
-            <p>What's new?</p>
+            <p>Welcome student!</p>
+            <h4>What's new?</h4>
             {/*  <button className="filterbutton">
               Filter Posts &nbsp;
               <FaFilter size={15} className="filtericon" />
@@ -69,6 +70,9 @@ const FeedFilter = styled.div`
     margin: 5px 10px;
     font-size: 20px;
     color: #646464;
+  }
+  h4 {
+    color: #0e5937;
   }
   button {
     background-color: #0e5937;
