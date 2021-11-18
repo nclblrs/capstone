@@ -14,8 +14,8 @@ const AllCourseGroups = () => {
           <NavMenu to="/classes">
             <li>Classes</li>
           </NavMenu>
-          <NavMenu to="/classgroups" exact>
-            <li>Class Groups</li>
+          <NavMenu to="/coursegroups" exact>
+            <li>Course Groups</li>
           </NavMenu>
           <NavMenu to="/studygroups">
             <li>Study Groups</li>
