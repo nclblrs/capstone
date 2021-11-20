@@ -76,7 +76,7 @@ const GroupActivityPage = () => {
                 <ActivityButtons>
                   <Link
                     className="groupprogress"
-                    to={`/progress/${groupSubmissionId}`}
+                    to={`/progress/class/${classId}/groupactivity/${groupSubmissionId}`}
                   >
                     Group Progress
                   </Link>
