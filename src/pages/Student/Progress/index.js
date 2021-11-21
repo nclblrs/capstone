@@ -57,6 +57,9 @@ const Progress = () => {
   const missingCount = taskInfo.filter(
     ({ dueAt, submittedAt }) => !submittedAt && new Date(dueAt) < new Date()
   ).length;
+
+  const allCount =
+    toDoCount + inProgressCount + underReviewCount + missingCount + doneCount;
   const percentProgress = (doneCount / taskInfo.length) * 100;
 
   return (
@@ -68,10 +71,22 @@ const Progress = () => {
         <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
             <h4>Progress</h4>
-            <p>{percentProgress ? `${percentProgress}%` : "0%"}</p>
+            <p>
+              {percentProgress
+                ? `${
+                    Math.round((percentProgress + Number.EPSILON) * 100) / 100
+                  }%`
+                : "0%"}
+            </p>
             <div className="outerbar">
               <div className="bar"></div>
             </div>
+          </div>
+          <div className="alltask">
+            <h4>All</h4>
+            <Link className="alltaskButton">
+              <div className="alltaskCircle">{allCount}</div>
+            </Link>
           </div>
           <div className="todo">
             <h4>To-do</h4>
@@ -153,7 +168,7 @@ const Progress = () => {
                       )}
                       <ViewLink
                         status={status}
-                        to={`/progress/${groupSubmissionId}/task/${id}`}
+                        to={`/progress/class/${course?.id}/groupactivity/${groupSubmissionId}/task/${id}`}
                       >
                         {status === "TODO"
                           ? "View Submission"
@@ -308,13 +323,14 @@ const UpperContainer = styled.div`
       }
     }
   }
+  .alltask,
   .todo,
   .inprogress,
   .underreview,
   .missing,
   .done {
     background-color: #f2f2f2;
-    width: 50%;
+    width: 60%;
     text-align: center;
     border-radius: 10px;
     > h4 {
@@ -322,6 +338,7 @@ const UpperContainer = styled.div`
       height: 40px;
       margin-top: 15px;
       margin-bottom: 0;
+      font-size: 15px;
     }
     .todoButton {
       color: white;
@@ -335,6 +352,28 @@ const UpperContainer = styled.div`
         border-radius: 50%;
         margin: 0 auto;
         background-color: #164aae;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+    }
+  }
+  .alltask {
+    > h4 {
+      color: #6b16ae;
+    }
+    .alltaskButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .alltaskCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #6b16ae;
         justify-content: center;
         align-items: center;
         display: flex;

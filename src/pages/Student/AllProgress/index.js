@@ -1,43 +1,31 @@
 import React from "react";
 import styled from "styled-components";
-import { Link, NavLink } from "react-router-dom";
-import { GET_CLASSGROUPS } from "./gql";
+import { GET_COURSES } from "./gql";
 import { useQuery } from "@apollo/client";
+import { Link } from "react-router-dom";
 
-const AllCourseGroups = () => {
-  const { loading, data } = useQuery(GET_CLASSGROUPS);
+const AllProgress = () => {
+  const { loading, data } = useQuery(GET_COURSES);
 
   return (
     <PageContainer>
       <MainContainer>
-        <AllContainer>
-          <NavMenu to="/classes">
-            <li>Classes</li>
-          </NavMenu>
-          <NavMenu to="/coursegroups" exact>
-            <li>Course Groups</li>
-          </NavMenu>
-          <NavMenu to="/studygroups">
-            <li>Study Groups</li>
-          </NavMenu>
-        </AllContainer>
         <div className="buttoncontainer">
-          <h2>ALL CLASS GROUPS</h2>
+          <h2>PROGRESS - ALL CLASSES</h2>
           <button>Show Inactive</button>
         </div>
         <div className="itemcontainer">
           {loading
             ? "Loading..."
-            : data?.studentClassGroups?.data?.map(
-                ({ id, name, course, leader, studentCount }) => (
-                  <Link className="items" key={id} to={`/group/${id}`}>
+            : data?.studentCourses?.data?.map(
+                ({ id, name, yearAndSection, teacher, studentCount }) => (
+                  <Link className="items" key={id} to={`/progress/class/${id}`}>
                     <h1>{name}</h1>
                     <p>
-                      Leader: {leader?.user?.lastName},{" "}
-                      {leader?.user?.firstName}
+                      Teacher: {teacher?.user?.lastName},{" "}
+                      {teacher?.user?.firstName}
                     </p>
-                    <p>Subject: {course.name}</p>
-                    <p> {studentCount + 1} members</p>
+                    <p>Year and Section: {yearAndSection}</p>
                   </Link>
                 )
               )}
@@ -50,43 +38,6 @@ const AllCourseGroups = () => {
 const PageContainer = styled.div`
   display: flex;
   justify-content: center;
-`;
-
-const AllContainer = styled.nav`
-  display: flex;
-  position: sticky;
-  margin: 0;
-  gap: 50px;
-`;
-
-const NavMenu = styled(NavLink)`
-  text-decoration: none;
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 1px;
-  font-size: 18px;
-  color: #646464;
-  cursor: pointer;
-  padding: 10px;
-  font-weight: bold;
-
-  li {
-    list-style-type: none;
-    border-bottom: 4px solid #0e5937;
-    height: 35px;
-    margin-top: 0;
-  }
-
-  &:hover,
-  &.active {
-    color: white;
-    background-color: #0e5937;
-    border-radius: 10px;
-    padding-bottom: 0;
-    font-weight: normal;
-  }
 `;
 
 const MainContainer = styled.div`
@@ -145,7 +96,6 @@ const MainContainer = styled.div`
     padding: 2em;
     width: 24%;
     background-color: #f2f2f2;
-    height: 250px;
     margin-bottom: 20px;
     text-decoration: none;
 
@@ -168,4 +118,5 @@ const MainContainer = styled.div`
     }
   }
 `;
-export default AllCourseGroups;
+
+export default AllProgress;
