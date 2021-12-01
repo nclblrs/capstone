@@ -5,17 +5,15 @@ import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { COURSE_GROUPACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import dayjs from "dayjs";
 import CreateGroupSubmissionForm from "./Forms/SubmitGroupSubmissionForm";
-import { Link } from "react-router-dom";
 import { FaLaptop } from "react-icons/fa";
 
 const GroupActivityPage = () => {
   const [showGroupSubmissionModal, setShowGroupSubmissionModal] =
     useState(false);
   const { activityId } = useParams();
-
   const { loading, data, refetch } = useQuery(COURSE_GROUPACTIVITY, {
     variables: { groupActivityId: activityId },
   });
@@ -146,9 +144,6 @@ const GroupActivityPage = () => {
                 </li>
               </ul>
             </RSideAbout>
-            <GoBack to={`/class/${classId}/activities/group`}>
-              Go to Group Activities Tab
-            </GoBack>
           </RSideContainer>
           <Modal
             show={showGroupSubmissionModal}
@@ -336,23 +331,5 @@ const Content = styled(Link)`
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
-  }
-`;
-
-const GoBack = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  width: 220px;
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  &:hover {
-    background-color: #0e5937;
   }
 `;

@@ -68,6 +68,9 @@ export const GET_TASK = gql`
       groupSubmission {
         id
         group {
+          course {
+            id
+          }
           leader {
             id
             user {

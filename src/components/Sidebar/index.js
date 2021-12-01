@@ -3,9 +3,9 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import { FaSchool } from "react-icons/fa";
 import { SiGoogleclassroom } from "react-icons/si";
-/* import { FiClock } from "react-icons/fi";
+import { FiClock } from "react-icons/fi";
 import { BiCalendar } from "react-icons/bi";
-import { AiFillPieChart } from "react-icons/ai";*/
+import { AiFillPieChart } from "react-icons/ai";
 
 const Sidebar = () => {
   return (
@@ -18,7 +18,6 @@ const Sidebar = () => {
           <SiGoogleclassroom size={20} />
           Classes
         </NavMenu>
-        {/*
         <NavMenu to="/class-schedule">
           <FiClock size={20} />
           Class Schedule
@@ -30,7 +29,7 @@ const Sidebar = () => {
         <NavMenu to="/progress">
           <AiFillPieChart size={20} />
           Progress
-  </NavMenu>*/}
+        </NavMenu>
       </SidebarContainer>
     </Nav>
   );

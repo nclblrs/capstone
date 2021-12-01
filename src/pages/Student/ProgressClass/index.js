@@ -4,15 +4,11 @@ import dayjs from "dayjs";
 import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
 import { GET_ACTIVITIES, GET_GROUP_ACTIVITIES, GET_COURSE } from "./gql";
 import { useQuery } from "@apollo/client";
-import { useLocation } from "react-router";
-
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 
 const ProgressClass = () => {
-  const location = useLocation();
-  const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
   const { classId } = useParams();
 
   const { loading: activityLoading, data: activityData } = useQuery(
@@ -57,39 +53,55 @@ const ProgressClass = () => {
               <Route path={`/progress/class/:classId/activities`} exact>
                 {activityLoading
                   ? "Loading..."
-                  : activityInfo.map(({ id, title, dueAt, createdAt }) => {
-                      return (
-                        <>
-                          <Activity key={id}>
-                            <Content>
-                              <h1>{title}</h1>
-                              <h4>
-                                {dayjs(createdAt).format(
-                                  "MMMM D, YYYY [at] h:mm a"
-                                )}
-                              </h4>
-                              <h3>
-                                {" "}
-                                Due: {dayjs(dueAt).format("MMMM D, YYYY")}{" "}
-                              </h3>
-                            </Content>
-                            <ViewLink
-                              to={`${removeLast(
-                                location.pathname
-                              )}/activity/${id}`}
-                            >
-                              View
-                            </ViewLink>
-                          </Activity>
-                        </>
-                      );
-                    })}
+                  : activityInfo.map(
+                      ({
+                        id,
+                        title,
+                        dueAt,
+                        createdAt,
+                        course,
+                        mySubmission,
+                      }) => {
+                        return (
+                          <>
+                            <Activity key={id}>
+                              <Content>
+                                <h1>{title}</h1>
+                                <h4>
+                                  {dayjs(createdAt).format(
+                                    "MMMM D, YYYY [at] h:mm a"
+                                  )}
+                                </h4>
+                                <h3>
+                                  {" "}
+                                  Due: {dayjs(dueAt).format(
+                                    "MMMM D, YYYY"
+                                  )}{" "}
+                                </h3>
+                              </Content>
+                              <ViewLink
+                                to={`/class/${course.id}/activity/${id}`}
+                              >
+                                View
+                              </ViewLink>
+                            </Activity>
+                          </>
+                        );
+                      }
+                    )}
               </Route>
               <Route path={`/progress/class/:classId/activities/group`}>
                 {groupActivityLoading
                   ? "Loading..."
                   : groupActivityInfo.map(
-                      ({ id, title, dueAt, createdAt, course }) => {
+                      ({
+                        id,
+                        title,
+                        dueAt,
+                        createdAt,
+                        course,
+                        mySubmission,
+                      }) => {
                         return (
                           <>
                             <Activity key={id}>
@@ -357,23 +369,5 @@ const NavMenu = styled(NavLink)`
     color: white;
     background-color: #0f482f;
     border-radius: 5px;
-  }
-`;
-
-const GoBack = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  width: 150px;
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  &:hover {
-    background-color: #0e5937;
   }
 `;

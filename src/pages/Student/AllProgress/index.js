@@ -19,7 +19,11 @@ const AllProgress = () => {
             ? "Loading..."
             : data?.studentCourses?.data?.map(
                 ({ id, name, yearAndSection, teacher, studentCount }) => (
-                  <Link className="items" key={id} to={`/progress/class/${id}`}>
+                  <Link
+                    className="items"
+                    key={id}
+                    to={`/progress/class/${id}/activities`}
+                  >
                     <h1>{name}</h1>
                     <p>
                       Teacher: {teacher?.user?.lastName},{" "}

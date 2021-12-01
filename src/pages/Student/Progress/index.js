@@ -10,7 +10,7 @@ import Dropdown, { DropdownButtons } from "components/Dropdown";
 import dayjs from "dayjs";
 import { toast } from "react-toastify";
 import { TiGroup } from "react-icons/ti";
-import { FaLaptop, FaArrowAltCircleLeft } from "react-icons/fa";
+import { FaLaptop } from "react-icons/fa";
 import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
 
 const Progress = () => {
@@ -65,9 +65,6 @@ const Progress = () => {
   return (
     <ProgressContainer>
       <LeftSideContainer>
-        <GoBack to={`/class/${course?.id}/groupactivity/${groupActivity?.id}`}>
-          <FaArrowAltCircleLeft /> &nbsp; <h4> Back </h4>
-        </GoBack>
         <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
             <h4>Progress</h4>
@@ -627,7 +624,7 @@ const ViewLink = styled(Link)`
   margin-right: 1em;
 `;
 
-const GoBack = styled(Link)`
+/* const GoBack = styled.button`
   text-decoration: none;
   font-size: 18px;
   width: 100px;
@@ -640,6 +637,6 @@ const GoBack = styled(Link)`
   align-items: center;
   letter-spacing: 1px;
   font-weight: normal;
-`;
+`; */
 
 export default Progress;

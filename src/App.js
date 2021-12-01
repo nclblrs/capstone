@@ -40,6 +40,7 @@ import Submission from "pages/Teacher/Submission";
 import Task from "pages/Student/Task";
 import AllProgress from "pages/Student/AllProgress";
 import ProgressClass from "pages/Student/ProgressClass";
+import TProgress from "pages/Teacher/TProgress";
 
 function App() {
   const { user } = useCurrentUserContext();
@@ -91,7 +92,7 @@ function App() {
                   <Route path="/progress/class/:classId/groupactivity/:groupSubmissionId">
                     <Progress />
                   </Route>
-                  <Route path="/progress/class/:classId">
+                  <Route path="/progress/class/:classId/activities">
                     <ProgressClass />
                   </Route>
                   <Route path="/progress">
@@ -156,7 +157,9 @@ function App() {
                     <Route path="/settings">
                       <TSettings />
                     </Route>
-
+                    <Route path="/progress">
+                      <TProgress />
+                    </Route>
                     <Redirect from="/" to="/" />
                   </Switch>
                 </>
