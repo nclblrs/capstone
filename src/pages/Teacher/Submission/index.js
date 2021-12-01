@@ -17,7 +17,7 @@ const Submission = () => {
   const location = useLocation();
   const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
 
-  const { submissionId, activityId, classId } = useParams();
+  const { submissionId, activityId } = useParams();
   const { loading: submissionLoading, data: submissionData } = useQuery(
     GET_SUBMISSION,
     {
@@ -125,9 +125,6 @@ const Submission = () => {
                       );
                     })}
             </RSideContent>
-            <GoBack to={`/class/${classId}/activity/${activityId}`}>
-              Go back to Activity Page
-            </GoBack>
           </RSideContainer>
           <Modal
             show={showGradeSubmissionModal}
@@ -291,23 +288,6 @@ const Content = styled(Link)`
     height: 30px;
     border-radius: 50%;
     margin-right: 10px;
-  }
-`;
-
-const GoBack = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  width: 200px;
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  &:hover {
-    background-color: #0e5937;
   }
 `;
 
