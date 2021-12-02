@@ -7,7 +7,6 @@ import { RiQuestionnaireLine } from "react-icons/ri";
 import { COURSE_ACTIVITY } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import dayjs from "dayjs";
 import CreateSubmissionForm from "pages/Student/Activity/Forms/CreateSubmissionForm";
 
@@ -29,7 +28,7 @@ const Activity = () => {
     points,
   } = data?.activity ?? {};
 
-  const { teacher, name, id: classId } = course ?? {};
+  const { teacher, name } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
   const {
     attachment: myAttachment = null,
@@ -135,9 +134,6 @@ const Activity = () => {
                 </li>
               </ul>
             </RSideAbout>
-            <GoBack to={`/class/${classId}/activities/`}>
-              Go to Activities Tab
-            </GoBack>
           </RSideContainer>
           <Modal
             show={showCreateSubmissionModal}
@@ -290,22 +286,4 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 1em;
-`;
-
-const GoBack = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  width: 200px;
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  &:hover {
-    background-color: #0e5937;
-  }
 `;

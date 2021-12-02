@@ -34,7 +34,7 @@ const TActivity = () => {
   const activitySubmissions =
     activitySubmissionsData?.activitySubmissions?.data ?? [];
 
-  const { teacher, name, id: classId } = course ?? {};
+  const { teacher, name } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
@@ -124,9 +124,6 @@ const TActivity = () => {
                 </li>
               </ul>
             </RSideAbout>
-            <GoBack to={`/class/${classId}/activities`}>
-              Go to Activities Tab
-            </GoBack>
           </RSideContainer>
         </>
       )}
@@ -276,23 +273,5 @@ const Content = styled.div`
   }
   > span {
     color: #646464;
-  }
-`;
-
-const GoBack = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  width: 200px;
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  &:hover {
-    background-color: #0e5937;
   }
 `;

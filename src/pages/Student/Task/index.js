@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { GET_TASK } from "./gql";
-import { Link } from "react-router-dom";
 import { useQuery, useMutation } from "@apollo/client";
 import { useParams } from "react-router";
 import dayjs from "dayjs";
@@ -17,7 +16,7 @@ import Dropdown, { DropdownButtons } from "components/Dropdown";
 const Task = () => {
   const [showSubmitTaskModal, setShowSubmitTaskModal] = useState(false);
   const { user } = useCurrentUserContext();
-  const { taskId, groupSubmissionId } = useParams();
+  const { taskId } = useParams();
   const [changeTaskStatus] = useMutation(CHANGE_TASK_STATUS);
   const { loading, data, refetch } = useQuery(GET_TASK, {
     variables: { taskId: taskId },
@@ -213,7 +212,6 @@ const Task = () => {
               </li>
             </ul>
           </RSideAbout>
-          <GoBack to={`/progress/${groupSubmissionId}`}>Go back</GoBack>
         </RSideContainer>
         <Modal
           show={showSubmitTaskModal}
@@ -377,22 +375,4 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 1em;
-`;
-
-const GoBack = styled(Link)`
-  text-decoration: none;
-  font-size: 16px;
-  width: 150px;
-  height: 40px;
-  border: none;
-  color: white;
-  background-color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-left: auto;
-  &:hover {
-    background-color: #0e5937;
-  }
 `;
