@@ -158,12 +158,15 @@ const ClassGroup = () => {
                 <h1>
                   Members
                   {!leader && (
-                    <button onClick={handleBecomeLeader}>
+                    <button
+                      className="becomeleader"
+                      onClick={handleBecomeLeader}
+                    >
                       Become the Leader
                     </button>
                   )}
                   {leader?.id === user?.id && (
-                    <button>
+                    <button className="transferleader">
                       <Dropdown
                         popperComponent={
                           <DropdownButtons>
@@ -369,18 +372,20 @@ const LeftContainer = styled.div`
     padding: 0.5em 1.5em;
   }
   button {
-    display: flex;
-    width: 150px;
-    height: 44px;
     font-size: 15px;
-    align-items: center;
     justify-content: center;
-    background-color: #0e5937;
     color: white;
     border: none;
+    padding: 0;
     text-align: center;
     margin-left: auto;
     cursor: pointer;
+  }
+  .becomeleader,
+  .transferleader {
+    width: 150px;
+    height: 44px;
+    background-color: #0e5937;
   }
   .leftContent {
     position: absolute;
