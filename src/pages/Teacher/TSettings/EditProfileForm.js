@@ -1,26 +1,62 @@
 import styled from "styled-components";
+import { useMutation } from "@apollo/client";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useState } from "react";
+import { TEACHER_EDITUSERINFO } from "./gql";
 
 const EditProfileForm = () => {
+  const [toSubmit, setIsSubmitting] = useState(false);
+  const { register, handleSubmit } = useForm();
+
+  const [teacheredituserinfos] = useMutation(TEACHER_EDITUSERINFO);
+
+  const handleEditUserInfo = async (data) => {
+    const { firstName, middleName, lastName } = data;
+
+    try {
+      setIsSubmitting(true);
+      const { data } = await teacheredituserinfos({
+        variables: { firstName, middleName, lastName },
+      });
+
+      if (!data?.teacheredituserinfos?.id) {
+        toast.success("Edit Successfully");
+      } else {
+        throw Error("Something is Wrong");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    }
+    setIsSubmitting(false);
+  };
+
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(handleEditUserInfo)}>
       <div>
         <label>First Name</label>
-        <input />
+        <input {...register("firstName", { required: true, maxLength: 20 })} />
       </div>
       <div>
         <label>Middle Name</label>
-        <input />
+        <input {...register("middleName")} />
       </div>
       <div>
         <label>Last Name</label>
-        <input />
+        <input {...register("lastName", { required: true })} />
+      </div>
+      <div>
+        <label>Student Number</label>
+        <input {...register("schoolIdNumber", { required: true })} />
       </div>
       <div>
         <label>Email</label>
-        <input />
+        <input {...register("emails", { required: true })} />
       </div>
 
-      <button>Submit</button>
+      <button disabled={toSubmit}>
+        {toSubmit ? "Confirming..." : "Submit "}
+      </button>
     </Form>
   );
 };
