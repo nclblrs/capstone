@@ -8,3 +8,22 @@ export const CHANGE_PROFILEPIC = gql`
     }
   }
 `;
+
+export const EDITUSERINFO = gql`
+  mutation editUserInfo(
+    $firstName: String!
+    $middleName: String!
+    $lastName: String!
+  ) {
+    editUserInfo(
+      firstName: $firstName
+      middleName: $middleName
+      lastName: $lastName
+    ) {
+      id
+      firstName
+      middleName
+      lastName
+    }
+  }
+`;

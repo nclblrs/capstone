@@ -16,10 +16,6 @@ const EditProfileForm = () => {
         <input />
       </div>
       <div>
-        <label>Student Number</label>
-        <input />
-      </div>
-      <div>
         <label>Email</label>
         <input />
       </div>
