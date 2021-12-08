@@ -4,12 +4,14 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { EDITUSERINFO } from "./gql";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const EditProfileForm = () => {
   const [toSubmit, setIsSubmitting] = useState(false);
-  const { register, handleSubmit } = useForm();
-
   const [edituserinfos] = useMutation(EDITUSERINFO);
+  const { user } = useCurrentUserContext();
+  const { firstName, middleName, lastName } = user ?? {};
+  const { register, handleSubmit } = useForm();
 
   const handleEditUserInfo = async (data) => {
     const { firstName, middleName, lastName } = data;
@@ -35,23 +37,28 @@ const EditProfileForm = () => {
     <Form onSubmit={handleSubmit(handleEditUserInfo)}>
       <div>
         <label>First Name</label>
-        <input {...register("firstName", { required: true, maxLength: 20 })} />
+        <input
+          type="text"
+          defaultValue={firstName}
+          {...register("firstName", { required: true, maxLength: 20 })}
+        />
       </div>
       <div>
         <label>Middle Name</label>
-        <input {...register("middleName")} />
+
+        <input
+          type="text"
+          defaultValue={middleName}
+          {...register("middleName")}
+        />
       </div>
       <div>
         <label>Last Name</label>
-        <input {...register("lastName", { required: true })} />
-      </div>
-      <div>
-        <label>Student Number</label>
-        <input {...register("schoolIdNumber", { required: true })} />
-      </div>
-      <div>
-        <label>Email</label>
-        <input {...register("emails", { required: true })} />
+        <input
+          type="text"
+          defaultValue={lastName}
+          {...register("lastName", { required: true })}
+        />
       </div>
 
       <button disabled={toSubmit}>
