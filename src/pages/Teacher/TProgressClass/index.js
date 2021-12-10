@@ -121,8 +121,12 @@ const TProgressClass = () => {
                     {loading
                       ? "Loading..."
                       : groups?.data?.map(({ id, name, students, leader }) => (
-                          <>
-                            <div key={id} className="groupcontainer">
+                          <div key={id} className="groupcontainer">
+                            <Link
+                              className="group"
+                              key={id}
+                              to={`/progress/class/${classId}/group/${id}`}
+                            >
                               <h5>{name}</h5>
                               <p>
                                 Leader: &nbsp;
@@ -137,8 +141,8 @@ const TProgressClass = () => {
                                   </li>
                                 </ul>
                               ))}
-                            </div>
-                          </>
+                            </Link>
+                          </div>
                         ))}
                   </div>
                 </GroupContainer>
@@ -256,7 +260,9 @@ const GroupContainer = styled.div`
       background-color: white;
       margin-bottom: 20px;
       border: 1px solid;
-
+      .group {
+        text-decoration: none;
+      }
       p {
         margin-top: 7px;
         color: #0f482f;
