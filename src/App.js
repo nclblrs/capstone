@@ -42,6 +42,7 @@ import AllProgress from "pages/Student/AllProgress";
 import ProgressClass from "pages/Student/ProgressClass";
 import TProgress from "pages/Teacher/TProgress";
 import TProgressClass from "pages/Teacher/TProgressClass";
+import TProgressUser from "pages/Teacher/TProgressUser";
 
 function App() {
   const { user } = useCurrentUserContext();
@@ -157,6 +158,9 @@ function App() {
                     </Route>
                     <Route path="/settings">
                       <TSettings />
+                    </Route>
+                    <Route path="/progress/class/:classId/individual/:userId">
+                      <TProgressUser />
                     </Route>
                     <Route path="/progress/class/:classId">
                       <TProgressClass />

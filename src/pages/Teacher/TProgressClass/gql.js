@@ -20,6 +20,7 @@ export const GET_COURSE = gql`
       students {
         data {
           user {
+            id
             profilePicture
             firstName
             lastName

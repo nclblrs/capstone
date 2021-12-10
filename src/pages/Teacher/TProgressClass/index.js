@@ -7,6 +7,7 @@ import { useQuery } from "@apollo/client";
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
+import { smallProfpicUrl } from "utils/upload";
 
 const TProgressClass = () => {
   const { classId } = useParams();
@@ -17,14 +18,12 @@ const TProgressClass = () => {
   const {
     name,
     subjCode,
-    teacher,
     courseCode,
     yearAndSection,
     students,
     groups,
     studentCount,
   } = data?.course ?? {};
-  const { firstName, lastName } = teacher?.user ?? {};
 
   return (
     <Container>
@@ -72,13 +71,24 @@ const TProgressClass = () => {
                 <h3>SECTION NAME Students</h3>
                 {loading
                   ? "Loading..."
-                  : students?.data?.map(({ id, user }) => (
-                      <ul key={id}>
-                        <li>
-                          {user.lastName}, {user.firstName} {user.middleName}
-                        </li>
-                      </ul>
-                    ))}
+                  : students?.data?.map(({ id, user }) => {
+                      const { secure_url } =
+                        JSON.parse(user.profilePicture) ?? {};
+                      return (
+                        <>
+                          <ul key={id}>
+                            <Link
+                              className="members"
+                              key={id}
+                              to={`/progress/class/${classId}/individual/user/${user.id}`}
+                            >
+                              <img src={smallProfpicUrl(secure_url)} alt="a" />
+                              {user.firstName} {user.middleName} {user.lastName}
+                            </Link>
+                          </ul>
+                        </>
+                      );
+                    })}
               </ActivityContainer>
             </LSideContainer>
             <RSideContainer>
@@ -106,6 +116,32 @@ const TProgressClass = () => {
             <LSideContainer>
               <ActivityContainer>
                 <h3>SECTION NAME Groups</h3>
+                <GroupContainer>
+                  <div className="leftContent">
+                    {loading
+                      ? "Loading..."
+                      : groups?.data?.map(({ id, name, students, leader }) => (
+                          <>
+                            <div key={id} className="groupcontainer">
+                              <h5>{name}</h5>
+                              <p>
+                                Leader: &nbsp;
+                                {leader &&
+                                  `${leader?.user?.lastName}, ${leader?.user?.firstName}`}
+                              </p>
+                              <p>Members: </p>
+                              {students?.data?.map(({ id, user }) => (
+                                <ul key={id}>
+                                  <li>
+                                    {user.lastName}, {user.firstName}
+                                  </li>
+                                </ul>
+                              ))}
+                            </div>
+                          </>
+                        ))}
+                  </div>
+                </GroupContainer>
               </ActivityContainer>
             </LSideContainer>
             <RSideContainer>
@@ -153,11 +189,19 @@ const DownContainer = styled.div`
 const ActivityContainer = styled.div`
   width: 100%;
   background-color: #f2f2f2;
-  height: 550px;
   border-radius: 10px;
-  background-color: #f2f2f2;
-  width: 100%;
   padding: 2em;
+  .members {
+    text-decoration: none;
+    color: #0e5937;
+  }
+  img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-top: 5px;
+  }
 `;
 
 const LSideContainer = styled.div`
@@ -178,6 +222,52 @@ const LSideContainer = styled.div`
     display: flex;
     margin: 0 10px;
     margin-bottom: 20px;
+  }
+`;
+
+const GroupContainer = styled.div`
+  display: flex;
+  border-radius: 1em;
+  padding: 2em;
+  flex-direction: column;
+
+  h5 {
+    font-weight: bold;
+    color: #0f482f;
+    text-align: left;
+    font-size: 20px;
+    display: flex;
+    margin: 0;
+    margin-bottom: 1em;
+  }
+
+  .leftContent {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2em;
+
+    .groupcontainer {
+      border-radius: 1em;
+      flex-direction: column;
+      display: flex;
+      padding: 2em;
+      width: 45%;
+      background-color: white;
+      margin-bottom: 20px;
+      border: 1px solid;
+
+      p {
+        margin-top: 7px;
+        color: #0f482f;
+        font-size: 16px;
+        font-weight: bold;
+      }
+      ul {
+        list-style-type: none;
+        margin: 10px;
+      }
+    }
   }
 `;
 
@@ -215,13 +305,6 @@ const RSideContainer = styled.div`
     color: #646464;
   }
 
-  ul {
-    font-size: 20px;
-    color: #646464;
-    font-weight: normal;
-    list-style-type: none;
-    margin-top: 20px;
-  }
   li {
     padding: 8px 8px;
   }
