@@ -48,7 +48,7 @@ const CreateCourseForm = () => {
         <input {...register("subjCode", { required: true })} />
       </div>
       <div>
-        <label>Year and Section</label>
+        <label>Course, Year, and Section</label>
         <input {...register("yearAndSection", { required: true })} />
       </div>
       <div>

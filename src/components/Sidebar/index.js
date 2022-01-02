@@ -40,7 +40,7 @@ const Nav = styled.nav`
   height: auto;
   display: flex;
   align-items: center;
-  width: 275px;
+  width: 240px;
   position: fixed;
   overflow-x: hidden;
   top: 0;
@@ -66,8 +66,7 @@ const NavMenu = styled(NavLink)`
   display: flex;
   align-items: center;
   text-decoration: none;
-  padding: 25px 100px;
-
+  padding: 25px 2.5em;
   &:hover,
   &.active {
     background-color: #1b6344;
