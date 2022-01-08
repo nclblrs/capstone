@@ -14,19 +14,16 @@ export const EDITUSERINFO = gql`
     $firstName: String!
     $middleName: String!
     $lastName: String!
-    $emails: EmailRecord!
   ) {
     editUserInfo(
       firstName: $firstName
       middleName: $middleName
       lastName: $lastName
-      emails: $emails
     ) {
       id
       firstName
       middleName
       lastName
-      emails
     }
   }
 `;

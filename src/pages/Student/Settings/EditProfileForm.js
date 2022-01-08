@@ -59,14 +59,6 @@ const EditProfileForm = () => {
           {...register("lastName", { required: true })}
         />
       </div>
-      <div>
-        <label>Email</label>
-        <input
-          type="text"
-          defaultValue={emails}
-          {...register("emails", { required: true })}
-        />
-      </div>
       <button disabled={toSubmit}>
         {toSubmit ? "Confirming..." : "Submit "}
       </button>
