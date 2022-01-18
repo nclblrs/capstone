@@ -1,11 +1,11 @@
 import React from "react";
 import styled from "styled-components";
-import dayjs from "dayjs";
+/* import dayjs from "dayjs"; */
 import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
 import { GET_COURSE } from "./gql";
 import { useQuery } from "@apollo/client";
 import { FaLaptop } from "react-icons/fa";
-import { MdAccountCircle } from "react-icons/md";
+/* import { MdAccountCircle } from "react-icons/md"; */
 import { TiGroup } from "react-icons/ti";
 import { smallProfpicUrl } from "utils/upload";
 
@@ -18,7 +18,7 @@ const TProgressClass = () => {
   const {
     name,
     subjCode,
-    courseCode,
+    /* {courseCode,} */
     yearAndSection,
     students,
     groups,
@@ -339,7 +339,7 @@ const RSideAbout = styled.div`
   }
 `;
 
-const ViewLink = styled(Link)`
+/* const ViewLink = styled(Link)`
   text-decoration: none;
   margin-left: auto;
   font-size: 16px;
@@ -355,7 +355,7 @@ const ViewLink = styled(Link)`
   &:hover {
     background-color: #0e5937;
   }
-`;
+`; */
 
 const NavBar = styled.div`
   display: flex;

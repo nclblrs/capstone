@@ -11,8 +11,8 @@ import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
 import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
 
-const TProgressUser = () => {
-  const { group } = useCurrentUserContext();
+const TProgressGroup = () => {
+  const { user } = useCurrentUserContext();
   const { groupSubmissionId } = useParams();
 
   //count status
@@ -39,7 +39,7 @@ const TProgressUser = () => {
       <LeftSideContainer>
         <UpperContainer>
           <div className="taskprogress">
-            <h4>STUDENT NAME</h4>
+            <h4>GROUP NAME</h4>
             <p></p>
             <div className="outerbar">
               <div className="bar"></div>
@@ -86,7 +86,7 @@ const TProgressUser = () => {
             </li>
             <li>
               <TiGroup size={18} />
-              &nbsp;
+              &nbsp; groups
             </li>
           </ul>
         </AboutContainer>
@@ -476,4 +476,4 @@ const ViewLink = styled(Link)`
   font-weight: normal;
 `; */
 
-export default TProgressUser;
+export default TProgressGroup;
