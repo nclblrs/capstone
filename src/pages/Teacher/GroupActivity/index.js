@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Modal from "components/Modal";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
-import { COURSE_GROUPACTIVITY } from "./gql";
+import { COURSE_GROUPACTIVITY, GROUPACTIVITY_SUBMISSION } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
@@ -32,6 +32,10 @@ const TGroupActivityPage = () => {
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
 
+  const { loading: grpactsubmission, data: grpactsubmissiondata } = useQuery(GROUPACTIVITY_SUBMISSION, {
+    variables: { groupActivityId: activityId },
+  });
+
   return (
     <ActivityContainer>
       {loading ? (
@@ -54,13 +58,19 @@ const TGroupActivityPage = () => {
             <ActivityHeader>
               <ActivityContent>
                 <h1>Group Submissions</h1>
-                <Container>
-                  <Content>
-                    <h1>
-                      TEST <span> | Date here</span>
-                    </h1>
-                  </Content>
-                </Container>
+                
+                {grpactsubmission
+          ? "Loading..."
+          : grpactsubmissiondata?.groupActivitySubmissions?.data?.map(({ id, description, grade, submittedAt, submittedBy, group, attachment }) => (
+          <Container key={id}>
+            <Content>
+              <h1>
+                {group?.name} <span> Submitted By: {submittedBy?.user?.firstName} {submittedBy?.user?.lastName} | {dayjs(submittedAt).format("MMMM D, YYYY [at] h:mm a")}</span>
+              </h1>
+            </Content>
+          </Container>
+            ))}
+       
               </ActivityContent>
             </ActivityHeader>
           </LSideContainer>
