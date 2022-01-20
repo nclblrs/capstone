@@ -80,7 +80,7 @@ const TProgressClass = () => {
                             <Link
                               className="members"
                               key={id}
-                              to={`/progress/class/${classId}/individual/user/${user.id}`}
+                              to={`/progress/class/${classId}/individual/${user.id}`}
                             >
                               <img src={smallProfpicUrl(secure_url)} alt="a" />
                               {user.firstName} {user.middleName} {user.lastName}

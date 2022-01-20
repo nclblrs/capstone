@@ -10,10 +10,13 @@ import { toast } from "react-toastify";
 import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
 import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
+import { COURSE_ACTIVITIES_SUBMISSIONS } from "./gql";
 
 const TProgressUser = () => {
-  const { group } = useCurrentUserContext();
-  const { groupSubmissionId } = useParams();
+  const { classId, userId } = useParams();
+  const { loading, data } = useQuery(COURSE_ACTIVITIES_SUBMISSIONS, {
+    variables: { courseId: classId, studentId: userId },
+  });
 
   //count status
   {
@@ -70,7 +73,30 @@ const TProgressUser = () => {
             </Link>
           </div>
         </UpperContainer>
-        <TasksContainer></TasksContainer>
+        <TasksContainer>
+          {loading
+            ? "Loading..."
+            : data?.courseActivitiesAndSubmissions?.data?.map(
+                ({ id, activity, submission }) => (
+                  <Content>
+                    <Task>
+                      <h1>{activity?.title}</h1>
+                      <p>
+                        {dayjs(activity?.createdAt).format(
+                          "MMMM D, YYYY [at] h:mm a"
+                        )}
+                      </p>
+                      <h3>
+                        {" "}
+                        Due: {dayjs(activity?.dueAt).format(
+                          "MMMM D, YYYY"
+                        )}{" "}
+                      </h3>
+                    </Task>
+                  </Content>
+                )
+              )}
+        </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
         <AboutContainer>
