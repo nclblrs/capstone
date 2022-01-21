@@ -29,3 +29,26 @@ export const CREATE_GROUPSUBMISSION = gql`
     }
   }
 `;
+
+export const GROUPACTIVITY_SUBMISSION = gql`
+query groupActivitySubmissions($groupActivityId: ID!){
+  groupActivitySubmissions(groupActivityId: $groupActivityId) {
+   data {
+    id
+    description
+    grade
+    submittedAt
+    submittedBy {
+      user {
+        firstName
+        lastName
+      }
+    }
+    group {
+      name
+    }
+    attachment
+  }
+  }
+}
+`;
