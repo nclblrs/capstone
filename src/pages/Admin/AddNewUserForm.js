@@ -78,6 +78,15 @@ const AddNewUserForm = ({ onCreateFinish }) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <div>
+        <label>User Type</label>
+        <select {...register("type", { required: true })}>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <div>
         <label>First Name</label>
         <input {...register("firstName", { required: true })} />
       </div>
@@ -90,6 +99,10 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         <input {...register("lastName", { required: true })} />
       </div>
       <div>
+        <label>Email</label>
+        <input {...register("email", { required: true })} />
+      </div>
+      <div>
         <label> Year-Level: </label>
         <select {...register("yearLevel", { required: true })}>
           <option value="1st">1st year</option>
@@ -99,21 +112,8 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         </select>
       </div>
       <div>
-        <label>Email</label>
-        <input {...register("email", { required: true })} />
-      </div>
-      <div>
         <label>School Number</label>
         <input {...register("schoolIdNumber", { required: true })} />
-      </div>
-
-      <div>
-        <label>User Type</label>
-        <select {...register("type", { required: true })}>
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
-          <option value="admin">Admin</option>
-        </select>
       </div>
 
       <button disabled={loading}>Submit</button>
