@@ -16,8 +16,15 @@ const AddNewUserForm = ({ onCreateFinish }) => {
   const onSubmit = async (data) => {
     console.log(data);
 
-    const { firstName, middleName, lastName, email, schoolIdNumber, type } =
-      data;
+    const {
+      firstName,
+      middleName,
+      lastName,
+      email,
+      schoolIdNumber,
+      yearLevel,
+      type,
+    } = data;
 
     if (type === "admin") {
       try {
@@ -50,6 +57,7 @@ const AddNewUserForm = ({ onCreateFinish }) => {
             lastName,
             email,
             schoolIdNumber,
+            yearLevel,
             isTeacher: type === "teacher",
           },
         });
@@ -81,10 +89,15 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         <label>Last Name</label>
         <input {...register("lastName", { required: true })} />
       </div>
-      {/*<div>
+      <div>
         <label> Year-Level: </label>
-        <input type="text" name="Year-Level" />
-      </div>*/}
+        <select {...register("yearLevel", { required: true })}>
+          <option value="1st">1st year</option>
+          <option value="2nd">2nd year</option>
+          <option value="3rd">3rd year</option>
+          <option value="4th">4th year</option>
+        </select>
+      </div>
       <div>
         <label>Email</label>
         <input {...register("email", { required: true })} />
