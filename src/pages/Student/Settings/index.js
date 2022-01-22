@@ -15,6 +15,7 @@ const Settings = () => {
     firstName,
     middleName,
     lastName,
+    yearLevel,
     schoolIdNumber,
     student,
     emails,
@@ -58,7 +59,10 @@ const Settings = () => {
                           .join(" ")}
                   </li>
                   <li className="idnum">{schoolIdNumber}</li>
-                  <li className="role">{student ? "Student" : "Teacher"}</li>
+                  <li className="role">
+                    {yearLevel} &thinsp; year &thinsp;
+                    {student ? "Student" : "Teacher"}
+                  </li>
                 </ul>
                 <button
                   className="editprofile"
@@ -252,13 +256,14 @@ const ProfileTop = styled.div`
   }
   .idnum {
     color: #0f482f;
+    font-size: 25px;
   }
   .role {
     color: #646464;
+    font-size: 22px;
   }
   .idnum,
   .role {
-    font-size: 25px;
     margin-top: 8px;
   }
   .editprofile {

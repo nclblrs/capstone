@@ -10,6 +10,7 @@ const GET_USER = gql`
       firstName
       middleName
       lastName
+      yearLevel
       isAdmin
       profilePicture
       schoolIdNumber
