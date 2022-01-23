@@ -60,7 +60,7 @@ const Settings = () => {
                   </li>
                   <li className="idnum">{schoolIdNumber}</li>
                   <li className="role">
-                    {yearLevel} &thinsp; year &thinsp;
+                    {yearLevel} year &thinsp;
                     {student ? "Student" : "Teacher"}
                   </li>
                 </ul>
