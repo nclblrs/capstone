@@ -43,14 +43,34 @@ const Admin = () => {
   return (
     <Container>
       <UsersCount>
-        <div>
+        <div className="users">
           <MdAccountCircle size={30} /> &nbsp;
           {countLoading ? "Loading..." : `${teachersCount} Teachers`}
         </div>
-        <div>
+        <div className="users">
           <MdAccountCircle size={30} /> &nbsp;
           {countLoading ? "Loading..." : `${studentsCount} Students`}
         </div>
+        <FirstCol>
+          <div className="fcolumn">
+            <MdAccountCircle size={20} color="#164aae" /> &nbsp; 1st year
+            students
+          </div>
+          <div className="fcolumn">
+            <MdAccountCircle size={20} color="#ae5f16" /> &nbsp; 2nd year
+            students
+          </div>
+        </FirstCol>
+        <SecondCol>
+          <div className="scolumn">
+            <MdAccountCircle size={20} color="#ae1696" /> &nbsp; 3rd year
+            students
+          </div>
+          <div className="scolumn">
+            <MdAccountCircle size={20} color="#e7b22a" /> &nbsp; 4th year
+            students
+          </div>
+        </SecondCol>
       </UsersCount>
 
       <Header>
@@ -162,8 +182,9 @@ const Container = styled.div`
 const UsersCount = styled.div`
   display: flex;
   gap: 20px;
+  flex-direction: row;
 
-  & > div {
+  .users {
     cursor: pointer;
     background: #f2f2f2;
     width: 300px;
@@ -173,6 +194,46 @@ const UsersCount = styled.div`
     align-items: center;
     padding: 48px;
     font-size: 28px;
+    font-weight: 400;
+    color: #0e5937;
+  }
+`;
+
+const FirstCol = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+
+  .fcolumn {
+    cursor: pointer;
+    background: #f2f2f2;
+    width: 200px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #0e5937;
+  }
+`;
+
+const SecondCol = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+
+  .scolumn {
+    cursor: pointer;
+    background: #f2f2f2;
+    width: 200px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-size: 16px;
     font-weight: 400;
     color: #0e5937;
   }
