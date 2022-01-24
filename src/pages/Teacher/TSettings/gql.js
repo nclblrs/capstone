@@ -19,11 +19,15 @@ export const TEACHER_EDITUSERINFO = gql`
       firstName: $firstName
       middleName: $middleName
       lastName: $lastName
+      email: $email
     ) {
       id
       firstName
       middleName
       lastName
+      emails {
+        address
+      }
     }
   }
 `;

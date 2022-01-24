@@ -10,16 +10,16 @@ const EditProfileForm = () => {
   const [toSubmit, setIsSubmitting] = useState(false);
   const [teacheredituserinfos] = useMutation(TEACHER_EDITUSERINFO);
   const { user } = useCurrentUserContext();
-  const { firstName, middleName, lastName } = user ?? {};
+  const { firstName, middleName, lastName, emails } = user ?? {};
   const { register, handleSubmit } = useForm();
 
   const handleEditUserInfo = async (data) => {
-    const { firstName, middleName, lastName } = data;
+    const { firstName, middleName, lastName, email } = data;
 
     try {
       setIsSubmitting(true);
       const { data } = await teacheredituserinfos({
-        variables: { firstName, middleName, lastName },
+        variables: { firstName, middleName, lastName, email },
       });
 
       if (!data?.edituserinfos?.id) {
@@ -37,7 +37,6 @@ const EditProfileForm = () => {
     <Form onSubmit={handleSubmit(handleEditUserInfo)}>
       <div>
         <label>First Name</label>
-        <input />
         <input
           type="text"
           defaultValue={firstName}
@@ -58,6 +57,14 @@ const EditProfileForm = () => {
           type="text"
           defaultValue={lastName}
           {...register("lastName", { required: true })}
+        />
+      </div>
+      <div>
+        <label>Email</label>
+        <input
+          type="text"
+          defaultValue={emails[0].address}
+          {...register("email", { required: true })}
         />
       </div>
       <button disabled={toSubmit}>
