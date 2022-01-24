@@ -8,18 +8,18 @@ import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
 const EditProfileForm = () => {
   const [toSubmit, setIsSubmitting] = useState(false);
-  const [editUserinfo] = useMutation(EDITUSERINFO);
+  const [editUserInfo] = useMutation(EDITUSERINFO);
   const { user } = useCurrentUserContext();
   const { firstName, middleName, lastName, emails } = user ?? {};
   const { register, handleSubmit } = useForm();
 
   const handleEditUserInfo = async (data) => {
-    const { firstName, middleName, lastName, emails } = data;
+    const { firstName, middleName, lastName, email } = data;
 
     try {
       setIsSubmitting(true);
-      const { data } = await editUserinfo({
-        variables: { firstName, middleName, lastName, emails },
+      const { data } = await editUserInfo({
+        variables: { firstName, middleName, lastName, email },
       });
 
       if (!data?.edituserinfos?.id) {
@@ -57,6 +57,14 @@ const EditProfileForm = () => {
           type="text"
           defaultValue={lastName}
           {...register("lastName", { required: true })}
+        />
+      </div>
+      <div>
+        <label>Email</label>
+        <input
+          type="text"
+          defaultValue={emails[0].address}
+          {...register("email", { required: true })}
         />
       </div>
       <button disabled={toSubmit}>

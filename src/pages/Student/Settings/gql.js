@@ -14,16 +14,21 @@ export const EDITUSERINFO = gql`
     $firstName: String!
     $middleName: String!
     $lastName: String!
+    $email: String
   ) {
     editUserInfo(
       firstName: $firstName
       middleName: $middleName
       lastName: $lastName
+      email: $email
     ) {
       id
       firstName
       middleName
       lastName
+      emails {
+        address
+      }
     }
   }
 `;
