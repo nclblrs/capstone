@@ -40,6 +40,19 @@ const Admin = () => {
     history.push(`${location.pathname}?search=${search}`);
   };
 
+  const firstyrCount = users.filter(
+    ({ yearLevel }) => yearLevel === "1st"
+  ).length;
+  const secondyrCount = users.filter(
+    ({ yearLevel }) => yearLevel === "2nd"
+  ).length;
+  const thirdyrCount = users.filter(
+    ({ yearLevel }) => yearLevel === "3rd"
+  ).length;
+  const fourthyrCount = users.filter(
+    ({ yearLevel }) => yearLevel === "4th"
+  ).length;
+
   return (
     <Container>
       <UsersCount>
@@ -53,22 +66,22 @@ const Admin = () => {
         </div>
         <FirstCol>
           <div className="fcolumn">
-            <MdAccountCircle size={20} color="#164aae" /> &nbsp; 1st year
-            students
+            <MdAccountCircle size={20} color="#164aae" /> &nbsp; {firstyrCount}{" "}
+            1st year students
           </div>
           <div className="fcolumn">
-            <MdAccountCircle size={20} color="#ae5f16" /> &nbsp; 2nd year
-            students
+            <MdAccountCircle size={20} color="#ae5f16" /> &nbsp; {secondyrCount}{" "}
+            2nd year students
           </div>
         </FirstCol>
         <SecondCol>
           <div className="scolumn">
-            <MdAccountCircle size={20} color="#ae1696" /> &nbsp; 3rd year
-            students
+            <MdAccountCircle size={20} color="#ae1696" /> &nbsp; {thirdyrCount}{" "}
+            3rd year students
           </div>
           <div className="scolumn">
-            <MdAccountCircle size={20} color="#e7b22a" /> &nbsp; 4th year
-            students
+            <MdAccountCircle size={20} color="#e7b22a" /> &nbsp; {fourthyrCount}{" "}
+            4th year students
           </div>
         </SecondCol>
       </UsersCount>
@@ -207,7 +220,7 @@ const FirstCol = styled.div`
   .fcolumn {
     cursor: pointer;
     background: #f2f2f2;
-    width: 200px;
+    width: 220px;
     height: 50px;
     border-radius: 12px;
     display: flex;
@@ -227,7 +240,7 @@ const SecondCol = styled.div`
   .scolumn {
     cursor: pointer;
     background: #f2f2f2;
-    width: 200px;
+    width: 220px;
     height: 50px;
     border-radius: 12px;
     display: flex;
