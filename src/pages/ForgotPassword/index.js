@@ -66,26 +66,39 @@ const BackButton = styled(Link)`
   cursor: pointer;
   text-decoration: none;
   font-size: 18px;
+  @media (max-width: 520px) {
+    width: 100px;
+    font-size: 14px;
+  }
 `;
 
 const ForgotContainer = styled.div`
   background-color: #36393f;
-  width: 30%;
+  width: 500px;
   height: 320px;
   padding: 2em;
   margin: auto;
   border-radius: 10px;
   font-family: "Roboto", sans-serif;
+  @media (max-width: 520px) {
+    width: 50%;
+  }
 
   h1 {
     text-align: center;
     color: white;
     letter-spacing: 1.5px;
+    @media (max-width: 520px) {
+      font-size: 22px;
+    }
   }
   p {
     color: #c4c4c4;
     font-size: 15px;
     text-align: center;
+    @media (max-width: 520px) {
+      font-size: 14px;
+    }
   }
   input {
     height: 45px;
@@ -94,6 +107,9 @@ const ForgotContainer = styled.div`
     padding: 1em;
     margin-top: 5px;
     border-radius: 5px;
+    @media (max-width: 520px) {
+      font-size: 15px;
+    }
   }
   button {
     margin-top: 30px;
@@ -107,6 +123,10 @@ const ForgotContainer = styled.div`
     justify-content: center;
     padding: 0.5em;
     cursor: pointer;
+    @media (max-width: 520px) {
+      width: 100px;
+      font-size: 14px;
+    }
   }
 `;
 

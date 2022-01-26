@@ -57,21 +57,30 @@ const Base = styled.div`
 
 const ResetContainer = styled.div`
   background-color: #36393f;
-  width: 30%;
+  width: 500px;
   height: 300px;
   padding: 2em;
   margin: auto;
   border-radius: 10px;
   font-family: "Roboto", sans-serif;
+  @media (max-width: 520px) {
+    width: 50%;
+  }
   h1 {
     text-align: center;
     color: white;
     letter-spacing: 1.5px;
+    @media (max-width: 520px) {
+      font-size: 22px;
+    }
   }
   p {
     color: #c4c4c4;
     font-size: 15px;
     text-align: center;
+    @media (max-width: 520px) {
+      font-size: 14px;
+    }
   }
   input {
     height: 45px;
@@ -79,6 +88,9 @@ const ResetContainer = styled.div`
     font-size: 18px;
     padding: 1em;
     margin-top: 5px;
+    @media (max-width: 520px) {
+      font-size: 15px;
+    }
   }
   button {
     margin-top: 30px;
@@ -92,6 +104,10 @@ const ResetContainer = styled.div`
     justify-content: center;
     padding: 0.5em;
     cursor: pointer;
+    @media (max-width: 520px) {
+      width: 100px;
+      font-size: 14px;
+    }
   }
 `;
 

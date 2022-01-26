@@ -16,8 +16,15 @@ const AddNewUserForm = ({ onCreateFinish }) => {
   const onSubmit = async (data) => {
     console.log(data);
 
-    const { firstName, middleName, lastName, email, schoolIdNumber, type } =
-      data;
+    const {
+      firstName,
+      middleName,
+      lastName,
+      email,
+      schoolIdNumber,
+      yearLevel,
+      type,
+    } = data;
 
     if (type === "admin") {
       try {
@@ -50,6 +57,7 @@ const AddNewUserForm = ({ onCreateFinish }) => {
             lastName,
             email,
             schoolIdNumber,
+            yearLevel,
             isTeacher: type === "teacher",
           },
         });
@@ -70,6 +78,15 @@ const AddNewUserForm = ({ onCreateFinish }) => {
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <div>
+        <label>User Type</label>
+        <select {...register("type", { required: true })}>
+          <option value="student">Student</option>
+          <option value="teacher">Teacher</option>
+          <option value="admin">Admin</option>
+        </select>
+      </div>
+
+      <div>
         <label>First Name</label>
         <input {...register("firstName", { required: true })} />
       </div>
@@ -81,26 +98,22 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         <label>Last Name</label>
         <input {...register("lastName", { required: true })} />
       </div>
-      {/*<div>
-        <label> Year-Level: </label>
-        <input type="text" name="Year-Level" />
-      </div>*/}
       <div>
         <label>Email</label>
         <input {...register("email", { required: true })} />
       </div>
       <div>
+        <label> Year-Level: </label>
+        <select {...register("yearLevel", { required: true })}>
+          <option value="1st">1st year</option>
+          <option value="2nd">2nd year</option>
+          <option value="3rd">3rd year</option>
+          <option value="4th">4th year</option>
+        </select>
+      </div>
+      <div>
         <label>School Number</label>
         <input {...register("schoolIdNumber", { required: true })} />
-      </div>
-
-      <div>
-        <label>User Type</label>
-        <select {...register("type", { required: true })}>
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
-          <option value="admin">Admin</option>
-        </select>
       </div>
 
       <button disabled={loading}>Submit</button>

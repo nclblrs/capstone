@@ -40,17 +40,50 @@ const Admin = () => {
     history.push(`${location.pathname}?search=${search}`);
   };
 
+  const firstyrCount = users.filter(
+    ({ yearLevel }) => yearLevel === "1st"
+  ).length;
+  const secondyrCount = users.filter(
+    ({ yearLevel }) => yearLevel === "2nd"
+  ).length;
+  const thirdyrCount = users.filter(
+    ({ yearLevel }) => yearLevel === "3rd"
+  ).length;
+  const fourthyrCount = users.filter(
+    ({ yearLevel }) => yearLevel === "4th"
+  ).length;
+
   return (
     <Container>
       <UsersCount>
-        <div>
+        <div className="users">
           <MdAccountCircle size={30} /> &nbsp;
           {countLoading ? "Loading..." : `${teachersCount} Teachers`}
         </div>
-        <div>
+        <div className="users">
           <MdAccountCircle size={30} /> &nbsp;
           {countLoading ? "Loading..." : `${studentsCount} Students`}
         </div>
+        <FirstCol>
+          <div className="fcolumn">
+            <MdAccountCircle size={20} color="#164aae" /> &nbsp; {firstyrCount}{" "}
+            1st year students
+          </div>
+          <div className="fcolumn">
+            <MdAccountCircle size={20} color="#ae5f16" /> &nbsp; {secondyrCount}{" "}
+            2nd year students
+          </div>
+        </FirstCol>
+        <SecondCol>
+          <div className="scolumn">
+            <MdAccountCircle size={20} color="#ae1696" /> &nbsp; {thirdyrCount}{" "}
+            3rd year students
+          </div>
+          <div className="scolumn">
+            <MdAccountCircle size={20} color="#e7b22a" /> &nbsp; {fourthyrCount}{" "}
+            4th year students
+          </div>
+        </SecondCol>
       </UsersCount>
 
       <Header>
@@ -70,6 +103,7 @@ const Admin = () => {
           <tr>
             <th></th>
             <th>Name</th>
+            <th>Year Level</th>
             <th>School Number</th>
             <th>Email</th>
             <th>User Type</th>
@@ -86,6 +120,7 @@ const Admin = () => {
                 id,
                 firstName,
                 lastName,
+                yearLevel,
                 schoolIdNumber,
                 emails,
                 isAdmin,
@@ -103,6 +138,7 @@ const Admin = () => {
                     <td className="name">
                       {firstName} {lastName}
                     </td>
+                    <td>{yearLevel}</td>
                     <td>{schoolIdNumber}</td>
                     <td>{emails[0].address}</td>
                     <td>
@@ -159,8 +195,9 @@ const Container = styled.div`
 const UsersCount = styled.div`
   display: flex;
   gap: 20px;
+  flex-direction: row;
 
-  & > div {
+  .users {
     cursor: pointer;
     background: #f2f2f2;
     width: 300px;
@@ -170,6 +207,46 @@ const UsersCount = styled.div`
     align-items: center;
     padding: 48px;
     font-size: 28px;
+    font-weight: 400;
+    color: #0e5937;
+  }
+`;
+
+const FirstCol = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+
+  .fcolumn {
+    cursor: pointer;
+    background: #f2f2f2;
+    width: 220px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-size: 16px;
+    font-weight: 400;
+    color: #0e5937;
+  }
+`;
+
+const SecondCol = styled.div`
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+
+  .scolumn {
+    cursor: pointer;
+    background: #f2f2f2;
+    width: 220px;
+    height: 50px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    font-size: 16px;
     font-weight: 400;
     color: #0e5937;
   }
