@@ -84,26 +84,27 @@ export const GET_ACTIVITIES = gql`
 `;
 
 export const COURSE_ACTIVITIES_SUBMISSIONS = gql`
-query courseActivitiesAndSubmissions($courseId: ID!, $studentId: ID!) {
-  courseActivitiesAndSubmissions(
-    courseId: $courseId
-    studentId: $studentId
-  ) {
-    data {
-      activity {
-        id
-        title
-        createdAt
-        dueAt
-      }
-      submission {
-        id
-        description
-        attachment
-        createdAt
-        submittedAt
+  query courseActivitiesAndSubmissions($courseId: ID!, $studentId: ID!) {
+    courseActivitiesAndSubmissions(courseId: $courseId, studentId: $studentId) {
+      data {
+        activity {
+          id
+          title
+          createdAt
+          dueAt
+          course {
+            subjCode
+            yearAndSection
+          }
+        }
+        submission {
+          id
+          description
+          attachment
+          createdAt
+          submittedAt
+        }
       }
     }
   }
-}
-`; 
+`;

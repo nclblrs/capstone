@@ -13,11 +13,11 @@ import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
 import { COURSE_ACTIVITIES_SUBMISSIONS } from "./gql";
 
 const TProgressUser = () => {
-  const { classId, userId } = useParams();
+  const { classId, userId, activityId } = useParams();
   const { loading, data } = useQuery(COURSE_ACTIVITIES_SUBMISSIONS, {
     variables: { courseId: classId, studentId: userId },
   });
-
+  const courseInfo = data?.courseActivitiesAndSubmissions?.data ?? [];
   //count status
   {
     /*const doneCount = taskInfo.filter(({ status }) => status === "DONE").length;
@@ -42,7 +42,7 @@ const TProgressUser = () => {
       <LeftSideContainer>
         <UpperContainer>
           <div className="taskprogress">
-            <h4>STUDENT NAME</h4>
+            <p>{userId}</p>
             <p></p>
             <div className="outerbar">
               <div className="bar"></div>
@@ -76,9 +76,9 @@ const TProgressUser = () => {
         <TasksContainer>
           {loading
             ? "Loading..."
-            : data?.courseActivitiesAndSubmissions?.data?.map(
-                ({ id, activity, submission }) => (
-                  <Content>
+            : courseInfo.map(({ id, activity, submission }) => (
+                <>
+                  <Content key={id}>
                     <Task>
                       <h1>{activity?.title}</h1>
                       <p>
@@ -92,16 +92,26 @@ const TProgressUser = () => {
                           "MMMM D, YYYY"
                         )}{" "}
                       </h3>
+                      {submission?.id != null ? (
+                        <ViewLink
+                          to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
+                        >
+                          View
+                        </ViewLink>
+                      ) : (
+                        <ViewLink>Missing</ViewLink>
+                      )}
                     </Task>
                   </Content>
-                )
-              )}
+                </>
+              ))}
         </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
         <AboutContainer>
           <h3>ABOUT</h3>
           <ul>
+            <h3>{userId}'s Progress</h3>
             <li>
               <FaLaptop size={18} />
               &nbsp; Subject Code:
@@ -112,13 +122,13 @@ const TProgressUser = () => {
             </li>
             <li>
               <TiGroup size={18} />
-              &nbsp;
+              &nbsp; Group Number:
             </li>
           </ul>
         </AboutContainer>
         {/*<ToDoContainer>
-          <h3>TO-DO</h3>
-        </ToDoContainer>*/}
+                      <h3>TO-DO</h3>
+                    </ToDoContainer>*/}
       </RightSideContainer>
     </ProgressContainer>
   );
@@ -339,7 +349,7 @@ const TasksContainer = styled.div`
   margin-top: 1.5em;
   overflow-y: scroll;
   flex-direction: column;
-  padding: 10px;
+  padding: 1em;
 `;
 
 const Content = styled.div`
@@ -348,7 +358,7 @@ const Content = styled.div`
   text-align: left;
   padding: 0 20px;
   margin: 2em 0;
-  border-bottom: 1px solid black;
+
   button {
     display: flex;
     font-size: 15px;
@@ -359,16 +369,11 @@ const Content = styled.div`
     text-align: center;
     cursor: pointer;
   }
-  .mark {
-    width: 130px;
-    height: 40px;
-    background-color: #0e5937;
-    float: right;
-  }
 `;
 
 const Task = styled.div`
   width: 100%;
+  border-bottom: 1px solid black;
   h1 {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -391,27 +396,13 @@ const RightSideContainer = styled.div`
   margin-left: 2em;
 
   h3 {
-    color: #646464;
+    color: #0e5937;
     text-align: left;
     font-size: 22px;
     font-weight: normal;
     display: flex;
     margin: 0 10px;
     margin-bottom: 20px;
-  }
-
-  .assign {
-    display: flex;
-    width: 130px;
-    height: 40px;
-    font-size: 15px;
-    align-items: center;
-    justify-content: center;
-    background-color: #0e5937;
-    color: white;
-    border: none;
-    text-align: center;
-    cursor: pointer;
   }
 `;
 
@@ -460,31 +451,21 @@ const AboutContainer = styled.div`
 `;*/
 
 const ViewLink = styled(Link)`
-  ${({ status }) =>
-    css`
-      background-color: ${status === "TODO"
-        ? "#164aae"
-        : status === "DONE"
-        ? "#0e5937"
-        : status === "UNDER_REVIEW"
-        ? "#ae1696"
-        : status === "IN_PROGRESS"
-        ? "#ae5f16"
-        : "#0e5937"};
-    `}
   text-decoration: none;
+  margin-left: auto;
   font-size: 16px;
-  width: 150px;
+  width: 130px;
   height: 40px;
   border: none;
   color: white;
+  background-color: #0f482f;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: inline-block;
-  float: right;
-  margin-right: 1em;
+  &:hover {
+    background-color: #0e5937;
+  }
 `;
 
 /* const GoBack = styled.button`
