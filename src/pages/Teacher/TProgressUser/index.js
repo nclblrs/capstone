@@ -18,10 +18,17 @@ const TProgressUser = () => {
     variables: { courseId: classId, studentId: userId },
   });
   const courseInfo = data?.courseActivitiesAndSubmissions?.data ?? [];
+  const { student, course, group } = data?.courseActivitiesAndSubmissions ?? {};
+
   //count status
-  {
-    /*const doneCount = taskInfo.filter(({ status }) => status === "DONE").length;
-  const inProgressCount = taskInfo.filter(
+  const doneCount = courseInfo.filter(
+    ({ submission }) => submission?.id != null
+  ).length;
+  const missingCount = courseInfo.filter(
+    ({ submission }) => submission?.id == null
+  ).length;
+
+  /*const inProgressCount = taskInfo.filter(
     ({ status }) => status === "IN_PROGRESS"
   ).length;
   const underReviewCount = taskInfo.filter(
@@ -35,14 +42,15 @@ const TProgressUser = () => {
   const allCount =
     toDoCount + inProgressCount + underReviewCount + missingCount + doneCount;
   const percentProgress = (doneCount / taskInfo.length) * 100;*/
-  }
 
   return (
     <ProgressContainer>
       <LeftSideContainer>
         <UpperContainer>
           <div className="taskprogress">
-            <p>{userId}</p>
+            <p>
+              {student?.user?.firstName} {student?.user?.lastName}
+            </p>
             <p></p>
             <div className="outerbar">
               <div className="bar"></div>
@@ -54,29 +62,23 @@ const TProgressUser = () => {
               <div className="alltaskCircle"></div>
             </Link>
           </div>
-          <div className="todo">
-            <h4>To-do</h4>
-            <Link className="todoButton">
-              <div className="todoCircle"></div>
-            </Link>
-          </div>
           <div className="missing">
             <h4>Missing</h4>
             <Link className="missingButton">
-              <div className="missingCircle"></div>
+              <div className="missingCircle">{missingCount}</div>
             </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
             <Link className="doneButton">
-              <div className="doneCircle"></div>
+              <div className="doneCircle">{doneCount}</div>
             </Link>
           </div>
         </UpperContainer>
         <TasksContainer>
           {loading
             ? "Loading..."
-            : courseInfo.map(({ id, activity, submission }) => (
+            : courseInfo.map(({ id, activity, submission = null }) => (
                 <>
                   <Content key={id}>
                     <Task>
@@ -92,6 +94,7 @@ const TProgressUser = () => {
                           "MMMM D, YYYY"
                         )}{" "}
                       </h3>
+
                       {submission?.id != null ? (
                         <ViewLink
                           to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
@@ -99,7 +102,7 @@ const TProgressUser = () => {
                           View
                         </ViewLink>
                       ) : (
-                        <ViewLink>Missing</ViewLink>
+                        ""
                       )}
                     </Task>
                   </Content>
@@ -111,18 +114,20 @@ const TProgressUser = () => {
         <AboutContainer>
           <h3>ABOUT</h3>
           <ul>
-            <h3>{userId}'s Progress</h3>
+            <h3>
+              {student?.user?.firstName} {student?.user?.lastName}'s Progress
+            </h3>
             <li>
               <FaLaptop size={18} />
-              &nbsp; Subject Code:
+              &nbsp; Subject Code: {course?.subjCode} ({course?.name})
             </li>
             <li>
               <FaLaptop size={18} />
-              &nbsp; Section:
+              &nbsp; Section: {course?.yearAndSection}
             </li>
             <li>
               <TiGroup size={18} />
-              &nbsp; Group Number:
+              &nbsp; Group Number: {group?.name}
             </li>
           </ul>
         </AboutContainer>
@@ -350,6 +355,7 @@ const TasksContainer = styled.div`
   overflow-y: scroll;
   flex-direction: column;
   padding: 1em;
+  height: 650px;
 `;
 
 const Content = styled.div`
@@ -451,6 +457,7 @@ const AboutContainer = styled.div`
 `;*/
 
 const ViewLink = styled(Link)`
+  background-color: #0e5937;
   text-decoration: none;
   margin-left: auto;
   font-size: 16px;
@@ -458,7 +465,6 @@ const ViewLink = styled(Link)`
   height: 40px;
   border: none;
   color: white;
-  background-color: #0f482f;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -467,20 +473,5 @@ const ViewLink = styled(Link)`
     background-color: #0e5937;
   }
 `;
-
-/* const GoBack = styled.button`
-  text-decoration: none;
-  font-size: 18px;
-  width: 100px;
-  height: 40px;
-  border: none;
-  color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  letter-spacing: 1px;
-  font-weight: normal;
-`; */
 
 export default TProgressUser;
