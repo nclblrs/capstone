@@ -5,9 +5,8 @@ import styled from "styled-components";
 import { useHistory, useLocation } from "react-router";
 import { MdAddCircle, MdAccountCircle } from "react-icons/md";
 import { FaTrashAlt, FaPenSquare } from "react-icons/fa";
-
 import { useUrlQuery } from "hooks/useUrlQuery";
-
+import AdminEditUserInfo from "./AdminEditUserInfo";
 import AddNewUserForm from "./AddNewUserForm";
 import { USERS, USERS_COUNT } from "./gql";
 import { smallProfpicUrl } from "utils/upload";
@@ -29,7 +28,7 @@ const Admin = () => {
     variables: { filter: { search } },
   });
   const [showNewUserModal, setShowNewUserModal] = useState(false);
-
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const { teachersCount, studentsCount } = countData?.usersCount ?? {};
   const users = usersData?.users?.data ?? [];
 
@@ -151,8 +150,11 @@ const Admin = () => {
                         : "None"}
                     </td>
                     <td>
-                      <button className="edit">
-                        <FaPenSquare size={18} />
+                      <button
+                        className="Adminedituserinfo"
+                        onClick={() => setShowEditProfileModal(true)}
+                      >
+                        <FaPenSquare size={30} />
                       </button>
                     </td>
                     <td>
@@ -180,6 +182,12 @@ const Admin = () => {
             refetchUsers();
           }}
         />
+      </Modal>
+      <Modal
+        show={showEditProfileModal}
+        closeModal={() => setShowEditProfileModal(false)}
+      >
+        <AdminEditUserInfo />
       </Modal>
     </Container>
   );

@@ -26,6 +26,41 @@ export const USERS = gql`
   }
 `;
 
+export const ADMIN_EDITUSER_INFO = gql`
+  mutation adminEditUserInfo(
+    $firstName: String!
+    $middleName: String!
+    $lastName: String!
+    $courseDept: String!
+    $yearLevel: String!
+    $section: Int
+    $schoolIdNumber: String!
+    $email: String!
+  ) {
+    adminEditUserInfo(
+      firstName: $firstName
+      middleName: $middleName
+      lastName: $lastName
+      courseDept: $courseDept
+      yearLevel: $yearLevel
+      section: $section
+      schoolIdNumber: $schoolIdNumber
+      email: $email
+    ) {
+      id
+      firstName
+      middleName
+      lastName
+      courseDept
+      yearLevel
+      section
+      schoolIdNumber
+      emails {
+        address
+      }
+    }
+  }
+`;
 export const USERS_COUNT = gql`
   query {
     usersCount {
