@@ -23,6 +23,8 @@ const AddNewUserForm = ({ onCreateFinish }) => {
       email,
       schoolIdNumber,
       yearLevel,
+      courseDept,
+      section,
       type,
     } = data;
 
@@ -58,6 +60,8 @@ const AddNewUserForm = ({ onCreateFinish }) => {
             email,
             schoolIdNumber,
             yearLevel,
+            courseDept,
+            section,
             isTeacher: type === "teacher",
           },
         });
@@ -103,13 +107,24 @@ const AddNewUserForm = ({ onCreateFinish }) => {
         <input {...register("email", { required: true })} />
       </div>
       <div>
-        <label> Year-Level: </label>
+        <label> Course </label>
+        <select {...register("courseDept", { required: true })}>
+          <option value="BSIT">BSIT</option>
+          <option value="BSCS">BSCS</option>
+        </select>
+      </div>
+      <div>
+        <label> Year-Level </label>
         <select {...register("yearLevel", { required: true })}>
           <option value="1st">1st year</option>
           <option value="2nd">2nd year</option>
           <option value="3rd">3rd year</option>
           <option value="4th">4th year</option>
         </select>
+      </div>
+      <div>
+        <label>Section</label>
+        <input {...register("section", { required: true })} />
       </div>
       <div>
         <label>School Number</label>

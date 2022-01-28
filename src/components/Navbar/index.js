@@ -14,7 +14,7 @@ const Navbar = () => {
   const { user, loading } = useCurrentUserContext();
   const isAdmin = user?.isAdmin;
   const teacher = user?.teacher;
-  const { firstName, lastName, profilePicture = null } = user ?? {};
+  const { firstName, middleName, lastName, profilePicture = null } = user ?? {};
   const { secure_url } = JSON.parse(profilePicture) ?? {};
   return (
     <Nav>
@@ -52,7 +52,7 @@ const Navbar = () => {
       >
         <Profile to="#">
           <img src={smallProfpicUrl(secure_url)} alt="Your profile pic" />
-          {loading ? "Loading..." : `${firstName} ${lastName}`}
+          {loading ? "Loading..." : `${firstName} ${middleName} ${lastName}`}
         </Profile>
       </Dropdown>
     </Nav>
@@ -131,7 +131,7 @@ const Profile = styled(NavLink)`
   display: flex;
   text-decoration: none;
   padding: 10px;
-  font-size: 18px;
+  font-size: 16px;
   justify-content: flex-end;
   color: white;
   align-items: center;
