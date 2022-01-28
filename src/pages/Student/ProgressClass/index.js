@@ -1,16 +1,29 @@
 import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
+import {
+  Switch,
+  NavLink,
+  Route,
+  useParams,
+  Link,
+  useRouteMatch,
+} from "react-router-dom";
 import { GET_ACTIVITIES, GET_GROUP_ACTIVITIES, GET_COURSE } from "./gql";
 import { useQuery } from "@apollo/client";
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
+import { useUrlQuery } from "hooks/useUrlQuery";
+import { useLocation } from "react-router-dom";
 
 const ProgressClass = () => {
   const { classId } = useParams();
-
+  const { filter } = useUrlQuery();
+  const { pathname } = useLocation();
+  const groupPathMatch = useRouteMatch(
+    "/progress/class/:classId/activities/group"
+  );
   const { loading: activityLoading, data: activityData } = useQuery(
     GET_ACTIVITIES,
     {
@@ -36,6 +49,14 @@ const ProgressClass = () => {
   const groupActivityInfo =
     groupActivityData?.courseGroupActivities?.data ?? [];
 
+  const activities = groupPathMatch ? groupActivityInfo : activityInfo;
+  const doneActivities = activities.filter(
+    ({ mySubmission }) => mySubmission?.id != null
+  );
+  const missingActivities = activities.filter(
+    ({ mySubmission }) => mySubmission?.id == null
+  );
+
   return (
     <Container>
       <LSideContainer>
@@ -47,13 +68,38 @@ const ProgressClass = () => {
             Group Activities
           </NavMenu>
         </NavBar>
+        <UpperContainer>
+          <div className="alltask">
+            <h4>All</h4>
+            <Link className="alltaskButton">
+              <div className="alltaskCircle">{activities.length}</div>
+            </Link>
+          </div>
+          <div className="missing">
+            <h4>Missing</h4>
+            <Link className="missingButton" to={`${pathname}?filter=missing`}>
+              <div className="missingCircle">{missingActivities.length}</div>
+            </Link>
+          </div>
+          <div className="done">
+            <h4>Done</h4>
+            <Link className="doneButton" to={`${pathname}?filter=done`}>
+              <div className="doneCircle">{doneActivities.length}</div>
+            </Link>
+          </div>
+        </UpperContainer>
         <ActivityHeader>
           <ActivityContainer>
             <Switch>
               <Route path={`/progress/class/:classId/activities`} exact>
                 {activityLoading
                   ? "Loading..."
-                  : activityInfo.map(
+                  : (filter === "missing"
+                      ? missingActivities
+                      : filter === "done"
+                      ? doneActivities
+                      : activities
+                    ).map(
                       ({
                         id,
                         title,
@@ -159,17 +205,6 @@ const ProgressClass = () => {
             </>
           )}
         </RSideAbout>
-        <RSideAbout>
-          <h3>ACTIVITY COUNT</h3>
-          <h4>
-            Individual Activity: no. of completed activities/total no. of
-            activities{" "}
-          </h4>
-          <h4>
-            Group Activity: no. of completed group activities/total no. of group
-            activities
-          </h4>
-        </RSideAbout>
       </RSideContainer>
     </Container>
   );
@@ -191,6 +226,152 @@ const ActivityContainer = styled.div`
 const LSideContainer = styled.div`
   margin: 0 1em;
   width: 80%;
+`;
+
+const UpperContainer = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  height: 130px;
+  margin: 1em;
+
+  > h4 {
+    font-weight: normal;
+    font-size: 18px;
+    padding: 0 1em;
+  }
+  .taskprogress {
+    background-color: #f2f2f2;
+    width: 100%;
+    border-radius: 10px;
+    padding: 0 10px;
+
+    > h4 {
+      color: #0f482f;
+      margin: 5px;
+      margin-top: 15px;
+    }
+    > p {
+      margin: 0;
+      padding: 5px;
+      font-size: 18px;
+      color: #0e5937;
+    }
+    .outerbar {
+      height: 2em;
+      background-color: #c4c4c4;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      > p {
+        margin: 0;
+        padding: 5px;
+        color: white;
+      }
+    }
+  }
+  .alltask,
+  .todo,
+  .inprogress,
+  .underreview,
+  .missing,
+  .done {
+    background-color: #f2f2f2;
+    width: 60%;
+    text-align: center;
+    border-radius: 10px;
+    > h4 {
+      color: #164aae;
+      height: 40px;
+      margin-top: 15px;
+      margin-bottom: 0;
+      font-size: 15px;
+    }
+    .todoButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .todoCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #164aae;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+    }
+  }
+  .alltask {
+    > h4 {
+      color: #6b16ae;
+    }
+    .alltaskButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .alltaskCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #6b16ae;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+    }
+  }
+  .missing {
+    > h4 {
+      color: #9b1313;
+    }
+    .missingButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .missingCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #9b1313;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+    }
+  }
+  .done {
+    > h4 {
+      color: #0e5937;
+    }
+    .doneButton {
+      color: white;
+      margin: 0;
+      font-size: 22px;
+      text-decoration: none;
+
+      .doneCircle {
+        height: 50px;
+        width: 50px;
+        border-radius: 50%;
+        margin: 0 auto;
+        background-color: #0e5937;
+        justify-content: center;
+        align-items: center;
+        display: flex;
+      }
+    }
+  }
 `;
 
 const ActivityHeader = styled.div`

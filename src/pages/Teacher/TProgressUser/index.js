@@ -1,26 +1,27 @@
-import React, { useState } from "react";
+import React from "react";
+import { useLocation } from "react-router";
 import styled, { css } from "styled-components";
-import Modal from "components/Modal";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useParams, Link } from "react-router-dom";
-import { useCurrentUserContext } from "contexts/CurrentUserContext";
-import Dropdown, { DropdownButtons } from "components/Dropdown";
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
 import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
-import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
+
+import { useUrlQuery } from "hooks/useUrlQuery";
+
 import { COURSE_ACTIVITIES_SUBMISSIONS } from "./gql";
 
 const TProgressUser = () => {
-  const { classId, userId, activityId } = useParams();
+  const { classId, userId } = useParams();
+  const { filter } = useUrlQuery();
+  const { pathname } = useLocation();
+
   const { loading, data } = useQuery(COURSE_ACTIVITIES_SUBMISSIONS, {
     variables: { courseId: classId, studentId: userId },
   });
   const courseInfo = data?.courseActivitiesAndSubmissions?.data ?? [];
   const { student, course, group } = data?.courseActivitiesAndSubmissions ?? {};
 
-  //count status
   const doneCount = courseInfo.filter(
     ({ submission }) => submission?.id != null
   ).length;
@@ -28,30 +29,18 @@ const TProgressUser = () => {
     ({ submission }) => submission?.id == null
   ).length;
 
-  /*const inProgressCount = taskInfo.filter(
-    ({ status }) => status === "IN_PROGRESS"
-  ).length;
-  const underReviewCount = taskInfo.filter(
-    ({ status }) => status === "UNDER_REVIEW"
-  ).length;
-  const toDoCount = taskInfo.filter(({ status }) => status === "TODO").length;
-  const missingCount = taskInfo.filter(
-    ({ dueAt, submittedAt }) => !submittedAt && new Date(dueAt) < new Date()
-  ).length;
-
-  const allCount =
-    toDoCount + inProgressCount + underReviewCount + missingCount + doneCount;
-  const percentProgress = (doneCount / taskInfo.length) * 100;*/
+  const allCount = missingCount + doneCount;
+  const percentProgress = (doneCount / courseInfo.length) * 100;
 
   return (
     <ProgressContainer>
       <LeftSideContainer>
-        <UpperContainer>
+        <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
-            <p>
+            <h4>
               {student?.user?.firstName} {student?.user?.lastName}
-            </p>
-            <p></p>
+            </h4>
+            <p>{percentProgress ? `${percentProgress.toFixed(2)}%` : "0%"}</p>
             <div className="outerbar">
               <div className="bar"></div>
             </div>
@@ -59,18 +48,18 @@ const TProgressUser = () => {
           <div className="alltask">
             <h4>All</h4>
             <Link className="alltaskButton">
-              <div className="alltaskCircle"></div>
+              <div className="alltaskCircle">{allCount}</div>
             </Link>
           </div>
           <div className="missing">
             <h4>Missing</h4>
-            <Link className="missingButton">
+            <Link className="missingButton" to={`${pathname}?filter=missing`}>
               <div className="missingCircle">{missingCount}</div>
             </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
-            <Link className="doneButton">
+            <Link className="doneButton" to={`${pathname}?filter=done`}>
               <div className="doneCircle">{doneCount}</div>
             </Link>
           </div>
@@ -78,36 +67,46 @@ const TProgressUser = () => {
         <TasksContainer>
           {loading
             ? "Loading..."
-            : courseInfo.map(({ id, activity, submission = null }) => (
-                <>
-                  <Content key={id}>
-                    <Task>
-                      <h1>{activity?.title}</h1>
-                      <p>
-                        {dayjs(activity?.createdAt).format(
-                          "MMMM D, YYYY [at] h:mm a"
-                        )}
-                      </p>
-                      <h3>
-                        {" "}
-                        Due: {dayjs(activity?.dueAt).format(
-                          "MMMM D, YYYY"
-                        )}{" "}
-                      </h3>
+            : courseInfo
+                .filter(({ submission }) => {
+                  if (filter === "missing") {
+                    return submission?.id == null;
+                  }
+                  if (filter === "done") {
+                    return submission?.id != null;
+                  }
+                  return true;
+                })
+                .map(({ id, activity, submission = null }) => (
+                  <>
+                    <Content key={id}>
+                      <Task>
+                        <h1>{activity?.title}</h1>
+                        <p>
+                          {dayjs(activity?.createdAt).format(
+                            "MMMM D, YYYY [at] h:mm a"
+                          )}
+                        </p>
+                        <h3>
+                          {" "}
+                          Due: {dayjs(activity?.dueAt).format(
+                            "MMMM D, YYYY"
+                          )}{" "}
+                        </h3>
 
-                      {submission?.id != null ? (
-                        <ViewLink
-                          to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
-                        >
-                          View
-                        </ViewLink>
-                      ) : (
-                        ""
-                      )}
-                    </Task>
-                  </Content>
-                </>
-              ))}
+                        {submission?.id != null ? (
+                          <ViewLink
+                            to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
+                          >
+                            View
+                          </ViewLink>
+                        ) : (
+                          ""
+                        )}
+                      </Task>
+                    </Content>
+                  </>
+                ))}
         </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
@@ -131,9 +130,6 @@ const TProgressUser = () => {
             </li>
           </ul>
         </AboutContainer>
-        {/*<ToDoContainer>
-                      <h3>TO-DO</h3>
-                    </ToDoContainer>*/}
       </RightSideContainer>
     </ProgressContainer>
   );
@@ -194,6 +190,10 @@ const UpperContainer = styled.div`
         color: white;
       }
       .bar {
+        ${({ percentProgress }) =>
+          css`
+            width: ${percentProgress}%;
+          `}
         background-color: #0e5937;
         height: 2em;
       }
@@ -250,50 +250,6 @@ const UpperContainer = styled.div`
         border-radius: 50%;
         margin: 0 auto;
         background-color: #6b16ae;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-      }
-    }
-  }
-  .inprogress {
-    > h4 {
-      color: #ae5f16;
-    }
-    .inprogressButton {
-      color: white;
-      margin: 0;
-      font-size: 22px;
-      text-decoration: none;
-
-      .inprogressCircle {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        margin: 0 auto;
-        background-color: #ae5f16;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-      }
-    }
-  }
-  .underreview {
-    > h4 {
-      color: #ae1696;
-    }
-    .underreviewButton {
-      color: white;
-      margin: 0;
-      font-size: 22px;
-      text-decoration: none;
-
-      .underreviewCircle {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        margin: 0 auto;
-        background-color: #ae1696;
         justify-content: center;
         align-items: center;
         display: flex;
@@ -445,16 +401,6 @@ const AboutContainer = styled.div`
     font-size: 16px;
   }
 `;
-
-/*const ToDoContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: max-content;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  padding: 2em;
-  border-radius: 10px;
-`;*/
 
 const ViewLink = styled(Link)`
   background-color: #0e5937;

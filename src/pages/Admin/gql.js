@@ -13,6 +13,8 @@ export const USERS = gql`
         isAdmin
         schoolIdNumber
         yearLevel
+        courseDept
+        section
         profilePicture
         student {
           id
@@ -80,6 +82,8 @@ export const ADMIN_CREATE_USER = gql`
     $lastName: String!
     $schoolIdNumber: String!
     $yearLevel: String!
+    $courseDept: String!
+    $section: Int!
     $email: String!
     $isTeacher: Boolean!
   ) {
@@ -89,6 +93,8 @@ export const ADMIN_CREATE_USER = gql`
       lastName: $lastName
       schoolIdNumber: $schoolIdNumber
       yearLevel: $yearLevel
+      courseDept: $courseDept
+      section: $section
       email: $email
       isTeacher: $isTeacher
     ) {
