@@ -1,14 +1,20 @@
 import React from "react";
+import { useLocation } from "react-router";
 import styled, { css } from "styled-components";
 import { useQuery } from "@apollo/client";
 import { useParams, Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
+
+import { useUrlQuery } from "hooks/useUrlQuery";
+
 import { COURSE_ACTIVITIES_SUBMISSIONS } from "./gql";
 
 const TProgressUser = () => {
   const { classId, userId } = useParams();
+  const { filter } = useUrlQuery();
+  const { pathname } = useLocation();
 
   const { loading, data } = useQuery(COURSE_ACTIVITIES_SUBMISSIONS, {
     variables: { courseId: classId, studentId: userId },
@@ -53,13 +59,13 @@ const TProgressUser = () => {
           </div>
           <div className="missing">
             <h4>Missing</h4>
-            <Link className="missingButton">
+            <Link className="missingButton" to={`${pathname}?filter=missing`}>
               <div className="missingCircle">{missingCount}</div>
             </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
-            <Link className="doneButton">
+            <Link className="doneButton" to={`${pathname}?filter=done`}>
               <div className="doneCircle">{doneCount}</div>
             </Link>
           </div>
@@ -67,36 +73,46 @@ const TProgressUser = () => {
         <TasksContainer>
           {loading
             ? "Loading..."
-            : courseInfo.map(({ id, activity, submission = null }) => (
-                <>
-                  <Content key={id}>
-                    <Task>
-                      <h1>{activity?.title}</h1>
-                      <p>
-                        {dayjs(activity?.createdAt).format(
-                          "MMMM D, YYYY [at] h:mm a"
-                        )}
-                      </p>
-                      <h3>
-                        {" "}
-                        Due: {dayjs(activity?.dueAt).format(
-                          "MMMM D, YYYY"
-                        )}{" "}
-                      </h3>
+            : courseInfo
+                .filter(({ submission }) => {
+                  if (filter === "missing") {
+                    return submission?.id == null;
+                  }
+                  if (filter === "done") {
+                    return submission?.id != null;
+                  }
+                  return true;
+                })
+                .map(({ id, activity, submission = null }) => (
+                  <>
+                    <Content key={id}>
+                      <Task>
+                        <h1>{activity?.title}</h1>
+                        <p>
+                          {dayjs(activity?.createdAt).format(
+                            "MMMM D, YYYY [at] h:mm a"
+                          )}
+                        </p>
+                        <h3>
+                          {" "}
+                          Due: {dayjs(activity?.dueAt).format(
+                            "MMMM D, YYYY"
+                          )}{" "}
+                        </h3>
 
-                      {submission?.id != null ? (
-                        <ViewLink
-                          to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
-                        >
-                          View
-                        </ViewLink>
-                      ) : (
-                        ""
-                      )}
-                    </Task>
-                  </Content>
-                </>
-              ))}
+                        {submission?.id != null ? (
+                          <ViewLink
+                            to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
+                          >
+                            View
+                          </ViewLink>
+                        ) : (
+                          ""
+                        )}
+                      </Task>
+                    </Content>
+                  </>
+                ))}
         </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
