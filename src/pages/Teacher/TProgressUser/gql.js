@@ -86,16 +86,26 @@ export const GET_ACTIVITIES = gql`
 export const COURSE_ACTIVITIES_SUBMISSIONS = gql`
   query courseActivitiesAndSubmissions($courseId: ID!, $studentId: ID!) {
     courseActivitiesAndSubmissions(courseId: $courseId, studentId: $studentId) {
+      group {
+        name
+      }
+      course {
+        name
+        subjCode
+        yearAndSection
+      }
+      student {
+        user {
+          firstName
+          lastName
+        }
+      }
       data {
         activity {
           id
           title
           createdAt
           dueAt
-          course {
-            subjCode
-            yearAndSection
-          }
         }
         submission {
           id

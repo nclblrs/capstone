@@ -1,49 +1,46 @@
-import React, { useState } from "react";
+import React from "react";
+import { useLocation } from "react-router";
 import styled, { css } from "styled-components";
-import Modal from "components/Modal";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useParams, Link } from "react-router-dom";
-import { useCurrentUserContext } from "contexts/CurrentUserContext";
-import Dropdown, { DropdownButtons } from "components/Dropdown";
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
 import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
-import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
+
+import { useUrlQuery } from "hooks/useUrlQuery";
+
 import { COURSE_ACTIVITIES_SUBMISSIONS } from "./gql";
 
 const TProgressUser = () => {
-  const { classId, userId, activityId } = useParams();
+  const { classId, userId } = useParams();
+  const { filter } = useUrlQuery();
+  const { pathname } = useLocation();
+
   const { loading, data } = useQuery(COURSE_ACTIVITIES_SUBMISSIONS, {
     variables: { courseId: classId, studentId: userId },
   });
   const courseInfo = data?.courseActivitiesAndSubmissions?.data ?? [];
-  //count status
-  {
-    /*const doneCount = taskInfo.filter(({ status }) => status === "DONE").length;
-  const inProgressCount = taskInfo.filter(
-    ({ status }) => status === "IN_PROGRESS"
+  const { student, course, group } = data?.courseActivitiesAndSubmissions ?? {};
+
+  const doneCount = courseInfo.filter(
+    ({ submission }) => submission?.id != null
   ).length;
-  const underReviewCount = taskInfo.filter(
-    ({ status }) => status === "UNDER_REVIEW"
-  ).length;
-  const toDoCount = taskInfo.filter(({ status }) => status === "TODO").length;
-  const missingCount = taskInfo.filter(
-    ({ dueAt, submittedAt }) => !submittedAt && new Date(dueAt) < new Date()
+  const missingCount = courseInfo.filter(
+    ({ submission }) => submission?.id == null
   ).length;
 
-  const allCount =
-    toDoCount + inProgressCount + underReviewCount + missingCount + doneCount;
-  const percentProgress = (doneCount / taskInfo.length) * 100;*/
-  }
+  const allCount = missingCount + doneCount;
+  const percentProgress = (doneCount / courseInfo.length) * 100;
 
   return (
     <ProgressContainer>
       <LeftSideContainer>
-        <UpperContainer>
+        <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
-            <p>{userId}</p>
-            <p></p>
+            <h4>
+              {student?.user?.firstName} {student?.user?.lastName}
+            </h4>
+            <p>{percentProgress ? `${percentProgress.toFixed(2)}%` : "0%"}</p>
             <div className="outerbar">
               <div className="bar"></div>
             </div>
@@ -51,78 +48,85 @@ const TProgressUser = () => {
           <div className="alltask">
             <h4>All</h4>
             <Link className="alltaskButton">
-              <div className="alltaskCircle"></div>
-            </Link>
-          </div>
-          <div className="todo">
-            <h4>To-do</h4>
-            <Link className="todoButton">
-              <div className="todoCircle"></div>
+              <div className="alltaskCircle">{allCount}</div>
             </Link>
           </div>
           <div className="missing">
             <h4>Missing</h4>
-            <Link className="missingButton">
-              <div className="missingCircle"></div>
+            <Link className="missingButton" to={`${pathname}?filter=missing`}>
+              <div className="missingCircle">{missingCount}</div>
             </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
-            <Link className="doneButton">
-              <div className="doneCircle"></div>
+            <Link className="doneButton" to={`${pathname}?filter=done`}>
+              <div className="doneCircle">{doneCount}</div>
             </Link>
           </div>
         </UpperContainer>
         <TasksContainer>
           {loading
             ? "Loading..."
-            : courseInfo.map(({ id, activity, submission }) => (
-                <>
-                  <Content key={id}>
-                    <Task>
-                      <h1>{activity?.title}</h1>
-                      <p>
-                        {dayjs(activity?.createdAt).format(
-                          "MMMM D, YYYY [at] h:mm a"
+            : courseInfo
+                .filter(({ submission }) => {
+                  if (filter === "missing") {
+                    return submission?.id == null;
+                  }
+                  if (filter === "done") {
+                    return submission?.id != null;
+                  }
+                  return true;
+                })
+                .map(({ id, activity, submission = null }) => (
+                  <>
+                    <Content key={id}>
+                      <Task>
+                        <h1>{activity?.title}</h1>
+                        <p>
+                          {dayjs(activity?.createdAt).format(
+                            "MMMM D, YYYY [at] h:mm a"
+                          )}
+                        </p>
+                        <h3>
+                          {" "}
+                          Due: {dayjs(activity?.dueAt).format(
+                            "MMMM D, YYYY"
+                          )}{" "}
+                        </h3>
+
+                        {submission?.id != null ? (
+                          <ViewLink
+                            to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
+                          >
+                            View
+                          </ViewLink>
+                        ) : (
+                          ""
                         )}
-                      </p>
-                      <h3>
-                        {" "}
-                        Due: {dayjs(activity?.dueAt).format(
-                          "MMMM D, YYYY"
-                        )}{" "}
-                      </h3>
-                      {submission?.id != null ? (
-                        <ViewLink
-                          to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
-                        >
-                          View
-                        </ViewLink>
-                      ) : (
-                        <ViewLink>Missing</ViewLink>
-                      )}
-                    </Task>
-                  </Content>
-                </>
-              ))}
+                      </Task>
+                    </Content>
+                  </>
+                ))}
         </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
         <AboutContainer>
           <h3>ABOUT</h3>
           <ul>
-            <h3>{userId}'s Progress</h3>
+            <h3>
+              {student?.user?.firstName} {student?.user?.lastName}'s Progress
+            </h3>
             <li>
               <FaLaptop size={18} />
-              &nbsp; Subject Code:
+              &nbsp; Subject Code: {course?.subjCode} ({course?.name})
             </li>
             <li>
               <FaLaptop size={18} />
-              &nbsp; Section:
+              &nbsp; Section: {course?.yearAndSection}
             </li>
             <li>
               <TiGroup size={18} />
-              &nbsp; Group Number:
+              &nbsp; Group Number: {group?.name}
             </li>
           </ul>
         </AboutContainer>
@@ -189,6 +193,10 @@ const UpperContainer = styled.div`
         color: white;
       }
       .bar {
+        ${({ percentProgress }) =>
+          css`
+            width: ${percentProgress}%;
+          `}
         background-color: #0e5937;
         height: 2em;
       }
@@ -251,50 +259,6 @@ const UpperContainer = styled.div`
       }
     }
   }
-  .inprogress {
-    > h4 {
-      color: #ae5f16;
-    }
-    .inprogressButton {
-      color: white;
-      margin: 0;
-      font-size: 22px;
-      text-decoration: none;
-
-      .inprogressCircle {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        margin: 0 auto;
-        background-color: #ae5f16;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-      }
-    }
-  }
-  .underreview {
-    > h4 {
-      color: #ae1696;
-    }
-    .underreviewButton {
-      color: white;
-      margin: 0;
-      font-size: 22px;
-      text-decoration: none;
-
-      .underreviewCircle {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        margin: 0 auto;
-        background-color: #ae1696;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-      }
-    }
-  }
   .missing {
     > h4 {
       color: #9b1313;
@@ -350,6 +314,7 @@ const TasksContainer = styled.div`
   overflow-y: scroll;
   flex-direction: column;
   padding: 1em;
+  height: 650px;
 `;
 
 const Content = styled.div`
@@ -451,6 +416,7 @@ const AboutContainer = styled.div`
 `;*/
 
 const ViewLink = styled(Link)`
+  background-color: #0e5937;
   text-decoration: none;
   margin-left: auto;
   font-size: 16px;
@@ -458,7 +424,6 @@ const ViewLink = styled(Link)`
   height: 40px;
   border: none;
   color: white;
-  background-color: #0f482f;
   cursor: pointer;
   display: flex;
   justify-content: center;
@@ -467,20 +432,5 @@ const ViewLink = styled(Link)`
     background-color: #0e5937;
   }
 `;
-
-/* const GoBack = styled.button`
-  text-decoration: none;
-  font-size: 18px;
-  width: 100px;
-  height: 40px;
-  border: none;
-  color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  letter-spacing: 1px;
-  font-weight: normal;
-`; */
 
 export default TProgressUser;
