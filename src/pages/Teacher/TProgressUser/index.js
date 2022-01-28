@@ -1,26 +1,21 @@
-import React, { useState } from "react";
+import React from "react";
 import styled, { css } from "styled-components";
-import Modal from "components/Modal";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useParams, Link } from "react-router-dom";
-import { useCurrentUserContext } from "contexts/CurrentUserContext";
-import Dropdown, { DropdownButtons } from "components/Dropdown";
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
 import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
-import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
 import { COURSE_ACTIVITIES_SUBMISSIONS } from "./gql";
 
 const TProgressUser = () => {
-  const { classId, userId, activityId } = useParams();
+  const { classId, userId } = useParams();
+
   const { loading, data } = useQuery(COURSE_ACTIVITIES_SUBMISSIONS, {
     variables: { courseId: classId, studentId: userId },
   });
   const courseInfo = data?.courseActivitiesAndSubmissions?.data ?? [];
   const { student, course, group } = data?.courseActivitiesAndSubmissions ?? {};
 
-  //count status
   const doneCount = courseInfo.filter(
     ({ submission }) => submission?.id != null
   ).length;
@@ -28,30 +23,24 @@ const TProgressUser = () => {
     ({ submission }) => submission?.id == null
   ).length;
 
-  /*const inProgressCount = taskInfo.filter(
-    ({ status }) => status === "IN_PROGRESS"
-  ).length;
-  const underReviewCount = taskInfo.filter(
-    ({ status }) => status === "UNDER_REVIEW"
-  ).length;
-  const toDoCount = taskInfo.filter(({ status }) => status === "TODO").length;
-  const missingCount = taskInfo.filter(
-    ({ dueAt, submittedAt }) => !submittedAt && new Date(dueAt) < new Date()
-  ).length;
-
-  const allCount =
-    toDoCount + inProgressCount + underReviewCount + missingCount + doneCount;
-  const percentProgress = (doneCount / taskInfo.length) * 100;*/
+  const allCount = missingCount + doneCount;
+  const percentProgress = (doneCount / courseInfo.length) * 100;
 
   return (
     <ProgressContainer>
       <LeftSideContainer>
         <UpperContainer>
           <div className="taskprogress">
-            <p>
+            <h4>
               {student?.user?.firstName} {student?.user?.lastName}
+            </h4>
+            <p>
+              {percentProgress
+                ? `${
+                    Math.round((percentProgress + Number.EPSILON) * 100) / 100
+                  }%`
+                : "0%"}
             </p>
-            <p></p>
             <div className="outerbar">
               <div className="bar"></div>
             </div>
@@ -59,7 +48,7 @@ const TProgressUser = () => {
           <div className="alltask">
             <h4>All</h4>
             <Link className="alltaskButton">
-              <div className="alltaskCircle"></div>
+              <div className="alltaskCircle">{allCount}</div>
             </Link>
           </div>
           <div className="missing">
@@ -194,6 +183,10 @@ const UpperContainer = styled.div`
         color: white;
       }
       .bar {
+        ${({ percentProgress }) =>
+          css`
+            width: ${percentProgress}%;
+          `}
         background-color: #0e5937;
         height: 2em;
       }
@@ -250,50 +243,6 @@ const UpperContainer = styled.div`
         border-radius: 50%;
         margin: 0 auto;
         background-color: #6b16ae;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-      }
-    }
-  }
-  .inprogress {
-    > h4 {
-      color: #ae5f16;
-    }
-    .inprogressButton {
-      color: white;
-      margin: 0;
-      font-size: 22px;
-      text-decoration: none;
-
-      .inprogressCircle {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        margin: 0 auto;
-        background-color: #ae5f16;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-      }
-    }
-  }
-  .underreview {
-    > h4 {
-      color: #ae1696;
-    }
-    .underreviewButton {
-      color: white;
-      margin: 0;
-      font-size: 22px;
-      text-decoration: none;
-
-      .underreviewCircle {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        margin: 0 auto;
-        background-color: #ae1696;
         justify-content: center;
         align-items: center;
         display: flex;
