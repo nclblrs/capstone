@@ -103,7 +103,9 @@ const Admin = () => {
           <tr>
             <th></th>
             <th>Name</th>
+            <th>Course</th>
             <th>Year Level</th>
+            <th> Section </th>
             <th>School Number</th>
             <th>Email</th>
             <th>User Type</th>
@@ -119,8 +121,11 @@ const Admin = () => {
               ({
                 id,
                 firstName,
+                middleName,
                 lastName,
+                courseDept,
                 yearLevel,
+                section,
                 schoolIdNumber,
                 emails,
                 isAdmin,
@@ -136,9 +141,11 @@ const Admin = () => {
                       <img src={smallProfpicUrl(secure_url)} alt="a" />
                     </td>
                     <td className="name">
-                      {firstName} {lastName}
+                      {firstName} {middleName} {lastName}
                     </td>
+                    <td>{courseDept}</td>
                     <td>{yearLevel}</td>
+                    <td>{section}</td>
                     <td>{schoolIdNumber}</td>
                     <td>{emails[0].address}</td>
                     <td>

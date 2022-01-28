@@ -68,7 +68,7 @@ const LoginContainer = styled.div`
   justify-content: center;
   align-items: center;
   @media (max-width: 520px) {
-    width: 50%;
+    width: 55%;
   }
   h1 {
     color: white;

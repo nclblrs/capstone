@@ -24,7 +24,9 @@ const ForgotPassword = () => {
         throw Error("something is wrong");
       }
 
-      toast.success("Check your email");
+      toast.success(
+        "Request for password reset was already sent to your email."
+      );
       window.location.href = "/login";
     } catch (error) {
       toast.error(error.message);
