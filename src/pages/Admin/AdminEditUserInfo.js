@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -10,7 +10,17 @@ const AdminEditProfileForm = () => {
   const [toSubmit, setIsSubmitting] = useState(false);
   const [Adminedituserinfos] = useMutation(ADMIN_EDITUSER_INFO);
   const { register, handleSubmit } = useForm();
-
+  const { user } = useCurrentUserContext();
+  const {
+    firstName,
+    middleName,
+    lastName,
+    courseDept,
+    yearLevel,
+    section,
+    schoolIdNumber,
+    emails,
+  } = user ?? {};
   const handleAdminEditUserInfo = async (data) => {
     const {
       firstName,

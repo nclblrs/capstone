@@ -8,6 +8,8 @@ export const USERS = gql`
         firstName
         middleName
         lastName
+        courseDept
+        section
         isAdmin
         schoolIdNumber
         yearLevel

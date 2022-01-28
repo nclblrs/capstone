@@ -103,6 +103,8 @@ const Admin = () => {
             <th></th>
             <th>Name</th>
             <th>Year Level</th>
+            <th>Section</th>
+            <th>Course</th>
             <th>School Number</th>
             <th>Email</th>
             <th>User Type</th>
@@ -120,6 +122,8 @@ const Admin = () => {
                 firstName,
                 lastName,
                 yearLevel,
+                section,
+                courseDept,
                 schoolIdNumber,
                 emails,
                 isAdmin,
@@ -138,6 +142,8 @@ const Admin = () => {
                       {firstName} {lastName}
                     </td>
                     <td>{yearLevel}</td>
+                    <td>{section}</td>
+                    <td>{courseDept}</td>
                     <td>{schoolIdNumber}</td>
                     <td>{emails[0].address}</td>
                     <td>
