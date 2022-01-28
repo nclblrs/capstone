@@ -35,18 +35,12 @@ const TProgressUser = () => {
   return (
     <ProgressContainer>
       <LeftSideContainer>
-        <UpperContainer>
+        <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
             <h4>
               {student?.user?.firstName} {student?.user?.lastName}
             </h4>
-            <p>
-              {percentProgress
-                ? `${
-                    Math.round((percentProgress + Number.EPSILON) * 100) / 100
-                  }%`
-                : "0%"}
-            </p>
+            <p>{percentProgress ? `${percentProgress.toFixed(2)}%` : "0%"}</p>
             <div className="outerbar">
               <div className="bar"></div>
             </div>
