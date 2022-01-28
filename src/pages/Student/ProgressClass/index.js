@@ -7,10 +7,17 @@ import { useQuery } from "@apollo/client";
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
+import { useRouteMatch } from "react-router-dom/cjs/react-router-dom.min";
+import { useUrlQuery } from "hooks/useUrlQuery";
+import { useLocation } from "react-router-dom";
 
 const ProgressClass = () => {
   const { classId } = useParams();
-
+  const { filter } = useUrlQuery();
+  const { pathname } = useLocation();
+  const groupPathMatch = useRouteMatch(
+    "/progress/class/:classId/activities/group"
+  );
   const { loading: activityLoading, data: activityData } = useQuery(
     GET_ACTIVITIES,
     {
@@ -36,12 +43,12 @@ const ProgressClass = () => {
   const groupActivityInfo =
     groupActivityData?.courseGroupActivities?.data ?? [];
 
-  const doneCount = activityInfo.filter(
+  const doneCount = (groupPathMatch ? groupActivityInfo : activityInfo).filter(
     ({ mySubmission }) => mySubmission?.id != null
   ).length;
-  const missingCount = activityInfo.filter(
-    ({ mySubmission }) => mySubmission?.id == null
-  ).length;
+  const missingCount = (
+    groupPathMatch ? groupActivityInfo : activityInfo
+  ).filter(({ mySubmission }) => mySubmission?.id == null).length;
 
   const allCount = missingCount + doneCount;
 
@@ -65,13 +72,13 @@ const ProgressClass = () => {
           </div>
           <div className="missing">
             <h4>Missing</h4>
-            <Link className="missingButton">
+            <Link className="missingButton" to={`${pathname}?filter=missing`}>
               <div className="missingCircle">{missingCount}</div>
             </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
-            <Link className="doneButton">
+            <Link className="doneButton" to={`${pathname}?filter=done`}>
               <div className="doneCircle">{doneCount}</div>
             </Link>
           </div>
@@ -82,42 +89,52 @@ const ProgressClass = () => {
               <Route path={`/progress/class/:classId/activities`} exact>
                 {activityLoading
                   ? "Loading..."
-                  : activityInfo.map(
-                      ({
-                        id,
-                        title,
-                        dueAt,
-                        createdAt,
-                        course,
-                        mySubmission,
-                      }) => {
-                        return (
-                          <>
-                            <Activity key={id}>
-                              <Content>
-                                <h1>{title}</h1>
-                                <h4>
-                                  {dayjs(createdAt).format(
-                                    "MMMM D, YYYY [at] h:mm a"
-                                  )}
-                                </h4>
-                                <h3>
-                                  {" "}
-                                  Due: {dayjs(dueAt).format(
-                                    "MMMM D, YYYY"
-                                  )}{" "}
-                                </h3>
-                              </Content>
-                              <ViewLink
-                                to={`/class/${course.id}/activity/${id}`}
-                              >
-                                View
-                              </ViewLink>
-                            </Activity>
-                          </>
-                        );
-                      }
-                    )}
+                  : activityInfo
+                      .filter(({ mySubmission }) => {
+                        if (filter === "missing") {
+                          return mySubmission?.id == null;
+                        }
+                        if (filter === "done") {
+                          return mySubmission?.id != null;
+                        }
+                        return true;
+                      })
+                      .map(
+                        ({
+                          id,
+                          title,
+                          dueAt,
+                          createdAt,
+                          course,
+                          mySubmission,
+                        }) => {
+                          return (
+                            <>
+                              <Activity key={id}>
+                                <Content>
+                                  <h1>{title}</h1>
+                                  <h4>
+                                    {dayjs(createdAt).format(
+                                      "MMMM D, YYYY [at] h:mm a"
+                                    )}
+                                  </h4>
+                                  <h3>
+                                    {" "}
+                                    Due: {dayjs(dueAt).format(
+                                      "MMMM D, YYYY"
+                                    )}{" "}
+                                  </h3>
+                                </Content>
+                                <ViewLink
+                                  to={`/class/${course.id}/activity/${id}`}
+                                >
+                                  View
+                                </ViewLink>
+                              </Activity>
+                            </>
+                          );
+                        }
+                      )}
               </Route>
               <Route path={`/progress/class/:classId/activities/group`}>
                 {groupActivityLoading
