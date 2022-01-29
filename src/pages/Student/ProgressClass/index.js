@@ -1,16 +1,29 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import dayjs from "dayjs";
-import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
+import {
+  Switch,
+  NavLink,
+  Route,
+  useParams,
+  Link,
+  useRouteMatch,
+} from "react-router-dom";
 import { GET_ACTIVITIES, GET_GROUP_ACTIVITIES, GET_COURSE } from "./gql";
 import { useQuery } from "@apollo/client";
 import { FaLaptop } from "react-icons/fa";
 import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
+import { useUrlQuery } from "hooks/useUrlQuery";
+import { useLocation } from "react-router-dom";
 
 const ProgressClass = () => {
   const { classId } = useParams();
-
+  const { filter } = useUrlQuery();
+  const { pathname } = useLocation();
+  const groupPathMatch = useRouteMatch(
+    "/progress/class/:classId/activities/group"
+  );
   const { loading: activityLoading, data: activityData } = useQuery(
     GET_ACTIVITIES,
     {
@@ -36,14 +49,13 @@ const ProgressClass = () => {
   const groupActivityInfo =
     groupActivityData?.courseGroupActivities?.data ?? [];
 
-  const doneCount = activityInfo.filter(
+  const activities = groupPathMatch ? groupActivityInfo : activityInfo;
+  const doneActivities = activities.filter(
     ({ mySubmission }) => mySubmission?.id != null
-  ).length;
-  const missingCount = activityInfo.filter(
+  );
+  const missingActivities = activities.filter(
     ({ mySubmission }) => mySubmission?.id == null
-  ).length;
-
-  const allCount = missingCount + doneCount;
+  );
 
   return (
     <Container>
@@ -60,19 +72,19 @@ const ProgressClass = () => {
           <div className="alltask">
             <h4>All</h4>
             <Link className="alltaskButton">
-              <div className="alltaskCircle">{allCount}</div>
+              <div className="alltaskCircle">{activities.length}</div>
             </Link>
           </div>
           <div className="missing">
             <h4>Missing</h4>
-            <Link className="missingButton">
-              <div className="missingCircle">{missingCount}</div>
+            <Link className="missingButton" to={`${pathname}?filter=missing`}>
+              <div className="missingCircle">{missingActivities.length}</div>
             </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
-            <Link className="doneButton">
-              <div className="doneCircle">{doneCount}</div>
+            <Link className="doneButton" to={`${pathname}?filter=done`}>
+              <div className="doneCircle">{doneActivities.length}</div>
             </Link>
           </div>
         </UpperContainer>
@@ -82,7 +94,12 @@ const ProgressClass = () => {
               <Route path={`/progress/class/:classId/activities`} exact>
                 {activityLoading
                   ? "Loading..."
-                  : activityInfo.map(
+                  : (filter === "missing"
+                      ? missingActivities
+                      : filter === "done"
+                      ? doneActivities
+                      : activities
+                    ).map(
                       ({
                         id,
                         title,
@@ -122,7 +139,12 @@ const ProgressClass = () => {
               <Route path={`/progress/class/:classId/activities/group`}>
                 {groupActivityLoading
                   ? "Loading..."
-                  : groupActivityInfo.map(
+                  : (filter === "missing"
+                      ? missingActivities
+                      : filter === "done"
+                      ? doneActivities
+                      : activities
+                    ).map(
                       ({
                         id,
                         title,

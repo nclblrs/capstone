@@ -130,9 +130,6 @@ const TProgressUser = () => {
             </li>
           </ul>
         </AboutContainer>
-        {/*<ToDoContainer>
-                      <h3>TO-DO</h3>
-                    </ToDoContainer>*/}
       </RightSideContainer>
     </ProgressContainer>
   );
@@ -404,16 +401,6 @@ const AboutContainer = styled.div`
     font-size: 16px;
   }
 `;
-
-/*const ToDoContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: max-content;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  padding: 2em;
-  border-radius: 10px;
-`;*/
 
 const ViewLink = styled(Link)`
   background-color: #0e5937;

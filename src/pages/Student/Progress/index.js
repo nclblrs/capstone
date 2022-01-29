@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useLocation } from "react-router";
 import styled, { css } from "styled-components";
 import { GET_GROUPSUBMISSION, CHANGE_TASK_STATUS } from "./gql";
 import Modal from "components/Modal";
@@ -13,9 +14,13 @@ import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
 import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
 
+import { useUrlQuery } from "hooks/useUrlQuery";
+
 const Progress = () => {
   const { user } = useCurrentUserContext();
   const { groupSubmissionId } = useParams();
+  const { filter } = useUrlQuery();
+  const { pathname } = useLocation();
 
   const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
 
@@ -55,7 +60,8 @@ const Progress = () => {
   ).length;
   const toDoCount = taskInfo.filter(({ status }) => status === "TODO").length;
   const missingCount = taskInfo.filter(
-    ({ dueAt, submittedAt }) => !submittedAt && new Date(dueAt) < new Date()
+    ({ dueAt, submittedAt, status }) =>
+      (!submittedAt && new Date(dueAt)) < new Date() && status !== "DONE"
   ).length;
 
   const allCount =
@@ -81,31 +87,37 @@ const Progress = () => {
           </div>
           <div className="todo">
             <h4>To-do</h4>
-            <Link className="todoButton">
+            <Link className="todoButton" to={`${pathname}?filter=todo`}>
               <div className="todoCircle">{toDoCount}</div>
             </Link>
           </div>
           <div className="inprogress">
             <h4>In Progress</h4>
-            <Link className="inprogressButton">
+            <Link
+              className="inprogressButton"
+              to={`${pathname}?filter=inprogress`}
+            >
               <div className="inprogressCircle">{inProgressCount}</div>
             </Link>
           </div>
           <div className="underreview">
             <h4>Under Review</h4>
-            <Link className="underreviewButton">
+            <Link
+              className="underreviewButton"
+              to={`${pathname}?filter=underreview`}
+            >
               <div className="underreviewCircle">{underReviewCount}</div>
             </Link>
           </div>
           <div className="missing">
             <h4>Missing</h4>
-            <Link className="missingButton">
+            <Link className="missingButton" to={`${pathname}?filter=missing`}>
               <div className="missingCircle">{missingCount}</div>
             </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
-            <Link className="doneButton">
+            <Link className="doneButton" to={`${pathname}?filter=done`}>
               <div className="doneCircle">{doneCount}</div>
             </Link>
           </div>
@@ -116,75 +128,95 @@ const Progress = () => {
           ) : loading ? (
             "Loading..."
           ) : (
-            taskInfo.map(({ id, title, status, dueAt, student }) => {
-              return (
-                <>
-                  <Content>
-                    <Task>
-                      <h1>{title} </h1>
-                      {(leader?.id === user.id || myTask?.id === id) && (
-                        <Dropdown
-                          popperComponent={
-                            <DropdownButtons>
-                              <button
-                                onClick={() =>
-                                  handleChangeTaskStatus(id, "DONE")
-                                }
-                              >
-                                Done
-                              </button>
-                              {leader?.id === user.id && (
+            taskInfo
+              .filter(({ status }) => {
+                if (filter === "todo") {
+                  return status === "TODO";
+                }
+                if (filter === "inprogress") {
+                  return status === "IN_PROGRESS";
+                }
+                if (filter === "underreview") {
+                  return status === "UNDER_REVIEW";
+                }
+                if (filter === "missing") {
+                  return status === "MISSING";
+                }
+                if (filter === "done") {
+                  return status === "DONE";
+                }
+                return true;
+              })
+              .map(({ id, title, status, dueAt, student }) => {
+                return (
+                  <>
+                    <Content>
+                      <Task>
+                        <h1>{title} </h1>
+                        {(leader?.id === user.id || myTask?.id === id) && (
+                          <Dropdown
+                            popperComponent={
+                              <DropdownButtons>
                                 <button
                                   onClick={() =>
-                                    handleChangeTaskStatus(id, "UNDER_REVIEW")
+                                    handleChangeTaskStatus(id, "DONE")
                                   }
                                 >
-                                  Under Review
+                                  Done
                                 </button>
-                              )}
-                              {myTask?.id === id && (
-                                <button
-                                  onClick={() =>
-                                    handleChangeTaskStatus(id, "IN_PROGRESS")
-                                  }
-                                >
-                                  In Progress
-                                </button>
-                              )}
-                            </DropdownButtons>
-                          }
+                                {leader?.id === user.id && (
+                                  <button
+                                    onClick={() =>
+                                      handleChangeTaskStatus(id, "UNDER_REVIEW")
+                                    }
+                                  >
+                                    Under Review
+                                  </button>
+                                )}
+                                {myTask?.id === id && (
+                                  <button
+                                    onClick={() =>
+                                      handleChangeTaskStatus(id, "IN_PROGRESS")
+                                    }
+                                  >
+                                    In Progress
+                                  </button>
+                                )}
+                              </DropdownButtons>
+                            }
+                          >
+                            <button className="mark">Mark as</button>
+                          </Dropdown>
+                        )}
+                        <ViewLink
+                          status={status}
+                          to={`/progress/class/${course?.id}/groupactivity/${groupSubmissionId}/task/${id}`}
                         >
-                          <button className="mark">Mark as</button>
-                        </Dropdown>
-                      )}
-                      <ViewLink
-                        status={status}
-                        to={`/progress/class/${course?.id}/groupactivity/${groupSubmissionId}/task/${id}`}
-                      >
-                        {status === "TODO"
-                          ? "View Submission"
-                          : status === "IN_PROGRESS"
-                          ? "In Progress"
-                          : status === "UNDER_REVIEW"
-                          ? "Under Review"
-                          : status === "DONE"
-                          ? "Done"
-                          : ""}
-                      </ViewLink>
-                      <p>
-                        Assigned to:{" "}
-                        {user.id === student?.id
-                          ? "You"
-                          : student?.user?.firstName +
-                            " " +
-                            student?.user?.lastName}{" "}
-                        | Due: {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
-                      </p>
-                    </Task>
-                  </Content>
-                </>
-              );
-            })
+                          {status === "TODO"
+                            ? "View Submission"
+                            : status === "IN_PROGRESS"
+                            ? "In Progress"
+                            : status === "UNDER_REVIEW"
+                            ? "Under Review"
+                            : status === "DONE"
+                            ? "Done"
+                            : ""}
+                        </ViewLink>
+                        <p>
+                          Assigned to:{" "}
+                          {user.id === student?.id
+                            ? "You"
+                            : student?.user?.firstName +
+                              " " +
+                              student?.user?.lastName}{" "}
+                          | Due:{" "}
+                          {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                        </p>
+                      </Task>
+                    </Content>
+                  </>
+                );
+              })
           )}
         </TasksContainer>
       </LeftSideContainer>
