@@ -292,6 +292,9 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 1em;
+  &:hover {
+    background-color: #158f58;
+  }
 `;
 
 const Container = styled.div`

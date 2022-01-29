@@ -315,4 +315,7 @@ const Attachment = styled.a`
   align-items: center;
   justify-content: flex-start;
   cursor: pointer;
+  &:hover {
+    background-color: #158f58;
+  }
 `;

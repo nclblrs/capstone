@@ -165,6 +165,9 @@ const Attachment = styled.a`
     overflow: hidden;
     text-overflow: ellipsis;
   }
+  &:hover {
+    background-color: #158f58;
+  }
 `;
 
 export default Files;

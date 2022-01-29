@@ -37,6 +37,7 @@ import TGroupActivityPage from "pages/Teacher/GroupActivity";
 import TActivity from "pages/Teacher/Activity";
 import TSettings from "pages/Teacher/TSettings";
 import Submission from "pages/Teacher/Submission";
+import GroupSubmission from "pages/Teacher/GroupSubmission";
 import Task from "pages/Student/Task";
 import AllProgress from "pages/Student/AllProgress";
 import ProgressClass from "pages/Student/ProgressClass";
@@ -145,7 +146,10 @@ function App() {
                     <Route path="/class/:classId/activity/:activityId">
                       <TActivity />
                     </Route>
-                    <Route path="/class/:classId/groupactivity/:activityId">
+                    <Route path="/class/:classId/groupactivity/:groupActivityId/submission/:groupSubmissionId">
+                      <GroupSubmission />
+                    </Route>
+                    <Route path="/class/:classId/groupactivity/:groupActivityId">
                       <TGroupActivityPage />
                     </Route>
                     <Route path="/class/:classId">
