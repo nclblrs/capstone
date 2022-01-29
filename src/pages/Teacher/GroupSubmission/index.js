@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import Modal from "components/Modal";
 import GradeGroupSubmissionForm from "./Forms/GradeGroupSubmissionForm";
-import { smallProfpicUrl } from "utils/upload";
 
 const GroupSubmission = () => {
   const [showGradeGroupSubmissionModal, setShowGradeGroupSubmissionModal] =
