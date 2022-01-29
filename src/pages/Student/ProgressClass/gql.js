@@ -81,6 +81,13 @@ export const GET_GROUP_ACTIVITIES = gql`
         }
         mySubmission {
           id
+          submittedAt
+          submittedBy {
+            user {
+              firstName
+              lastName
+            }
+          }
         }
       }
     }

@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import dayjs from "dayjs";
 import {
   Switch,
@@ -139,7 +139,12 @@ const ProgressClass = () => {
               <Route path={`/progress/class/:classId/activities/group`}>
                 {groupActivityLoading
                   ? "Loading..."
-                  : groupActivityInfo.map(
+                  : (filter === "missing"
+                      ? missingActivities
+                      : filter === "done"
+                      ? doneActivities
+                      : activities
+                    ).map(
                       ({
                         id,
                         title,
