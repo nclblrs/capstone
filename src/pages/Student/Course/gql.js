@@ -174,8 +174,8 @@ export const COURSE_FILES = gql`
 `;
 
 export const GET_ACTIVITIES = gql`
-  query ($courseId: ID!) {
-    courseActivities(courseId: $courseId) {
+  query ($courseId: ID!, $sortByDueAt: Boolean) {
+    courseActivities(courseId: $courseId, sortByDueAt: $sortByDueAt) {
       data {
         id
         title
@@ -187,8 +187,8 @@ export const GET_ACTIVITIES = gql`
 `;
 
 export const GET_GROUP_ACTIVITIES = gql`
-  query ($courseId: ID!) {
-    courseGroupActivities(courseId: $courseId) {
+  query ($courseId: ID!, $sortByDueAt: Boolean) {
+    courseGroupActivities(courseId: $courseId, sortByDueAt: $sortByDueAt) {
       data {
         id
         title
