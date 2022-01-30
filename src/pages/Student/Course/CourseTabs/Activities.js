@@ -1,28 +1,38 @@
 import React from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
-import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
-import { GET_ACTIVITIES, GET_GROUP_ACTIVITIES } from "../gql";
+import {
+  Switch,
+  NavLink,
+  Route,
+  useParams,
+  Link,
+  useHistory,
+} from "react-router-dom";
 import { useQuery } from "@apollo/client";
 import { useLocation } from "react-router";
 
+import { useUrlQuery } from "hooks/useUrlQuery";
+
+import { GET_ACTIVITIES, GET_GROUP_ACTIVITIES } from "../gql";
+
 const Activities = () => {
   const location = useLocation();
+  const history = useHistory();
   const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
   const { classId } = useParams();
+  const { sortByDueAt } = useUrlQuery();
 
+  const variables = { courseId: classId, sortByDueAt: !!sortByDueAt };
+  console.log(variables);
   const { loading: activityLoading, data: activityData } = useQuery(
     GET_ACTIVITIES,
-    {
-      variables: { courseId: classId },
-    }
+    { variables }
   );
 
   const { loading: groupActivityLoading, data: groupActivityData } = useQuery(
     GET_GROUP_ACTIVITIES,
-    {
-      variables: { courseId: classId },
-    }
+    { variables }
   );
 
   const activityInfo = activityData?.courseActivities?.data ?? [];
@@ -38,6 +48,17 @@ const Activities = () => {
         <NavMenu to={`/class/${classId}/activities/group`}>
           Group Activities
         </NavMenu>
+        <button
+          onClick={() => {
+            if (sortByDueAt) {
+              history.push(location.pathname);
+            } else {
+              history.push(`${location.pathname}?sortByDueAt=true`);
+            }
+          }}
+        >
+          {sortByDueAt ? "Sort by create date" : "Sort by due date"}
+        </button>
       </NavBar>
       <Switch>
         <Route path={`/class/:classId/activities`} exact>
@@ -45,22 +66,20 @@ const Activities = () => {
             ? "Loading..."
             : activityInfo.map(({ id, title, dueAt, createdAt }) => {
                 return (
-                  <>
-                    <Activity key={id}>
-                      <Content>
-                        <h1>{title}</h1>
-                        <h4>
-                          {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
-                        </h4>
-                        <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
-                      </Content>
-                      <ViewLink
-                        to={`${removeLast(location.pathname)}/activity/${id}`}
-                      >
-                        View
-                      </ViewLink>
-                    </Activity>
-                  </>
+                  <Activity key={id}>
+                    <Content>
+                      <h1>{title}</h1>
+                      <h4>
+                        {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
+                      </h4>
+                      <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
+                    </Content>
+                    <ViewLink
+                      to={`${removeLast(location.pathname)}/activity/${id}`}
+                    >
+                      View
+                    </ViewLink>
+                  </Activity>
                 );
               })}
         </Route>
@@ -70,24 +89,18 @@ const Activities = () => {
             : groupActivityInfo.map(
                 ({ id, title, dueAt, createdAt, course }) => {
                   return (
-                    <>
-                      <Activity key={id}>
-                        <Content>
-                          <h1>{title} </h1>
-                          <h4>
-                            {dayjs(createdAt).format(
-                              "MMMM D, YYYY [at] h:mm a"
-                            )}
-                          </h4>
-                          <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
-                        </Content>
-                        <ViewLink
-                          to={`/class/${course.id}/groupactivity/${id}`}
-                        >
-                          View
-                        </ViewLink>
-                      </Activity>
-                    </>
+                    <Activity key={id}>
+                      <Content>
+                        <h1>{title} </h1>
+                        <h4>
+                          {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
+                        </h4>
+                        <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
+                      </Content>
+                      <ViewLink to={`/class/${course.id}/groupactivity/${id}`}>
+                        View
+                      </ViewLink>
+                    </Activity>
                   );
                 }
               )}
