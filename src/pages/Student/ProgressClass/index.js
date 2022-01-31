@@ -16,6 +16,7 @@ import { MdAccountCircle } from "react-icons/md";
 import { TiGroup } from "react-icons/ti";
 import { useUrlQuery } from "hooks/useUrlQuery";
 import { useLocation } from "react-router-dom";
+import { RiNumbersFill } from "react-icons/ri";
 
 const ProgressClass = () => {
   const { classId } = useParams();
@@ -50,13 +51,20 @@ const ProgressClass = () => {
     groupActivityData?.courseGroupActivities?.data ?? [];
 
   const activities = groupPathMatch ? groupActivityInfo : activityInfo;
-  const doneActivities = activities.filter(
-    ({ mySubmission }) => mySubmission?.id != null
+
+  const toDoActivities = activities.filter(
+    ({ mySubmission, dueAt }) => mySubmission?.submittedAt == null
   );
   const missingActivities = activities.filter(
-    ({ mySubmission }) => mySubmission?.id == null
+    ({ mySubmission, dueAt }) =>
+      mySubmission?.submittedAt == null && new Date(dueAt) < new Date()
+  );
+  const doneActivities = activities.filter(
+    ({ mySubmission }) => mySubmission?.submittedAt != null
   );
 
+  const today = new Date();
+  console.log(today);
   return (
     <Container>
       <LSideContainer>
@@ -73,6 +81,12 @@ const ProgressClass = () => {
             <h4>All</h4>
             <Link className="alltaskButton">
               <div className="alltaskCircle">{activities.length}</div>
+            </Link>
+          </div>
+          <div className="todo">
+            <h4>To-do</h4>
+            <Link className="todoButton" to={`${pathname}?filter=todo`}>
+              <div className="todoCircle">{toDoActivities.length}</div>
             </Link>
           </div>
           <div className="missing">
@@ -94,7 +108,9 @@ const ProgressClass = () => {
               <Route path={`/progress/class/:classId/activities`} exact>
                 {activityLoading
                   ? "Loading..."
-                  : (filter === "missing"
+                  : (filter === "todo"
+                      ? toDoActivities
+                      : filter === "missing"
                       ? missingActivities
                       : filter === "done"
                       ? doneActivities
@@ -139,7 +155,9 @@ const ProgressClass = () => {
               <Route path={`/progress/class/:classId/activities/group`}>
                 {groupActivityLoading
                   ? "Loading..."
-                  : (filter === "missing"
+                  : (filter === "todo"
+                      ? toDoActivities
+                      : filter === "missing"
                       ? missingActivities
                       : filter === "done"
                       ? doneActivities
