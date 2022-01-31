@@ -83,7 +83,7 @@ export const ADMIN_CREATE_USER = gql`
     $schoolIdNumber: String!
     $yearLevel: String!
     $courseDept: String!
-    $section: Int!
+    $section: String!
     $email: String!
     $isTeacher: Boolean!
   ) {

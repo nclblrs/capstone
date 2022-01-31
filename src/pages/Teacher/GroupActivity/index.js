@@ -13,9 +13,9 @@ import { FaLaptop } from "react-icons/fa";
 
 const TGroupActivityPage = () => {
   const [showAssignTaskModal, setShowAssignTaskModal] = useState(false);
-  const { activityId } = useParams();
+  const { groupActivityId, classId } = useParams();
   const { loading, data, refetch } = useQuery(COURSE_GROUPACTIVITY, {
-    variables: { groupActivityId: activityId },
+    variables: { groupActivityId: groupActivityId },
   });
 
   const {
@@ -32,9 +32,12 @@ const TGroupActivityPage = () => {
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
 
-  const { loading: grpactsubmission, data: grpactsubmissiondata } = useQuery(GROUPACTIVITY_SUBMISSION, {
-    variables: { groupActivityId: activityId },
-  });
+  const { loading: grpactsubmission, data: grpactsubmissiondata } = useQuery(
+    GROUPACTIVITY_SUBMISSION,
+    {
+      variables: { groupActivityId: groupActivityId },
+    }
+  );
 
   return (
     <ActivityContainer>
@@ -58,19 +61,47 @@ const TGroupActivityPage = () => {
             <ActivityHeader>
               <ActivityContent>
                 <h1>Group Submissions</h1>
-                
+
                 {grpactsubmission
-          ? "Loading..."
-          : grpactsubmissiondata?.groupActivitySubmissions?.data?.map(({ id, description, grade, submittedAt, submittedBy, group, attachment }) => (
-          <Container key={id}>
-            <Content>
-              <h1>
-                {group?.name} <span> Submitted By: {submittedBy?.user?.firstName} {submittedBy?.user?.lastName} | {dayjs(submittedAt).format("MMMM D, YYYY [at] h:mm a")}</span>
-              </h1>
-            </Content>
-          </Container>
-            ))}
-       
+                  ? "Loading..."
+                  : grpactsubmissiondata?.groupActivitySubmissions?.data?.map(
+                      ({
+                        id,
+                        description,
+                        grade,
+                        submittedAt,
+                        submittedBy,
+                        group,
+                        attachment,
+                      }) =>
+                        submittedAt !== null ? (
+                          <Container key={id}>
+                            <Content>
+                              <h1>
+                                {group?.name}{" "}
+                                <span>
+                                  {" "}
+                                  Submitted By: {
+                                    submittedBy?.user?.firstName
+                                  }{" "}
+                                  {submittedBy?.user?.lastName} |{" "}
+                                  {dayjs(submittedAt).format(
+                                    "MMMM D, YYYY [at] h:mm a"
+                                  )}
+                                </span>
+                              </h1>
+                            </Content>
+                            <Link
+                              className="buttons"
+                              to={`/class/${classId}/groupactivity/${groupActivityId}/submission/${id}`}
+                            >
+                              View
+                            </Link>
+                          </Container>
+                        ) : (
+                          "No submissions yet."
+                        )
+                    )}
               </ActivityContent>
             </ActivityHeader>
           </LSideContainer>
@@ -250,6 +281,9 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 1em;
+  &:hover {
+    background-color: #158f58;
+  }
 `;
 
 const Container = styled.div`
@@ -264,6 +298,22 @@ const Container = styled.div`
   text-align: left;
   margin: 1em 1.4em;
   display: flex;
+  .buttons {
+    font-size: 16px;
+    width: 110px;
+    height: 40px;
+    border: none;
+    color: white;
+    background-color: #0f482f;
+    cursor: pointer;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    &:hover {
+      background-color: #0e5937;
+    }
+  }
 `;
 
 const Content = styled(Link)`

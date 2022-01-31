@@ -52,7 +52,11 @@ const Navbar = () => {
       >
         <Profile to="#">
           <img src={smallProfpicUrl(secure_url)} alt="Your profile pic" />
-          {loading ? "Loading..." : `${firstName} ${middleName} ${lastName}`}
+          {loading
+            ? "Loading..."
+            : middleName
+            ? `${firstName} ${middleName} ${lastName}`
+            : `${firstName} ${lastName}`}
         </Profile>
       </Dropdown>
     </Nav>

@@ -78,6 +78,9 @@ const Activities = () => {
                         </h4>
                         <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
                       </Content>
+                      <ViewLink to={`/class/${classId}/groupactivity/${id}`}>
+                        View
+                      </ViewLink>
                     </Activity>
                   </>
                 );

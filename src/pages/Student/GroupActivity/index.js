@@ -72,12 +72,16 @@ const GroupActivityPage = () => {
               <ActivityContent>
                 <h1>Your Group's Submission</h1>
                 <ActivityButtons>
-                  <Link
-                    className="groupprogress"
-                    to={`/progress/class/${classId}/groupactivity/${groupSubmissionId}`}
-                  >
-                    Group Progress
-                  </Link>
+                  {group ? (
+                    <Link
+                      className="groupprogress"
+                      to={`/progress/class/${classId}/groupactivity/${groupSubmissionId}`}
+                    >
+                      Group Progress
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </ActivityButtons>
                 {submittedAt ? (
                   <Container>
@@ -292,6 +296,9 @@ const Attachment = styled.a`
   justify-content: flex-start;
   cursor: pointer;
   margin-top: 1em;
+  &:hover {
+    background-color: #158f58;
+  }
 `;
 
 const Container = styled.div`

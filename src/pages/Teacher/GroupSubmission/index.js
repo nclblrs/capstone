@@ -1,82 +1,81 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { GET_SUBMISSION, COURSE_ACTIVITYSUBMISSIONS } from "./gql";
+import { GET_GROUPSUBMISSION, COURSE_GROUPACTIVITYSUBMISSIONS } from "./gql";
 import { useQuery } from "@apollo/client";
 import { useParams } from "react-router-dom";
 import dayjs from "dayjs";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router";
 import Modal from "components/Modal";
-import GradeSubmissionForm from "./Forms/GradeSubmissionForm";
-import { smallProfpicUrl } from "utils/upload";
+import GradeGroupSubmissionForm from "./Forms/GradeGroupSubmissionForm";
 
-const Submission = () => {
-  const [showGradeSubmissionModal, setShowGradeSubmissionModal] =
+const GroupSubmission = () => {
+  const [showGradeGroupSubmissionModal, setShowGradeGroupSubmissionModal] =
     useState(false);
 
   const location = useLocation();
   const removeLast = (path) => path.substring(0, path.lastIndexOf("/"));
 
-  const { submissionId, activityId } = useParams();
-  const { loading: submissionLoading, data: submissionData } = useQuery(
-    GET_SUBMISSION,
-    {
-      variables: { submissionId: submissionId },
-    }
-  );
+  const { groupSubmissionId, groupActivityId } = useParams();
+  const { loading: groupSubmissionLoading, data: groupSubmissionData } =
+    useQuery(GET_GROUPSUBMISSION, {
+      variables: { groupSubmissionId: groupSubmissionId },
+    });
 
   const {
     description,
     createdAt,
     submittedAt,
     grade,
-    student,
-    activity,
+    group,
+    groupActivity,
     attachment = null,
-  } = submissionData?.submission ?? {};
+  } = groupSubmissionData?.groupSubmission ?? {};
 
-  const { loading: activitySubmissionsLoading, data: activitySubmissionsData } =
-    useQuery(COURSE_ACTIVITYSUBMISSIONS, {
-      variables: { activityId: activityId },
-    });
+  const {
+    loading: groupActivitySubmissionsLoading,
+    data: groupActivitySubmissionsData,
+  } = useQuery(COURSE_GROUPACTIVITYSUBMISSIONS, {
+    variables: { groupActivityId: groupActivityId },
+  });
 
-  const activitySubmissions =
-    activitySubmissionsData?.activitySubmissions?.data ?? [];
-
-  const { firstName, lastName } = student?.user ?? {};
+  const groupActivitySubmissions =
+    groupActivitySubmissionsData?.groupActivitySubmissions?.data ?? [];
 
   const { original_filename, secure_url } = JSON.parse(attachment) ?? {};
 
   return (
     <ActivityContainer>
-      {submissionLoading ? (
+      {groupSubmissionLoading ? (
         "Loading..."
       ) : (
         <>
           <LSideContainer>
             <ActivityHeader>
               <ActivityContent>
-                <h1>
-                  {firstName} {lastName}'s Submission
-                </h1>
+                <h1>{group.name}'s Submission</h1>
                 <span>
+                  {" "}
+                  Deadline:{" "}
                   {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
                 </span>
                 <span>
-                  {activity.points
-                    ? `${activity.points} pts`
+                  {groupActivity.points
+                    ? `${groupActivity.points} pts`
                     : "No points assigned"}
                 </span>
               </ActivityContent>
               <ActivityButtons>
-                {activity.points ? (
+                {groupActivity.points ? (
                   !grade ? (
-                    <button onClick={() => setShowGradeSubmissionModal(true)}>
+                    <button
+                      onClick={() => setShowGradeGroupSubmissionModal(true)}
+                    >
                       Add Grade
                     </button>
                   ) : (
                     <div className="ptsbg">
-                      {grade}/{activity.points}
+                      {grade}/{groupActivity.points}
                     </div>
                   )
                 ) : (
@@ -106,27 +105,17 @@ const Submission = () => {
           <RSideContainer>
             <RSideContent>
               <div className="submissionsheader">Other Submissions: </div>
-              {activitySubmissionsLoading
+              {groupActivitySubmissionsLoading
                 ? "Loading..."
-                : activitySubmissions
-                    .filter(({ id }) => submissionId !== id)
-                    .map(({ id, student }) => {
-                      const {
-                        firstName,
-                        lastName,
-                        profilePicture = null,
-                      } = student?.user ?? {};
-                      const { secure_url: secure_url2 } =
-                        JSON.parse(profilePicture) ?? {};
+                : groupActivitySubmissions
+                    .filter(({ id }) => groupSubmissionId !== id)
+                    .map(({ id, group }) => {
                       return (
                         <Container key={id}>
                           <Content
                             to={`${removeLast(location.pathname)}/${id}`}
                           >
-                            <img src={smallProfpicUrl(secure_url2)} alt="a" />
-                            <h1>
-                              {firstName} {lastName}
-                            </h1>
+                            <h1>{group.name}</h1>
                           </Content>
                         </Container>
                       );
@@ -134,14 +123,14 @@ const Submission = () => {
             </RSideContent>
           </RSideContainer>
           <Modal
-            show={showGradeSubmissionModal}
-            closeModal={() => setShowGradeSubmissionModal(false)}
+            show={showGradeGroupSubmissionModal}
+            closeModal={() => setShowGradeGroupSubmissionModal(false)}
             title="Create Grade"
           >
-            <GradeSubmissionForm
-              submissionId={submissionId}
+            <GradeGroupSubmissionForm
+              groupSubmissionId={groupSubmissionId}
               onCreateFinish={() => {
-                setShowGradeSubmissionModal(false);
+                setShowGradeGroupSubmissionModal(false);
               }}
             />
           </Modal>
@@ -151,7 +140,7 @@ const Submission = () => {
   );
 };
 
-export default Submission;
+export default GroupSubmission;
 
 const ActivityContainer = styled.div`
   display: flex;

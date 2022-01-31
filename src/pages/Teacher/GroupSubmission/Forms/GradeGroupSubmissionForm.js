@@ -2,26 +2,28 @@ import React from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@apollo/client";
-import { GRADE_SUBMISSION } from "../gql";
+import { GRADE_GROUPSUBMISSION } from "../gql";
 import { toast } from "react-toastify";
 
-const GradeSubmissionForm = ({ submissionId, onCreateFinish }) => {
+const GradeSubmissionForm = ({ groupSubmissionId, onCreateFinish }) => {
   const { register, handleSubmit } = useForm();
 
-  const [gradeSubmission, { loading }] = useMutation(GRADE_SUBMISSION);
+  const [gradeGroupSubmission, { loading }] = useMutation(
+    GRADE_GROUPSUBMISSION
+  );
 
-  const handleGradeSubmission = async (data) => {
+  const handleGradeGroupSubmission = async (data) => {
     const { grade } = data;
 
     try {
-      const { data } = await gradeSubmission({
+      const { data } = await gradeGroupSubmission({
         variables: {
-          submissionId,
+          groupSubmissionId,
           grade: parseInt(grade),
         },
       });
 
-      if (!data?.gradeSubmission?.id) throw Error("something is wrong");
+      if (!data?.gradeGroupSubmission?.id) throw Error("something is wrong");
 
       toast.success("Created Grade");
       onCreateFinish();
@@ -31,7 +33,7 @@ const GradeSubmissionForm = ({ submissionId, onCreateFinish }) => {
   };
 
   return (
-    <Form onSubmit={handleSubmit(handleGradeSubmission)}>
+    <Form onSubmit={handleSubmit(handleGradeGroupSubmission)}>
       <div>
         <label>Grade</label>
         <input
