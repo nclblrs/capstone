@@ -76,7 +76,7 @@ const RightSideBar = () => {
       {activities?.length === 2 ||
         groupActivities?.length === 2 ||
         (tasks?.length === 2 && (
-          <RSideLinks to="/studygroups">
+          <RSideLinks to="/calendar">
             <BiDotsHorizontalRounded size={20} /> See More
           </RSideLinks>
         ))}
