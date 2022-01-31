@@ -28,9 +28,9 @@ const Navbar = () => {
             <img src={home} alt="Home" />
             Home
           </NavMenu>
-          <NavMenu to="/class-schedule">
-            <img src={clock} alt="Class Schedule" />
-            Class Schedule
+          <NavMenu to="/classes">
+            <img src={clock} alt="Classes" />
+            Classes
           </NavMenu>
           <NavMenu to="/calendar">
             <img src={calendar} alt="Calendar" />

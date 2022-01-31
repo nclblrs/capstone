@@ -188,6 +188,22 @@ const NavBar = styled.div`
   width: 100%;
   align-items: center;
   padding: 10px;
+  > button {
+    color: #0f482f;
+    cursor: pointer;
+    font-size: 18px;
+    align-items: center;
+    text-decoration: none;
+    padding: 7px 1em;
+    margin: 0 10px;
+    border: 1px solid #0f482f;
+    &:hover,
+    &.active {
+      color: white;
+      background-color: #0f482f;
+      border-radius: 5px;
+    }
+  }
 `;
 
 const NavMenu = styled(NavLink)`
