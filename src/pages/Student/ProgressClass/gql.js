@@ -62,6 +62,7 @@ export const GET_ACTIVITIES = gql`
         }
         mySubmission {
           id
+          submittedAt
         }
       }
     }
