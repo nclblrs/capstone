@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { NavLink } from "react-router-dom";
 import logo from "./images/logo.svg";
 import home from "./images/home.svg";
-/* import clock from "./images/clock.svg"; */
+import clock from "./images/clock.svg";
 /* import calendar from "./images/calendar.svg"; */
 import progress from "./images/progress.svg";
 import { smallProfpicUrl } from "utils/upload";
@@ -27,6 +27,10 @@ const Navbar = () => {
           <NavMenu to="/" exact>
             <img src={home} alt="Home" />
             Home
+          </NavMenu>
+          <NavMenu to="/classes">
+            <img src={clock} alt="Classes" />
+            Classes
           </NavMenu>
           {/*
           <NavMenu to="/class-schedule">
