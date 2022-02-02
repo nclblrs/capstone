@@ -137,8 +137,11 @@ const RSideItem = styled.div`
   }
   p {
     font-size: 16px;
+    white-space: nowrap;
     margin: 0;
     margin-bottom: 30px;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 `;
 
