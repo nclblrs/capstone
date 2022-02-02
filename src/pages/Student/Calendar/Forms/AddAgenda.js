@@ -1,22 +1,92 @@
 import React from "react";
 import styled from "styled-components";
+import { BsPaperclip } from "react-icons/bs";
+import { useForm } from "react-hook-form";
+import { useMutation } from "@apollo/client";
+import { CREATE_AGENDA, AGENDA_ATTACHMENT } from "./gql";
+import { upload } from "utils/upload";
+import { toast } from "react-toastify";
+import { useCurrentUserContext } from "contexts/CurrentUserContext";
 
-const AddAgendaForm = () => {
+const AddAgendaForm = ({ onCreateFinish }) => {
+  const { user } = useCurrentUserContext();
+  const { register, watch, handleSubmit } = useForm();
+  const attachedFileName = watch("file", false)?.[0]?.name ?? undefined;
+
+  const [createAgenda, { loading: createAgendaLoading }] =
+    useMutation(CREATE_AGENDA);
+  const [addAttachmentToAgenda] = useMutation(AGENDA_ATTACHMENT);
+
+  const loading = createAgendaLoading;
+
+  const handleCreateAgenda = async (data) => {
+    const { title, endsAt, description, file: files } = data;
+    const file = files[0];
+
+    try {
+      const { data: createAgendaData } = await createAgenda({
+        variables: {
+          title,
+          description,
+          endsAt,
+        },
+      });
+
+      const agendaId = createAgendaData?.createAgenda?.id;
+
+      if (!agendaId) throw Error("something wrong");
+
+      if (file) {
+        const { cloudinaryString } = await upload(
+          file,
+          user.uploadPreset,
+          `Agenda_${agendaId}`
+        );
+
+        const { data: addAttachmentToAgendaData } = await addAttachmentToAgenda(
+          {
+            variables: { id: agendaId, attachment: cloudinaryString },
+          }
+        );
+
+        if (!addAttachmentToAgendaData?.addAttachmentToAgenda?.id)
+          throw Error("something is wrong");
+      }
+
+      toast.success("Create Agenda");
+      onCreateFinish();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
   return (
-    <Form>
+    <Form onSubmit={handleSubmit(handleCreateAgenda)}>
       <div>
         <label>Agenda Title</label>
-        <input />
+        <input {...register("title", { required: true })} />
       </div>
       <div>
         <label>Due</label>
-        <input />
+        <input type="datetime-local" {...register("endsAt")} />
       </div>
       <div>
         <label>Description</label>
-        <input />
+        <input className="desc" {...register("description")} />
       </div>
-      <button>Submit</button>
+      <div>
+        <label className="file"> File </label>
+        <label className="attachmentLabel">
+          {attachedFileName ? attachedFileName : "Attach File"}
+          <BsPaperclip size={15} className="attachicon" />
+        </label>
+        <input
+          id="attach-file-agenda"
+          type="file"
+          {...register("file")}
+          className="attachmentInput"
+        />
+      </div>
+      <button disabled={loading}>{loading ? "Creating..." : "Submit "}</button>
     </Form>
   );
 };

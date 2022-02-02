@@ -26,6 +26,8 @@ const RightSideBar = () => {
           <br />
           Current Date : {date}
         </p>
+
+        <h5>INDIVIDUAL ACTIVITY</h5>
         {loading
           ? "Loading..."
           : activities.map(({ id, title, dueAt }) => (
@@ -40,6 +42,13 @@ const RightSideBar = () => {
               </RSideLinks>
             ))}
       </RSideItem>
+      {activities?.length === 2 && (
+        <RSideLinks to="/calendar">
+          <BiDotsHorizontalRounded size={20} /> See More
+        </RSideLinks>
+      )}
+      <Line />
+      <h5>GROUP ACTIVITY</h5>
       <RSideItem>
         {loading
           ? "Loading..."
@@ -55,6 +64,13 @@ const RightSideBar = () => {
               </RSideLinks>
             ))}
       </RSideItem>
+      {groupActivities?.length === 2 && (
+        <RSideLinks to="/calendar">
+          <BiDotsHorizontalRounded size={20} /> See More
+        </RSideLinks>
+      )}
+      <Line />
+      <h5>TASK</h5>
       <RSideItem>
         {loading
           ? "Loading..."
@@ -73,13 +89,11 @@ const RightSideBar = () => {
               </RSideLinks>
             ))}
       </RSideItem>
-      {activities?.length === 2 ||
-        groupActivities?.length === 2 ||
-        (tasks?.length === 2 && (
-          <RSideLinks to="/calendar">
-            <BiDotsHorizontalRounded size={20} /> See More
-          </RSideLinks>
-        ))}
+      {tasks?.length === 2 && (
+        <RSideLinks to="/calendar">
+          <BiDotsHorizontalRounded size={20} /> See More
+        </RSideLinks>
+      )}
     </RSideContainer>
   );
 };
@@ -95,6 +109,13 @@ const RSideContainer = styled.div`
   flex-direction: column;
   height: max-content;
   padding: 29px;
+  h5 {
+    color: #646464;
+    font-weight: normal;
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
 `;
 
 const RSideItem = styled.div`
@@ -143,6 +164,12 @@ const RSideLinks = styled(Link)`
     font-size: 14px;
     color: #646464;
   }
+`;
+
+const Line = styled.hr`
+  display: flex;
+  margin: 15px 0;
+  color: #e8e8e8;
 `;
 
 export default RightSideBar;

@@ -282,7 +282,7 @@ const RSideContainer = styled.div`
   }
   h5 {
     color: #0f482f;
-    font-size: 20px;
+    font-size: 18px;
     text-align: left;
     font-weight: normal;
     display: flex;
