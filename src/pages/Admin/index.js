@@ -27,10 +27,12 @@ const Admin = () => {
   } = useQuery(USERS, {
     variables: { filter: { search } },
   });
+
   const [showNewUserModal, setShowNewUserModal] = useState(false);
-  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
   const { teachersCount, studentsCount } = countData?.usersCount ?? {};
   const users = usersData?.users?.data ?? [];
+  const [showEditProfileModal, setShowEditProfileModal] = useState(false);
+  const [userToEdit, setUserToEdit] = useState();
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -116,8 +118,8 @@ const Admin = () => {
               <td>Loading...</td>
             </tr>
           ) : (
-            users.map(
-              ({
+            users.map((user) => {
+              const {
                 id,
                 firstName,
                 middleName,
@@ -131,49 +133,51 @@ const Admin = () => {
                 student,
                 teacher,
                 profilePicture = null,
-              }) => {
-                const { secure_url } = JSON.parse(profilePicture) ?? {};
+              } = user;
 
-                return (
-                  <tr key={id}>
-                    <td>
-                      <img src={smallProfpicUrl(secure_url)} alt="a" />
-                    </td>
-                    <td className="name">
-                      {firstName} {middleName} {lastName}
-                    </td>
-                    <td>{courseDept}</td>
-                    <td>{yearLevel}</td>
-                    <td>{section}</td>
-                    <td>{courseDept}</td>
-                    <td>{schoolIdNumber}</td>
-                    <td>{emails[0].address}</td>
-                    <td>
-                      {isAdmin
-                        ? "Admin"
-                        : teacher
-                        ? "Teacher"
-                        : student
-                        ? "Student"
-                        : "None"}
-                    </td>
-                    <td>
-                      <button
-                        className="Adminedituserinfo"
-                        onClick={() => setShowEditProfileModal(true)}
-                      >
-                        <FaPenSquare size={30} />
-                      </button>
-                    </td>
-                    <td>
-                      <button className="delete">
-                        <FaTrashAlt size={18} />
-                      </button>
-                    </td>
-                  </tr>
-                );
-              }
-            )
+              const { secure_url } = JSON.parse(profilePicture) ?? {};
+              return (
+                <tr key={id}>
+                  <td>
+                    <img src={smallProfpicUrl(secure_url)} alt="a" />
+                  </td>
+                  <td className="name">
+                    {firstName} {middleName} {lastName}
+                  </td>
+                  <td>{courseDept}</td>
+                  <td>{yearLevel}</td>
+                  <td>{section}</td>
+                  <td>{courseDept}</td>
+                  <td>{schoolIdNumber}</td>
+                  <td>{emails[0].address}</td>
+                  <td>
+                    {isAdmin
+                      ? "Admin"
+                      : teacher
+                      ? "Teacher"
+                      : student
+                      ? "Student"
+                      : "None"}
+                  </td>
+                  <td>
+                    <button
+                      className="Adminedituserinfo"
+                      onClick={() => {
+                        setUserToEdit(user);
+                        setShowEditProfileModal(true);
+                      }}
+                    >
+                      <FaPenSquare size={30} />
+                    </button>
+                  </td>
+                  <td>
+                    <button className="delete">
+                      <FaTrashAlt size={18} />
+                    </button>
+                  </td>
+                </tr>
+              );
+            })
           )}
         </tbody>
       </UsersTable>
@@ -195,7 +199,7 @@ const Admin = () => {
         show={showEditProfileModal}
         closeModal={() => setShowEditProfileModal(false)}
       >
-        <AdminEditUserInfo />
+        <AdminEditUserInfo userToEdit={userToEdit} />
       </Modal>
     </Container>
   );

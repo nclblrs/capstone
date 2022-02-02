@@ -32,16 +32,18 @@ export const USERS = gql`
 
 export const ADMIN_EDITUSER_INFO = gql`
   mutation adminEditUserInfo(
+    $id: ID!
     $firstName: String!
     $middleName: String!
     $lastName: String!
     $courseDept: String!
     $yearLevel: String!
-    $section: Int
+    $section: String!
     $schoolIdNumber: String!
     $email: String!
   ) {
     adminEditUserInfo(
+      id: $id
       firstName: $firstName
       middleName: $middleName
       lastName: $lastName

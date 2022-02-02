@@ -1,17 +1,16 @@
 import styled from "styled-components";
-import { useCurrentUserContext } from "contexts/CurrentUserContext";
 import { useMutation } from "@apollo/client";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useState } from "react";
 import { ADMIN_EDITUSER_INFO } from "./gql";
 
-const AdminEditProfileForm = () => {
+const AdminEditProfileForm = (props) => {
   const [toSubmit, setIsSubmitting] = useState(false);
   const [Adminedituserinfos] = useMutation(ADMIN_EDITUSER_INFO);
   const { register, handleSubmit } = useForm();
-  const { user } = useCurrentUserContext();
   const {
+    id,
     firstName,
     middleName,
     lastName,
@@ -20,7 +19,8 @@ const AdminEditProfileForm = () => {
     section,
     schoolIdNumber,
     emails,
-  } = user ?? {};
+  } = props.userToEdit;
+
   const handleAdminEditUserInfo = async (data) => {
     const {
       firstName,
@@ -37,6 +37,7 @@ const AdminEditProfileForm = () => {
       setIsSubmitting(true);
       const { data } = await Adminedituserinfos({
         variables: {
+          id,
           firstName,
           middleName,
           lastName,
@@ -48,7 +49,7 @@ const AdminEditProfileForm = () => {
         },
       });
 
-      if (!data?.edituserinfos?.id) {
+      if (!data?.Adminedituserinfos?.id) {
         toast.success("Edit Successfully");
       } else {
         throw Error("Something is Wrong");
@@ -125,6 +126,7 @@ const AdminEditProfileForm = () => {
           {...register("email", { required: true })}
         />
       </div>
+
       <button disabled={toSubmit}>
         {toSubmit ? "Confirming..." : "Submit "}
       </button>
