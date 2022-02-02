@@ -1,16 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useQuery } from "@apollo/client";
+import { useParams, Link } from "react-router-dom";
 import styled from "styled-components";
+import { GET_AGENDARIGHTSIDEBAR } from "./gql";
 import { FaRegLightbulb } from "react-icons/fa";
+import { BiDotsHorizontalRounded } from "react-icons/bi";
+import dayjs from "dayjs";
 
 const RightSideBar = () => {
+  const { groupSubmissionId } = useParams();
+  const { loading, data } = useQuery(GET_AGENDARIGHTSIDEBAR);
+  const activities = data?.agendaRightSidePanel?.activities ?? [];
+  const groupActivities = data?.agendaRightSidePanel?.groupActivities ?? [];
+  const tasks = data?.agendaRightSidePanel?.tasks ?? [];
+  const { course } = tasks ?? {};
   var today = new Date(),
-    date =
-      parseInt(today.getMonth() + 1) +
-      "-" +
-      today.getDate() +
-      "-" +
-      today.getFullYear();
+    date = dayjs(today).format("MMMM D, YYYY");
   console.log(date);
   return (
     <RSideContainer>
@@ -21,34 +26,74 @@ const RightSideBar = () => {
           <br />
           Current Date : {date}
         </p>
-        <RSideLinks>
-          <p title="Synchronous Meeting - Computer Programming 1">
-            <FaRegLightbulb size={18} /> &nbsp; Synchronous Meeting - Computer
-            Programming 1
-          </p>
-        </RSideLinks>
-        <RSideLinks>
-          <p title="Assessment 10 - Mathematics in the Modern World">
-            <FaRegLightbulb size={18} /> &nbsp; Assessment 10 - Mathematics in
-            the Modern World
-          </p>
-        </RSideLinks>
-        <RSideLinks>
-          <p title="Chapter 1-3 - Introduction to Computing">
-            <FaRegLightbulb size={18} /> &nbsp; Chapter 1-3 - Introduction to
-            Computing
-          </p>
-        </RSideLinks>
-        <RSideLinks>
-          <p title="Introduction - Group 1 - Introduction to Computing">
-            <FaRegLightbulb size={18} /> &nbsp; Introduction - Group 1 -
-            Introduction to Computing
-          </p>
-        </RSideLinks>
-        <RSideLinks>
-          <p>... See More</p>
-        </RSideLinks>
+
+        <h5>INDIVIDUAL ACTIVITY</h5>
+        {loading
+          ? "Loading..."
+          : activities.map(({ id, title, dueAt }) => (
+              <RSideLinks key={id} to={`/class/${id}/activity/${id}`}>
+                <FaRegLightbulb size={20} />
+                <span>
+                  <p title={title}>{title}</p>
+                  <p className="deadline">
+                    {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                  </p>
+                </span>
+              </RSideLinks>
+            ))}
       </RSideItem>
+      {activities?.length === 2 && (
+        <RSideLinks to="/calendar">
+          <BiDotsHorizontalRounded size={20} /> See More
+        </RSideLinks>
+      )}
+      <Line />
+      <h5>GROUP ACTIVITY</h5>
+      <RSideItem>
+        {loading
+          ? "Loading..."
+          : groupActivities.map(({ id, title, dueAt }) => (
+              <RSideLinks key={id} to={`/class/${id}/groupactivity/${id}`}>
+                <FaRegLightbulb size={20} />
+                <span>
+                  <p title={title}>{title}</p>
+                  <p className="deadline">
+                    {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                  </p>
+                </span>
+              </RSideLinks>
+            ))}
+      </RSideItem>
+      {groupActivities?.length === 2 && (
+        <RSideLinks to="/calendar">
+          <BiDotsHorizontalRounded size={20} /> See More
+        </RSideLinks>
+      )}
+      <Line />
+      <h5>TASK</h5>
+      <RSideItem>
+        {loading
+          ? "Loading..."
+          : tasks.map(({ id, title, dueAt }) => (
+              <RSideLinks
+                key={id}
+                to={`/progress/class/${course?.id}/groupactivity/${groupSubmissionId}/task/${id}`}
+              >
+                <FaRegLightbulb size={20} />
+                <span>
+                  <p title={title}>{title}</p>
+                  <p className="deadline">
+                    {dayjs(dueAt).format("MMMM D, YYYY [at] h:mm a")}
+                  </p>
+                </span>
+              </RSideLinks>
+            ))}
+      </RSideItem>
+      {tasks?.length === 2 && (
+        <RSideLinks to="/calendar">
+          <BiDotsHorizontalRounded size={20} /> See More
+        </RSideLinks>
+      )}
     </RSideContainer>
   );
 };
@@ -64,6 +109,13 @@ const RSideContainer = styled.div`
   flex-direction: column;
   height: max-content;
   padding: 29px;
+  h5 {
+    color: #646464;
+    font-weight: normal;
+    font-size: 16px;
+    margin: 0;
+    margin-bottom: 10px;
+  }
 `;
 
 const RSideItem = styled.div`
@@ -108,6 +160,16 @@ const RSideLinks = styled(Link)`
     margin: 0;
     font-size: 18px;
   }
+  .deadline {
+    font-size: 14px;
+    color: #646464;
+  }
+`;
+
+const Line = styled.hr`
+  display: flex;
+  margin: 15px 0;
+  color: #e8e8e8;
 `;
 
 export default RightSideBar;

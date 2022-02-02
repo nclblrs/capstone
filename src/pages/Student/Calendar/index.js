@@ -1,29 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { FaCircle, FaPlusCircle } from "react-icons/fa";
+import dayjs from "dayjs";
+import AddAgenda from "./Forms/AddAgenda";
+import Modal from "components/Modal";
+import { NavLink } from "react-router-dom";
 
 const Calendar = () => {
+  const [showAgendaModal, setShowAgendaModal] = useState(false);
   var today = new Date(),
-    date =
-      parseInt(today.getMonth() + 1) +
-      "-" +
-      today.getDate() +
-      "-" +
-      today.getFullYear();
+    date = dayjs(today).format("MMMM D, YYYY");
   console.log(date);
 
   return (
     <CalendarContainer>
+      <CalendarHeader>
+        <h3>TO-DO List</h3>
+      </CalendarHeader>
       <CalendarCard>
-        <CalendarHeader>
-          <h3>Calendar</h3>
-        </CalendarHeader>
         <UpperContainer>
           <p className="Today">
             <i> Today is </i>
           </p>
           <p className="CurrentDate"> {date} </p>
-          <button className="AddAgenda">
+          <button
+            className="AddAgenda"
+            onClick={() => setShowAgendaModal(true)}
+          >
             Add Agenda <FaPlusCircle size={18} className="agendaicon" />
           </button>
         </UpperContainer>
@@ -59,15 +62,28 @@ const Calendar = () => {
                 <FaCircle className="c5" /> Missing
               </i>
             </li>
-            <li>
-              <i>
-                {" "}
-                <FaCircle className="c6" /> Priority
-              </i>
-            </li>
           </ul>
         </LeftContainer>
+        <AgendaContainer>
+          <NavBar>
+            <NavMenu to={`/calendar`}>Individual Activities</NavMenu>
+            <NavMenu to={`/calendar`}>Group Activities</NavMenu>
+            <NavMenu to={`/calendar`}>Group Activity Tasks</NavMenu>
+            <NavMenu to={`/calendar`}>Set Tasks</NavMenu>
+          </NavBar>
+        </AgendaContainer>
       </CalendarCard>
+      <Modal
+        show={showAgendaModal}
+        closeModal={() => setShowAgendaModal(false)}
+        title="Add Agenda"
+      >
+        <AddAgenda
+          onCreateFinish={() => {
+            setShowAgendaModal(false);
+          }}
+        />
+      </Modal>
     </CalendarContainer>
   );
 };
@@ -81,25 +97,9 @@ const CalendarContainer = styled.div`
 
 const CalendarCard = styled.div`
   display: flex;
-  position: sticky;
+  position: absolute;
   top: 120px;
-  background-color: #f2f2f2;
-  width: 100%;
-  min-width: 500px;
-  border-radius: 5px;
-  height: max-content;
-  button {
-    display: flex;
-    width: 150px;
-    height: 44px;
-    font-size: 15px;
-    align-items: center;
-    justify-content: center;
-    background-color: #0e5937;
-    color: white;
-    border: none;
-    text-align: center;
-  }
+  width: 95%;
 `;
 
 const CalendarHeader = styled.div`
@@ -125,6 +125,8 @@ const UpperContainer = styled.div`
   flex-direction: row;
   position: absolute;
   width: 100%;
+  height: 50px;
+  top: 0%;
   .agendaicon {
     padding-left: 10px;
     width: 24px;
@@ -134,7 +136,18 @@ const UpperContainer = styled.div`
     margin-left: auto;
     position: absolute;
     font-size: 16px;
-    margin-top: 5em;
+    margin-top: 7em;
+    display: flex;
+    width: 150px;
+    height: 44px;
+    font-size: 15px;
+    align-items: center;
+    justify-content: center;
+    background-color: #0e5937;
+    color: white;
+    border: none;
+    text-align: center;
+    cursor: pointer;
   }
   .Today {
     position: absolute;
@@ -144,7 +157,7 @@ const UpperContainer = styled.div`
   }
   .CurrentDate {
     position: absolute;
-    left: 50%;
+    left: 47.5%;
     font-size: 26px;
     margin-top: 4.98em;
     color: #0e5937;
@@ -153,18 +166,16 @@ const UpperContainer = styled.div`
 `;
 
 const LeftContainer = styled.div`
-  display: inline;
-  position: absolute;
-  width: 100%;
+  display: flex;
+  width: 20%;
   flex-direction: column;
-  float: right;
   margin-top: 10em;
   ul {
-    margin-top: 4%;
+    margin-top: 15%;
     list-style-type: none;
   }
   li {
-    margin-top: 0.8%;
+    margin-top: 5%;
     font-size: 20px;
   }
   .c1 {
@@ -184,6 +195,48 @@ const LeftContainer = styled.div`
   }
   .c6 {
     color: #e7b22a;
+  }
+`;
+
+const AgendaContainer = styled.div`
+  display: inline;
+  position: absolute;
+  width: 82.5%;
+  flex-direction: column;
+  float: right;
+  margin-top: 14em;
+  background-color: #f2f2f2;
+  margin-left: 320px;
+  margin-right: auto;
+  height: 550px;
+  overflow-y: scroll;
+  padding: 40px;
+  border-radius: 10px;
+`;
+
+const NavBar = styled.div`
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding: 10px;
+  background-color: #f2f2f2;
+  border-radius: 10px;
+`;
+
+const NavMenu = styled(NavLink)`
+  color: #0f482f;
+  cursor: pointer;
+  font-size: 18px;
+  align-items: center;
+  text-decoration: none;
+  padding: 7px 1em;
+  margin: 0 10px;
+  border: 1px solid #0f482f;
+  &:hover,
+  &.active {
+    color: white;
+    background-color: #0f482f;
+    border-radius: 5px;
   }
 `;
 
