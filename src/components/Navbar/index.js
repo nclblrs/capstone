@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 import logo from "./images/logo.svg";
 import home from "./images/home.svg";
 import clock from "./images/clock.svg";
-import calendar from "./images/calendar.svg";
+/* import calendar from "./images/calendar.svg"; */
 import progress from "./images/progress.svg";
 import { smallProfpicUrl } from "utils/upload";
 import { useCurrentUserContext } from "contexts/CurrentUserContext";
@@ -28,14 +28,19 @@ const Navbar = () => {
             <img src={home} alt="Home" />
             Home
           </NavMenu>
+          <NavMenu to="/classes">
+            <img src={clock} alt="Classes" />
+            Classes
+          </NavMenu>
+          {/*
           <NavMenu to="/class-schedule">
             <img src={clock} alt="Class Schedule" />
             Class Schedule
-          </NavMenu>
+          </NavMenu>{" "}
           <NavMenu to="/calendar">
             <img src={calendar} alt="Calendar" />
             Calendar
-          </NavMenu>
+          </NavMenu> */}
           <NavMenu to="/progress">
             <img src={progress} alt="Progress" />
             Progress
