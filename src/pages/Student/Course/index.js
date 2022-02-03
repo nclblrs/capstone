@@ -161,7 +161,7 @@ const Course = () => {
                           <div key={id} className="groupcontainer">
                             <h5>{name}</h5>
                             <p>
-                              Leader: &nbsp;
+                              Leader:{" "}
                               {leader &&
                                 `${leader?.user?.lastName}, ${leader?.user?.firstName}`}
                             </p>
@@ -355,8 +355,7 @@ const LeftContainer = styled.div`
     padding: 0.5em 1.5em;
   }
   .leftContent {
-    position: absolute;
-    padding: 4.2em 3em;
+    padding-left: 3em;
     ul {
       list-style-type: none;
       font-size: 20px;
@@ -397,8 +396,9 @@ const GroupContainer = styled.div`
       padding: 2em;
       width: 32%;
       background-color: #f2f2f2;
-      height: 350px;
+      height: 380px;
       margin-bottom: 20px;
+      overflow-y: scroll;
 
       p {
         margin-top: 7px;
