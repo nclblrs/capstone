@@ -31,7 +31,7 @@ const Settings = () => {
           <NavMenu to="/settings" exact>
             Personal Information
           </NavMenu>
-          <NavMenu to="/settings/change-password">Password</NavMenu>
+          {/* <NavMenu to="/settings/change-password">Password</NavMenu> */}
         </Nav>
       </LSideContainer>
       <RSideContainer>
