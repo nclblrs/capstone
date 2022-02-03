@@ -253,9 +253,6 @@ const Progress = () => {
             )}
           </ul>
         </AboutContainer>
-        {/*<ToDoContainer>
-          <h3>TO-DO</h3>
-        </ToDoContainer>*/}
         {leader?.id === user.id && (
           <button
             className="assign"

@@ -28,7 +28,7 @@ const GroupActivityPage = () => {
     mySubmission,
   } = data?.groupActivity ?? {};
 
-  const { teacher, name, id: classId } = course ?? {};
+  const { teacher, name, myGroup, id: classId } = course ?? {};
   const { firstName, lastName } = teacher?.user ?? {};
   const {
     id: groupSubmissionId,
@@ -72,7 +72,7 @@ const GroupActivityPage = () => {
               <ActivityContent>
                 <h1>Your Group's Submission</h1>
                 <ActivityButtons>
-                  {group ? (
+                  {myGroup ? (
                     <Link
                       className="groupprogress"
                       to={`/progress/class/${classId}/groupactivity/${groupSubmissionId}`}
