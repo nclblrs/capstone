@@ -89,7 +89,7 @@ const TProgressClass = () => {
           <Route path={`/progress/class/:classId/individual`} exact>
             <LSideContainer>
               <ActivityContainer>
-                <h3>SECTION NAME Students</h3>
+                <h3>{yearAndSection} Students</h3>
                 {loading
                   ? "Loading..."
                   : students?.data?.map(({ id, user }) => {
@@ -136,7 +136,7 @@ const TProgressClass = () => {
           <Route path={`/progress/class/:classId/group`} exact>
             <LSideContainer>
               <ActivityContainer>
-                <h3>SECTION NAME Groups</h3>
+                <h3>{yearAndSection} Groups</h3>
                 <GroupContainer>
                   <div className="leftContent">
                     {loading

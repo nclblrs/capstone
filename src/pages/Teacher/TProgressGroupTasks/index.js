@@ -8,24 +8,34 @@ import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
 import { useUrlQuery } from "hooks/useUrlQuery";
 
-import { COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS } from "./gql";
+import {
+  COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS,
+  GROUPSUBMISSION_GROUP,
+} from "./gql";
 
 const TProgressGroupTasks = () => {
-  const { classId, groupId } = useParams();
+  const { groupActivityId, groupId, classId } = useParams();
 
   const { pathname } = useLocation();
 
   const { loading, data } = useQuery(COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS, {
     variables: { courseId: classId, groupId },
   });
+
   const courseGroupInfo =
     data?.courseGroupActivitiesAndGroupSubmissions?.data ?? [];
   const { group, course } =
     data?.courseGroupActivitiesAndGroupSubmissions ?? {};
 
-  const { name, leader } = group ?? {};
-  const { tasks } = courseGroupInfo?.groupSubmission ?? {};
-  const taskInfo = tasks?.data ?? [];
+  const { name, leader, students } = group ?? {};
+
+  const { loading: groupSubmissionLoading, data: groupSubmissionData } =
+    useQuery(GROUPSUBMISSION_GROUP, {
+      variables: { groupId, groupActivityId },
+    });
+
+  const { tasks } = groupSubmissionData?.groupSubmissionOfGroup ?? {};
+  const tasksInfo = tasks?.data ?? [];
 
   const doneCount = courseGroupInfo.filter(
     ({ submission }) => submission?.id != null
@@ -41,10 +51,6 @@ const TProgressGroupTasks = () => {
         <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
             <h4>{name}</h4>
-            <p>{percentProgress ? `${percentProgress.toFixed(2)}%` : "0%"}</p>
-            <div className="outerbar">
-              <div className="bar"></div>
-            </div>
           </div>
           <div className="alltask">
             <h4>All</h4>
@@ -66,19 +72,32 @@ const TProgressGroupTasks = () => {
           </div>
         </UpperContainer>
         <TasksContainer>
-          {loading
+          {groupSubmissionLoading
             ? "Loading..."
-            : taskInfo.map(
+            : tasksInfo.map(
                 ({
                   id,
                   attachment = null,
-                  description,
+                  title,
                   submittedAt,
-                  submittedBy,
+                  createdAt,
+                  dueAt,
+                  student,
                 }) => (
-                  <ul key={id}>
-                    <li>{description}</li>
-                  </ul>
+                  <Content key={id}>
+                    <Task>
+                      <h1>{title}</h1>
+                      <p>
+                        {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
+                      </p>
+                      <p>
+                        Assigned to: {student?.user?.firstName}
+                        {student?.user?.lastName}{" "}
+                      </p>
+                      <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
+                    </Task>
+                    <ViewLink>View</ViewLink>
+                  </Content>
                 )
               )}
         </TasksContainer>
@@ -110,19 +129,13 @@ const TProgressGroupTasks = () => {
           </ul>
           {loading
             ? "Loading..."
-            : taskInfo.map(
-                ({
-                  id,
-                  attachment = null,
-                  description,
-                  submittedAt,
-                  submittedBy,
-                }) => (
-                  <ul key={id}>
-                    <li>{description}</li>
-                  </ul>
-                )
-              )}
+            : students?.data?.map(({ id, user }) => (
+                <ul key={id}>
+                  <li>
+                    {user.lastName}, {user.firstName} {user.middleName}
+                  </li>
+                </ul>
+              ))}
         </AboutContainer>
       </RightSideContainer>
     </ProgressContainer>
@@ -321,7 +334,6 @@ const TasksContainer = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  height: 110px;
   text-align: left;
   padding: 0 1em;
   margin: 1em 0;
