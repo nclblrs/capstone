@@ -49,18 +49,20 @@ const TProgressClass = () => {
             <LSideContainer>
               <ActivityContainer>
                 <h4>{name}</h4>
-                <Pie
-                  data={{
-                    labels: ["Group Activity", "Individual Activity"],
-                    datasets: [
-                      {
-                        data: [groupActivitiesCount, activitiesCount],
-                        backgroundColor: ["#0E5937", "#67C587"],
-                        hoverOffset: 20,
-                      },
-                    ],
-                  }}
-                />
+                <div style={{ width: "500px", margin: "0 auto" }}>
+                  <Pie
+                    data={{
+                      labels: ["Group Activity", "Individual Activity"],
+                      datasets: [
+                        {
+                          data: [groupActivitiesCount, activitiesCount],
+                          backgroundColor: ["#0E5937", "#67C587"],
+                          hoverOffset: 10,
+                        },
+                      ],
+                    }}
+                  />
+                </div>
               </ActivityContainer>
             </LSideContainer>
             <RSideContainer>
