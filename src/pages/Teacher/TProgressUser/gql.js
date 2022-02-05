@@ -98,6 +98,7 @@ export const COURSE_ACTIVITIES_SUBMISSIONS = gql`
         user {
           firstName
           lastName
+          profilePicture
         }
       }
       data {

@@ -14,6 +14,7 @@ export const TEACHER_EDITUSERINFO = gql`
     $firstName: String!
     $middleName: String!
     $lastName: String!
+    $email: String
   ) {
     editUserInfo(
       firstName: $firstName
