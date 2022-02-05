@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 /* import dayjs from "dayjs"; */
 import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
 import { GET_COURSE } from "./gql";
@@ -8,6 +10,8 @@ import { FaLaptop } from "react-icons/fa";
 /* import { MdAccountCircle } from "react-icons/md"; */
 import { TiGroup } from "react-icons/ti";
 import { smallProfpicUrl } from "utils/upload";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const TProgressClass = () => {
   const { classId } = useParams();
@@ -24,6 +28,9 @@ const TProgressClass = () => {
     groups,
     studentCount,
   } = data?.course ?? {};
+
+  const groupActivitiesCount = data?.courseGroupActivities?.data?.length;
+  const activitiesCount = data?.courseActivities?.data?.length;
 
   return (
     <Container>
@@ -42,6 +49,18 @@ const TProgressClass = () => {
             <LSideContainer>
               <ActivityContainer>
                 <h4>{name}</h4>
+                <Pie
+                  data={{
+                    labels: ["Group Activity", "Individual Activity"],
+                    datasets: [
+                      {
+                        data: [groupActivitiesCount, activitiesCount],
+                        backgroundColor: ["#0E5937", "#67C587"],
+                        hoverOffset: 20,
+                      },
+                    ],
+                  }}
+                />
               </ActivityContainer>
             </LSideContainer>
             <RSideContainer>

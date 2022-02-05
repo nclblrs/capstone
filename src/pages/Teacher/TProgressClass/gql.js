@@ -48,6 +48,16 @@ export const GET_COURSE = gql`
         }
       }
     }
+    courseActivities(courseId: $courseId) {
+      data {
+        id
+      }
+    }
+    courseGroupActivities(courseId: $courseId) {
+      data {
+        id
+      }
+    }
   }
 `;
 
