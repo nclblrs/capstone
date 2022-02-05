@@ -168,7 +168,7 @@ function App() {
                     <Route path="/progress/class/:classId/individual/:userId">
                       <TProgressUser />
                     </Route>
-                    <Route path="/progress/class/:classId/group/:groupId:/groupactivity/:groupActivityId/tasks">
+                    <Route path="/progress/class/:classId/group/:groupId/groupactivity/:groupActivityId/tasks">
                       <TProgressGroupTasks />
                     </Route>
                     <Route path="/progress/class/:classId/group/:groupId">

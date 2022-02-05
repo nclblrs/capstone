@@ -327,7 +327,6 @@ const TasksContainer = styled.div`
 
 const Content = styled.div`
   width: 100%;
-  height: 110px;
   text-align: left;
   padding: 0 1em;
   margin: 1em 0;
