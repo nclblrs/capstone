@@ -10,9 +10,9 @@ import { useUrlQuery } from "hooks/useUrlQuery";
 
 import { COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS } from "./gql";
 
-const TProgressGroup = () => {
+const TProgressGroupTasks = () => {
   const { classId, groupId } = useParams();
-  const { filter } = useUrlQuery();
+
   const { pathname } = useLocation();
 
   const { loading, data } = useQuery(COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS, {
@@ -23,7 +23,9 @@ const TProgressGroup = () => {
   const { group, course } =
     data?.courseGroupActivitiesAndGroupSubmissions ?? {};
 
-  const { students, leader } = group ?? {};
+  const { name, leader } = group ?? {};
+  const { tasks } = courseGroupInfo?.groupSubmission ?? {};
+  const taskInfo = tasks?.data ?? [];
 
   const doneCount = courseGroupInfo.filter(
     ({ submission }) => submission?.id != null
@@ -38,7 +40,7 @@ const TProgressGroup = () => {
       <LeftSideContainer>
         <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
-            <h4>{group?.name}</h4>
+            <h4>{name}</h4>
             <p>{percentProgress ? `${percentProgress.toFixed(2)}%` : "0%"}</p>
             <div className="outerbar">
               <div className="bar"></div>
@@ -66,42 +68,19 @@ const TProgressGroup = () => {
         <TasksContainer>
           {loading
             ? "Loading..."
-            : courseGroupInfo
-                .filter(({ groupSubmission }) => {
-                  if (filter === "missing") {
-                    return groupSubmission?.submittedAt == null;
-                  }
-                  if (filter === "done") {
-                    return groupSubmission?.submittedAt != null;
-                  }
-                  return true;
-                })
-                .map(({ id, groupActivity, groupSubmission = null }) => (
-                  <>
-                    <Content key={id}>
-                      <Task>
-                        <h1>{groupActivity?.title}</h1>
-                        <p>
-                          {dayjs(groupActivity?.createdAt).format(
-                            "MMMM D, YYYY [at] h:mm a"
-                          )}
-                        </p>
-                        <h3>
-                          {" "}
-                          Due:{" "}
-                          {dayjs(groupActivity?.dueAt).format(
-                            "MMMM D, YYYY"
-                          )}{" "}
-                        </h3>
-                      </Task>
-                      <ViewLink
-                        to={`/progress/class/${classId}/group/${groupId}/groupactivity/${groupActivity.id}/tasks`}
-                      >
-                        View
-                      </ViewLink>
-                    </Content>
-                  </>
-                ))}
+            : taskInfo.map(
+                ({
+                  id,
+                  attachment = null,
+                  description,
+                  submittedAt,
+                  submittedBy,
+                }) => (
+                  <ul key={id}>
+                    <li>{description}</li>
+                  </ul>
+                )
+              )}
         </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
@@ -131,13 +110,19 @@ const TProgressGroup = () => {
           </ul>
           {loading
             ? "Loading..."
-            : students?.data?.map(({ id, user }) => (
-                <ul key={id}>
-                  <li>
-                    {user.lastName}, {user.firstName} {user.middleName}
-                  </li>
-                </ul>
-              ))}
+            : taskInfo.map(
+                ({
+                  id,
+                  attachment = null,
+                  description,
+                  submittedAt,
+                  submittedBy,
+                }) => (
+                  <ul key={id}>
+                    <li>{description}</li>
+                  </ul>
+                )
+              )}
         </AboutContainer>
       </RightSideContainer>
     </ProgressContainer>
@@ -445,4 +430,4 @@ const ViewLink = styled(Link)`
   }
 `;
 
-export default TProgressGroup;
+export default TProgressGroupTasks;

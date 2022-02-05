@@ -45,6 +45,7 @@ import TProgress from "pages/Teacher/TProgress";
 import TProgressClass from "pages/Teacher/TProgressClass";
 import TProgressUser from "pages/Teacher/TProgressUser";
 import TProgressGroup from "pages/Teacher/TProgressGroup";
+import TProgressGroupTasks from "pages/Teacher/TProgressGroupTasks";
 
 function App() {
   const { user } = useCurrentUserContext();
@@ -166,6 +167,9 @@ function App() {
                     </Route>
                     <Route path="/progress/class/:classId/individual/:userId">
                       <TProgressUser />
+                    </Route>
+                    <Route path="/progress/class/:classId/group/:groupId:/groupactivity/:groupActivityId/tasks">
+                      <TProgressGroupTasks />
                     </Route>
                     <Route path="/progress/class/:classId/group/:groupId">
                       <TProgressGroup />
