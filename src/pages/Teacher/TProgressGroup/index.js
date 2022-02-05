@@ -1,46 +1,45 @@
-import React, { useState } from "react";
+import React from "react";
+import { useLocation } from "react-router";
 import styled, { css } from "styled-components";
-import Modal from "components/Modal";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { useParams, Link } from "react-router-dom";
-import { useCurrentUserContext } from "contexts/CurrentUserContext";
-import Dropdown, { DropdownButtons } from "components/Dropdown";
 import dayjs from "dayjs";
-import { toast } from "react-toastify";
 import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
-import { RiAccountCircleFill, RiQuestionnaireLine } from "react-icons/ri";
+import { useUrlQuery } from "hooks/useUrlQuery";
+
+import { COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS } from "./gql";
 
 const TProgressGroup = () => {
-  const { user } = useCurrentUserContext();
-  const { groupSubmissionId } = useParams();
+  const { classId, groupId } = useParams();
+  const { filter } = useUrlQuery();
+  const { pathname } = useLocation();
 
-  //count status
-  {
-    /*const doneCount = taskInfo.filter(({ status }) => status === "DONE").length;
-  const inProgressCount = taskInfo.filter(
-    ({ status }) => status === "IN_PROGRESS"
-  ).length;
-  const underReviewCount = taskInfo.filter(
-    ({ status }) => status === "UNDER_REVIEW"
-  ).length;
-  const toDoCount = taskInfo.filter(({ status }) => status === "TODO").length;
-  const missingCount = taskInfo.filter(
-    ({ dueAt, submittedAt }) => !submittedAt && new Date(dueAt) < new Date()
-  ).length;
+  const { loading, data } = useQuery(COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS, {
+    variables: { courseId: classId, groupId },
+  });
+  const courseGroupInfo =
+    data?.courseGroupActivitiesAndGroupSubmissions?.data ?? [];
+  const { group, course } =
+    data?.courseGroupActivitiesAndGroupSubmissions ?? {};
 
-  const allCount =
-    toDoCount + inProgressCount + underReviewCount + missingCount + doneCount;
-  const percentProgress = (doneCount / taskInfo.length) * 100;*/
-  }
+  const { students, leader } = group ?? {};
 
+  const doneCount = courseGroupInfo.filter(
+    ({ submission }) => submission?.id != null
+  ).length;
+  const missingCount = courseGroupInfo.filter(
+    ({ submission }) => submission?.id == null
+  ).length;
+  const allCount = missingCount + doneCount;
+  const percentProgress = (doneCount / courseGroupInfo.length) * 100;
   return (
     <ProgressContainer>
       <LeftSideContainer>
-        <UpperContainer>
+        <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
-            <h4>GROUP NAME</h4>
-            <p></p>
+            <h4>{group?.name}</h4>
+            <p>{percentProgress ? `${percentProgress.toFixed(2)}%` : "0%"}</p>
             <div className="outerbar">
               <div className="bar"></div>
             </div>
@@ -48,51 +47,102 @@ const TProgressGroup = () => {
           <div className="alltask">
             <h4>All</h4>
             <Link className="alltaskButton">
-              <div className="alltaskCircle"></div>
-            </Link>
-          </div>
-          <div className="todo">
-            <h4>To-do</h4>
-            <Link className="todoButton">
-              <div className="todoCircle"></div>
+              <div className="alltaskCircle">{allCount}</div>
             </Link>
           </div>
           <div className="missing">
             <h4>Missing</h4>
-            <Link className="missingButton">
-              <div className="missingCircle"></div>
+            <Link className="missingButton" to={`${pathname}?filter=missing`}>
+              <div className="missingCircle">{missingCount}</div>
             </Link>
           </div>
           <div className="done">
             <h4>Done</h4>
-            <Link className="doneButton">
-              <div className="doneCircle"></div>
+            <Link className="doneButton" to={`${pathname}?filter=done`}>
+              <div className="doneCircle">{doneCount}</div>
             </Link>
           </div>
         </UpperContainer>
-        <TasksContainer></TasksContainer>
+        <TasksContainer>
+          {loading
+            ? "Loading..."
+            : courseGroupInfo
+                .filter(({ groupSubmission }) => {
+                  if (filter === "missing") {
+                    return groupSubmission?.submittedAt == null;
+                  }
+                  if (filter === "done") {
+                    return groupSubmission?.submittedAt != null;
+                  }
+                  return true;
+                })
+                .map(({ id, groupActivity, groupSubmission = null }) => (
+                  <>
+                    <Content key={id}>
+                      <Task>
+                        <h1>{groupActivity?.title}</h1>
+                        <p>
+                          {dayjs(groupActivity?.createdAt).format(
+                            "MMMM D, YYYY [at] h:mm a"
+                          )}
+                        </p>
+                        <h3>
+                          {" "}
+                          Due:{" "}
+                          {dayjs(groupActivity?.dueAt).format(
+                            "MMMM D, YYYY"
+                          )}{" "}
+                        </h3>
+                      </Task>
+                      {groupSubmission?.submittedAt != null ? (
+                        <ViewLink
+                          to={`/class/${classId}/groupactivity/${groupActivity.id}/submission/${groupSubmission.id}`}
+                        >
+                          View
+                        </ViewLink>
+                      ) : (
+                        <span>No submission yet.</span>
+                      )}
+                    </Content>
+                  </>
+                ))}
+        </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
         <AboutContainer>
           <h3>ABOUT</h3>
           <ul>
+            <h3>{group?.name}'s Progress</h3>
             <li>
               <FaLaptop size={18} />
-              &nbsp; Subject Code:
+              &nbsp; Subject Code: {course?.subjCode} ({course?.name})
             </li>
             <li>
               <FaLaptop size={18} />
-              &nbsp; Section:
+              &nbsp; Section: {course?.yearAndSection}
             </li>
             <li>
               <TiGroup size={18} />
-              &nbsp; groups
+              &nbsp; Group Number: {group?.name}
             </li>
           </ul>
         </AboutContainer>
-        {/*<ToDoContainer>
-          <h3>TO-DO</h3>
-        </ToDoContainer>*/}
+        <AboutContainer>
+          <h3>MEMBERS</h3>
+          <ul className="leader">
+            Leader: {leader?.user?.firstName}
+            {leader?.user?.lastName}
+          </ul>
+          {loading
+            ? "Loading..."
+            : students?.data?.map(({ id, user }) => (
+                <ul key={id}>
+                  <li>
+                    {user.lastName}, {user.firstName} {user.middleName}
+                  </li>
+                </ul>
+              ))}
+        </AboutContainer>
       </RightSideContainer>
     </ProgressContainer>
   );
@@ -116,8 +166,15 @@ const UpperContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  height: 130px;
+  height: 150px;
   margin-top: 1em;
+  img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    object-fit: cover;
+  }
 
   > h4 {
     font-weight: normal;
@@ -131,9 +188,13 @@ const UpperContainer = styled.div`
     padding: 0 10px;
 
     > h4 {
+      font-size: 18px;
       color: #0f482f;
       margin: 5px;
       margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     > p {
       margin: 0;
@@ -153,6 +214,10 @@ const UpperContainer = styled.div`
         color: white;
       }
       .bar {
+        ${({ percentProgress }) =>
+          css`
+            width: ${percentProgress}%;
+          `}
         background-color: #0e5937;
         height: 2em;
       }
@@ -215,50 +280,6 @@ const UpperContainer = styled.div`
       }
     }
   }
-  .inprogress {
-    > h4 {
-      color: #ae5f16;
-    }
-    .inprogressButton {
-      color: white;
-      margin: 0;
-      font-size: 22px;
-      text-decoration: none;
-
-      .inprogressCircle {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        margin: 0 auto;
-        background-color: #ae5f16;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-      }
-    }
-  }
-  .underreview {
-    > h4 {
-      color: #ae1696;
-    }
-    .underreviewButton {
-      color: white;
-      margin: 0;
-      font-size: 22px;
-      text-decoration: none;
-
-      .underreviewCircle {
-        height: 50px;
-        width: 50px;
-        border-radius: 50%;
-        margin: 0 auto;
-        background-color: #ae1696;
-        justify-content: center;
-        align-items: center;
-        display: flex;
-      }
-    }
-  }
   .missing {
     > h4 {
       color: #9b1313;
@@ -313,47 +334,44 @@ const TasksContainer = styled.div`
   margin-top: 1.5em;
   overflow-y: scroll;
   flex-direction: column;
-  padding: 10px;
+  padding: 1em;
+  height: 650px;
 `;
 
 const Content = styled.div`
   width: 100%;
   height: 110px;
   text-align: left;
-  padding: 0 20px;
-  margin: 2em 0;
+  padding: 0 1em;
+  margin: 1em 0;
+
+  display: flex;
   border-bottom: 1px solid black;
-  button {
-    display: flex;
-    font-size: 15px;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    border: none;
-    text-align: center;
-    cursor: pointer;
-  }
-  .mark {
-    width: 130px;
-    height: 40px;
-    background-color: #0e5937;
-    float: right;
+
+  > span {
+    margin-top: 2em;
+    padding: 0;
   }
 `;
 
 const Task = styled.div`
   width: 100%;
+  margin: 1em;
   h1 {
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0;
     font-size: 20px;
     color: #0f482f;
+    margin: 0;
   }
   p {
     font-size: 17px;
-    margin-top: 5px;
+    margin: 0;
     color: #646464;
+  }
+
+  h3 {
+    padding: 0;
   }
 `;
 
@@ -365,27 +383,13 @@ const RightSideContainer = styled.div`
   margin-left: 2em;
 
   h3 {
-    color: #646464;
+    color: #0e5937;
     text-align: left;
     font-size: 22px;
     font-weight: normal;
     display: flex;
     margin: 0 10px;
     margin-bottom: 20px;
-  }
-
-  .assign {
-    display: flex;
-    width: 130px;
-    height: 40px;
-    font-size: 15px;
-    align-items: center;
-    justify-content: center;
-    background-color: #0e5937;
-    color: white;
-    border: none;
-    text-align: center;
-    cursor: pointer;
   }
 `;
 
@@ -411,6 +415,9 @@ const AboutContainer = styled.div`
       color: #0e5937;
     }
   }
+  .leader {
+    color: #0e5937;
+  }
 
   button {
     border: none;
@@ -423,57 +430,23 @@ const AboutContainer = styled.div`
   }
 `;
 
-/*const ToDoContainer = styled.div`
-  display: flex;
-  width: 100%;
-  height: max-content;
-  flex-direction: column;
-  background-color: #f2f2f2;
-  padding: 2em;
-  border-radius: 10px;
-`;*/
-
 const ViewLink = styled(Link)`
-  ${({ status }) =>
-    css`
-      background-color: ${status === "TODO"
-        ? "#164aae"
-        : status === "DONE"
-        ? "#0e5937"
-        : status === "UNDER_REVIEW"
-        ? "#ae1696"
-        : status === "IN_PROGRESS"
-        ? "#ae5f16"
-        : "#0e5937"};
-    `}
   text-decoration: none;
+  margin-left: auto;
   font-size: 16px;
-  width: 150px;
+  width: 130px;
   height: 40px;
+  margin-top: 2em;
   border: none;
   color: white;
+  background-color: #0f482f;
   cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
-  position: inline-block;
-  float: right;
-  margin-right: 1em;
+  &:hover {
+    background-color: #0e5937;
+  }
 `;
-
-/* const GoBack = styled.button`
-  text-decoration: none;
-  font-size: 18px;
-  width: 100px;
-  height: 40px;
-  border: none;
-  color: #0f482f;
-  cursor: pointer;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  letter-spacing: 1px;
-  font-weight: normal;
-`; */
 
 export default TProgressGroup;
