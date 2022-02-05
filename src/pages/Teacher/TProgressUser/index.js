@@ -6,7 +6,7 @@ import { useParams, Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
-
+import { smallProfpicUrl } from "utils/upload";
 import { useUrlQuery } from "hooks/useUrlQuery";
 
 import { COURSE_ACTIVITIES_SUBMISSIONS } from "./gql";
@@ -21,24 +21,25 @@ const TProgressUser = () => {
   });
   const courseInfo = data?.courseActivitiesAndSubmissions?.data ?? [];
   const { student, course, group } = data?.courseActivitiesAndSubmissions ?? {};
-
+  const { user } = student ?? {};
+  const { firstName, lastName, profilePicture = null } = user ?? {};
   const doneCount = courseInfo.filter(
     ({ submission }) => submission?.id != null
   ).length;
   const missingCount = courseInfo.filter(
     ({ submission }) => submission?.id == null
   ).length;
-
+  const { secure_url } = JSON.parse(profilePicture) ?? {};
   const allCount = missingCount + doneCount;
   const percentProgress = (doneCount / courseInfo.length) * 100;
-
   return (
     <ProgressContainer>
       <LeftSideContainer>
         <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
             <h4>
-              {student?.user?.firstName} {student?.user?.lastName}
+              <img src={smallProfpicUrl(secure_url)} alt="Your profile pic" />{" "}
+              {firstName} {lastName}
             </h4>
             <p>{percentProgress ? `${percentProgress.toFixed(2)}%` : "0%"}</p>
             <div className="outerbar">
@@ -93,17 +94,16 @@ const TProgressUser = () => {
                             "MMMM D, YYYY"
                           )}{" "}
                         </h3>
-
-                        {submission?.id != null ? (
-                          <ViewLink
-                            to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
-                          >
-                            View
-                          </ViewLink>
-                        ) : (
-                          ""
-                        )}
                       </Task>
+                      {submission?.id != null ? (
+                        <ViewLink
+                          to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
+                        >
+                          View
+                        </ViewLink>
+                      ) : (
+                        <span>No submission yet.</span>
+                      )}
                     </Content>
                   </>
                 ))}
@@ -153,8 +153,15 @@ const UpperContainer = styled.div`
   display: flex;
   flex-direction: row;
   gap: 10px;
-  height: 130px;
+  height: 150px;
   margin-top: 1em;
+  img {
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+    object-fit: cover;
+  }
 
   > h4 {
     font-weight: normal;
@@ -168,9 +175,13 @@ const UpperContainer = styled.div`
     padding: 0 10px;
 
     > h4 {
+      font-size: 18px;
       color: #0f482f;
       margin: 5px;
       margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
     > p {
       margin: 0;
@@ -318,35 +329,36 @@ const Content = styled.div`
   width: 100%;
   height: 110px;
   text-align: left;
-  padding: 0 20px;
-  margin: 2em 0;
+  padding: 0 1em;
+  margin: 1em 0;
 
-  button {
-    display: flex;
-    font-size: 15px;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    border: none;
-    text-align: center;
-    cursor: pointer;
+  display: flex;
+  border-bottom: 1px solid black;
+
+  > span {
+    margin-top: 2em;
+    padding: 0;
   }
 `;
 
 const Task = styled.div`
   width: 100%;
-  border-bottom: 1px solid black;
+  margin: 1em;
   h1 {
     overflow: hidden;
     text-overflow: ellipsis;
-    padding: 0;
     font-size: 20px;
     color: #0f482f;
+    margin: 0;
   }
   p {
     font-size: 17px;
-    margin-top: 5px;
+    margin: 0;
     color: #646464;
+  }
+
+  h3 {
+    padding: 0;
   }
 `;
 
@@ -403,14 +415,15 @@ const AboutContainer = styled.div`
 `;
 
 const ViewLink = styled(Link)`
-  background-color: #0e5937;
   text-decoration: none;
   margin-left: auto;
   font-size: 16px;
   width: 130px;
   height: 40px;
+  margin-top: 2em;
   border: none;
   color: white;
+  background-color: #0f482f;
   cursor: pointer;
   display: flex;
   justify-content: center;
