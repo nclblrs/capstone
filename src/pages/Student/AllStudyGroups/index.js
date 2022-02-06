@@ -23,7 +23,7 @@ const AllStudyGroups = () => {
         </AllContainer>
         <div className="buttoncontainer">
           <h2>ALL STUDY GROUPS</h2>
-          <button>Show Inactive</button>
+          {/*    <button>Show Inactive</button> */}
         </div>
         <div className="itemcontainer">
           {loading
