@@ -108,7 +108,7 @@ const GroupSubmission = () => {
               {groupActivitySubmissionsLoading
                 ? "Loading..."
                 : groupActivitySubmissions
-                    .filter(({ id }) => groupSubmissionId !== id)
+                    .filter(({ submittedAt }) => submittedAt)
                     .map(({ id, group }) => {
                       return (
                         <Container key={id}>

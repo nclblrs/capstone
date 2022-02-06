@@ -6,45 +6,51 @@ import { useParams, Link } from "react-router-dom";
 import dayjs from "dayjs";
 import { TiGroup } from "react-icons/ti";
 import { FaLaptop } from "react-icons/fa";
-import { smallProfpicUrl } from "utils/upload";
 import { useUrlQuery } from "hooks/useUrlQuery";
 
-import { COURSE_ACTIVITIES_SUBMISSIONS } from "./gql";
+import {
+  COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS,
+  GROUPSUBMISSION_GROUP,
+} from "./gql";
 
-const TProgressUser = () => {
-  const { classId, userId } = useParams();
-  const { filter } = useUrlQuery();
+const TProgressGroupTasks = () => {
+  const { groupActivityId, groupId, classId } = useParams();
+
   const { pathname } = useLocation();
 
-  const { loading, data } = useQuery(COURSE_ACTIVITIES_SUBMISSIONS, {
-    variables: { courseId: classId, studentId: userId },
+  const { loading, data } = useQuery(COURSEGROUP_GROUPACTIVITIES_SUBMISSIONS, {
+    variables: { courseId: classId, groupId },
   });
-  const courseInfo = data?.courseActivitiesAndSubmissions?.data ?? [];
-  const { student, course, group } = data?.courseActivitiesAndSubmissions ?? {};
-  const { user } = student ?? {};
-  const { firstName, lastName, profilePicture = null } = user ?? {};
-  const doneCount = courseInfo.filter(
+
+  const courseGroupInfo =
+    data?.courseGroupActivitiesAndGroupSubmissions?.data ?? [];
+  const { group, course } =
+    data?.courseGroupActivitiesAndGroupSubmissions ?? {};
+
+  const { name, leader, students } = group ?? {};
+
+  const { loading: groupSubmissionLoading, data: groupSubmissionData } =
+    useQuery(GROUPSUBMISSION_GROUP, {
+      variables: { groupId, groupActivityId },
+    });
+
+  const { tasks } = groupSubmissionData?.groupSubmissionOfGroup ?? {};
+  const tasksInfo = tasks?.data ?? [];
+
+  const doneCount = courseGroupInfo.filter(
     ({ submission }) => submission?.id != null
   ).length;
-  const missingCount = courseInfo.filter(
+  const missingCount = courseGroupInfo.filter(
     ({ submission }) => submission?.id == null
   ).length;
-  const { secure_url } = JSON.parse(profilePicture) ?? {};
   const allCount = missingCount + doneCount;
-  const percentProgress = (doneCount / courseInfo.length) * 100;
+  const percentProgress = (doneCount / courseGroupInfo.length) * 100;
   return (
     <ProgressContainer>
       <LeftSideContainer>
         <UpperContainer percentProgress={percentProgress}>
           <div className="taskprogress">
-            <h4>
-              <img src={smallProfpicUrl(secure_url)} alt="Your profile pic" />{" "}
-              {firstName} {lastName}
-            </h4>
-            <p>{percentProgress ? `${percentProgress.toFixed(2)}%` : "0%"}</p>
-            <div className="outerbar">
-              <div className="bar"></div>
-            </div>
+            <h4>{name}</h4>
           </div>
           <div className="alltask">
             <h4>All</h4>
@@ -66,56 +72,41 @@ const TProgressUser = () => {
           </div>
         </UpperContainer>
         <TasksContainer>
-          {loading
+          {groupSubmissionLoading
             ? "Loading..."
-            : courseInfo
-                .filter(({ submission }) => {
-                  if (filter === "missing") {
-                    return submission?.id == null;
-                  }
-                  if (filter === "done") {
-                    return submission?.id != null;
-                  }
-                  return true;
-                })
-                .map(({ id, activity, submission = null }) => (
-                  <>
-                    <Content key={id}>
-                      <Task>
-                        <h1>{activity?.title}</h1>
-                        <p>
-                          {dayjs(activity?.createdAt).format(
-                            "MMMM D, YYYY [at] h:mm a"
-                          )}
-                        </p>
-                        <h3>
-                          {" "}
-                          Due: {dayjs(activity?.dueAt).format(
-                            "MMMM D, YYYY"
-                          )}{" "}
-                        </h3>
-                      </Task>
-                      {submission?.id != null ? (
-                        <ViewLink
-                          to={`/class/${classId}/activity/${activity.id}/submission/${submission.id}`}
-                        >
-                          View
-                        </ViewLink>
-                      ) : (
-                        <span>No submission yet.</span>
-                      )}
-                    </Content>
-                  </>
-                ))}
+            : tasksInfo.map(
+                ({
+                  id,
+                  attachment = null,
+                  title,
+                  submittedAt,
+                  createdAt,
+                  dueAt,
+                  student,
+                }) => (
+                  <Content key={id}>
+                    <Task>
+                      <h1>{title}</h1>
+                      <p>
+                        {dayjs(createdAt).format("MMMM D, YYYY [at] h:mm a")}
+                      </p>
+                      <p>
+                        Assigned to: {student?.user?.firstName}
+                        {student?.user?.lastName}{" "}
+                      </p>
+                      <h3> Due: {dayjs(dueAt).format("MMMM D, YYYY")} </h3>
+                    </Task>
+                    <ViewLink>View</ViewLink>
+                  </Content>
+                )
+              )}
         </TasksContainer>
       </LeftSideContainer>
       <RightSideContainer>
         <AboutContainer>
           <h3>ABOUT</h3>
           <ul>
-            <h3>
-              {student?.user?.firstName} {student?.user?.lastName}'s Progress
-            </h3>
+            <h3>{group?.name}'s Progress</h3>
             <li>
               <FaLaptop size={18} />
               &nbsp; Subject Code: {course?.subjCode} ({course?.name})
@@ -129,6 +120,22 @@ const TProgressUser = () => {
               &nbsp; Group Number: {group?.name}
             </li>
           </ul>
+        </AboutContainer>
+        <AboutContainer>
+          <h3>MEMBERS</h3>
+          <ul className="leader">
+            Leader: {leader?.user?.firstName}
+            {leader?.user?.lastName}
+          </ul>
+          {loading
+            ? "Loading..."
+            : students?.data?.map(({ id, user }) => (
+                <ul key={id}>
+                  <li>
+                    {user.lastName}, {user.firstName} {user.middleName}
+                  </li>
+                </ul>
+              ))}
         </AboutContainer>
       </RightSideContainer>
     </ProgressContainer>
@@ -401,6 +408,9 @@ const AboutContainer = styled.div`
       color: #0e5937;
     }
   }
+  .leader {
+    color: #0e5937;
+  }
 
   button {
     border: none;
@@ -432,4 +442,4 @@ const ViewLink = styled(Link)`
   }
 `;
 
-export default TProgressUser;
+export default TProgressGroupTasks;

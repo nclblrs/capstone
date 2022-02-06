@@ -1,5 +1,7 @@
 import React from "react";
 import styled from "styled-components";
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
+import { Pie } from "react-chartjs-2";
 /* import dayjs from "dayjs"; */
 import { Switch, NavLink, Route, useParams, Link } from "react-router-dom";
 import { GET_COURSE } from "./gql";
@@ -8,6 +10,8 @@ import { FaLaptop } from "react-icons/fa";
 /* import { MdAccountCircle } from "react-icons/md"; */
 import { TiGroup } from "react-icons/ti";
 import { smallProfpicUrl } from "utils/upload";
+
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const TProgressClass = () => {
   const { classId } = useParams();
@@ -24,6 +28,9 @@ const TProgressClass = () => {
     groups,
     studentCount,
   } = data?.course ?? {};
+
+  const groupActivitiesCount = data?.courseGroupActivities?.data?.length;
+  const activitiesCount = data?.courseActivities?.data?.length;
 
   return (
     <Container>
@@ -42,6 +49,20 @@ const TProgressClass = () => {
             <LSideContainer>
               <ActivityContainer>
                 <h4>{name}</h4>
+                <div style={{ width: "500px", margin: "0 auto" }}>
+                  <Pie
+                    data={{
+                      labels: ["Group Activity", "Individual Activity"],
+                      datasets: [
+                        {
+                          data: [groupActivitiesCount, activitiesCount],
+                          backgroundColor: ["#0E5937", "#67C587"],
+                          hoverOffset: 10,
+                        },
+                      ],
+                    }}
+                  />
+                </div>
               </ActivityContainer>
             </LSideContainer>
             <RSideContainer>
@@ -68,7 +89,7 @@ const TProgressClass = () => {
           <Route path={`/progress/class/:classId/individual`} exact>
             <LSideContainer>
               <ActivityContainer>
-                <h3>SECTION NAME Students</h3>
+                <h3>{yearAndSection} Students</h3>
                 {loading
                   ? "Loading..."
                   : students?.data?.map(({ id, user }) => {
@@ -115,7 +136,7 @@ const TProgressClass = () => {
           <Route path={`/progress/class/:classId/group`} exact>
             <LSideContainer>
               <ActivityContainer>
-                <h3>SECTION NAME Groups</h3>
+                <h3>{yearAndSection} Groups</h3>
                 <GroupContainer>
                   <div className="leftContent">
                     {loading
