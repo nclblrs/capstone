@@ -92,19 +92,28 @@ const AddNewUserForm = ({ onCreateFinish }) => {
 
       <div>
         <label>First Name</label>
-        <input {...register("firstName", { required: true })} />
+        <input
+          {...register("firstName", { required: true })}
+          placeholder="First Name"
+        />
       </div>
       <div>
         <label>Middle Name</label>
-        <input {...register("middleName")} />
+        <input
+          {...register("middleName")}
+          placeholder="Middle Name (leave blank if N/A)"
+        />
       </div>
       <div>
         <label>Last Name</label>
-        <input {...register("lastName", { required: true })} />
+        <input
+          {...register("lastName", { required: true })}
+          placeholder="Last Name"
+        />
       </div>
       <div>
         <label>Email</label>
-        <input {...register("email", { required: true })} />
+        <input {...register("email", { required: true })} placeholder="Email" />
       </div>
       <div>
         <label> Course </label>
@@ -124,11 +133,17 @@ const AddNewUserForm = ({ onCreateFinish }) => {
       </div>
       <div>
         <label>Section</label>
-        <input {...register("section", { required: true })} />
+        <input
+          {...register("section", { required: true })}
+          placeholder="Section"
+        />
       </div>
       <div>
         <label>School Number</label>
-        <input {...register("schoolIdNumber", { required: true })} />
+        <input
+          {...register("schoolIdNumber", { required: true })}
+          placeholder="School ID Number"
+        />
       </div>
 
       <button disabled={loading}>Submit</button>
