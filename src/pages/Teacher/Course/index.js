@@ -408,6 +408,7 @@ const GroupContainer = styled.div`
       background-color: #f2f2f2;
       height: 350px;
       margin-bottom: 20px;
+      overflow-y: scroll;
 
       p {
         margin-top: 7px;
@@ -448,8 +449,7 @@ const LeftContainer = styled.div`
     padding: 0.5em 1.5em 0;
   }
   .leftContent {
-    position: absolute;
-    padding: 4.2em 3em;
+    padding-left: 3em;
     ul {
       list-style-type: none;
       font-size: 20px;

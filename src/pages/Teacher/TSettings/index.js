@@ -101,7 +101,7 @@ const TSettings = () => {
                 </div>
                 <div className="row">
                   <div className="snInput">
-                    <label for="SN">Student Number</label>
+                    <label for="SN">ID Number</label>
                     <input
                       type="text"
                       id="SN"

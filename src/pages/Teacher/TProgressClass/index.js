@@ -103,8 +103,18 @@ const TProgressClass = () => {
                               key={id}
                               to={`/progress/class/${classId}/individual/${user.id}`}
                             >
-                              <img src={smallProfpicUrl(secure_url)} alt="a" />
-                              {user.firstName} {user.middleName} {user.lastName}
+                              <span>
+                                <li>
+                                  <img
+                                    src={smallProfpicUrl(secure_url)}
+                                    alt="a"
+                                  />
+                                  <p>
+                                    {user.firstName} {user.middleName}{" "}
+                                    {user.lastName}
+                                  </p>
+                                </li>
+                              </span>
                             </Link>
                           </ul>
                         </>
@@ -226,6 +236,9 @@ const ActivityContainer = styled.div`
     border-radius: 50%;
     margin-right: 10px;
     margin-top: 5px;
+  }
+  li {
+    display: flex;
   }
 `;
 
