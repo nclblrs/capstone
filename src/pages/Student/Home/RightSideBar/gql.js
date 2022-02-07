@@ -19,6 +19,12 @@ export const GET_AGENDARIGHTSIDEBAR = gql`
         dueAt
         groupSubmission {
           id
+          groupActivity {
+            id
+            course {
+              id
+            }
+          }
         }
       }
     }

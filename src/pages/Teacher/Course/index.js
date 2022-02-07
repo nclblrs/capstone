@@ -397,7 +397,7 @@ const GroupContainer = styled.div`
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-evenly;
+    justify-content: space-between;
 
     .groupcontainer {
       border-radius: 1em;
@@ -406,7 +406,7 @@ const GroupContainer = styled.div`
       padding: 2em;
       width: 32%;
       background-color: #f2f2f2;
-      height: 350px;
+      height: 380px;
       margin-bottom: 20px;
       overflow-y: scroll;
 

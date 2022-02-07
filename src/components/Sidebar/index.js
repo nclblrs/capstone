@@ -18,14 +18,14 @@ const Sidebar = () => {
           <SiGoogleclassroom size={20} />
           Classes
         </NavMenu>
-        <NavMenu to="/class-schedule">
+        {/*<NavMenu to="/class-schedule">
           <FiClock size={20} />
           Class Schedule
         </NavMenu>
         <NavMenu to="/calendar">
           <BiCalendar size={20} />
           Calendar
-        </NavMenu>
+        </NavMenu>*/}
         <NavMenu to="/progress">
           <AiFillPieChart size={20} />
           Progress

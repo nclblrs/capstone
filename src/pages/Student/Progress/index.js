@@ -18,7 +18,7 @@ import { useUrlQuery } from "hooks/useUrlQuery";
 
 const Progress = () => {
   const { user } = useCurrentUserContext();
-  const { groupSubmissionId } = useParams();
+  const { groupSubmissionId, groupActivityId } = useParams();
   const { filter } = useUrlQuery();
   const { pathname } = useLocation();
 
@@ -190,7 +190,7 @@ const Progress = () => {
                         )}
                         <ViewLink
                           status={status}
-                          to={`/progress/class/${course?.id}/groupactivity/${groupSubmissionId}/task/${id}`}
+                          to={`/progress/class/${course?.id}/groupactivity/${groupActivityId}/submission/${groupSubmissionId}/task/${id}`}
                         >
                           {status === "TODO"
                             ? "View Submission"

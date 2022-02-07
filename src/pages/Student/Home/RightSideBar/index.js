@@ -16,7 +16,7 @@ const RightSideBar = () => {
   const { course } = tasks ?? {};
   var today = new Date(),
     date = dayjs(today).format("MMMM D, YYYY");
-  console.log(date);
+
   return (
     <RSideContainer>
       <RSideItem>
@@ -74,10 +74,10 @@ const RightSideBar = () => {
       <RSideItem>
         {loading
           ? "Loading..."
-          : tasks.map(({ id, title, dueAt }) => (
+          : tasks.map(({ id, title, dueAt, groupSubmission }) => (
               <RSideLinks
                 key={id}
-                to={`/progress/class/${course?.id}/groupactivity/${groupSubmissionId}/task/${id}`}
+                to={`/progress/class/${groupSubmission?.groupActivity?.course?.id}/groupactivity/${groupSubmission?.id}/task/${id}`}
               >
                 <FaRegLightbulb size={20} />
                 <span>
