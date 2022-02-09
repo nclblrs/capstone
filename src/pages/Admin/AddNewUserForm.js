@@ -11,8 +11,8 @@ const AddNewUserForm = ({ onCreateFinish }) => {
   const [createAdmin, { loading: createAdminLoading }] =
     useMutation(CREATE_ADMIN);
   const loading = createUserLoading || createAdminLoading;
-  const { register, handleSubmit, reset } = useForm();
-
+  const { register, handleSubmit, reset, watch } = useForm();
+  const watchType = watch("type");
   const onSubmit = async (data) => {
     console.log(data);
 
@@ -84,67 +84,86 @@ const AddNewUserForm = ({ onCreateFinish }) => {
       <div>
         <label>User Type</label>
         <select {...register("type", { required: true })}>
+          <option value="admin">Admin</option>
           <option value="student">Student</option>
           <option value="teacher">Teacher</option>
-          <option value="admin">Admin</option>
         </select>
       </div>
 
       <div>
         <label>First Name</label>
         <input
-          {...register("firstName", { required: true })}
+          {...register("firstName", {
+            required: true,
+            pattern: /[A-Za-z]/,
+          })}
           placeholder="First Name"
         />
       </div>
       <div>
         <label>Middle Name</label>
         <input
-          {...register("middleName")}
+          {...register("middleName", { pattern: /[A-Za-z]/ })}
           placeholder="Middle Name (leave blank if N/A)"
         />
       </div>
       <div>
         <label>Last Name</label>
         <input
-          {...register("lastName", { required: true })}
+          {...register("lastName", { required: true, pattern: /[A-Za-z]/ })}
           placeholder="Last Name"
         />
       </div>
       <div>
         <label>Email</label>
-        <input {...register("email", { required: true })} placeholder="Email" />
-      </div>
-      <div>
-        <label> Course </label>
-        <select {...register("courseDept", { required: true })}>
-          <option value="BSIT">BSIT</option>
-          <option value="BSCS">BSCS</option>
-        </select>
-      </div>
-      <div>
-        <label> Year-Level </label>
-        <select {...register("yearLevel", { required: true })}>
-          <option value="1st">1st year</option>
-          <option value="2nd">2nd year</option>
-          <option value="3rd">3rd year</option>
-          <option value="4th">4th year</option>
-        </select>
-      </div>
-      <div>
-        <label>Section</label>
         <input
-          {...register("section", { required: true })}
-          placeholder="Section"
+          {...register("email", {
+            required: true,
+            pattern: /[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/,
+          })}
+          placeholder="Email"
         />
       </div>
-      <div>
-        <label>School Number</label>
-        <input
-          {...register("schoolIdNumber", { required: true })}
-          placeholder="School ID Number"
-        />
-      </div>
+      {watchType === "student" ? (
+        <>
+          <div>
+            <label> Course </label>
+            <select {...register("courseDept", { required: true })}>
+              <option value="BSIT">BSIT</option>
+              <option value="BSCS">BSCS</option>
+            </select>
+          </div>
+          <div>
+            <label> Year-Level </label>
+            <select {...register("yearLevel", { required: true })}>
+              <option value="1st">1st year</option>
+              <option value="2nd">2nd year</option>
+              <option value="3rd">3rd year</option>
+              <option value="4th">4th year</option>
+            </select>
+          </div>
+          <div>
+            <label>Section</label>
+            <input
+              {...register("section", { required: true })}
+              placeholder="Section"
+            />
+          </div>
+        </>
+      ) : (
+        ""
+      )}
+      {watchType === "teacher" || watchType === "student" ? (
+        <div>
+          <label>School Number</label>
+          <input
+            {...register("schoolIdNumber", { required: true })}
+            placeholder="School ID Number"
+          />
+        </div>
+      ) : (
+        ""
+      )}
 
       <button disabled={loading}>Submit</button>
     </Form>
