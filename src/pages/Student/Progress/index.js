@@ -190,7 +190,7 @@ const Progress = () => {
                         )}
                         <ViewLink
                           status={status}
-                          to={`/progress/class/${course?.id}/groupactivity/${groupActivityId}/submission/${groupSubmissionId}/task/${id}`}
+                          to={`/progress/class/${course?.id}/groupactivity/${groupSubmissionId}/task/${id}`}
                         >
                           {status === "TODO"
                             ? "View Submission"
